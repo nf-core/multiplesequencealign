@@ -50,6 +50,8 @@ include { FASTQC                      } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { STATS                       } from '../subworkflows/local/get_stats'
+include { ALIGN                       } from '../subworkflows/local/align'
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -67,7 +69,8 @@ workflow MSA {
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
     //
     INPUT_CHECK (
-        file(params.input)
+        file(params.input),
+        file(params.tools)
     )
     ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
     // TODO: OPTIONAL, you can use nf-validation plugin to create an input channel from the samplesheet with Channel.fromSamplesheet("input")
@@ -75,13 +78,19 @@ workflow MSA {
     // ! There is currently no tooling to help you write a sample sheet schema
 
     ch_seqs = INPUT_CHECK.out.fasta
-    ch_seqs.view()
+    ch_tools = INPUT_CHECK.out.tools
+
+    //
+    // Compute summary statistics about the input sequences
+    //
     if( !params.skip_stats ){
         STATS(ch_seqs)
     }
-    // ch_versions = ch_versions.mix(STATS.out.versions.first())
-    // ch_versions.view()
+    ch_versions = ch_versions.mix(STATS.out.versions.first())
+    ch_versions.view()
 
+
+    ALIGN(ch_seqs, ch_tools)
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
@@ -100,7 +109,6 @@ workflow MSA {
     ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS.out.mqc_yml.collect())
-    //ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
 
     MULTIQC (
         ch_multiqc_files.collect(),

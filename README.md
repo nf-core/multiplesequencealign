@@ -76,7 +76,7 @@ For more details about the output files and reports, please refer to the
 
 ## Credits
 
-nf-core/msa was originally written by luisas.
+nf-core/msa was originally written by Luisa Santus (@luisas) and Jose Espinosa-Carrasco (@JoseEspinosa) and  from The Comparative Bioinformatics Group at The Centre for Genomic Regulation, Spain. 
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 

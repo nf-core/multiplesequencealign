@@ -12,6 +12,7 @@ process TCOFFEE_SEQREFORMAT_SIM {
 
     output:
     tuple val(meta), path("*.sim"), emit: perc_sim
+    tuple val(meta), path("*.sim_tot"), emit: perc_sim_tot
     path "versions.yml" , emit: versions
 
 
@@ -24,10 +25,15 @@ process TCOFFEE_SEQREFORMAT_SIM {
     """
     t_coffee -other_pg seq_reformat -in ${fasta} -output=sim_idscore > "${prefix}.sim"
 
+    echo "$prefix" > tmp 
+    grep ^TOT ${prefix}.sim | cut -f4 >> tmp
+    tr '\\n' ',' < tmp > ${prefix}.sim_tot
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         t_coffee: \$( t_coffee -version | sed 's/.*(Version_\\(.*\\)).*/\\1/' )
     END_VERSIONS
     """
-
 }
+
+

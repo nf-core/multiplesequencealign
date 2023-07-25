@@ -1,5 +1,5 @@
 //
-// Uncompress and prepare reference genome files
+// Compute stats about the input sequences
 //
 
 include {   TCOFFEE_SEQREFORMAT_SIM       } from '../../modules/local/stats.nf'
@@ -19,6 +19,5 @@ workflow STATS {
 
     emit:
     stats            = TCOFFEE_SEQREFORMAT_SIM.out.perc_sim                  // TODO
- 
     versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
 }
