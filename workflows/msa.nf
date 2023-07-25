@@ -49,7 +49,7 @@ include { INPUT_CHECK } from '../subworkflows/local/input_check'
 include { FASTQC                      } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
-// include { STATS                       } from '../subworkflows/local/stats'
+include { STATS                       } from '../subworkflows/local/get_stats'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -63,32 +63,25 @@ workflow MSA {
 
     ch_versions = Channel.empty()
 
-    print(params.input)
     //
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
     //
     INPUT_CHECK (
-        ch_seqs = file(params.input)
+        file(params.input)
     )
     ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
-    ch_versions.view()
     // TODO: OPTIONAL, you can use nf-validation plugin to create an input channel from the samplesheet with Channel.fromSamplesheet("input")
     // See the documentation https://nextflow-io.github.io/nf-validation/samplesheets/fromSamplesheet/
     // ! There is currently no tooling to help you write a sample sheet schema
 
-
-    // if( !params.skip_stats ){
-    //     STATS(ch_seqs)
-    // }
-    // ch_versions = ch_versions.mix(PREPARE_GENOME.out.versions)
-
-    //
-    // MODULE: Run FastQC
-    //
-    // STATS (
-    //     INPUT_CHECK.out.fasta
-    // )
+    ch_seqs = INPUT_CHECK.out.fasta
+    ch_seqs.view()
+    if( !params.skip_stats ){
+        STATS(ch_seqs)
+    }
     // ch_versions = ch_versions.mix(STATS.out.versions.first())
+    // ch_versions.view()
+
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')

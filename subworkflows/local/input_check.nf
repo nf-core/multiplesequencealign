@@ -25,7 +25,6 @@ def create_fasta_channel(LinkedHashMap row) {
     // create meta map
     def meta = [:]
     meta.family         = row.family
-    meta.fasta = row.fasta.toBoolean()
 
     // add path(s) of the fastq file(s) to the meta map
     def fasta_meta = []
