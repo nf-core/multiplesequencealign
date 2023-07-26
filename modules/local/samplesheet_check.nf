@@ -32,7 +32,7 @@ process SAMPLESHEET_CHECK {
 
 
 process TOOLSHEET_CHECK {
-    tag "$samplesheet"
+    tag "$toolsheet"
     label 'process_single'
 
     conda "conda-forge::python=3.8.3"

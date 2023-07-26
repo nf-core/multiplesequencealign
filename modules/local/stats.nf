@@ -1,7 +1,7 @@
 
 
 process TCOFFEE_SEQREFORMAT_SIM {
-    tag "$meta.id"
+    tag "$meta.family"
     label 'process_low'
 
     // TODO: change to the correct container

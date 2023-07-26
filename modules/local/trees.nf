@@ -2,7 +2,7 @@
 
 
 process PARTTREE {
-    tag "$meta.family _ $meta.tree _ $meta.args_tree"
+    tag "$meta.family _ $meta_run.tree _ $meta_run.args_tree"
     label 'process_low'
 
     // TODO: change to the correct container
@@ -34,7 +34,7 @@ process PARTTREE {
 
 
 process MBEDTREE {
-    tag "$meta.family _ $meta.tree _ $meta.args_tree"
+    tag "$meta.family _ $meta_run.tree _ $meta_run.args_tree"
     label 'process_low'
 
     // TODO: change to the correct container
