@@ -1,5 +1,7 @@
  
- include { PARTTREE; MBEDTREE } from '../../modules/local/trees'
+include { PARTTREE } from '../../modules/local/parttree'
+include { MBEDTREE } from '../../modules/local/mbedtree'
+
  
  workflow COMPUTE_TREES {
 

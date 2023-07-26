@@ -1,5 +1,5 @@
 
-include { TCOFFEE_ALNCOMPARE_EVAL } from '../../modules/local/evaluation.nf'
+include { TCOFFEE_ALNCOMPARE_EVAL } from '../../modules/local/tcoffee_alncompare_eval.nf'
 
 workflow EVALUATE_MSA {
 

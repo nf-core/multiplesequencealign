@@ -1,5 +1,5 @@
-process SAMPLESHEET_CHECK {
-    tag "$samplesheet"
+process TOOLSHEET_CHECK {
+    tag "$toolsheet"
     label 'process_single'
 
     conda "conda-forge::python=3.8.3"
@@ -8,7 +8,7 @@ process SAMPLESHEET_CHECK {
         'biocontainers/python:3.8.3' }"
 
     input:
-    path samplesheet
+    path toolsheet
 
     output:
     path '*.csv'       , emit: csv
@@ -20,9 +20,9 @@ process SAMPLESHEET_CHECK {
     script: // This script is bundled with the pipeline, in nf-core/msa/bin/
     def args = task.ext.args ?: ''
     """
-    check_samplesheet.py \\
-        $samplesheet \\
-        samplesheet.valid.csv
+    check_toolsheet.py \\
+        $toolsheet \\
+        toolsheet.valid.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -30,5 +30,3 @@ process SAMPLESHEET_CHECK {
     END_VERSIONS
     """
 }
-
-

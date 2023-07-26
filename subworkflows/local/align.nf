@@ -3,7 +3,7 @@
 //
 
 include {   COMPUTE_TREES       } from '../../subworkflows/local/compute_tree.nf'
-include {   FAMSA_ALIGN            } from '../../modules/local/alignment.nf'
+include {   FAMSA_ALIGN            } from '../../modules/local/famsa_align.nf'
 
 workflow ALIGN {
     take:

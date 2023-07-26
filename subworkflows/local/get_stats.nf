@@ -2,7 +2,7 @@
 // Compute stats about the input sequences
 //
 
-include {   TCOFFEE_SEQREFORMAT_SIM       } from '../../modules/local/stats.nf'
+include {   TCOFFEE_SEQREFORMAT_SIM       } from '../../modules/local/tcoffee_seqreformat_sim.nf'
 
 
 workflow STATS {
