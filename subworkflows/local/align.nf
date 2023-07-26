@@ -3,7 +3,7 @@
 //
 
 include {   COMPUTE_TREES       } from '../../subworkflows/local/compute_tree.nf'
-
+include {   FAMSA_ALIGN            } from '../../modules/local/alignment.nf'
 
 workflow ALIGN {
     take:
@@ -26,17 +26,25 @@ workflow ALIGN {
     ch_versions = ch_versions.mix(COMPUTE_TREES.out.versions.first())
 
     
-    // Align the sequences
-    ch_tools.view()
-    ch_tools_split.align.view()
+    // Here is all the combinations we need to compute
+    ch_fasta_trees = ch_fastas.combine(ch_tools)
+                              .map{ it -> [it[0] , it[2], it[3], it[1]] }
+                              .combine(trees, by: [0,1])
+                              .branch{
+                                  famsa: it[2]["align"] == "FAMSA"
+                              }
 
 
-    //msa = ALIGN_WITH_TREE.out.msa.mix(ALIGN_WITHOUT_TREE.out.msas)
+    // Compute the alignments
+    ch_fasta_trees.famsa.view()
+    FAMSA_ALIGN(ch_fasta_trees.famsa)
+    //ch_versions = ch_versions.mix(FAMSA.out.versions.first())
+    //msa = FAMSA.out.msa
 
 
 
     emit:
-    //msa                             // TODO
+    //msa                             
     versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
 }
 
