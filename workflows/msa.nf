@@ -87,11 +87,22 @@ workflow MSA {
         STATS(ch_seqs)
     }
     ch_versions = ch_versions.mix(STATS.out.versions.first())
-    ch_versions.view()
 
-
+    //
+    // Align
+    //
     ALIGN(ch_seqs, ch_tools)
+    ch_versions = ch_versions.mix(ALIGN.out.versions.first())
 
+    //
+    // Evaluate the quality of the alignment
+    //
+
+
+    //
+    // Compress the alignment
+    //
+    
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )

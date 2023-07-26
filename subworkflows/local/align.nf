@@ -2,31 +2,35 @@
 // Compute stats about the input sequences
 //
 
-include {   ALIGN_WITH_TREE       } from '../../subworkflows/local/align_with_tree.nf'
+include {   COMPUTE_TREES       } from '../../subworkflows/local/compute_tree.nf'
 
 
 workflow ALIGN {
     take:
-    ch_seqs                //      channel: meta, /path/to/file.fasta
+    ch_fastas                //      channel: meta, /path/to/file.fasta
     ch_tools
 
     main:
 
     ch_versions = Channel.empty()
 
-    // Merge all the files and tools to compute all combinations
-    ch_seqs_tools = ch_seqs.combine(ch_tools)
-                           .map( it -> [it[0]+it[2], it[1]] )
-                           .branch{
-                                    with_tree: it[0]["tree"] !=  "none"
-                                    without_tree: it[0]["tree"] == "none"
-                                  }
+    // Separae the tools into two channels
+    ch_tools_split = ch_tools.multiMap{ it -> 
+                          tree: it[0]
+                          align: it[1]
+                      }
 
-    ch_seqs_tools.without_tree.view()
-    // Here i need to branch in 
-    //msa = ALIGN_WITH_TREE(ch_seqs_tools.with_tree)
-    //ch_versions = ch_versions.mix(ALIGN_WITH_TREE.out.versions.first())
-    //ALIGN_WITHOUT_TREE(ch_seqs_tools.without_tree)
+    // Compute the required trees
+    COMPUTE_TREES(ch_fastas, ch_tools_split.tree)
+    trees = COMPUTE_TREES.out.trees
+    ch_versions = ch_versions.mix(COMPUTE_TREES.out.versions.first())
+
+    
+    // Align the sequences
+    ch_tools.view()
+    ch_tools_split.align.view()
+
+
     //msa = ALIGN_WITH_TREE.out.msa.mix(ALIGN_WITHOUT_TREE.out.msas)
 
 
