@@ -2,7 +2,7 @@
 // Compute stats about the input sequences
 //
 
-include {   COMPUTE_TREES       } from '../../subworkflows/local/compute_tree.nf'
+include {   COMPUTE_TREES       } from '../../subworkflows/local/compute_trees.nf'
 include {   FAMSA_ALIGN            } from '../../modules/local/famsa_align.nf'
 
 workflow ALIGN {

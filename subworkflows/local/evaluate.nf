@@ -15,7 +15,6 @@ workflow EVALUATE_MSA {
                             .cross (ch_msa)
                             .map { it -> [ it[0][0]+it[1][1], it[1][2], it[0][1] ] }
 
-    alignment_and_ref.view()
     TCOFFEE_ALNCOMPARE_EVAL(alignment_and_ref)
 
     emit:

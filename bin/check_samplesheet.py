@@ -34,6 +34,7 @@ class RowChecker:
         family_col="family",
         fasta_col="fasta", 
         reference_col="reference",
+        structures_col="structures",
         **kwargs,
     ):
         """
@@ -50,6 +51,7 @@ class RowChecker:
         self._family_col = family_col
         self._fasta_col = fasta_col
         self._reference_col = reference_col
+        self._structures_col = structures_col
         self._seen = set()
         self.modified = []
 
@@ -64,6 +66,7 @@ class RowChecker:
         """
         self._validate_family(row)
         self._validate_fasta(row)
+        self._validate_structures(row)
         self._seen.add((row[self._family_col], row[self._fasta_col]))
         self.modified.append(row)
 
@@ -87,6 +90,10 @@ class RowChecker:
                 f"The fasta file has an unrecognized extension: {filename}\n"
                 f"It should be one of: {', '.join(self.VALID_FORMATS)}"
             )
+    def _validate_structures(self, row):
+        """Assert that the structures entry is non-empty and has the right format."""
+        if len(row[self._structures_col]) <= 0:
+            row[self._structures_col] = "none"
 
     def validate_unique_samples(self):
         """

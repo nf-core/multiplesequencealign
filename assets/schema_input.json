@@ -19,6 +19,9 @@
             },
             "reference": {
                 "type": "string"
+            }, 
+            "structures": {
+                "type": "string"
             }
         },
         "required": ["family", "fasta"]

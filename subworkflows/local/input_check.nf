@@ -17,6 +17,9 @@ workflow INPUT_CHECK {
 
     fasta = samplesheet_ch.map { create_fasta_channel(it) }
     references = samplesheet_ch.map { create_references_channel(it) }
+    structures = samplesheet_ch.map { create_structures_channel(it) }.unique() 
+    // TODO make sure the unique is not necessary 
+
 
     TOOLSHEET_CHECK ( toolsheet )
     .csv
@@ -28,6 +31,7 @@ workflow INPUT_CHECK {
     emit:
     fasta
     references
+    structures
     tools                                     // channel: [ val(meta), [ fasta ] ]
     versions = SAMPLESHEET_CHECK.out.versions // channel: [ versions.yml ]
 }
@@ -62,6 +66,19 @@ def create_references_channel(LinkedHashMap row) {
     ref_meta = [ meta, [ file(row.reference) ] ]
 
     return ref_meta
+}
+
+
+// Function to get list of [ meta, [ fasta ] ]
+def create_structures_channel(LinkedHashMap row) {
+    // create meta map
+    def meta = [:]
+    meta.family         = row.family
+    // add path(s) of the fastq file(s) to the meta map
+    if (row.structures != "none") {
+        structures = [ meta, [ file(row.structures) ] ]
+    }
+    return structures
 }
 
 def create_tools_channel(LinkedHashMap row) {

@@ -49,7 +49,7 @@ include { INPUT_CHECK } from '../subworkflows/local/input_check'
 include { FASTQC                      } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
-include { STATS                       } from '../subworkflows/local/get_stats'
+include { STATS                       } from '../subworkflows/local/stats'
 include { ALIGN                       } from '../subworkflows/local/align'
 include { EVALUATE_MSA                } from '../subworkflows/local/evaluate'
 /*
@@ -80,6 +80,7 @@ workflow MSA {
     ch_seqs = INPUT_CHECK.out.fasta
     ch_tools = INPUT_CHECK.out.tools
     ch_refs = INPUT_CHECK.out.references
+    ch_structures = INPUT_CHECK.out.structures
 
     //
     // Compute summary statistics about the input sequences
@@ -99,6 +100,7 @@ workflow MSA {
     // Evaluate the quality of the alignment
     //
     EVALUATE_MSA(ALIGN.out.msa, ch_refs)
+    ch_versions = ch_versions.mix(EVALUATE_MSA.out.versions.first())
 
     //
     // Compress the alignment
