@@ -33,6 +33,7 @@ class RowChecker:
         self,
         family_col="family",
         fasta_col="fasta", 
+        reference_col="reference",
         **kwargs,
     ):
         """
@@ -48,6 +49,7 @@ class RowChecker:
         super().__init__(**kwargs)
         self._family_col = family_col
         self._fasta_col = fasta_col
+        self._reference_col = reference_col
         self._seen = set()
         self.modified = []
 

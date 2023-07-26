@@ -1,6 +1,6 @@
 
 process FAMSA_ALIGN {
-    tag "$meta.family _ $meta.tree _ $meta.args_tree"
+    tag "$meta.family _ $meta_run.align _ $meta_run.args_align"
     label 'process_low'
 
     // TODO: change to the correct container
@@ -14,13 +14,14 @@ process FAMSA_ALIGN {
     path "versions.yml" , emit: versions
 
     script:
-    def args = meta_run.args_align == 'none' ? '' : meta_run.args_align
+    def args = task.ext.args ?: ''
+    def args_meta = meta_run.args_align == 'none' ? '' : meta_run.args_align
     def args_align_clean = cleanargs(meta_run.args_align)
     def args_tree_clean = cleanargs(meta_tree.args_tree)
     def prefix = task.ext.prefix ?: "${meta.family}_${meta_tree.tree}-args-${args_tree_clean}_${meta_tree.align}-args-${args_align_clean}"
     
     """
-    famsa -gt import  ${tree} ${fasta} ${prefix}.aln
+    famsa -gt import ${tree} $args_meta ${fasta} ${prefix}.aln
 
     cat <<-END_VERSIONS > versions.yml
     version=\$(famsa --version 2>&1 | head -n 1)

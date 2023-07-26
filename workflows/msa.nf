@@ -51,7 +51,7 @@ include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { STATS                       } from '../subworkflows/local/get_stats'
 include { ALIGN                       } from '../subworkflows/local/align'
-
+include { EVALUATE_MSA                } from '../subworkflows/local/evaluate'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -79,6 +79,7 @@ workflow MSA {
 
     ch_seqs = INPUT_CHECK.out.fasta
     ch_tools = INPUT_CHECK.out.tools
+    ch_refs = INPUT_CHECK.out.references
 
     //
     // Compute summary statistics about the input sequences
@@ -97,12 +98,12 @@ workflow MSA {
     //
     // Evaluate the quality of the alignment
     //
-
+    EVALUATE_MSA(ALIGN.out.msa, ch_refs)
 
     //
     // Compress the alignment
     //
-    
+
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )

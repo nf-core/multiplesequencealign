@@ -16,6 +16,9 @@
                 "type": "string",
                 "pattern": "^\\S+\\.fa$",
                 "errorMessage": "fasta file. Must end with .fa"
+            },
+            "reference": {
+                "type": "string"
             }
         },
         "required": ["family", "fasta"]

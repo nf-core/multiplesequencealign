@@ -17,12 +17,13 @@ process PARTTREE {
     path "versions.yml" , emit: versions
 
     script:
-    def args = meta_run.args_tree == 'none' ? '' : meta_run.args_tree
+    def args = task.ext.args ?: ''
+    def args_meta = meta_run.args_tree == 'none' ? '' : meta_run.args_tree
     def args_tree_clean = cleanargs(meta_run.args_tree)
     def prefix = task.ext.prefix ?: "${meta.family}_${meta_run.tree}-args-${args_tree_clean}"
     
     """
-    famsa -gt upgma -parttree -t ${task.cpus} -gt_export ${fasta} $args ${prefix}.dnd
+    famsa -gt upgma -parttree -t ${task.cpus} -gt_export ${fasta} $args_meta ${prefix}.dnd
 
     cat <<-END_VERSIONS > versions.yml
     version=\$(famsa --version 2>&1 | head -n 1)

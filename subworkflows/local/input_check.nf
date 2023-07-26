@@ -10,11 +10,12 @@ workflow INPUT_CHECK {
     toolsheet  // file: /path/to/toolsheet.csv
 
     main:
-    SAMPLESHEET_CHECK ( samplesheet)
-        .csv
-        .splitCsv ( header:true, sep:',' )
-        .map { create_fasta_channel(it) }
-        .set { fasta }
+    samplesheet_ch = SAMPLESHEET_CHECK ( samplesheet)
+                    .csv
+                    .splitCsv ( header:true, sep:',' )
+
+    fasta = samplesheet_ch.map { create_fasta_channel(it) }
+    references = samplesheet_ch.map { create_references_channel(it) }
 
     TOOLSHEET_CHECK ( toolsheet )
     .csv
@@ -25,6 +26,7 @@ workflow INPUT_CHECK {
 
     emit:
     fasta
+    references
     tools                                     // channel: [ val(meta), [ fasta ] ]
     versions = SAMPLESHEET_CHECK.out.versions // channel: [ versions.yml ]
 }
@@ -47,6 +49,19 @@ def create_fasta_channel(LinkedHashMap row) {
     return fasta_meta
 }
 
+
+// Function to get list of [ meta, [ fasta ] ]
+def create_references_channel(LinkedHashMap row) {
+    // create meta map
+    def meta = [:]
+    meta.family         = row.family
+
+    // add path(s) of the fastq file(s) to the meta map
+    def ref_meta = []
+    ref_meta = [ meta, [ file(row.reference) ] ]
+
+    return ref_meta
+}
 
 def create_tools_channel(LinkedHashMap row) {
     // create meta map

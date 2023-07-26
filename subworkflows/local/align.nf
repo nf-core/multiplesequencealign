@@ -36,15 +36,15 @@ workflow ALIGN {
 
 
     // Compute the alignments
-    ch_fasta_trees.famsa.view()
     FAMSA_ALIGN(ch_fasta_trees.famsa)
-    //ch_versions = ch_versions.mix(FAMSA.out.versions.first())
-    //msa = FAMSA.out.msa
+    ch_versions = ch_versions.mix(FAMSA_ALIGN.out.versions.first())
+    msa = FAMSA_ALIGN.out.msa
 
-
+    // Merge the metas so we have one entry per alignment file
+    msa = msa.map{ it -> [it[0], it[1]+it[2], it[3]] }
 
     emit:
-    //msa                             
+    msa                             
     versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
 }
 
