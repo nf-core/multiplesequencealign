@@ -1,4 +1,4 @@
 tree, args_tree, align, args_align
 PARTTREE, "", FAMSA, ""
-MBED, "", FAMSA, ""
+MBED, "",tcoffee3D_tmalign, ""
 ,, LEARNMSA,

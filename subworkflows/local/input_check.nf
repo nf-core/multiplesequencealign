@@ -68,15 +68,23 @@ def create_references_channel(LinkedHashMap row) {
     return ref_meta
 }
 
+import groovy.io.FileType
 
 // Function to get list of [ meta, [ fasta ] ]
 def create_structures_channel(LinkedHashMap row) {
     // create meta map
     def meta = [:]
     meta.family         = row.family
+
+
     // add path(s) of the fastq file(s) to the meta map
     if (row.structures != "none") {
-        structures = [ meta, [ file(row.structures) ] ]
+        def list = []
+        def dir = new File(row.structures)
+        dir.eachFileRecurse (FileType.FILES) { it ->
+            list << file(it)
+        }
+        structures = [ meta, list ]
     }
     return structures
 }

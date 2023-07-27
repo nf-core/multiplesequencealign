@@ -4,11 +4,12 @@
 
 include {   COMPUTE_TREES       } from '../../subworkflows/local/compute_trees.nf'
 include {   FAMSA_ALIGN            } from '../../modules/local/famsa_align.nf'
-
+include {   TCOFFEE3D_TMALIGN_ALIGN } from '../../modules/local/tcoffee3D_tmalign_align.nf'
 workflow ALIGN {
     take:
     ch_fastas                //      channel: meta, /path/to/file.fasta
     ch_tools
+    ch_structures            //      channel: meta, [/path/to/file.pdb,/path/to/file.pdb,/path/to/file.pdb]
 
     main:
 
@@ -32,6 +33,7 @@ workflow ALIGN {
                               .combine(trees, by: [0,1])
                               .branch{
                                   famsa: it[2]["align"] == "FAMSA"
+                                  tcoffee3D_tmalign: it[2]["align"] == "tcoffee3D_tmalign"
                               }
 
 
@@ -39,6 +41,14 @@ workflow ALIGN {
     FAMSA_ALIGN(ch_fasta_trees.famsa)
     ch_versions = ch_versions.mix(FAMSA_ALIGN.out.versions.first())
     msa = FAMSA_ALIGN.out.msa
+
+    //ch_fasta_trees.tcoffee3D_tmalign.view()
+    ch_structures.view()
+    //TCOFFEE3D_TMALIGN_ALIGN(ch_fasta_trees.tcoffee3D_tmalign)
+    //ch_versions = ch_versions.mix(TCOFFEE3D_TMALIGN_ALIGN.out.versions.first())
+    //msa = msa.mix(TCOFFEE3D_TMALIGN_ALIGN.out.msa)
+
+
 
     // Merge the metas so we have one entry per alignment file
     msa = msa.map{ it -> [it[0], it[1]+it[2], it[3]] }

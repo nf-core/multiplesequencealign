@@ -93,7 +93,7 @@ workflow MSA {
     //
     // Align
     //
-    ALIGN(ch_seqs, ch_tools)
+    ALIGN(ch_seqs, ch_tools, ch_structures)
     ch_versions = ch_versions.mix(ALIGN.out.versions.first())
 
     //
