@@ -18,7 +18,7 @@ process FAMSA_ALIGN {
     def args_meta = meta_run.args_align == 'none' ? '' : meta_run.args_align
     def args_align_clean = cleanargs(meta_run.args_align)
     def args_tree_clean = cleanargs(meta_tree.args_tree)
-    def prefix = task.ext.prefix ?: "${meta.family}_${meta_tree.tree}-args-${args_tree_clean}_${meta_tree.align}-args-${args_align_clean}"
+    def prefix = task.ext.prefix ?: "${meta.family}_${meta_tree.tree}-args-${args_tree_clean}_${meta_run.align}-args-${args_align_clean}"
     
     """
     famsa -gt import ${tree} $args_meta ${fasta} ${prefix}.aln

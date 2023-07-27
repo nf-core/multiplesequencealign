@@ -36,17 +36,22 @@ workflow ALIGN {
                                   tcoffee3D_tmalign: it[2]["align"] == "tcoffee3D_tmalign"
                               }
 
-
+    //    
     // Compute the alignments
+    // 
+
+    // FAMSA 
     FAMSA_ALIGN(ch_fasta_trees.famsa)
     ch_versions = ch_versions.mix(FAMSA_ALIGN.out.versions.first())
     msa = FAMSA_ALIGN.out.msa
 
-    //ch_fasta_trees.tcoffee3D_tmalign.view()
-    ch_structures.view()
-    //TCOFFEE3D_TMALIGN_ALIGN(ch_fasta_trees.tcoffee3D_tmalign)
-    //ch_versions = ch_versions.mix(TCOFFEE3D_TMALIGN_ALIGN.out.versions.first())
-    //msa = msa.mix(TCOFFEE3D_TMALIGN_ALIGN.out.msa)
+    // 3DCOFFE TMALIGN
+    // First collect the structures
+    input_tcoffee3dtmalign = ch_fasta_trees.tcoffee3D_tmalign.combine(ch_structures, by: 0 )
+    // Then align 
+    TCOFFEE3D_TMALIGN_ALIGN(input_tcoffee3dtmalign)
+    ch_versions = ch_versions.mix(TCOFFEE3D_TMALIGN_ALIGN.out.versions.first())
+    msa = msa.mix(TCOFFEE3D_TMALIGN_ALIGN.out.msa)
 
 
 
