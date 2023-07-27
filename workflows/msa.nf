@@ -51,7 +51,7 @@ include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { STATS                       } from '../subworkflows/local/stats'
 include { ALIGN                       } from '../subworkflows/local/align'
-include { EVALUATE_MSA                } from '../subworkflows/local/evaluate'
+include { EVALUATE               } from '../subworkflows/local/evaluate'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -99,8 +99,13 @@ workflow MSA {
     //
     // Evaluate the quality of the alignment
     //
-    EVALUATE_MSA(ALIGN.out.msa, ch_refs)
-    ch_versions = ch_versions.mix(EVALUATE_MSA.out.versions.first())
+    EVALUATE(ALIGN.out.msa, ch_refs, ch_structures)
+    ch_versions = ch_versions.mix(EVALUATE.out.versions.first())
+
+    //
+    // Add 
+    //
+
 
     //
     // Compress the alignment
