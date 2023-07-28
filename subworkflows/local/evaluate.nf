@@ -25,11 +25,11 @@ workflow EVALUATE {
                                         .combine(ch_structures.map { it -> [ it[0]["family"], it[1] ] }, by: 0)
                                         .map { it -> [ it[1], it[2], it[3], it[4] ] }
 
-    alignment_and_ref_and_structures.view()
     TCOFFEE_IRMSD_EVAL(alignment_and_ref_and_structures)
 
     emit:
-    eval_tcoffee_standard   = TCOFFEE_ALNCOMPARE_EVAL.out.scores
-    versions                = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
+    tcoffee_alncompare_scores   = TCOFFEE_ALNCOMPARE_EVAL.out.scores
+    tcoffee_irmsd_scores        = TCOFFEE_IRMSD_EVAL.out.scores
+    versions                    = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
 
 }

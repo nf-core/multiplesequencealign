@@ -5,6 +5,8 @@
 include {   COMPUTE_TREES       } from '../../subworkflows/local/compute_trees.nf'
 include {   FAMSA_ALIGN            } from '../../modules/local/famsa_align.nf'
 include {   TCOFFEE3D_TMALIGN_ALIGN } from '../../modules/local/tcoffee3D_tmalign_align.nf'
+
+
 workflow ALIGN {
     take:
     ch_fastas                //      channel: meta, /path/to/file.fasta

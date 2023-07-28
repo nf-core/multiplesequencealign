@@ -18,6 +18,7 @@ workflow STATS {
 
 
     emit:
-    stats            = TCOFFEE_SEQREFORMAT_SIM.out.perc_sim                  // TODO
+    tcoffee_seqreformat_sim            = TCOFFEE_SEQREFORMAT_SIM.out.perc_sim                      // TODO
+    tcoffee_seqreformat_simtot            = TCOFFEE_SEQREFORMAT_SIM.out.perc_sim_tot                      // TODO
     versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
 }

@@ -15,6 +15,8 @@ process TCOFFEE_ALNCOMPARE_EVAL {
 
     script:
     def args = task.ext.args ?: ''
+    def header = meta.keySet().join(",") 
+    def values = meta.values().join(",")
     """
     ## Sum-of-Pairs Score ##
     t_coffee -other_pg aln_compare \
@@ -43,8 +45,13 @@ process TCOFFEE_ALNCOMPARE_EVAL {
              awk '{ print \$4}' ORS="\t" \
              >> "scores.txt"
 
-    cat scores.txt | tr -s '[:blank:]' ';'  >  "${msa.baseName}.scores"
-    sed -i 's/^/${msa.baseName};/' "${msa.baseName}.scores"
+
+    # Add metadata info to output file 
+    echo "${header},sp,tc,column" > "${msa.baseName}.scores"
+
+    # Add values 
+    scores=\$(awk '{sub(/[[:space:]]+\$/, "")} 1' scores.txt | tr -s '[:blank:]' ',')
+    echo "${values},\$scores" >> "${msa.baseName}.scores"
 
 
     cat <<-END_VERSIONS > versions.yml
