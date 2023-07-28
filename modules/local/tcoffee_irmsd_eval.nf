@@ -9,11 +9,13 @@ process TCOFFEE_IRMSD_EVAL {
     tuple  val(meta), file (msa), file (ref_msa), file(structures)
 
     output:
-    tuple val(meta), path ("*.total_irmsd"), emit: scores
+    tuple val(meta), path ("*.total_irmsd.csv"), emit: scores
     path "versions.yml" , emit: versions
 
     script:
     def args = task.ext.args ?: ''
+    def header = meta.keySet().join(",") 
+    def values = meta.values().join(",")
     """
     # Prep templates
     for i in `awk 'sub(/^>/, "")' ${msa}`; do
@@ -22,6 +24,16 @@ process TCOFFEE_IRMSD_EVAL {
 
     # Comp irmsd
     t_coffee -other_pg irmsd $msa -template_file template_list.txt | grep "TOTAL" > ${msa.baseName}.total_irmsd
+
+    # Parse irmsd file
+    parsers.py -i ${msa.baseName}.total_irmsd -o ${msa.baseName}.scores.csv
+
+    # Prep metadata file
+    echo "${header}" > meta.csv
+    echo "${values}" >> meta.csv
+
+    # Add metadata info to output file
+    paste -d, meta.csv ${msa.baseName}.scores.csv > ${msa.baseName}.total_irmsd.csv
 
 
     cat <<-END_VERSIONS > versions.yml

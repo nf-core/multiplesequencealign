@@ -16,12 +16,12 @@ workflow SUMMARY_REPORT {
     // tcoffee_seqreformat_sim.map{ it ->  "${it.text}" }
     //                        .collectFile(name: "similarities_summary.csv", newLine: true, storeDir:"/home/luisasantus/Desktop/")  
     
-    SUMMARY_CSV(tcoffee_irmsd_scores)
+    //SUMMARY_CSV(tcoffee_irmsd_scores)
 
 
 
     //SUMMARY_CSV(tcoffee_seqreformat_sim)
-    tcoffee_alncompare_scores.view()
+    //tcoffee_alncompare_scores.view()
     
 
     emit:
