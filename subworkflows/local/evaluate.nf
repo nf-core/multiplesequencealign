@@ -37,6 +37,7 @@ workflow EVALUATE {
 
     TCOFFEE_IRMSD_EVAL(alignment_and_ref_and_structures)
     tcoffee_irmsd_scores = TCOFFEE_IRMSD_EVAL.out.scores
+    
     // 
     // Summarize evaluation summaries into one summary file
     //  

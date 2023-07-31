@@ -103,10 +103,6 @@ workflow MSA {
     EVALUATE(ALIGN.out.msa, ch_refs, ch_structures)
     ch_versions = ch_versions.mix(EVALUATE.out.versions.first())
     
-    
-    //
-    // Compress the alignment
-    //
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')

@@ -1,6 +1,4 @@
 
-
-
 process TCOFFEEREGRESSIVE_ALIGN {
     tag "$meta.family _ $meta_run.align _ $meta_run.args_align"
     label 'process_low'
