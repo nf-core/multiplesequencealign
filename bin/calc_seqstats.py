@@ -25,6 +25,8 @@ def get_seq_lengths(fasta_file):
 summary_lengths = get_seq_lengths(fasta_file)
 stats_df = summary_lengths.groupby(by=['family']).agg({'sequence length':['mean', 'median', "max"]})["sequence length"].reset_index()
 stats_df["n_sequences"] = len(summary_lengths)
+stats_df.rename(columns={'mean': 'seqlength_mean', "max": "seqlength_max", "median": "seqlength_median"}, inplace=True)
+
 
 summary_lengths.to_csv(outfile, sep=",", index=False)
 stats_df.to_csv(outfile_summary, sep=",", index=False)

@@ -5,7 +5,7 @@
 include {   COMPUTE_TREES       } from '../../subworkflows/local/compute_trees.nf'
 include {   FAMSA_ALIGN            } from '../../modules/local/famsa_align.nf'
 include {   TCOFFEE3D_TMALIGN_ALIGN } from '../../modules/local/tcoffee3D_tmalign_align.nf'
-
+include {   TCOFFEEREGRESSIVE_ALIGN } from '../../modules/local/tcoffeeregressive_align.nf'
 
 workflow ALIGN {
     take:
@@ -36,6 +36,7 @@ workflow ALIGN {
                               .branch{
                                   famsa: it[2]["align"] == "FAMSA"
                                   tcoffee3D_tmalign: it[2]["align"] == "tcoffee3D_tmalign"
+                                  tcoffee_regressive: it[2]["align"] == "regressive"
                               }
 
     //    
@@ -46,6 +47,13 @@ workflow ALIGN {
     FAMSA_ALIGN(ch_fasta_trees.famsa)
     ch_versions = ch_versions.mix(FAMSA_ALIGN.out.versions.first())
     msa = FAMSA_ALIGN.out.msa
+
+    // TCOFFEE REGRESSIVE
+    ch_fasta_trees.tcoffee_regressive.view()
+    TCOFFEEREGRESSIVE_ALIGN(ch_fasta_trees.tcoffee_regressive)
+    ch_versions = ch_versions.mix(TCOFFEEREGRESSIVE_ALIGN.out.versions.first())
+    msa = msa.mix(TCOFFEEREGRESSIVE_ALIGN.out.msa)
+
 
     // 3DCOFFE TMALIGN
     // First collect the structures
