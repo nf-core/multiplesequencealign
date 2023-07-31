@@ -1,11 +1,11 @@
 
 
-process SUMMARY_CSV {
-    tag "$samplesheet"
+process MERGE_EVALUATIONS_REPORT {
     label 'process_low'
 
     input:
-    tuple path(meta), path(scores)
+    path(tcoffee_alncompare_scores_summary)
+    path(tcoffee_irmsd_scores_summary)
 
     output:
     path '*.csv'       , emit: csv
@@ -17,10 +17,10 @@ process SUMMARY_CSV {
     script: 
     def args = task.ext.args ?: ''
     """
-    parsers.py \\
-        -meta $meta \\
-        -scores $scores \\
-        test.csv
+    merge_scores.py \
+        "evaluation_summary_report.csv" \
+        ${tcoffee_alncompare_scores_summary} \
+        ${tcoffee_irmsd_scores_summary} 
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
