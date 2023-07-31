@@ -27,7 +27,9 @@ process TCOFFEE_SEQREFORMAT_SIM {
 
     echo "$prefix" > tmp 
     grep ^TOT ${prefix}.sim | cut -f4 >> tmp
-    tr '\\n' ',' < tmp > ${prefix}.sim_tot
+
+    echo "family,perc_sim" > ${prefix}.sim_tot
+    cat tmp | tr '\\n' ',' | awk 'gsub(/,\$/,x)' >>  ${prefix}.sim_tot
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

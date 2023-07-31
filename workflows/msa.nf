@@ -52,7 +52,6 @@ include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoft
 include { STATS                       } from '../subworkflows/local/stats'
 include { ALIGN                       } from '../subworkflows/local/align'
 include { EVALUATE                    } from '../subworkflows/local/evaluate'
-include { SUMMARY_REPORT              } from '../subworkflows/local/summary_report'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -104,17 +103,7 @@ workflow MSA {
     EVALUATE(ALIGN.out.msa, ch_refs, ch_structures)
     ch_versions = ch_versions.mix(EVALUATE.out.versions.first())
     
-
-    //
-    // Add summary report
-    //
-    STATS.out.tcoffee_seqreformat_simtot.view()
-    EVALUATE.out.tcoffee_alncompare_scores.view()
-    SUMMARY_REPORT(EVALUATE.out.tcoffee_alncompare_scores,
-                   EVALUATE.out.tcoffee_irmsd_scores)
-    //ch_versions = ch_versions.mix(SUMMARY_REPORT.out.versions.first())
-
-
+    
     //
     // Compress the alignment
     //
