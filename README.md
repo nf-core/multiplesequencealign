@@ -22,10 +22,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 On release, automated continuous integration tests run the pipeline on a full-sized dataset on the AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources.The results obtained from the full-sized test can be viewed on the [nf-core website](https://nf-co.re/proteinfold/results).
 
 
-![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
+![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map"){ width="800" height="600" style="display: block; margin: 0 auto" }
 
-1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
-2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
 
 1. **Stats**: computation of summary statistics on the input fasta file, such as the average similarity across sequences, their length, etc.
 2. **Collect dress-up infos**: any external information required by the downstream steps will be retrieved. For example, in the case of protein sequences, subworkflows of the proteinfold pipeline can be used to run de novo protein structure prediction software, alternatively, a database search followed by the fetching of the structures. 
