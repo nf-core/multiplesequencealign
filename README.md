@@ -12,8 +12,7 @@
 
 ## Introduction
 
-**nf-core/msa** is a bioinformatics pipeline to run and systematically evaluate Multiple Sequence Alignment (MSA) methods. 
-
+**nf-core/msa** is a bioinformatics pipeline to run and systematically evaluate Multiple Sequence Alignment (MSA) methods.
 
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. Where possible, these processes have been submitted to and installed from [nf-core/modules](https://github.com/nf-core/modules) in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!
 
@@ -21,17 +20,14 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 On release, automated continuous integration tests run the pipeline on a full-sized dataset on the AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources.The results obtained from the full-sized test can be viewed on the [nf-core website](https://nf-co.re/proteinfold/results).
 
-
-![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map"){ width="800" height="600" style="display: block; margin: 0 auto" }
-
+![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 
 1. **Stats**: computation of summary statistics on the input fasta file, such as the average similarity across sequences, their length, etc.
-2. **Collect dress-up infos**: any external information required by the downstream steps will be retrieved. For example, in the case of protein sequences, subworkflows of the proteinfold pipeline can be used to run de novo protein structure prediction software, alternatively, a database search followed by the fetching of the structures. 
-3. **Align**: runs multiple sequence alignment software. If possible, distance metrics computation, guide tree rendering and assembly steps will be kept separate to evaluate their individual contribution to the final result. 
+2. **Collect dress-up infos**: any external information required by the downstream steps will be retrieved. For example, in the case of protein sequences, subworkflows of the proteinfold pipeline can be used to run de novo protein structure prediction software, alternatively, a database search followed by the fetching of the structures.
+3. **Align**: runs multiple sequence alignment software. If possible, distance metrics computation, guide tree rendering and assembly steps will be kept separate to evaluate their individual contribution to the final result.
 4. **Evaluate**: here the MSAs are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.
 5. **Visualize**: colour the MSA according to TCS, visualize summary plots about performance etc.
 6. **Compress**: as the final MSA files are very large, compression tools will be used before storing the final result
-
 
 ## Usage
 
@@ -83,7 +79,7 @@ For more details about the output files and reports, please refer to the
 
 ## Credits
 
-nf-core/msa was originally written by Luisa Santus ([@luisas](https://github.com/luisas)) and Jose Espinosa-Carrasco ([@JoseEspinosa](https://github.com/JoseEspinosa))  from The Comparative Bioinformatics Group at The Centre for Genomic Regulation, Spain. 
+nf-core/msa was originally written by Luisa Santus ([@luisas](https://github.com/luisas)) and Jose Espinosa-Carrasco ([@JoseEspinosa](https://github.com/JoseEspinosa)) from The Comparative Bioinformatics Group at The Centre for Genomic Regulation, Spain.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 

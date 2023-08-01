@@ -1,21 +1,24 @@
 
-process FAMSA_ALIGN {
-    tag "$meta.family _ $meta.align _ $meta.args_align"
-    label 'process_medium'
+
+
+process FAMSA_PARTTREE {
+    tag "$meta.family _ $meta.tree _ $meta.args_tree"
+    label 'process_low'
+
 
     input:
-    tuple val(meta), path(fasta), path(tree)
+    tuple val(meta), path(fasta)
     
 
     output:
-    tuple val (meta), path ("*.aln"), emit: msa
+    tuple val (meta), path ("*.dnd"), emit: tree
     path "versions.yml" , emit: versions
 
     script:
     def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.family}"    
     """
-    famsa -gt import ${tree} $args ${fasta} ${prefix}.aln  &> "version.txt"
+    famsa -gt upgma -parttree -t ${task.cpus} -gt_export ${fasta} $args ${prefix}.dnd &> "version.txt"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -23,4 +26,9 @@ process FAMSA_ALIGN {
     END_VERSIONS
     """
 }
+
+
+
+
+
 

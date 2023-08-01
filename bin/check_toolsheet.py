@@ -13,6 +13,12 @@ from pathlib import Path
 
 logger = logging.getLogger()
 
+def cleanargs(argstring):
+
+    cleanargs = argstring.strip().replace("-", '').replace(" ", '=').replace("==", '=').replace("\s+", '')
+
+
+    return cleanargs
 
 class RowChecker:
     """
@@ -30,8 +36,10 @@ class RowChecker:
         self,
         tree_col="tree",
         argstree_col="args_tree",
+        argstree_clean_col="argstree_clean",
         align_col="align",
         argsalign_col="args_align",
+        argsalign_clean_col="argsalign_clean",
         **kwargs,
     ):
         """
@@ -47,8 +55,10 @@ class RowChecker:
         super().__init__(**kwargs)
         self._tree_col = tree_col
         self._argstree_col = argstree_col
+        self._argstree_clean_col = argstree_clean_col
         self._align_col = align_col
         self._argsalign_col = argsalign_col
+        self._argsalign_clean_col = argsalign_clean_col
         self._seen = set()
         self.modified = []
 
@@ -65,7 +75,8 @@ class RowChecker:
         self._validate_tree(row)
         self._validate_argstree(row)
         self._validate_argsalign(row)
-        self._seen.add((row[self._tree_col], row[self._argstree_col], row[self._align_col], row[self._argsalign_col]))
+        self._seen.add((row[self._tree_col], row[self._argstree_col], row[self._align_col], row[self._argsalign_col], row[self._argstree_clean_col]))
+        print(row)
         self.modified.append(row)
 
     def _validate_tree(self, row):
@@ -80,12 +91,14 @@ class RowChecker:
                 row[self._argstree_col] = "none"
             # Sanitize samples slightly.
             row[self._argstree_col] = row[self._argstree_col]
+            row[self._argstree_clean_col] = cleanargs(row[self._argstree_col])   
 
     def _validate_align(self, row):
             if len(row[self._align_col]) <= 0:
                 raise AssertionError("alignment tool is required.")
             # Sanitize samples slightly.
             row[self._align_col] = row[self._align_col]
+            row[self._argsalign_clean_col] = cleanargs(row[self._argsalign_col])
 
     def _validate_argsalign(self, row):
             if len(row[self._argsalign_col]) <= 0:
@@ -105,7 +118,7 @@ class RowChecker:
             raise AssertionError("The pair of sample name and fasta must be unique.")
         seen = Counter()
         for row in self.modified:
-            entry = row[self._tree_col]+ row[self._argstree_col]+ row[self._align_col]+ row[self._argsalign_col]
+            entry = row[self._tree_col]+ row[self._argstree_col]+ row[self._align_col]+ row[self._argsalign_col] 
             seen[entry] += 1
 
 
@@ -178,6 +191,9 @@ def check_samplesheet(file_in, file_out):
                 sys.exit(1)
         checker.validate_unique_samples()
     header = list(reader.fieldnames)
+    header.append("argstree_clean")
+    header.append("argsalign_clean")
+    
     # See https://docs.python.org/3.9/library/csv.html#id3 to read up on `newline=""`.
     with file_out.open(mode="w", newline="") as out_handle:
         writer = csv.DictWriter(out_handle, header, delimiter=",")

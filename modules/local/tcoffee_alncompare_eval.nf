@@ -4,7 +4,6 @@ process TCOFFEE_ALNCOMPARE_EVAL {
     tag "$meta.family"
     label 'process_low'
 
-    // TODO: change to the correct container
 
     input:
     tuple  val(meta), file (msa), file (ref_msa)

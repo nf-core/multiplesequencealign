@@ -28,15 +28,15 @@ workflow ALIGN {
     trees = COMPUTE_TREES.out.trees
     ch_versions = ch_versions.mix(COMPUTE_TREES.out.versions)
 
-    
     // Here is all the combinations we need to compute
     ch_fasta_trees = ch_fastas.combine(ch_tools)
-                              .map{ it -> [it[0] , it[2], it[3], it[1]] }
-                              .combine(trees, by: [0,1])
+                              .map{ it -> [it[0] + it[2] ,  it[3], it[1]] }
+                              .combine(trees, by: [0])
+                              .map{ it -> [it[0] + it[1] , it[2], it[3]]}
                               .branch{
-                                  famsa: it[2]["align"] == "FAMSA"
-                                  tcoffee3D_tmalign: it[2]["align"] == "tcoffee3D_tmalign"
-                                  tcoffee_regressive: it[2]["align"] == "regressive"
+                                  famsa: it[0]["align"] == "FAMSA"
+                                  tcoffee3D_tmalign: it[0]["align"] == "tcoffee3D_tmalign"
+                                  tcoffee_regressive: it[0]["align"] == "regressive"
                               }
 
     //    
@@ -56,16 +56,16 @@ workflow ALIGN {
 
     // 3DCOFFE TMALIGN
     // First collect the structures
-    input_tcoffee3dtmalign = ch_fasta_trees.tcoffee3D_tmalign.combine(ch_structures, by: 0 )
-    // Then align 
+    input_tcoffee3dtmalign = ch_fasta_trees.tcoffee3D_tmalign
+                                           .map{ it -> [it[0]["family"], it[0],it[1], it[2]] }
+                                           .combine(ch_structures.map{ it -> [it[0]["family"], it[1]]}, by: 0 )
+                                           .map{ it -> [it[1], it[2], it[3], it[4]] }
+
+
     TCOFFEE3D_TMALIGN_ALIGN(input_tcoffee3dtmalign)
     ch_versions = ch_versions.mix(TCOFFEE3D_TMALIGN_ALIGN.out.versions.first())
     msa = msa.mix(TCOFFEE3D_TMALIGN_ALIGN.out.msa)
 
-
-
-    // Merge the metas so we have one entry per alignment file
-    msa = msa.map{ it -> [it[0], it[1]+it[2], it[3]] }
 
     emit:
     msa                             

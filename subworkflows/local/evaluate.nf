@@ -16,13 +16,12 @@ workflow EVALUATE {
     ch_versions = Channel.empty()
 
 
-
     // 
     // Reference based evaluation
     //  
-    alignment_and_ref = ch_references
-                            .cross (ch_msa)
-                            .map { it -> [ it[0][0]+it[1][1], it[1][2], it[0][1] ] }
+    alignment_and_ref = ch_references.map { meta,ref -> [ meta.family, ref ] }
+                            .cross (ch_msa.map { meta, aln -> [ meta.family, meta, aln ] })
+                            .map { chref, chaln -> [ chaln[1], chref[1], chaln[2] ] }
 
     TCOFFEE_ALNCOMPARE_EVAL(alignment_and_ref)
     tcoffee_alncompare_scores = TCOFFEE_ALNCOMPARE_EVAL.out.scores
