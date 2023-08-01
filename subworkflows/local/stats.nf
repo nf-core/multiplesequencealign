@@ -31,16 +31,14 @@ workflow STATS {
     tcoffee_seqreformat_simtot.map{ it ->  "${it[1].text}" }.collectFile( name: 'tcoffee_seqreformat_simtot_summary.csv',
                                                                           keepHeader : true,
                                                                           skip:1,                                         
-                                                                          newLine: false, 
-                                                                          storeDir: "/home/luisasantus/Desktop/")
+                                                                          newLine: false)
                                                             .set { tcoffee_seqreformat_simtot_summary }
 
 
     seqstats_summary.map{ it ->  "${it[1].text}" }.collectFile( name: 'seqstats.csv',
                                                                           keepHeader : true,
                                                                           skip:1,                                         
-                                                                          newLine: false, 
-                                                                          storeDir: "/home/luisasantus/Desktop/")
+                                                                          newLine: false)
                                                   .set { seqstats_summary }
 
     MERGE_STATS( tcoffee_seqreformat_simtot_summary,

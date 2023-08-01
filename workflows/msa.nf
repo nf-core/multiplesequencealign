@@ -88,8 +88,9 @@ workflow MSA {
     //
     if( !params.skip_stats ){
         STATS(ch_seqs)
+        ch_versions = ch_versions.mix(STATS.out.versions.first())
     }
-    ch_versions = ch_versions.mix(STATS.out.versions.first())
+    
 
     //
     // Align
@@ -100,9 +101,11 @@ workflow MSA {
     //
     // Evaluate the quality of the alignment
     //
-    EVALUATE(ALIGN.out.msa, ch_refs, ch_structures)
-    ch_versions = ch_versions.mix(EVALUATE.out.versions.first())
-    
+    if( !params.skip_eval ){
+        EVALUATE(ALIGN.out.msa, ch_refs, ch_structures)
+        ch_versions = ch_versions.mix(EVALUATE.out.versions.first())
+    }
+
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')

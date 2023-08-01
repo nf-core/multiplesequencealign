@@ -67,6 +67,19 @@
                 }
             }
         },
+        "eval_options": {
+            "title": "Eval options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define wether to run stats.",
+            "properties": {
+                "skip_eval": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Skip all of the evaluations computation on the msa."
+                }
+            }
+        },
         "institutional_config_options": {
             "title": "Institutional config options",
             "type": "object",
@@ -275,6 +288,9 @@
         },
         {
             "$ref": "#/definitions/stats_options"
+        },
+        {
+            "$ref": "#/definitions/eval_options"
         },
         {
             "$ref": "#/definitions/institutional_config_options"
