@@ -11,6 +11,9 @@ workflow INPUT_CHECK {
     toolsheet  // file: /path/to/toolsheet.csv
 
     main:
+
+    ch_versions = Channel.empty()
+
     samplesheet_ch = SAMPLESHEET_CHECK ( samplesheet)
                     .csv
                     .splitCsv ( header:true, sep:',' )
@@ -18,22 +21,22 @@ workflow INPUT_CHECK {
     fasta = samplesheet_ch.map { create_fasta_channel(it) }
     references = samplesheet_ch.map { create_references_channel(it) }
     structures = samplesheet_ch.map { create_structures_channel(it) }.unique() 
-    // TODO make sure the unique is not necessary 
+    ch_versions = ch_versions.mix(SAMPLESHEET_CHECK.out.versions)
 
 
     TOOLSHEET_CHECK ( toolsheet )
-    .csv
-    .splitCsv ( header:true, sep:',' )
-    .map { create_tools_channel(it) }
-    .set { tools }
-
+            .csv
+            .splitCsv ( header:true, sep:',' )
+            .map { create_tools_channel(it) }
+            .set { tools }
+    ch_versions = ch_versions.mix(TOOLSHEET_CHECK.out.versions)
 
     emit:
     fasta
     references
     structures
     tools                                     // channel: [ val(meta), [ fasta ] ]
-    versions = SAMPLESHEET_CHECK.out.versions // channel: [ versions.yml ]
+    versions = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
 }
 
 

@@ -26,7 +26,7 @@ workflow ALIGN {
     // Compute the required trees
     COMPUTE_TREES(ch_fastas, ch_tools_split.tree)
     trees = COMPUTE_TREES.out.trees
-    ch_versions = ch_versions.mix(COMPUTE_TREES.out.versions.first())
+    ch_versions = ch_versions.mix(COMPUTE_TREES.out.versions)
 
     
     // Here is all the combinations we need to compute
@@ -49,7 +49,6 @@ workflow ALIGN {
     msa = FAMSA_ALIGN.out.msa
 
     // TCOFFEE REGRESSIVE
-    ch_fasta_trees.tcoffee_regressive.view()
     TCOFFEEREGRESSIVE_ALIGN(ch_fasta_trees.tcoffee_regressive)
     ch_versions = ch_versions.mix(TCOFFEEREGRESSIVE_ALIGN.out.versions.first())
     msa = msa.mix(TCOFFEEREGRESSIVE_ALIGN.out.msa)

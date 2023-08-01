@@ -23,12 +23,10 @@ process PARTTREE {
     def prefix = task.ext.prefix ?: "${meta.family}_${meta_run.tree}-args-${args_tree_clean}"
     
     """
-    famsa -gt upgma -parttree -t ${task.cpus} -gt_export ${fasta} $args_meta ${prefix}.dnd
-
+     version=\$(famsa -gt upgma -parttree -t ${task.cpus} -gt_export ${fasta} $args_meta ${prefix}.dnd | head -n 1)
     cat <<-END_VERSIONS > versions.yml
-    version=\$(famsa --version 2>&1 | head -n 1)
     "${task.process}":
-        famsa: \$( echo \$version| grep -oP '(?<=ver\\.\\s)\S+' )
+        famsa: \$( echo \$version| sed 's/FAMSA (Fast and Accurate Multiple Sequence Alignment) ver. //g' )
     END_VERSIONS
     """
 }

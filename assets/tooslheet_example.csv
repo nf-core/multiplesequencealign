@@ -1,3 +1,4 @@
 tree, args_tree, align, args_align
 PARTTREE, "", FAMSA, ""
 MBED, "",tcoffee3D_tmalign, ""
+PARTTREE,,regressive,"-reg_method famsa_msa -reg_nseq 100"

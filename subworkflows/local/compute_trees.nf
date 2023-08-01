@@ -28,9 +28,12 @@ include { MBEDTREE } from '../../modules/local/mbedtree'
 
     PARTTREE(ch_fastas_fortrees.parttree)
     ch_trees = PARTTREE.out.tree
+    ch_versions = ch_versions.mix(PARTTREE.out.versions.first())
+
 
     MBEDTREE(ch_fastas_fortrees.mbed)
     ch_trees = ch_trees.mix(MBEDTREE.out.tree)
+    ch_versions = ch_versions.mix(MBEDTREE.out.versions.first())
 
 
     emit:

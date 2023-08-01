@@ -19,7 +19,6 @@ process TCOFFEEREGRESSIVE_ALIGN {
     def args_align_clean = cleanargs(meta_run.args_align)
     def args_tree_clean = cleanargs(meta_tree.args_tree)
     def prefix = task.ext.prefix ?: "${meta.family}_${meta_tree.tree}-args-${args_tree_clean}_${meta_run.align}-args-${args_align_clean}"
-    print(args_align_clean)
     """
     t_coffee -reg $args_meta \
          -reg_tree ${tree} \

@@ -26,6 +26,7 @@ workflow EVALUATE {
 
     TCOFFEE_ALNCOMPARE_EVAL(alignment_and_ref)
     tcoffee_alncompare_scores = TCOFFEE_ALNCOMPARE_EVAL.out.scores
+    ch_versions = ch_versions.mix(TCOFFEE_ALNCOMPARE_EVAL.out.versions.first())
 
     // 
     // Structure based evaluation
@@ -37,6 +38,7 @@ workflow EVALUATE {
 
     TCOFFEE_IRMSD_EVAL(alignment_and_ref_and_structures)
     tcoffee_irmsd_scores = TCOFFEE_IRMSD_EVAL.out.scores
+    ch_versions = ch_versions.mix(TCOFFEE_IRMSD_EVAL.out.versions.first())
     
     // 
     // Summarize evaluation summaries into one summary file
@@ -55,6 +57,7 @@ workflow EVALUATE {
 
     MERGE_EVALUATIONS_REPORT( tcoffee_alncompare_scores_summary,
                               tcoffee_irmsd_scores_summary )
+    ch_versions = ch_versions.mix(MERGE_EVALUATIONS_REPORT.out.versions.first())
 
 
 

@@ -23,7 +23,8 @@ workflow STATS {
     CALCULATE_SEQSTATS(ch_seqs)
     seqstats = CALCULATE_SEQSTATS.out.seqstats
     seqstats_summary = CALCULATE_SEQSTATS.out.seqstats_summary
-    ch_versions = ch_versions.mix(CALCULATE_SEQSTATS.out.versions.first())                      
+    ch_versions = ch_versions.mix(CALCULATE_SEQSTATS.out.versions.first())
+
 
     // 
     // Summarize stats into one summary file
@@ -43,6 +44,8 @@ workflow STATS {
 
     MERGE_STATS( tcoffee_seqreformat_simtot_summary,
                  seqstats_summary )
+    
+    ch_versions = ch_versions.mix(MERGE_STATS.out.versions)                      
 
 
     emit:

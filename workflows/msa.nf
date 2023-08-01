@@ -88,7 +88,7 @@ workflow MSA {
     //
     if( !params.skip_stats ){
         STATS(ch_seqs)
-        ch_versions = ch_versions.mix(STATS.out.versions.first())
+        ch_versions = ch_versions.mix(STATS.out.versions)
     }
     
 
@@ -96,14 +96,14 @@ workflow MSA {
     // Align
     //
     ALIGN(ch_seqs, ch_tools, ch_structures)
-    ch_versions = ch_versions.mix(ALIGN.out.versions.first())
+    ch_versions = ch_versions.mix(ALIGN.out.versions)
 
     //
     // Evaluate the quality of the alignment
     //
     if( !params.skip_eval ){
         EVALUATE(ALIGN.out.msa, ch_refs, ch_structures)
-        ch_versions = ch_versions.mix(EVALUATE.out.versions.first())
+        ch_versions = ch_versions.mix(EVALUATE.out.versions)
     }
 
 
