@@ -21,11 +21,11 @@ process FAMSA_ALIGN {
     def prefix = task.ext.prefix ?: "${meta.family}_${meta_tree.tree}-args-${args_tree_clean}_${meta_run.align}-args-${args_align_clean}"
     
     """
-    version=\$(famsa -gt import ${tree} $args_meta ${fasta} ${prefix}.aln | head -n 1)
+    famsa -gt import ${tree} $args_meta ${fasta} ${prefix}.aln  &> "version.txt"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        famsa: \$( echo \$version| sed 's/FAMSA (Fast and Accurate Multiple Sequence Alignment) ver. //g' )
+        famsa: \$( cat version.txt | head -n 1 | sed 's/FAMSA (Fast and Accurate Multiple Sequence Alignment) ver. //g' )
     END_VERSIONS
     """
 }
