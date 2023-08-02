@@ -1,5 +1,5 @@
  
-include { FAMSA_PARTTREE } from '../../modules/local/famsa_parttree'
+include { FAMSA_GUIDETREE } from '../../modules/local/famsa_guidetree'
 include { CLUSTALO_MBEDTREE } from '../../modules/local/clustalo_mbedtree'
 
  
@@ -20,14 +20,14 @@ include { CLUSTALO_MBEDTREE } from '../../modules/local/clustalo_mbedtree'
    ch_fastas_fortrees = ch_fastas.combine(tree_tools)
                                  .map( it -> [it[0] + it[2], it[1]] )
                                  .branch{
-                                          parttree: it[0]["tree"] ==  "PARTTREE"
+                                          famsa_guidetree: it[0]["tree"] ==  "FAMSA_GUIDETREE"
                                           mbed: it[0]["tree"] == "MBED"
                                         }
 
-
-    FAMSA_PARTTREE(ch_fastas_fortrees.parttree)
-    ch_trees = FAMSA_PARTTREE.out.tree
-    ch_versions = ch_versions.mix(FAMSA_PARTTREE.out.versions.first())
+      
+    FAMSA_GUIDETREE(ch_fastas_fortrees.famsa_guidetree)
+    ch_trees = FAMSA_GUIDETREE.out.tree
+    ch_versions = ch_versions.mix(FAMSA_GUIDETREE.out.versions.first())
 
 
     CLUSTALO_MBEDTREE(ch_fastas_fortrees.mbed)
