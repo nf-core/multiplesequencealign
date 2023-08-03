@@ -42,12 +42,10 @@ workflow ALIGN {
     //    
     // Compute the alignments
     // 
-
     // FAMSA 
     FAMSA_ALIGN(ch_fasta_trees.famsa)
     ch_versions = ch_versions.mix(FAMSA_ALIGN.out.versions.first())
     msa = FAMSA_ALIGN.out.msa
-
     // TCOFFEE REGRESSIVE
     TCOFFEEREGRESSIVE_ALIGN(ch_fasta_trees.tcoffee_regressive)
     ch_versions = ch_versions.mix(TCOFFEEREGRESSIVE_ALIGN.out.versions.first())

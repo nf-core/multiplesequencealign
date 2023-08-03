@@ -15,7 +15,7 @@ logger = logging.getLogger()
 
 def cleanargs(argstring):
 
-    cleanargs = argstring.strip().replace("-", '').replace(" ", '=').replace("==", '=').replace("\s+", '')
+    cleanargs = argstring.strip().replace("-", '').replace(" ", '_').replace("==", '_').replace("\s+", '')
 
 
     return cleanargs
@@ -89,6 +89,7 @@ class RowChecker:
     def _validate_argstree(self, row):
             if len(row[self._argstree_col]) <= 0:
                 row[self._argstree_col] = "none"
+                row[self._argstree_clean_col] = "none"
             # Sanitize samples slightly.
             row[self._argstree_col] = row[self._argstree_col]
             row[self._argstree_clean_col] = cleanargs(row[self._argstree_col])   
@@ -103,6 +104,7 @@ class RowChecker:
     def _validate_argsalign(self, row):
             if len(row[self._argsalign_col]) <= 0:
                 row[self._argsalign_col] = "none"
+                row[self._argsalign_clean_col] = "none"
             # Sanitize samples slightly.
             row[self._argsalign_col] = row[self._argsalign_col]
 

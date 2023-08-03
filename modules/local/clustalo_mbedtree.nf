@@ -1,6 +1,6 @@
 
 process CLUSTALO_MBEDTREE {
-    tag "$meta.family _ $meta.tree _ $meta.args_tree"
+    tag "$meta.id _ $meta.tree _ $meta.args_tree"
     label 'process_low'
 
 
@@ -14,7 +14,7 @@ process CLUSTALO_MBEDTREE {
 
     script:
     def args = task.ext.args ?: ''
-    prefix = task.ext.prefix ?: "${meta.family}"  
+    prefix = task.ext.prefix ?: "${meta.id}"  
     
     """
     clustalo -i ${fasta} --guidetree-out ${prefix}.dnd --force $args

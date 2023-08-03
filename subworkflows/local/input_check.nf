@@ -99,8 +99,10 @@ def create_tools_channel(LinkedHashMap row) {
 
     meta_tree.tree         = row.tree
     meta_tree.args_tree    = row.args_tree
+    meta_tree.argstree_clean = row.argstree_clean
     meta_align.align        = row.align
     meta_align.args_align   = row.args_align
+    meta_align.argsalign_clean = row.argsalign_clean
 
     // add path(s) of the fastq file(s) to the meta map
     def tools_meta = []
