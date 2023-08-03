@@ -57,8 +57,8 @@ workflow ALIGN {
     // 3DCOFFE TMALIGN
     // First collect the structures
     input_tcoffee3dtmalign = ch_fasta_trees.tcoffee3D_tmalign
-                                           .map{ it -> [it[0]["family"], it[0],it[1], it[2]] }
-                                           .combine(ch_structures.map{ it -> [it[0]["family"], it[1]]}, by: 0 )
+                                           .map{ it -> [it[0]["id"], it[0],it[1], it[2]] }
+                                           .combine(ch_structures.map{ it -> [it[0]["id"], it[1]]}, by: 0 )
                                            .map{ it -> [it[1], it[2], it[3], it[4]] }
 
 

@@ -16,14 +16,14 @@ def get_seq_lengths(fasta_file):
         name, sequence = fasta.id, str(fasta.seq)
         l = len(sequence)
         name = name.replace("/", "_")
-        entry = pd.DataFrame([{"family": fam_name,
+        entry = pd.DataFrame([{"id": fam_name,
                                "sequence": name,
                                "sequence length": l}])
         summary = pd.concat([summary,entry], ignore_index=True)
     return(summary)
 
 summary_lengths = get_seq_lengths(fasta_file)
-stats_df = summary_lengths.groupby(by=['family']).agg({'sequence length':['mean', 'median', "max"]})["sequence length"].reset_index()
+stats_df = summary_lengths.groupby(by=['id']).agg({'sequence length':['mean', 'median', "max"]})["sequence length"].reset_index()
 stats_df["n_sequences"] = len(summary_lengths)
 stats_df.rename(columns={'mean': 'seqlength_mean', "max": "seqlength_max", "median": "seqlength_median"}, inplace=True)
 

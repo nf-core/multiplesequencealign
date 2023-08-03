@@ -7,10 +7,10 @@
     "items": {
         "type": "object",
         "properties": {
-            "family": {
+            "id": {
                 "type": "string",
                 "pattern": "^\\S+$",
-                "errorMessage": "Family/sample name must be provided and cannot contain spaces"
+                "errorMessage": "id/sample name must be provided and cannot contain spaces"
             },
             "fasta": {
                 "type": "string",
@@ -24,6 +24,6 @@
                 "type": "string"
             }
         },
-        "required": ["family", "fasta"]
+        "required": ["id", "fasta"]
     }
 }

@@ -19,8 +19,8 @@ workflow EVALUATE {
     // 
     // Reference based evaluation
     //  
-    alignment_and_ref = ch_references.map { meta,ref -> [ meta.family, ref ] }
-                            .cross (ch_msa.map { meta, aln -> [ meta.family, meta, aln ] })
+    alignment_and_ref = ch_references.map { meta,ref -> [ meta.id, ref ] }
+                            .cross (ch_msa.map { meta, aln -> [ meta.id, meta, aln ] })
                             .map { chref, chaln -> [ chaln[1], chref[1], chaln[2] ] }
 
     TCOFFEE_ALNCOMPARE_EVAL(alignment_and_ref)
@@ -31,8 +31,8 @@ workflow EVALUATE {
     // Structure based evaluation
     //  
     alignment_and_ref_and_structures = alignment_and_ref
-                                        .map { it -> [ it[0]["family"], it[0], it[1], it[2] ] }
-                                        .combine(ch_structures.map { it -> [ it[0]["family"], it[1] ] }, by: 0)
+                                        .map { it -> [ it[0]["id"], it[0], it[1], it[2] ] }
+                                        .combine(ch_structures.map { it -> [ it[0]["id"], it[1] ] }, by: 0)
                                         .map { it -> [ it[1], it[2], it[3], it[4] ] }
 
     TCOFFEE_IRMSD_EVAL(alignment_and_ref_and_structures)

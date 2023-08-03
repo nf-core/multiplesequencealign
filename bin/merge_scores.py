@@ -5,7 +5,7 @@ import argparse
 import sys
 import pandas as pd
 
-merging_cols = ["family", "tree", "args_tree", "align", "args_align"]
+merging_cols = ["id", "tree", "args_tree", "align", "args_align"]
 scores_files = sys.argv[2:]
 outfile = sys.argv[1] 
 

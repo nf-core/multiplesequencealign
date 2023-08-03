@@ -1,5 +1,5 @@
 process TCOFFEE3D_TMALIGN_ALIGN {
-    tag "$meta.family _ $meta.align _ $meta.args_align"
+    tag "$meta.id _ $meta.align _ $meta.args_align"
     label 'process_medium'
 
     input:
@@ -12,7 +12,7 @@ process TCOFFEE3D_TMALIGN_ALIGN {
 
     script:
     def args = task.ext.args ?: ''
-    prefix = task.ext.prefix ?: "${meta.family}"    
+    prefix = task.ext.prefix ?: "${meta.id}"    
     """
     # Prep templates
     for i in `awk 'sub(/^>/, "")' ${fasta}`; do

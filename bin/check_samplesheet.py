@@ -31,7 +31,7 @@ class RowChecker:
 
     def __init__(
         self,
-        family_col="family",
+        id_col="id",
         fasta_col="fasta", 
         reference_col="reference",
         structures_col="structures",
@@ -41,14 +41,14 @@ class RowChecker:
         Initialize the row checker with the expected column names.
 
         Args:
-            family_col (str): The name of the column that contains the family name
-                (default "family").
+            id_col (str): The name of the column that contains the id name
+                (default "id").
             fasta_col (str): The name of the column that contains the fasta file
                  path (default "fasta").
 
         """
         super().__init__(**kwargs)
-        self._family_col = family_col
+        self._id_col = id_col
         self._fasta_col = fasta_col
         self._reference_col = reference_col
         self._structures_col = structures_col
@@ -64,18 +64,18 @@ class RowChecker:
                 (values).
 
         """
-        self._validate_family(row)
+        self._validate_id(row)
         self._validate_fasta(row)
         self._validate_structures(row)
-        self._seen.add((row[self._family_col], row[self._fasta_col]))
+        self._seen.add((row[self._id_col], row[self._fasta_col]))
         self.modified.append(row)
 
-    def _validate_family(self, row):
-        """Assert that the family name exists and convert spaces to underscores."""
-        if len(row[self._family_col]) <= 0:
+    def _validate_id(self, row):
+        """Assert that the id name exists and convert spaces to underscores."""
+        if len(row[self._id_col]) <= 0:
             raise AssertionError("Sample input is required.")
         # Sanitize samples slightly.
-        row[self._family_col] = row[self._family_col].replace(" ", "_")
+        row[self._id_col] = row[self._id_col].replace(" ", "_")
 
     def _validate_fasta(self, row):
         """Assert that the fasta entry is non-empty and has the right format."""
@@ -97,15 +97,15 @@ class RowChecker:
 
     def validate_unique_samples(self):
         """
-        Assert that the combination of family name and fasta filename is unique.
+        Assert that the combination of id name and fasta filename is unique.
 
         """
         if len(self._seen) != len(self.modified):
             raise AssertionError("The pair of sample name and fasta must be unique.")
         seen = Counter()
         for row in self.modified:
-            family = row[self._family_col]
-            seen[family] += 1
+            id = row[self._id_col]
+            seen[id] += 1
 
 def read_head(handle, num_lines=10):
     """Read the specified number of lines from the current position in the file."""
@@ -156,13 +156,13 @@ def check_samplesheet(file_in, file_out):
         This function checks that the samplesheet follows the following structure,
         see also the `viral recon samplesheet`_::
 
-                family,fasta
+                id,fasta
                 seatoxin-ref,./testdata/seatoxin-ref.fa
                 toxin-ref,./testdata/toxin-ref.fa
 
 
     """
-    required_columns = {"family", "fasta"}
+    required_columns = {"id", "fasta"}
     # See https://docs.python.org/3.9/library/csv.html#id3 to read up on `newline=""`.
     with file_in.open(newline="") as in_handle:
         reader = csv.DictReader(in_handle, dialect=sniff_format(in_handle))

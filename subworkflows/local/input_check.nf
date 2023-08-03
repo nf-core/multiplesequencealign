@@ -44,7 +44,7 @@ workflow INPUT_CHECK {
 def create_fasta_channel(LinkedHashMap row) {
     // create meta map
     def meta = [:]
-    meta.family         = row.family
+    meta.id         = row.id
 
     // add path(s) of the fastq file(s) to the meta map
     def fasta_meta = []
@@ -62,7 +62,7 @@ def create_fasta_channel(LinkedHashMap row) {
 def create_references_channel(LinkedHashMap row) {
     // create meta map
     def meta = [:]
-    meta.family         = row.family
+    meta.id         = row.id
 
     // add path(s) of the fastq file(s) to the meta map
     def ref_meta = []
@@ -77,7 +77,7 @@ import groovy.io.FileType
 def create_structures_channel(LinkedHashMap row) {
     // create meta map
     def meta = [:]
-    meta.family         = row.family
+    meta.id         = row.id
 
 
     // add path(s) of the fastq file(s) to the meta map

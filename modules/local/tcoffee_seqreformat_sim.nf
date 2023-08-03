@@ -1,7 +1,7 @@
 
 
 process TCOFFEE_SEQREFORMAT_SIM {
-    tag "$meta.family"
+    tag "$meta.id"
     label 'process_low'
 
     // TODO: change to the correct container
@@ -21,14 +21,14 @@ process TCOFFEE_SEQREFORMAT_SIM {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.family}"
+    def prefix = task.ext.prefix ?: "${meta.id}"
     """
     t_coffee -other_pg seq_reformat -in ${fasta} -output=sim_idscore > "${prefix}.sim"
 
     echo "$prefix" > tmp 
     grep ^TOT ${prefix}.sim | cut -f4 >> tmp
 
-    echo "family,perc_sim" > ${prefix}.sim_tot
+    echo "id,perc_sim" > ${prefix}.sim_tot
     cat tmp | tr '\\n' ',' | awk 'gsub(/,\$/,x)' >>  ${prefix}.sim_tot
 
     cat <<-END_VERSIONS > versions.yml

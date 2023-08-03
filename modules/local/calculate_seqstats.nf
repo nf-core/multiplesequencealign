@@ -1,6 +1,6 @@
 
 process CALCULATE_SEQSTATS {
-    tag "$meta.family"
+    tag "$meta.id"
     label 'process_low'
 
     container 'luisas/structural_regression:20'
@@ -19,10 +19,10 @@ process CALCULATE_SEQSTATS {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.family}"
-    def family = meta.family
+    def prefix = task.ext.prefix ?: "${meta.id}"
+    def id = meta.id
     """
-    calc_seqstats.py $family ${fasta} "${prefix}_seqstats.csv" "${prefix}_seqstats_summary.csv"
+    calc_seqstats.py $id ${fasta} "${prefix}_seqstats.csv" "${prefix}_seqstats_summary.csv"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

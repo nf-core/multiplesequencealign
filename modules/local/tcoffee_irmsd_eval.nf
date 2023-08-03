@@ -1,6 +1,6 @@
 
 process TCOFFEE_IRMSD_EVAL {
-    tag "$meta.family"
+    tag "$meta.id"
     label 'process_low'
 
     // TODO: change to the correct container

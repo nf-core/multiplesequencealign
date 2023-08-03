@@ -1,7 +1,7 @@
 
 
 process TCOFFEE_ALNCOMPARE_EVAL {
-    tag "$meta.family"
+    tag "$meta.id"
     label 'process_low'
 
 

@@ -5,7 +5,7 @@ import argparse
 import sys
 import pandas as pd
 
-merging_cols = ["family"]
+merging_cols = ["id"]
 outfile = sys.argv[1] 
 stats_files = sys.argv[2:]
 

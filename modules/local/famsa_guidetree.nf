@@ -2,7 +2,7 @@
 
 
 process FAMSA_GUIDETREE {
-    tag "$meta.family _ $meta.tree _ $meta.args_tree"
+    tag "$meta.id _ $meta.tree _ $meta.args_tree"
     label 'process_low'
 
 
@@ -16,7 +16,7 @@ process FAMSA_GUIDETREE {
 
     script:
     def args = task.ext.args ?: ''
-    prefix = task.ext.prefix ?: "${meta.family}"    
+    prefix = task.ext.prefix ?: "${meta.id}"    
     """
     famsa -t ${task.cpus} -gt_export $args  ${fasta} ${prefix}.dnd &> "version.txt"
 

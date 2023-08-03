@@ -1,6 +1,6 @@
 
 process FAMSA_ALIGN {
-    tag "$meta.family _ $meta.align _ $meta.args_align"
+    tag "$meta.id _ $meta.align _ $meta.args_align"
     label 'process_medium'
 
     input:
@@ -13,7 +13,7 @@ process FAMSA_ALIGN {
 
     script:
     def args = task.ext.args ?: ''
-    prefix = task.ext.prefix ?: "${meta.family}"    
+    prefix = task.ext.prefix ?: "${meta.id}"    
     """
     famsa -gt import ${tree} $args ${fasta} ${prefix}.aln  &> "version.txt"
 
