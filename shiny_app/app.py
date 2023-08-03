@@ -7,8 +7,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sys
 
-# Functions we import from stats.py
-from stats import freqpoly, t_test
 
 # Style 
 sns.set(context="talk", style = "white", font_scale=0.8)
@@ -22,7 +20,7 @@ stats_report = "/home/luisasantus/Desktop/crg_cluster/projects/nf-core-msa/outdi
 summary_df = pd.read_csv(summary_report)
 stats_df = pd.read_csv(stats_report)
 
-cols_to_merge = ["family"]
+cols_to_merge = ["id"]
 
 inputfile = summary_df.merge(stats_df, on = cols_to_merge, how = "left")
 # ----------------------------------------------------------------------------
