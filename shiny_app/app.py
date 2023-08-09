@@ -67,7 +67,7 @@ app_ui = ui.page_fluid(
                 {
                     "color": options,
                 },
-                selected = "family"
+                selected = "id"
             ),
         )
     ),
