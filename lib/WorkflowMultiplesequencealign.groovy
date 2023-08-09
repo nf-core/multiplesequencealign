@@ -1,11 +1,11 @@
 //
-// This file holds several functions specific to the workflow/msa.nf in the nf-core/msa pipeline
+// This file holds several functions specific to the workflow/multiplesequencealign.nf in the nf-core/multiplesequencealign pipeline
 //
 
 import nextflow.Nextflow
 import groovy.text.SimpleTemplateEngine
 
-class WorkflowMsa {
+class WorkflowMultiplesequencealign {
 
     //
     // Check and validate parameters

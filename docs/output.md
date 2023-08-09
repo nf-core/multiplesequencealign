@@ -1,4 +1,4 @@
-# nf-core/msa: Output
+# nf-core/multiplesequencealign: Output
 
 ## Introduction
 

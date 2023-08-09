@@ -1,5 +1,5 @@
 //
-// This file holds several functions specific to the main.nf workflow in the nf-core/msa pipeline
+// This file holds several functions specific to the main.nf workflow in the nf-core/multiplesequencealign pipeline
 //
 
 import nextflow.Nextflow

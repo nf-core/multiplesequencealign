@@ -1,11 +1,11 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    nf-core/msa
+    nf-core/multiplesequencealign
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/nf-core/msa
-    Website: https://nf-co.re/msa
-    Slack  : https://nfcore.slack.com/channels/msa
+    Github : https://github.com/nf-core/multiplesequencealign
+    Website: https://nf-co.re/multiplesequencealign
+    Slack  : https://nfcore.slack.com/channels/multiplesequencealign
 ----------------------------------------------------------------------------------------
 */
 
@@ -41,13 +41,13 @@ WorkflowMain.initialise(workflow, params, log)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { MSA } from './workflows/msa'
+include { MULTIPLESEQUENCEALIGN } from './workflows/multiplesequencealign'
 
 //
-// WORKFLOW: Run main nf-core/msa analysis pipeline
+// WORKFLOW: Run main nf-core/multiplesequencealign analysis pipeline
 //
-workflow NFCORE_MSA {
-    MSA ()
+workflow NFCORE_MULTIPLESEQUENCEALIGN {
+    MULTIPLESEQUENCEALIGN ()
 }
 
 /*
@@ -61,7 +61,7 @@ workflow NFCORE_MSA {
 // See: https://github.com/nf-core/rnaseq/issues/619
 //
 workflow {
-    NFCORE_MSA ()
+    NFCORE_MULTIPLESEQUENCEALIGN ()
 }
 
 /*
