@@ -1,6 +1,6 @@
 
 
-process FAMSA_GUIDETREE {
+process FAMSA_ALIGN {
     tag "$meta.id"
     label 'process_medium'
 
@@ -10,10 +10,11 @@ process FAMSA_GUIDETREE {
         'biocontainers/famsa:2.2.2--h9f5acd7_0' }"
 
     input:
-    tuple val(meta), path(fasta)
+    tuple val(meta),  path(fasta)
+    tuple val(meta2), path(tree)
 
     output:
-    tuple val(meta), path("*.dnd"), emit: tree
+    tuple val(meta), path("*.aln"), emit: alignment
     path "versions.yml"           , emit: versions
 
     when:
@@ -22,13 +23,13 @@ process FAMSA_GUIDETREE {
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
+    def options_tree = tree ? "-gt import $tree" : ""
     """
-    famsa -gt_export \\
+    famsa $options_tree \\
         $args \\
         -t ${task.cpus} \\
         ${fasta} \\
-        ${prefix}.dnd 
-        
+        ${prefix}.aln
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -37,10 +38,9 @@ process FAMSA_GUIDETREE {
     """
 
     stub:
-    def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    touch ${prefix}.dnd
+    touch ${prefix}.aln
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -48,11 +48,3 @@ process FAMSA_GUIDETREE {
     END_VERSIONS
     """
 }
-
-
-
-
-
-
-
-

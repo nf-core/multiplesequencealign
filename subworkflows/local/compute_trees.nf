@@ -1,5 +1,5 @@
  
-include { FAMSA_GUIDETREE } from '../../modules/local/famsa_guidetree'
+include { FAMSA_GUIDETREE } from '../../modules/nf-core/famsa/guidetree/main'
 include { CLUSTALO_MBEDTREE } from '../../modules/local/clustalo_mbedtree'
 
  

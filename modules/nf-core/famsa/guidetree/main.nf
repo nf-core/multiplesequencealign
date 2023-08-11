@@ -1,5 +1,5 @@
 
-process CLUSTALO_GUIDETREE {
+process FAMSA_GUIDETREE {
     tag "$meta.id"
     label 'process_medium'
 

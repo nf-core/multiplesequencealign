@@ -3,7 +3,7 @@
 //
 
 include {   COMPUTE_TREES       } from '../../subworkflows/local/compute_trees.nf'
-include {   FAMSA_ALIGN            } from '../../modules/local/famsa_align.nf'
+include {   FAMSA_ALIGN            } from '../../modules/nf-core/famsa/align/main'
 include {   TCOFFEE3D_TMALIGN_ALIGN } from '../../modules/local/tcoffee3D_tmalign_align.nf'
 include {   TCOFFEEREGRESSIVE_ALIGN } from '../../modules/local/tcoffeeregressive_align.nf'
 
@@ -43,26 +43,32 @@ workflow ALIGN {
     // Compute the alignments
     // 
     // FAMSA 
-    FAMSA_ALIGN(ch_fasta_trees.famsa)
+    ch_fasta_trees_famsa = ch_fasta_trees.famsa.multiMap{
+                                    meta, fastafile, treefile ->
+                                    fasta: [ meta, fastafile ]
+                                    tree: [ meta, treefile ]
+                                }
+    FAMSA_ALIGN(ch_fasta_trees_famsa.fasta, ch_fasta_trees_famsa.tree)
     ch_versions = ch_versions.mix(FAMSA_ALIGN.out.versions.first())
-    msa = FAMSA_ALIGN.out.msa
-    // TCOFFEE REGRESSIVE
-    TCOFFEEREGRESSIVE_ALIGN(ch_fasta_trees.tcoffee_regressive)
-    ch_versions = ch_versions.mix(TCOFFEEREGRESSIVE_ALIGN.out.versions.first())
-    msa = msa.mix(TCOFFEEREGRESSIVE_ALIGN.out.msa)
+    msa = FAMSA_ALIGN.out.alignment
+
+    // // TCOFFEE REGRESSIVE
+    // TCOFFEEREGRESSIVE_ALIGN(ch_fasta_trees.tcoffee_regressive)
+    // ch_versions = ch_versions.mix(TCOFFEEREGRESSIVE_ALIGN.out.versions.first())
+    // msa = msa.mix(TCOFFEEREGRESSIVE_ALIGN.out.msa)
 
 
-    // 3DCOFFE TMALIGN
-    // First collect the structures
-    input_tcoffee3dtmalign = ch_fasta_trees.tcoffee3D_tmalign
-                                           .map{ it -> [it[0]["id"], it[0],it[1], it[2]] }
-                                           .combine(ch_structures.map{ it -> [it[0]["id"], it[1]]}, by: 0 )
-                                           .map{ it -> [it[1], it[2], it[3], it[4]] }
+    // // 3DCOFFE TMALIGN
+    // // First collect the structures
+    // input_tcoffee3dtmalign = ch_fasta_trees.tcoffee3D_tmalign
+    //                                        .map{ it -> [it[0]["id"], it[0],it[1], it[2]] }
+    //                                        .combine(ch_structures.map{ it -> [it[0]["id"], it[1]]}, by: 0 )
+    //                                        .map{ it -> [it[1], it[2], it[3], it[4]] }
 
 
-    TCOFFEE3D_TMALIGN_ALIGN(input_tcoffee3dtmalign)
-    ch_versions = ch_versions.mix(TCOFFEE3D_TMALIGN_ALIGN.out.versions.first())
-    msa = msa.mix(TCOFFEE3D_TMALIGN_ALIGN.out.msa)
+    // TCOFFEE3D_TMALIGN_ALIGN(input_tcoffee3dtmalign)
+    // ch_versions = ch_versions.mix(TCOFFEE3D_TMALIGN_ALIGN.out.versions.first())
+    // msa = msa.mix(TCOFFEE3D_TMALIGN_ALIGN.out.msa)
 
 
     emit:
