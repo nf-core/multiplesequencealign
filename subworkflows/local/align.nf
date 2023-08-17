@@ -4,6 +4,7 @@
 
 include {   COMPUTE_TREES       } from '../../subworkflows/local/compute_trees.nf'
 include {   FAMSA_ALIGN            } from '../../modules/nf-core/famsa/align/main'
+include {   CLUSTALO_ALIGN            } from '../../modules/nf-core/clustalo/align/main'
 include {   TCOFFEE3D_TMALIGN_ALIGN } from '../../modules/local/tcoffee3D_tmalign_align.nf'
 include {   TCOFFEEREGRESSIVE_ALIGN } from '../../modules/local/tcoffeeregressive_align.nf'
 
@@ -37,12 +38,14 @@ workflow ALIGN {
                                   famsa: it[0]["align"] == "FAMSA"
                                   tcoffee3D_tmalign: it[0]["align"] == "tcoffee3D_tmalign"
                                   tcoffee_regressive: it[0]["align"] == "regressive"
+                                  clustalo: it[0]["align"] == "CLUSTALO"
                               }
 
     //    
     // Compute the alignments
     // 
-    // FAMSA 
+
+    // -----------------   FAMSA ---------------------
     ch_fasta_trees_famsa = ch_fasta_trees.famsa.multiMap{
                                     meta, fastafile, treefile ->
                                     fasta: [ meta, fastafile ]
@@ -51,6 +54,19 @@ workflow ALIGN {
     FAMSA_ALIGN(ch_fasta_trees_famsa.fasta, ch_fasta_trees_famsa.tree)
     ch_versions = ch_versions.mix(FAMSA_ALIGN.out.versions.first())
     msa = FAMSA_ALIGN.out.alignment
+
+
+    // -----------------  CLUSTALO ------------------
+    ch_fasta_trees_clustalo = ch_fasta_trees.clustalo.multiMap{
+                                    meta, fastafile, treefile ->
+                                    fasta: [ meta, fastafile ]
+                                    tree: [ meta, treefile ]
+                                }
+    CLUSTALO_ALIGN(ch_fasta_trees_clustalo.fasta, ch_fasta_trees_clustalo.tree)
+    ch_versions = ch_versions.mix(CLUSTALO_ALIGN.out.versions.first())
+    msa = msa.mix(CLUSTALO_ALIGN.out.alignment)
+
+
 
     // // TCOFFEE REGRESSIVE
     // TCOFFEEREGRESSIVE_ALIGN(ch_fasta_trees.tcoffee_regressive)

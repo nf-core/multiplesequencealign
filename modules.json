@@ -5,6 +5,20 @@
         "https://github.com/nf-core/modules.git": {
             "modules": {
                 "nf-core": {
+                    "clustalo/align": {
+                        "branch": "master",
+                        "git_sha": "5c73153097b0f906fa3fe91eb94faaee394d5704",
+                        "installed_by": [
+                            "modules"
+                        ]
+                    },
+                    "clustalo/guidetree": {
+                        "branch": "master",
+                        "git_sha": "9a884757b561688e0b3ff8b55ff7eb4da25eef33",
+                        "installed_by": [
+                            "modules"
+                        ]
+                    },
                     "custom/dumpsoftwareversions": {
                         "branch": "master",
                         "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
