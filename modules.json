@@ -47,6 +47,13 @@
                             "modules"
                         ]
                     },
+                    "mafft": {
+                        "branch": "master",
+                        "git_sha": "feb29be775d9e41750180539e9a3bdce801d0609",
+                        "installed_by": [
+                            "modules"
+                        ]
+                    },
                     "multiqc": {
                         "branch": "master",
                         "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
