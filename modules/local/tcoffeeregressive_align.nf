@@ -1,5 +1,5 @@
 
-process TCOFFEE_REGRESSIVEALIGN {
+process TCOFFEEREGRESSIVEALIGN {
     tag "$meta.id"
     label 'process_medium'
 
