@@ -15,9 +15,9 @@ sns.set(context="talk", style="white", font_scale=0.8)
 # Load file
 # ----------------------------------------------------------------------------
 summary_report = (
-    "/home/luisasantus/Desktop/crg_cluster/projects/nf-core-msa/outdir/summary_report/evaluation_summary_report.csv"
+    "./outdir/summary_report/evaluation_summary_report.csv"
 )
-stats_report = "/home/luisasantus/Desktop/crg_cluster/projects/nf-core-msa/outdir/stats/stats_summary_report.csv"
+stats_report = "./outdir/stats/stats_summary_report.csv"
 
 summary_df = pd.read_csv(summary_report)
 stats_df = pd.read_csv(stats_report)
@@ -28,6 +28,8 @@ inputfile = summary_df.merge(stats_df, on=cols_to_merge, how="left")
 # ----------------------------------------------------------------------------
 
 options = {item: item for item in list(inputfile.columns)}
+options_color = {"align": "assembly", "tree": "tree"}
+options_eval = {"sp": "sum of pairs (SP)", "n_sequences": "# sequences", "tc": "total column score (TC)", "perc_sim": "sequences avg similarity", "seq_length_mean": "sequence length (mean)"}
 
 app_ui = ui.page_fluid(
     ui.column(
@@ -45,7 +47,7 @@ app_ui = ui.page_fluid(
                 "x",
                 "X axis: ",
                 {
-                    "x axis": options,
+                    "x axis": options_eval,
                 },
                 selected="n_sequences",
             ),
@@ -56,7 +58,7 @@ app_ui = ui.page_fluid(
                 "y",
                 "Y axis: ",
                 {
-                    "y axis": options,
+                    "y axis": options_eval,
                 },
                 selected="sp",
             ),
@@ -67,11 +69,22 @@ app_ui = ui.page_fluid(
                 "color",
                 "color: ",
                 {
-                    "color": options,
+                    "color": options_color,
                 },
-                selected="id",
+                selected="align",
             ),
         ),
+        ui.column(
+            4,
+            ui.input_numeric(
+                "size",
+                "dot's size: ",
+                min=1,
+                max=100,
+                step=10,
+                value=60),
+        ), 
+
     ),
     ui.row(
         ui.column(
@@ -87,7 +100,19 @@ def server(input, output, session):
     def scatter():
         plt.ylim(0, 100)
         plt.xlim(0, 100)
-        ax = sns.scatterplot(data=inputfile, x=input.x(), y=input.y(), hue=input.color(), s=60)
+
+        x_label = options_eval[input.x()]
+        y_label = options_eval[input.y()]
+
+        ax = sns.scatterplot(data=inputfile,
+                             x=input.x(),
+                             y=input.y(),
+                             hue=input.color(),
+                             s=input.size())
+        
+        ax.set_xlabel(x_label)
+        ax.set_ylabel(y_label)
+
         plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.0)
         return ax
 
