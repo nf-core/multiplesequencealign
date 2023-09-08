@@ -14,13 +14,13 @@ process MERGE_EVALUATIONS_REPORT {
     when:
     task.ext.when == null || task.ext.when
 
-    script: 
+    script:
     def args = task.ext.args ?: ''
     """
     merge_scores.py \
         "evaluation_summary_report.csv" \
         ${tcoffee_alncompare_scores_summary} \
-        ${tcoffee_irmsd_scores_summary} 
+        ${tcoffee_irmsd_scores_summary}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

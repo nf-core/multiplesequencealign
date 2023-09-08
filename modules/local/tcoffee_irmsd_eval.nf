@@ -14,7 +14,7 @@ process TCOFFEE_IRMSD_EVAL {
 
     script:
     def args = task.ext.args ?: ''
-    def header = meta.keySet().join(",") 
+    def header = meta.keySet().join(",")
     def values = meta.values().join(",")
     """
     # Prep templates

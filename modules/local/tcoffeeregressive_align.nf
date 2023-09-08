@@ -1,12 +1,11 @@
 
-process TCOFFEEREGRESSIVE_ALIGN {
-    tag "$meta.id _ $meta.align _ $meta.args_align"
+process TCOFFEE_REGRESSIVEALIGN {
+    tag "$meta.id"
     label 'process_medium'
 
 
     input:
     tuple val(meta), path(fasta), path(tree)
-    
 
     output:
     tuple val(meta), path ("*.aln"), emit: msa
@@ -14,13 +13,13 @@ process TCOFFEEREGRESSIVE_ALIGN {
 
     script:
     def args = task.ext.args ?: ''
-    prefix = task.ext.prefix ?: "${meta.id}"    
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
     t_coffee -reg $args \
-         -reg_tree ${tree} \
-         -seq ${fasta} \
-         -thread ${task.cpus} \
-         -outfile ${prefix}.aln 2> tcoffee.stderr
+        -reg_tree ${tree} \
+        -seq ${fasta} \
+        -thread ${task.cpus} \
+        -outfile ${prefix}.aln 2> tcoffee.stderr
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -28,6 +27,7 @@ process TCOFFEEREGRESSIVE_ALIGN {
     END_VERSIONS
     """
 }
+
 
 
 
