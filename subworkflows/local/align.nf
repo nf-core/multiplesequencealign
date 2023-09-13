@@ -42,15 +42,17 @@ workflow ALIGN {
 
 
     // Here is all the combinations we need to compute
-    ch_fasta_trees = ch_fasta_tools.with_tree
-                              .combine(trees, by: [0])
-                              .map{ it -> [it[0] + it[1] , it[2], it[3]]}
-                              .branch{
-                                  famsa: it[0]["align"] == "FAMSA"
-                                  tcoffee3D_tmalign: it[0]["align"] == "tcoffee3D_tmalign"
-                                  tcoffee_regressive: it[0]["align"] == "regressive"
-                                  clustalo: it[0]["align"] == "CLUSTALO"
-                              }
+    ch_fasta_tools
+        .with_tree
+        .combine(trees, by: [0])
+        .map { it -> [it[0] + it[1] , it[2], it[3]]} 
+        .branch {
+            famsa: it[0]["align"] == "FAMSA"
+            tcoffee3D_tmalign: it[0]["align"] == "tcoffee3D_tmalign"
+            tcoffee_regressive: it[0]["align"] == "regressive"
+            clustalo: it[0]["align"] == "CLUSTALO"
+        }
+        .set { ch_fasta_trees }
 
     //    
     // Compute the alignments
