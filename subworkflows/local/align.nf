@@ -20,10 +20,11 @@ workflow ALIGN {
     ch_versions = Channel.empty()
 
     // Separae the tools into two channels
-    ch_tools_split = ch_tools.multiMap{ it -> 
+    ch_tools_split = ch_tools
+                        .multiMap{ it -> 
                           tree: it[0]
                           align: it[1]
-                      }
+                        }
 
     // ------------------------------------------------
     // Compute the required trees
@@ -61,7 +62,8 @@ workflow ALIGN {
     // 
 
     // -----------------   FAMSA ---------------------
-    ch_fasta_trees_famsa = ch_fasta_trees.famsa.multiMap{
+    ch_fasta_trees_famsa = ch_fasta_trees.famsa
+                                .multiMap{
                                     meta, fastafile, treefile ->
                                     fasta: [ meta, fastafile ]
                                     tree: [ meta, treefile ]
@@ -72,7 +74,8 @@ workflow ALIGN {
 
 
     // -----------------  CLUSTALO ------------------
-    ch_fasta_trees_clustalo = ch_fasta_trees.clustalo.multiMap{
+    ch_fasta_trees_clustalo = ch_fasta_trees.clustalo
+                                .multiMap{
                                     meta, fastafile, treefile ->
                                     fasta: [ meta, fastafile ]
                                     tree: [ meta, treefile ]
@@ -104,13 +107,14 @@ workflow ALIGN {
     // msa = msa.mix(TCOFFEE3D_TMALIGN_ALIGN.out.msa)
 
     ch_fasta_notrees = ch_fasta_tools.without_tree
-                              .map{ it -> [it[0] + it[1] , it[2]]}
-                              .branch{
-                                  mafft: it[0]["align"] == "MAFFT"
-                              }
+                            .map{ it -> [it[0] + it[1] , it[2]]}
+                            .branch{
+                                mafft: it[0]["align"] == "MAFFT"
+                            }
 
     // ---------------- MAFFT -----------------------
-    ch_fasta_mafft = ch_fasta_notrees.mafft.multiMap{
+    ch_fasta_mafft = ch_fasta_notrees.mafft
+                                .multiMap{
                                     meta, fastafile ->
                                     fasta: [ meta, fastafile ]
                                 }
