@@ -25,7 +25,7 @@ process TCOFFEE_SEQREFORMAT_SIM {
     """
     t_coffee -other_pg seq_reformat -in ${fasta} -output=sim_idscore > "${prefix}.sim"
 
-    echo "$prefix" > tmp 
+    echo "$prefix" > tmp
     grep ^TOT ${prefix}.sim | cut -f4 >> tmp
 
     echo "id,perc_sim" > ${prefix}.sim_tot

@@ -1,6 +1,6 @@
  
-include { FAMSA_GUIDETREE } from '../../modules/local/famsa_guidetree'
-include { CLUSTALO_MBEDTREE } from '../../modules/local/clustalo_mbedtree'
+include { FAMSA_GUIDETREE } from '../../modules/nf-core/famsa/guidetree/main'
+include { CLUSTALO_GUIDETREE } from '../../modules/nf-core/clustalo/guidetree/main'
 
  
  workflow COMPUTE_TREES {
@@ -30,9 +30,9 @@ include { CLUSTALO_MBEDTREE } from '../../modules/local/clustalo_mbedtree'
     ch_versions = ch_versions.mix(FAMSA_GUIDETREE.out.versions.first())
 
 
-    CLUSTALO_MBEDTREE(ch_fastas_fortrees.mbed)
-    ch_trees = ch_trees.mix(CLUSTALO_MBEDTREE.out.tree)
-    ch_versions = ch_versions.mix(CLUSTALO_MBEDTREE.out.versions.first())
+    CLUSTALO_GUIDETREE(ch_fastas_fortrees.mbed)
+    ch_trees = ch_trees.mix(CLUSTALO_GUIDETREE.out.tree)
+    ch_versions = ch_versions.mix(CLUSTALO_GUIDETREE.out.versions.first())
 
 
     emit:

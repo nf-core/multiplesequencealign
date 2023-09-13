@@ -6,11 +6,11 @@ REMARK This format is not meant to be used in place of the PDB format
 REMARK The header refers to the original entry
 REMARK The sequence from the original file has been taken in the field: ATOM
 REMARK extract_from_pdb, 2001, 2002, 2003, 2004, 2005 2006 (c) CNRS and Cedric Notredame
-REMARK Contains Coordinates of: 
-SEQRES   1 A   49  GLY VAL SER CYS LEU CYS ASP SER ASP GLY PRO SER VAL 
-SEQRES   2 A   49  ARG GLY ASN THR LEU SER GLY THR LEU TRP LEU TYR PRO 
-SEQRES   3 A   49  SER GLY CYS PRO SER GLY TRP HIS ASN CYS LYS ALA HIS 
-SEQRES   4 A   49  GLY PRO THR ILE GLY TRP CYS CYS LYS GLN 
+REMARK Contains Coordinates of:
+SEQRES   1 A   49  GLY VAL SER CYS LEU CYS ASP SER ASP GLY PRO SER VAL
+SEQRES   2 A   49  ARG GLY ASN THR LEU SER GLY THR LEU TRP LEU TYR PRO
+SEQRES   3 A   49  SER GLY CYS PRO SER GLY TRP HIS ASN CYS LYS ALA HIS
+SEQRES   4 A   49  GLY PRO THR ILE GLY TRP CYS CYS LYS GLN
 ATOM      1  N   GLY A   1      -6.136  -0.583  -5.411  1.00 73.73
 ATOM      2  CA  GLY A   1      -4.838  -0.904  -4.791  1.00 73.73
 ATOM      3  C   GLY A   1      -5.076  -1.733  -3.549  1.00 73.73
@@ -368,4 +368,3 @@ ATOM    354  CD  GLN A  49      -5.005  10.539  -2.648  1.00 90.66
 ATOM    355  NE2 GLN A  49      -4.846  11.006  -3.868  1.00 90.66
 ATOM    356  OE1 GLN A  49      -6.138  10.317  -2.253  1.00 90.66
 ATOM    357  OXT GLN A  49      -1.591  12.918   1.197  1.00 90.66
-

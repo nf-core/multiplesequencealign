@@ -14,41 +14,41 @@ process TCOFFEE_ALNCOMPARE_EVAL {
 
     script:
     def args = task.ext.args ?: ''
-    def header = meta.keySet().join(",") 
+    def header = meta.keySet().join(",")
     def values = meta.values().join(",")
     """
     ## Sum-of-Pairs Score ##
     t_coffee -other_pg aln_compare \
-             -al1 ${ref_msa} \
-             -al2 ${msa} \
-            -compare_mode sp \
-            | grep -v "seq1" | grep -v '*' | \
-            awk '{ print \$4}' ORS="\t" \
-            >> "scores.txt"
+        -al1 ${ref_msa} \
+        -al2 ${msa} \
+        -compare_mode sp \
+        | grep -v "seq1" | grep -v '*' | \
+        awk '{ print \$4}' ORS="\t" \
+        >> "scores.txt"
 
     ## Total Column Score ##
     t_coffee -other_pg aln_compare \
-             -al1 ${ref_msa} \
-             -al2 ${msa} \
-            -compare_mode tc \
+        -al1 ${ref_msa} \
+        -al2 ${msa} \
+        -compare_mode tc \
+        | grep -v "seq1" | grep -v '*' | \
+        awk '{ print \$4}' ORS="\t" \
+        >> "scores.txt"
+
+    ## Column Score ##
+        t_coffee -other_pg aln_compare \
+            -al1 ${ref_msa} \
+            -al2 ${msa} \
+            -compare_mode column \
             | grep -v "seq1" | grep -v '*' | \
             awk '{ print \$4}' ORS="\t" \
             >> "scores.txt"
 
-    ## Column Score ##
-        t_coffee -other_pg aln_compare \
-              -al1 ${ref_msa} \
-              -al2 ${msa} \
-             -compare_mode column \
-             | grep -v "seq1" | grep -v '*' | \
-             awk '{ print \$4}' ORS="\t" \
-             >> "scores.txt"
 
-
-    # Add metadata info to output file 
+    # Add metadata info to output file
     echo "${header},sp,tc,column" > "${msa.baseName}.scores"
 
-    # Add values 
+    # Add values
     scores=\$(awk '{sub(/[[:space:]]+\$/, "")} 1' scores.txt | tr -s '[:blank:]' ',')
     echo "${values},\$scores" >> "${msa.baseName}.scores"
 

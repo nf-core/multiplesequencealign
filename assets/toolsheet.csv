@@ -1,3 +1,4 @@
 tree, args_tree, align, args_align
 FAMSA_GUIDETREE, "-gt upgma -parttree", FAMSA, ""
-FAMSA_GUIDETREE, "-gt upgma -parttree",regressive,"-reg_method famsa_msa -reg_nseq 100"
+MBED, "", CLUSTALO, ""
+"","",MAFFT,"--anysymbol --quiet --dpparttree"

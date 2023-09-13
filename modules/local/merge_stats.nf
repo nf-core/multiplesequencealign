@@ -14,13 +14,13 @@ process MERGE_STATS {
     when:
     task.ext.when == null || task.ext.when
 
-    script: 
+    script:
     def args = task.ext.args ?: ''
     """
     merge_stats.py \
         "stats_summary_report.csv" \
         ${tcoffee_seqreformat_simtot} \
-        ${seqstats_summary} 
+        ${seqstats_summary}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

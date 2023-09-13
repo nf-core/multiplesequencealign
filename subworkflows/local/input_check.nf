@@ -1,9 +1,12 @@
 //
 // Check input samplesheet and get read channels
 //
+import java.util.zip.ZipFile
+import java.util.zip.ZipEntry
 
 include { SAMPLESHEET_CHECK } from '../../modules/local/samplesheet_check'
 include { TOOLSHEET_CHECK } from '../../modules/local/toolsheet_check'
+include { UNTAR as UNTAR_STRUCTURES }  from '../../modules/nf-core/untar/main'
 
 workflow INPUT_CHECK {
     take:
@@ -79,7 +82,6 @@ def create_structures_channel(LinkedHashMap row) {
     def meta = [:]
     meta.id         = row.id
 
-
     // add path(s) of the fastq file(s) to the meta map
     if (row.structures != "none") {
         def list = []
@@ -88,8 +90,11 @@ def create_structures_channel(LinkedHashMap row) {
             list << file(it)
         }
         structures = [ meta, list ]
+        return structures
+    } else {
+        return [ meta, [:] ]
     }
-    return structures
+    
 }
 
 def create_tools_channel(LinkedHashMap row) {

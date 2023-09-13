@@ -13,12 +13,12 @@ from pathlib import Path
 
 logger = logging.getLogger()
 
+
 def cleanargs(argstring):
-
-    cleanargs = argstring.strip().replace("-", '').replace(" ", '_').replace("==", '_').replace("\s+", '')
-
+    cleanargs = argstring.strip().replace("-", "").replace(" ", "_").replace("==", "_").replace("\s+", "")
 
     return cleanargs
+
 
 class RowChecker:
     """
@@ -29,8 +29,6 @@ class RowChecker:
             validated and transformed row. The order of rows is maintained.
 
     """
-
-
 
     def __init__(
         self,
@@ -75,41 +73,46 @@ class RowChecker:
         self._validate_tree(row)
         self._validate_argstree(row)
         self._validate_argsalign(row)
-        self._seen.add((row[self._tree_col], row[self._argstree_col], row[self._align_col], row[self._argsalign_col], row[self._argstree_clean_col]))
+        self._seen.add(
+            (
+                row[self._tree_col],
+                row[self._argstree_col],
+                row[self._align_col],
+                row[self._argsalign_col],
+                row[self._argstree_clean_col],
+            )
+        )
         print(row)
         self.modified.append(row)
 
     def _validate_tree(self, row):
-            """Assert that the family name exists and convert spaces to underscores."""
-            if len(row[self._tree_col]) <= 0:
-                row[self._tree_col] = "none"
-            # Sanitize samples slightly.
-            row[self._tree_col] = row[self._tree_col]
+        """Assert that the family name exists and convert spaces to underscores."""
+        if len(row[self._tree_col]) <= 0:
+            row[self._tree_col] = "none"
+        # Sanitize samples slightly.
+        row[self._tree_col] = row[self._tree_col]
 
     def _validate_argstree(self, row):
-            if len(row[self._argstree_col]) <= 0:
-                row[self._argstree_col] = "none"
-                row[self._argstree_clean_col] = "none"
-            # Sanitize samples slightly.
-            row[self._argstree_col] = row[self._argstree_col]
-            row[self._argstree_clean_col] = cleanargs(row[self._argstree_col])   
+        if len(row[self._argstree_col]) <= 0:
+            row[self._argstree_col] = "none"
+            row[self._argstree_clean_col] = "none"
+        # Sanitize samples slightly.
+        row[self._argstree_col] = row[self._argstree_col]
+        row[self._argstree_clean_col] = cleanargs(row[self._argstree_col])
 
     def _validate_align(self, row):
-            if len(row[self._align_col]) <= 0:
-                raise AssertionError("alignment tool is required.")
-            # Sanitize samples slightly.
-            row[self._align_col] = row[self._align_col]
-            row[self._argsalign_clean_col] = cleanargs(row[self._argsalign_col])
+        if len(row[self._align_col]) <= 0:
+            raise AssertionError("alignment tool is required.")
+        # Sanitize samples slightly.
+        row[self._align_col] = row[self._align_col]
+        row[self._argsalign_clean_col] = cleanargs(row[self._argsalign_col])
 
     def _validate_argsalign(self, row):
-            if len(row[self._argsalign_col]) <= 0:
-                row[self._argsalign_col] = "none"
-                row[self._argsalign_clean_col] = "none"
-            # Sanitize samples slightly.
-            row[self._argsalign_col] = row[self._argsalign_col]
-
-
-
+        if len(row[self._argsalign_col]) <= 0:
+            row[self._argsalign_col] = "none"
+            row[self._argsalign_clean_col] = "none"
+        # Sanitize samples slightly.
+        row[self._argsalign_col] = row[self._argsalign_col]
 
     def validate_unique_samples(self):
         """
@@ -120,7 +123,7 @@ class RowChecker:
             raise AssertionError("The pair of sample name and fasta must be unique.")
         seen = Counter()
         for row in self.modified:
-            entry = row[self._tree_col]+ row[self._argstree_col]+ row[self._align_col]+ row[self._argsalign_col] 
+            entry = row[self._tree_col] + row[self._argstree_col] + row[self._align_col] + row[self._argsalign_col]
             seen[entry] += 1
 
 
@@ -195,7 +198,7 @@ def check_samplesheet(file_in, file_out):
     header = list(reader.fieldnames)
     header.append("argstree_clean")
     header.append("argsalign_clean")
-    
+
     # See https://docs.python.org/3.9/library/csv.html#id3 to read up on `newline=""`.
     with file_out.open(mode="w", newline="") as out_handle:
         writer = csv.DictWriter(out_handle, header, delimiter=",")

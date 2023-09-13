@@ -4,7 +4,6 @@ process TCOFFEE3D_TMALIGN_ALIGN {
 
     input:
     tuple val(meta), path(fasta), path(tree), path(structures)
-    
 
     output:
     tuple val (meta), path ("*.aln"), emit: msa
@@ -12,7 +11,7 @@ process TCOFFEE3D_TMALIGN_ALIGN {
 
     script:
     def args = task.ext.args ?: ''
-    prefix = task.ext.prefix ?: "${meta.id}"    
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
     # Prep templates
     for i in `awk 'sub(/^>/, "")' ${fasta}`; do

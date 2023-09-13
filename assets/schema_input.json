@@ -19,7 +19,7 @@
             },
             "reference": {
                 "type": "string"
-            }, 
+            },
             "structures": {
                 "type": "string"
             }

@@ -24,15 +24,12 @@ class RowChecker:
 
     """
 
-    VALID_FORMATS = (
-        ".fa",
-        ".fasta"
-    )
+    VALID_FORMATS = (".fa", ".fasta")
 
     def __init__(
         self,
         id_col="id",
-        fasta_col="fasta", 
+        fasta_col="fasta",
         reference_col="reference",
         structures_col="structures",
         **kwargs,
@@ -90,6 +87,7 @@ class RowChecker:
                 f"The fasta file has an unrecognized extension: {filename}\n"
                 f"It should be one of: {', '.join(self.VALID_FORMATS)}"
             )
+
     def _validate_structures(self, row):
         """Assert that the structures entry is non-empty and has the right format."""
         if len(row[self._structures_col]) <= 0:
@@ -106,6 +104,7 @@ class RowChecker:
         for row in self.modified:
             id = row[self._id_col]
             seen[id] += 1
+
 
 def read_head(handle, num_lines=10):
     """Read the specified number of lines from the current position in the file."""
