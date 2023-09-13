@@ -34,11 +34,13 @@ workflow ALIGN {
 
 
     // Separate the computation intothose which need a tree and those which don't
-    ch_fasta_tools = ch_fastas.combine(ch_tools).map{ it -> [it[0] + it[2] ,  it[3], it[1]] }
-                                                .branch{
-                                                    with_tree: it[0]["tree"] != "none"
-                                                    without_tree: it[0]["tree"] == "none"
-                                                }
+    ch_fastas.combine(ch_tools)
+        .map{ it -> [it[0] + it[2] ,  it[3], it[1]] }
+        .branch {
+            with_tree: it[0]["tree"] != "none"
+            without_tree: it[0]["tree"] == "none"
+        }
+        .set { ch_fasta_tools }
 
 
     // Here is all the combinations we need to compute
