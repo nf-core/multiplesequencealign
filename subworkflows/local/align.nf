@@ -2,12 +2,15 @@
 // Compute stats about the input sequences
 //
 
-include {   COMPUTE_TREES       } from '../../subworkflows/local/compute_trees.nf'
-include {   FAMSA_ALIGN            } from '../../modules/nf-core/famsa/align/main'
-include {   CLUSTALO_ALIGN            } from '../../modules/nf-core/clustalo/align/main'
-include {   MAFFT            } from '../../modules/nf-core/mafft/main'
+include {   COMPUTE_TREES           } from '../../subworkflows/local/compute_trees.nf'
+include {   FAMSA_ALIGN             } from '../../modules/nf-core/famsa/align/main'
+include {   CLUSTALO_ALIGN          } from '../../modules/nf-core/clustalo/align/main'
+include {   MAFFT                   } from '../../modules/nf-core/mafft/main'
+include {   KALIGN_ALIGN            } from '../../modules/nf-core/kalign/align/main'
 include {   TCOFFEE3D_TMALIGN_ALIGN } from '../../modules/local/tcoffee3D_tmalign_align.nf'
 include {   TCOFFEEREGRESSIVE_ALIGN } from '../../modules/local/tcoffeeregressive_align.nf'
+
+
 
 workflow ALIGN {
     take:
@@ -110,6 +113,7 @@ workflow ALIGN {
                             .map{ it -> [it[0] + it[1] , it[2]]}
                             .branch{
                                 mafft: it[0]["align"] == "MAFFT"
+                                kalign: it[0]["align"] == "KALIGN"
                             }
 
     // ---------------- MAFFT -----------------------
@@ -122,7 +126,14 @@ workflow ALIGN {
     ch_versions = ch_versions.mix(MAFFT.out.versions.first())
 
 
-
+    // ---------------- KALIGN  -----------------------
+    ch_fasta_kalign = ch_fasta_notrees.kalign
+                                .multiMap{
+                                    meta, fastafile ->
+                                    fasta: [ meta, fastafile ]
+                                }
+    KALIGN_ALIGN(ch_fasta_kalign.fasta)
+    ch_versions = ch_versions.mix(KALIGN_ALIGN.out.versions.first())
 
 
 

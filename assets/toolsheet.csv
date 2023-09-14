@@ -1,4 +1,5 @@
-tree, args_tree, align, args_align
-FAMSA_GUIDETREE, "-gt upgma -parttree", FAMSA, ""
-MBED, "", CLUSTALO, ""
+tree,args_tree,align,args_align
+FAMSA_GUIDETREE,"-gt upgma -parttree",FAMSA,""
+MBED,"",CLUSTALO,""
 "","",MAFFT,"--anysymbol --quiet --dpparttree"
+"","","KALIGN",""
