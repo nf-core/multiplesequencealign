@@ -41,11 +41,10 @@ workflow ALIGN {
     ch_fastas.combine(ch_tools)
         .map{ it -> [it[0] + it[2] ,  it[3], it[1]] }
         .branch {
-            with_tree: it[0]["tree"] != "none"
-            without_tree: it[0]["tree"] == "none"
+            with_tree: it[0]["tree"] != null
+            without_tree: it[0]["tree"] == null
         }
         .set { ch_fasta_tools }
-
 
     // Here is all the combinations we need to compute
     ch_fasta_tools
