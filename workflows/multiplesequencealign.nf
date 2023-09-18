@@ -10,15 +10,6 @@ def logo = NfcoreTemplate.logo(workflow, params.monochrome_logs)
 def citation = '\n' + WorkflowMain.citation(workflow) + '\n'
 def summary_params = paramsSummaryMap(workflow)
 
-def cleanArgs(argString) {
-    def cleanArgs = argString.toString().trim().replace("-", "").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
-    // if clearnArgs is empty, return "default"
-    if (cleanArgs == null || cleanArgs == "") {
-        return ""
-    }else{
-        return cleanArgs
-    }
-}
 // Print parameter summary log to screen
 log.info logo + paramsSummaryLog(workflow) + citation
 
@@ -84,11 +75,11 @@ workflow MULTIPLESEQUENCEALIGN {
 
                         treeMap["tree"] = meta_clone["tree"]
                         treeMap["args_tree"] = meta_clone["args_tree"]
-                        treeMap["args_tree_clean"] = cleanArgs(meta_clone.args_tree)
+                        treeMap["args_tree_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_tree)
 
                         alignMap["align"] = meta_clone["align"]
                         alignMap["args_align"] = meta_clone["args_align"]
-                        alignMap["args_align_clean"] = cleanArgs(meta_clone.args_align)
+                        alignMap["args_align_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_align)
                         
                         [ treeMap, alignMap ]
                     }
