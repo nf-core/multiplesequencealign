@@ -32,10 +32,9 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-//
-// SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
-//
-include { INPUT_CHECK } from '../subworkflows/local/input_check'
+include { STATS                       } from '../subworkflows/local/stats'
+include { ALIGN                       } from '../subworkflows/local/align'
+include { EVALUATE                    } from '../subworkflows/local/evaluate'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -49,9 +48,6 @@ include { INPUT_CHECK } from '../subworkflows/local/input_check'
 include { FASTQC                      } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
-include { STATS                       } from '../subworkflows/local/stats'
-include { ALIGN                       } from '../subworkflows/local/align'
-include { EVALUATE                    } from '../subworkflows/local/evaluate'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -67,21 +63,32 @@ workflow MULTIPLESEQUENCEALIGN {
     ch_versions = Channel.empty()
 
     //
-    // SUBWORKFLOW: Read in samplesheet, validate and stage input files
+    // Prepare input and metadata
     //
-    INPUT_CHECK (
-        file(params.input),
-        file(params.tools)
-    )
-    ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
+
+    ch_input = Channel.fromSamplesheet('input')
+    ch_tools = Channel.fromSamplesheet('tools').map {
+                        meta ->
+                        def meta_clone = meta[0].clone()
+                        def treeMap = [:]
+                        def alignMap = [:]
+
+                        treeMap["tree"] = meta_clone["tree"]
+                        treeMap["args_tree"] = meta_clone["args_tree"]
+                        treeMap["args_tree_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_tree)
+
+                        alignMap["align"] = meta_clone["align"]
+                        alignMap["args_align"] = meta_clone["args_align"]
+                        alignMap["args_align_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_align)
+                        
+                        [ treeMap, alignMap ]
+                    }
 
 
-    ch_seqs = INPUT_CHECK.out.fasta
-    ch_tools = INPUT_CHECK.out.tools
-    ch_refs = INPUT_CHECK.out.references
-    ch_structures = INPUT_CHECK.out.structures
+    ch_seqs       = ch_input.map{ sample -> [ sample[0], file(sample[1]) ]}
+    ch_refs       = ch_input.map{ sample -> [ sample[0], file(sample[2]) ]}
+    ch_structures = ch_input.map{ sample -> [ sample[0], sample[3]       ]}
 
-    //
     // Compute summary statistics about the input sequences
     //
     if( !params.skip_stats ){
@@ -147,6 +154,8 @@ workflow.onComplete {
         NfcoreTemplate.IM_notification(workflow, params, summary_params, projectDir, log)
     }
 }
+
+
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -9,17 +9,21 @@
         "properties": {
             "tree": {
                 "type": "string",
-                "errorMessage": "tree name cannot contain spaces"
+                "errorMessage": "tree name cannot contain spaces",
+                "meta": ["tree"]
             },
             "args_tree": {
-                "type": "string"
+                "type": "string",
+                "meta": ["args_tree"]
             },
             "align": {
                 "type": "string",
+                "meta": ["align"],
                 "errorMessage": "align name must be provided and cannot contain spaces"
             },
             "args_align": {
-                "type": "string"
+                "type": "string",
+                "meta": ["args_align"]
             }
         },
         "required": ["align"]

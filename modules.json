@@ -35,6 +35,11 @@
                         "git_sha": "bd8092b67b5103bdd52e300f75889442275c3117",
                         "installed_by": ["modules"]
                     },
+                    "kalign/align": {
+                        "branch": "master",
+                        "git_sha": "c4328fea9d972088482f163052be0f51950eb91d",
+                        "installed_by": ["modules"]
+                    },
                     "mafft": {
                         "branch": "master",
                         "git_sha": "feb29be775d9e41750180539e9a3bdce801d0609",

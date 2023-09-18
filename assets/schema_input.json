@@ -10,6 +10,7 @@
             "id": {
                 "type": "string",
                 "pattern": "^\\S+$",
+                "meta": ["id"],
                 "errorMessage": "id/sample name must be provided and cannot contain spaces"
             },
             "fasta": {
