@@ -1,15 +1,14 @@
-//
-// Compute stats about the input sequences
-//
-
+// Incude the subworkflows
 include {   COMPUTE_TREES           } from '../../subworkflows/local/compute_trees.nf'
+// Include the nf-core modules
 include {   FAMSA_ALIGN             } from '../../modules/nf-core/famsa/align/main'
 include {   CLUSTALO_ALIGN          } from '../../modules/nf-core/clustalo/align/main'
 include {   MAFFT                   } from '../../modules/nf-core/mafft/main'
 include {   KALIGN_ALIGN            } from '../../modules/nf-core/kalign/align/main'
-include {   TCOFFEE3D_TMALIGN_ALIGN } from '../../modules/local/tcoffee3D_tmalign_align.nf'
-include {   TCOFFEEREGRESSIVE_ALIGN } from '../../modules/local/tcoffeeregressive_align.nf'
-
+include {   LEARNMSA_ALIGN          } from '../../modules/nf-core/learnmsa/align/main'
+// Include the local modules
+//include {   TCOFFEE3D_TMALIGN_ALIGN } from '../../modules/local/tcoffee3D_tmalign_align.nf'
+//include {   TCOFFEEREGRESSIVE_ALIGN } from '../../modules/local/tcoffeeregressive_align.nf'
 
 
 workflow ALIGN {
@@ -111,8 +110,9 @@ workflow ALIGN {
     ch_fasta_notrees = ch_fasta_tools.without_tree
                             .map{ it -> [it[0] + it[1] , it[2]]}
                             .branch{
-                                mafft: it[0]["align"] == "MAFFT"
-                                kalign: it[0]["align"] == "KALIGN"
+                                mafft:    it[0]["align"] == "MAFFT"
+                                kalign:   it[0]["align"] == "KALIGN"
+                                learnmsa: it[0]["align"] == "LEARNMSA"
                             }
 
     // ---------------- MAFFT -----------------------
@@ -134,7 +134,14 @@ workflow ALIGN {
     KALIGN_ALIGN(ch_fasta_kalign.fasta)
     ch_versions = ch_versions.mix(KALIGN_ALIGN.out.versions.first())
 
-
+    // ---------------- LEARNMSA  ----------------------
+    ch_fasta_learnmsa = ch_fasta_notrees.learnmsa
+                                .multiMap{
+                                    meta, fastafile ->
+                                    fasta: [ meta, fastafile ]
+                                }
+    LEARNMSA_ALIGN(ch_fasta_learnmsa.fasta)
+    ch_versions = ch_versions.mix(LEARNMSA_ALIGN.out.versions.first())
 
 
     emit:
