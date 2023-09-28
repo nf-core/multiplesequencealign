@@ -1,11 +1,12 @@
 
-process TCOFFEEREGRESSIVE_ALIGN {
+process TCOFFEE_REGRESSIVE_ALIGN {
     tag "$meta.id"
     label 'process_medium'
 
-
     input:
-    tuple val(meta), path(fasta), path(tree)
+    tuple val(meta),   path(fasta)
+    tuple val(meta2),  path(tree)
+    tuple val(meta3),  path(template), path(structures)
 
     output:
     tuple val(meta), path ("*.aln"), emit: msa
@@ -15,8 +16,7 @@ process TCOFFEEREGRESSIVE_ALIGN {
     def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    t_coffee -reg $args \
-        -reg_tree ${tree} \
+    t_coffee $args \
         -seq ${fasta} \
         -thread ${task.cpus} \
         -outfile ${prefix}.aln 2> tcoffee.stderr

@@ -1,9 +1,11 @@
-process TCOFFEE3D_TMALIGN_ALIGN {
+process TCOFFEE_ALIGN {
     tag "$meta.id _ $meta.align _ $meta.args_align"
     label 'process_medium'
 
     input:
-    tuple val(meta), path(fasta), path(tree), path(structures)
+    tuple val(meta) ,  path(fasta)
+    tuple val(meta2),  path(tree)
+    tuple val(meta3),  path(template), path(structures)
 
     output:
     tuple val (meta), path ("*.aln"), emit: msa
