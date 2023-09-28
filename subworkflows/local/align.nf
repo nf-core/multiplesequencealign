@@ -1,11 +1,14 @@
 // Incude the subworkflows
-include {   COMPUTE_TREES           } from '../../subworkflows/local/compute_trees.nf'
+include {   COMPUTE_TREES                     } from '../../subworkflows/local/compute_trees.nf'
+
 // Include the nf-core modules
-include {   FAMSA_ALIGN             } from '../../modules/nf-core/famsa/align/main'
-include {   CLUSTALO_ALIGN          } from '../../modules/nf-core/clustalo/align/main'
-include {   MAFFT                   } from '../../modules/nf-core/mafft/main'
-include {   KALIGN_ALIGN            } from '../../modules/nf-core/kalign/align/main'
-include {   LEARNMSA_ALIGN          } from '../../modules/nf-core/learnmsa/align/main'
+include {   FAMSA_ALIGN                       } from '../../modules/nf-core/famsa/align/main'
+include {   CLUSTALO_ALIGN                    } from '../../modules/nf-core/clustalo/align/main'
+include {   MAFFT                             } from '../../modules/nf-core/mafft/main'
+include {   KALIGN_ALIGN                      } from '../../modules/nf-core/kalign/align/main'
+include {   LEARNMSA_ALIGN                    } from '../../modules/nf-core/learnmsa/align/main'
+include {   TCOFFEE_ALIGN as TCOFFEE_3D_ALIGN } from '../../modules/nf-core/tcoffee/align/main'
+
 // Include the local modules
 //include {   TCOFFEE3D_TMALIGN_ALIGN } from '../../modules/local/tcoffee3D_tmalign_align.nf'
 //include {   TCOFFEEREGRESSIVE_ALIGN } from '../../modules/local/tcoffeeregressive_align.nf'
@@ -51,10 +54,9 @@ workflow ALIGN {
         .combine(trees, by: [0])
         .map { it -> [it[0] + it[1] , it[2], it[3]]} 
         .branch {
-            famsa: it[0]["align"] == "FAMSA"
-            tcoffee3D_tmalign: it[0]["align"] == "tcoffee3D_tmalign"
-            tcoffee_regressive: it[0]["align"] == "regressive"
-            clustalo: it[0]["align"] == "CLUSTALO"
+            famsa:               it[0]["align"] == "FAMSA"
+            tcoffee:             it[0]["align"] == "TCOFFEE"
+            clustalo:            it[0]["align"] == "CLUSTALO"
         }
         .set { ch_fasta_trees }
 

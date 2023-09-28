@@ -20,17 +20,17 @@ include { CLUSTALO_GUIDETREE } from '../../modules/nf-core/clustalo/guidetree/ma
    ch_fastas_fortrees = ch_fastas.combine(tree_tools)
                                  .map( it -> [it[0] + it[2], it[1]] )
                                  .branch{
-                                          famsa_guidetree: it[0]["tree"] ==  "FAMSA_GUIDETREE"
-                                          mbed: it[0]["tree"] == "MBED"
+                                          famsa:    it[0]["tree"] == "FAMSA"
+                                          clustalo: it[0]["tree"] == "CLUSTALO"
                                         }
 
       
-    FAMSA_GUIDETREE(ch_fastas_fortrees.famsa_guidetree)
+    FAMSA_GUIDETREE(ch_fastas_fortrees.famsa)
     ch_trees = FAMSA_GUIDETREE.out.tree
     ch_versions = ch_versions.mix(FAMSA_GUIDETREE.out.versions.first())
 
 
-    CLUSTALO_GUIDETREE(ch_fastas_fortrees.mbed)
+    CLUSTALO_GUIDETREE(ch_fastas_fortrees.clustalo)
     ch_trees = ch_trees.mix(CLUSTALO_GUIDETREE.out.tree)
     ch_versions = ch_versions.mix(CLUSTALO_GUIDETREE.out.versions.first())
 
