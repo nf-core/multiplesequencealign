@@ -40,6 +40,11 @@
                         "git_sha": "c4328fea9d972088482f163052be0f51950eb91d",
                         "installed_by": ["modules"]
                     },
+                    "learnmsa/align": {
+                        "branch": "master",
+                        "git_sha": "5be10048ca88180a5d1f0d56b6aca2415ff83a1e",
+                        "installed_by": ["modules"]
+                    },
                     "mafft": {
                         "branch": "master",
                         "git_sha": "feb29be775d9e41750180539e9a3bdce801d0609",
@@ -48,6 +53,11 @@
                     "multiqc": {
                         "branch": "master",
                         "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "tcoffee/align": {
+                        "branch": "master",
+                        "git_sha": "e05352061a3e5cdcf0043a824c87567966e725ea",
                         "installed_by": ["modules"]
                     },
                     "untar": {

@@ -4,9 +4,10 @@ process TCOFFEE_SEQREFORMAT_SIM {
     tag "$meta.id"
     label 'process_low'
 
-    // TODO: change to the correct container
-    container 'luisas/structural_regression:20'
-
+    conda "bioconda::t-coffee=13.45.0.4846264"
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/t-coffee:13.45.0.4846264--hc57179f_5':
+        'biocontainers/t-coffee:13.45.0.4846264--hc57179f_5' }"
     input:
     tuple val(meta), path(fasta)
 

@@ -48,6 +48,7 @@ include { EVALUATE                    } from '../subworkflows/local/evaluate'
 include { FASTQC                      } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
+include { UNTAR                       } from '../modules/nf-core/untar/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -77,9 +78,9 @@ workflow MULTIPLESEQUENCEALIGN {
                         treeMap["args_tree"] = meta_clone["args_tree"]
                         treeMap["args_tree_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_tree)
 
-                        alignMap["align"] = meta_clone["align"]
-                        alignMap["args_align"] = meta_clone["args_align"]
-                        alignMap["args_align_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_align)
+                        alignMap["aligner"] = meta_clone["aligner"]
+                        alignMap["args_aligner"] = meta_clone["args_aligner"]
+                        alignMap["args_aligner_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_aligner)
                         
                         [ treeMap, alignMap ]
                     }
@@ -87,7 +88,32 @@ workflow MULTIPLESEQUENCEALIGN {
 
     ch_seqs       = ch_input.map{ sample -> [ sample[0], file(sample[1]) ]}
     ch_refs       = ch_input.map{ sample -> [ sample[0], file(sample[2]) ]}
-    ch_structures = ch_input.map{ sample -> [ sample[0], sample[3]       ]}
+    ch_input
+        .map { 
+            sample -> [ sample[0], sample[3] ] 
+        }
+        .filter { it[1].size() > 0 }
+        .set { ch_structures }
+    
+    ch_structures.branch {
+        compressed:   it[1].endsWith('.tar.gz')
+        uncompressed: true
+    }
+    .set { ch_structures }
+
+    UNTAR ( ch_structures.compressed )
+        .untar
+        .mix( ch_structures.uncompressed )
+        .set { ch_structures }
+
+
+    ch_structures
+        .map { 
+            meta,dir -> 
+                [ meta,file(dir).listFiles().collect() ] 
+        }
+        .set { ch_structures }
+
 
     // Compute summary statistics about the input sequences
     //
