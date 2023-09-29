@@ -78,9 +78,9 @@ workflow MULTIPLESEQUENCEALIGN {
                         treeMap["args_tree"] = meta_clone["args_tree"]
                         treeMap["args_tree_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_tree)
 
-                        alignMap["align"] = meta_clone["align"]
-                        alignMap["args_align"] = meta_clone["args_align"]
-                        alignMap["args_align_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_align)
+                        alignMap["aligner"] = meta_clone["aligner"]
+                        alignMap["args_aligner"] = meta_clone["args_aligner"]
+                        alignMap["args_aligner_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_aligner)
                         
                         [ treeMap, alignMap ]
                     }
@@ -99,7 +99,6 @@ workflow MULTIPLESEQUENCEALIGN {
     ch_structures = UNTAR ( ch_structures.compressed ).untar.mix( ch_structures.uncompressed )
     ch_structures = ch_structures.map { meta,dir -> [meta,file(dir).listFiles().collect()]}
 
-    ch_structures.view()
 
     // Compute summary statistics about the input sequences
     //

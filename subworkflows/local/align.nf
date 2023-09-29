@@ -7,11 +7,11 @@ include {   CLUSTALO_ALIGN                    } from '../../modules/nf-core/clus
 include {   MAFFT                             } from '../../modules/nf-core/mafft/main'
 include {   KALIGN_ALIGN                      } from '../../modules/nf-core/kalign/align/main'
 include {   LEARNMSA_ALIGN                    } from '../../modules/nf-core/learnmsa/align/main'
-include {   TCOFFEE_ALIGN as TCOFFEE_3D_ALIGN } from '../../modules/nf-core/tcoffee/align/main'
+include {   TCOFFEE_ALIGN                     } from '../../modules/nf-core/tcoffee/align/main'
+include {   TCOFFEE_ALIGN as TCOFFEE3D_ALIGN  } from '../../modules/nf-core/tcoffee/align/main'
 
-// Include the local modules
-//include {   TCOFFEE3D_TMALIGN_ALIGN } from '../../modules/local/tcoffee3D_tmalign_align.nf'
-//include {   TCOFFEEREGRESSIVE_ALIGN } from '../../modules/local/tcoffeeregressive_align.nf'
+// Include local modules
+include {   CREATE_TCOFFEETEMPLATE            } from '../../modules/local/create_tcoffee_template' 
 
 
 workflow ALIGN {
@@ -24,7 +24,8 @@ workflow ALIGN {
 
     ch_versions = Channel.empty()
 
-    // Separae the tools into two channels
+    // Branch the toolsheet information into two channels
+    // This way, it can direct the computation of guidetrees and aligners separately
     ch_tools_split = ch_tools
                         .multiMap{ it -> 
                           tree: it[0]
@@ -34,7 +35,7 @@ workflow ALIGN {
     // ------------------------------------------------
     // Compute the required trees
     // ------------------------------------------------
-    COMPUTE_TREES(ch_fastas, ch_tools_split.tree)
+    COMPUTE_TREES(ch_fastas, ch_tools_split.tree.unique())
     trees = COMPUTE_TREES.out.trees
     ch_versions = ch_versions.mix(COMPUTE_TREES.out.versions)
 
@@ -52,11 +53,13 @@ workflow ALIGN {
     ch_fasta_tools
         .with_tree
         .combine(trees, by: [0])
-        .map { it -> [it[0] + it[1] , it[2], it[3]]} 
+        .map { it -> [it[0] + it[1] , it[2], it[3]]}
+        .unique()
         .branch {
-            famsa:               it[0]["align"] == "FAMSA"
-            tcoffee:             it[0]["align"] == "TCOFFEE"
-            clustalo:            it[0]["align"] == "CLUSTALO"
+            famsa:               it[0]["aligner"] == "FAMSA"
+            tcoffee:             it[0]["aligner"] == "TCOFFEE"
+            tcoffee3d:           it[0]["aligner"] == "3DCOFFEE"
+            clustalo:            it[0]["aligner"] == "CLUSTALO"
         }
         .set { ch_fasta_trees }
 
@@ -87,34 +90,41 @@ workflow ALIGN {
     ch_versions = ch_versions.mix(CLUSTALO_ALIGN.out.versions.first())
     msa = msa.mix(CLUSTALO_ALIGN.out.alignment)
 
+    // -----------------  TCOFFEE  ------------------
+    ch_fasta_trees_tcoffee = ch_fasta_trees.tcoffee
+                                .multiMap{
+                                    meta, fastafile, treefile ->
+                                    fasta: [ meta, fastafile ]
+                                    tree: [ meta, treefile ]
+                                }
+    TCOFFEE_ALIGN(ch_fasta_trees_tcoffee.fasta, ch_fasta_trees_tcoffee.tree,  [[:],[], []])
+    ch_versions = ch_versions.mix(TCOFFEE_ALIGN.out.versions.first())
+    msa = msa.mix(TCOFFEE_ALIGN.out.msa)
 
+    // -----------------  3DCOFFEE  ------------------ 
+    ch_structures_and_template = CREATE_TCOFFEETEMPLATE(ch_structures).structure_and_template
+    ch_fasta_trees_3dcoffee = ch_fasta_trees.tcoffee3d.map{ meta, fasta, tree -> [meta["id"], meta, fasta, tree] }
+                                                   .combine(ch_structures_and_template.map{ meta, template, structures -> [meta["id"], template, structures]}, by: 0)
+                                                   .multiMap{
+                                                                merging_id, meta, fastafile, treefile, templatefile, structuresfiles ->
+                                                                fasta:      [ meta, fastafile       ]
+                                                                tree:       [ meta, treefile        ]
+                                                                structures: [ meta, templatefile, structuresfiles ]
+                                                            }
+    TCOFFEE3D_ALIGN(ch_fasta_trees_3dcoffee.fasta, ch_fasta_trees_3dcoffee.tree, ch_fasta_trees_3dcoffee.structures)
+    ch_versions = ch_versions.mix(TCOFFEE3D_ALIGN.out.versions.first())
+    msa = msa.mix(TCOFFEE3D_ALIGN.out.msa)
 
- 
-
-    // // TCOFFEE REGRESSIVE
-    // TCOFFEEREGRESSIVE_ALIGN(ch_fasta_trees.tcoffee_regressive)
-    // ch_versions = ch_versions.mix(TCOFFEEREGRESSIVE_ALIGN.out.versions.first())
-    // msa = msa.mix(TCOFFEEREGRESSIVE_ALIGN.out.msa)
-
-
-    // // 3DCOFFE TMALIGN
-    // // First collect the structures
-    // input_tcoffee3dtmalign = ch_fasta_trees.tcoffee3D_tmalign
-    //                                        .map{ it -> [it[0]["id"], it[0],it[1], it[2]] }
-    //                                        .combine(ch_structures.map{ it -> [it[0]["id"], it[1]]}, by: 0 )
-    //                                        .map{ it -> [it[1], it[2], it[3], it[4]] }
-
-
-    // TCOFFEE3D_TMALIGN_ALIGN(input_tcoffee3dtmalign)
-    // ch_versions = ch_versions.mix(TCOFFEE3D_TMALIGN_ALIGN.out.versions.first())
-    // msa = msa.mix(TCOFFEE3D_TMALIGN_ALIGN.out.msa)
+    // ----------------------------------------------------------------
+    // For the one with no trees
+    // ----------------------------------------------------------------
 
     ch_fasta_notrees = ch_fasta_tools.without_tree
                             .map{ it -> [it[0] + it[1] , it[2]]}
                             .branch{
-                                mafft:    it[0]["align"] == "MAFFT"
-                                kalign:   it[0]["align"] == "KALIGN"
-                                learnmsa: it[0]["align"] == "LEARNMSA"
+                                mafft:    it[0]["aligner"] == "MAFFT"
+                                kalign:   it[0]["aligner"] == "KALIGN"
+                                learnmsa: it[0]["aligner"] == "LEARNMSA"
                             }
 
     // ---------------- MAFFT -----------------------

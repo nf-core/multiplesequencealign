@@ -16,16 +16,16 @@
                 "type": "string",
                 "meta": ["args_tree"]
             },
-            "align": {
+            "aligner": {
                 "type": "string",
-                "meta": ["align"],
+                "meta": ["aligner"],
                 "errorMessage": "align name must be provided and cannot contain spaces"
             },
-            "args_align": {
+            "args_aligner": {
                 "type": "string",
-                "meta": ["args_align"]
+                "meta": ["args_aligner"]
             }
         },
-        "required": ["align"]
+        "required": ["aligner"]
     }
 }
