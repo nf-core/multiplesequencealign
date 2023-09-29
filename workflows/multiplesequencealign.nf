@@ -101,7 +101,11 @@ workflow MULTIPLESEQUENCEALIGN {
     }
     .set { ch_structures }
 
-    ch_structures = UNTAR ( ch_structures.compressed ).untar.mix( ch_structures.uncompressed )
+    UNTAR ( ch_structures.compressed )
+        .out
+        .untar
+        .mix( ch_structures.uncompressed )
+        .set { ch_structures }
     ch_structures
         .map { 
             meta,dir -> 
