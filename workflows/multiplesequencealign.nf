@@ -88,7 +88,12 @@ workflow MULTIPLESEQUENCEALIGN {
 
     ch_seqs       = ch_input.map{ sample -> [ sample[0], file(sample[1]) ]}
     ch_refs       = ch_input.map{ sample -> [ sample[0], file(sample[2]) ]}
-    ch_structures = ch_input.map{ sample -> [ sample[0], sample[3]       ]}.filter{ it[1].size() > 0 }
+    ch_input
+        .map { 
+            sample -> [ sample[0], sample[3] ] 
+        }
+        .filter { it[1].size() > 0 }
+        .set { ch_structures }
     
     ch_structures.branch {
         compressed:   it[1].endsWith('.tar.gz')
