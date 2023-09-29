@@ -16,7 +16,6 @@ process MTMALIGN_ALIGN {
     def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    echo "Running mtmalign"
     grep -o "^>.*" "$fasta" | sed 's/^>//g' | sed 's/\$/.pdb/' > "mtmalign_list.txt"
     mTM-align -i mtmalign_list.txt -o sup
 
