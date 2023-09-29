@@ -17,12 +17,13 @@ include { CLUSTALO_GUIDETREE } from '../../modules/nf-core/clustalo/guidetree/ma
     //
 
    // Branch each guide tree rendering into a separate channel
-   ch_fastas_fortrees = ch_fastas.combine(tree_tools)
-                                 .map( it -> [it[0] + it[2], it[1]] )
-                                 .branch{
-                                          famsa:    it[0]["tree"] == "FAMSA"
-                                          clustalo: it[0]["tree"] == "CLUSTALO"
-                                        }
+   ch_fastas_fortrees = ch_fastas
+                           .combine(tree_tools)
+                           .map( it -> [it[0] + it[2], it[1]] )
+                           .branch{
+                              famsa:    it[0]["tree"] == "FAMSA"
+                              clustalo: it[0]["tree"] == "CLUSTALO"
+                           }
 
       
     FAMSA_GUIDETREE(ch_fastas_fortrees.famsa)
