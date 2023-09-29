@@ -102,7 +102,12 @@ workflow MULTIPLESEQUENCEALIGN {
     .set { ch_structures }
 
     ch_structures = UNTAR ( ch_structures.compressed ).untar.mix( ch_structures.uncompressed )
-    ch_structures = ch_structures.map { meta,dir -> [meta,file(dir).listFiles().collect()]}
+    ch_structures
+        .map { 
+            meta,dir -> 
+                [ meta,file(dir).listFiles().collect() ] 
+        }
+        .set { ch_structures }
 
 
     // Compute summary statistics about the input sequences
