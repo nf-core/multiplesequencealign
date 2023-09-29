@@ -8,7 +8,6 @@ process MTMALIGN_ALIGN {
 
     output:
     tuple val (meta), path ("*.aln"), emit: msa
-    path "versions.yml" , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
