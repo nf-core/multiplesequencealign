@@ -8,7 +8,7 @@ process TCOFFEE_ALNCOMPARE_EVAL {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/t-coffee:13.45.0.4846264--hc57179f_5':
         'biocontainers/t-coffee:13.45.0.4846264--hc57179f_5' }"
-        
+    
     input:
     tuple  val(meta), file (msa), file (ref_msa)
 
