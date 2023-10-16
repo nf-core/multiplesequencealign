@@ -5,21 +5,21 @@ include { CLUSTALO_GUIDETREE } from '../../modules/nf-core/clustalo/guidetree/ma
  
  workflow COMPUTE_TREES {
 
-    take:
-    ch_fastas               //channel: [ meta, /path/to/file.fasta ]
-    tree_tools              //channel: [ meta ] ( tools to be run: meta.tree, meta.args_tree )
+   take:
+   ch_fastas               //channel: [ meta, /path/to/file.fasta ]
+   tree_tools              //channel: [ meta ] ( tools to be run: meta.tree, meta.args_tree )
      
-    main:
-    ch_versions = Channel.empty()
+   main:
+   ch_versions = Channel.empty()
 
-    // 
-    // Render the required guide trees  
-    //
+   // 
+   // Render the required guide trees  
+   //
 
    // Branch each guide tree rendering into a separate channel
    ch_fastas_fortrees = ch_fastas
                            .combine(tree_tools)
-                           .map( it -> [it[0] + it[2], it[1]] )
+                           .map{ metafasta, fasta, metatree -> [metafasta+metatree, fasta] }
                            .branch{
                               famsa:    it[0]["tree"] == "FAMSA"
                               clustalo: it[0]["tree"] == "CLUSTALO"

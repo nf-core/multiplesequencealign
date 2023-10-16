@@ -40,16 +40,16 @@ workflow ALIGN {
     trees = COMPUTE_TREES.out.trees
     ch_versions = ch_versions.mix(COMPUTE_TREES.out.versions)
 
-    ch_fastas.combine(ch_tools)
-        .map{ it -> [it[0] + it[2] ,  it[3], it[1]] }
+    ch_fastas.combine(ch_tools).view()
+        .map{ metafasta, fasta, metatree, metaalign -> [metafasta+metatree , metaalign, fasta] }
         .set { ch_fasta_tools }
 
     // ------------------------------------------------
     // Add back trees to the fasta channel
     // ------------------------------------------------
     ch_fasta_tools
-        .join(trees, by: [0], remainder:true )
-        .map { metafasta, metatree, fasta, tree -> [metafasta + metatree, fasta, tree]}
+        .join(trees, by: [0], remainder:true ).view()
+        .map { metafasta_tree, metaalign, fasta, tree -> [metafasta_tree + metaalign, fasta, tree]}
         .map { meta, fasta, tree ->  tree ? [meta,fasta, tree] : [meta, fasta, []] }
         .branch {
             famsa:               it[0]["aligner"] == "FAMSA"
@@ -74,7 +74,7 @@ workflow ALIGN {
                                 .multiMap{
                                     meta, fastafile, treefile ->
                                     fasta: [ meta, fastafile ]
-                                    tree: [ meta, treefile ]
+                                    tree:  [ meta, treefile ]
                                 }
     CLUSTALO_ALIGN(ch_fasta_trees_clustalo.fasta, ch_fasta_trees_clustalo.tree)
     ch_versions = ch_versions.mix(CLUSTALO_ALIGN.out.versions.first())
@@ -85,7 +85,7 @@ workflow ALIGN {
                                 .multiMap{
                                     meta, fastafile, treefile ->
                                     fasta: [ meta, fastafile ]
-                                    tree: [ meta, treefile ]
+                                    tree:  [ meta, treefile  ]
                                 }
 
     FAMSA_ALIGN(ch_fasta_trees_famsa.fasta, ch_fasta_trees_famsa.tree )
