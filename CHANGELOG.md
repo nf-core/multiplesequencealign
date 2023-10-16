@@ -15,9 +15,12 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 [#35](https://github.com/nf-core/multiplesequencealign/issues/35) - Add module Tcoffee_align
 [#60](https://github.com/nf-core/multiplesequencealign/issues/60) - Add module Tcoffee3D_align and handle structures input
 
+
 ### `Fixed`
 
 [#61](https://github.com/nf-core/multiplesequencealign/issues/61) - Fix filtering of unique guidetree compuation instructions: no double GT computation.
+[#57](https://github.com/nf-core/multiplesequencealign/issues/57) - Update naming in the naming of the meta channels.
+[#66](https://github.com/nf-core/multiplesequencealign/issues/57) - README: add new metromap and available tool list. 
 
 ### `Dependencies`
 
