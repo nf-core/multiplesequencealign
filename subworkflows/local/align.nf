@@ -152,7 +152,7 @@ workflow ALIGN {
                                 }
     MUSCLE5_SUPER5(ch_fasta_muscle5.fasta)
     ch_versions = ch_versions.mix(MUSCLE5_SUPER5.out.versions.first())
-    msa = msa.mix(MUSCLE5_SUPER5.out.msa.first())
+    msa = msa.mix(MUSCLE5_SUPER5.out.aligned_fasta.first())
     
 
     emit:
