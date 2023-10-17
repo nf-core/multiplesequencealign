@@ -23,12 +23,28 @@ On release, automated continuous integration tests run the pipeline on a full-si
 
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 
-1. **Stats**: computation of summary statistics on the input fasta file, such as the average similarity across sequences, their length, etc.
-2. **Collect dress-up infos**: any external information required by the downstream steps will be retrieved. For example, in the case of protein sequences, subworkflows of the proteinfold pipeline can be used to run de novo protein structure prediction software, alternatively, a database search followed by the fetching of the structures.
-3. **Align**: runs multiple sequence alignment software. If possible, distance metrics computation, guide tree rendering and assembly steps will be kept separate to evaluate their individual contribution to the final result.
-4. **Evaluate**: here the MSAs are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.
-5. **Visualize**: colour the MSA according to TCS, visualize summary plots about performance etc.
-6. **Compress**: as the final MSA files are very large, compression tools will be used before storing the final result
+1. **Collect Input Information**: computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc. Skip by --skip_stats
+2. **Guide Tree**: (Optional, depends on alignment tools requirement) Renders a guide tree.
+3. **Align**: Runs one or multiple MSA tools in parallel.
+4. **Evaluate**: The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skip by --skip_eval
+5. **Compress**: As the final MSA files are very large, compression tools will be used before storing the final result. Skip by --skip_compress
+
+Available GUIDE TREE methods:
+
+- CLUSTALO
+- FAMSA
+
+Available ALIGN methods:
+
+- CLUSTALO
+- FAMSA
+- TCOFFEE
+- 3DCOFFEE
+- MAFFT
+- KALIGN
+- LEARNMSA
+- MTMALIGN
+- MUSCLE5
 
 ## Usage
 

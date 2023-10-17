@@ -23,6 +23,9 @@
             },
             "structures": {
                 "type": "string"
+            },
+            "template": {
+                "type": "string"
             }
         },
         "required": ["id", "fasta"]
