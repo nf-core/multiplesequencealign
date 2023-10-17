@@ -44,6 +44,7 @@ Available ALIGN methods:
 - KALIGN
 - LEARNMSA
 - MTMALIGN
+- MUSCLE5
 
 ## Usage
 
