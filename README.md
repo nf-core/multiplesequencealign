@@ -21,7 +21,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 On release, automated continuous integration tests run the pipeline on a full-sized dataset on the AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources.The results obtained from the full-sized test can be viewed on the [nf-core website](https://nf-co.re/proteinfold/results).
 
-![Alt text](docs/images/nf-core-msa_metro_map.pdf?raw=true "nf-core-msa metro map")
+![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 
 1. **Collect Input Information**: computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc. Skip by --skip_stats
 2. **Guide Tree**: (Optional, depends on alignment tools requirement) Renders a guide tree.
