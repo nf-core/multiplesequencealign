@@ -1,4 +1,9 @@
 tree,args_tree,aligner,args_aligner
+tree,args_tree,aligner,args_aligner
 FAMSA,"-gt upgma -parttree",FAMSA,""
 "","",MAFFT,"--anysymbol --quiet --dpparttree"
-"", "","3DCOFFEE", "-method TMalign_pair"
+"","","KALIGN",""
+CLUSTALO,"--force",3DCOFFEE,"-method TMalign_pair"
+CLUSTALO,"--force",TCOFFEE,"-reg -reg_method famsa_msa -reg_nseq 100"
+"","",FAMSA,""
+FAMSA,"",TCOFFEE,"-reg -reg_method famsa_msa -reg_nseq 100"
