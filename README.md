@@ -25,15 +25,17 @@ On release, automated continuous integration tests run the pipeline on a full-si
 
 1. **Collect Input Information**: computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc. Skip by --skip_stats
 2. **Guide Tree**: (Optional, depends on alignment tools requirement) Renders a guide tree.
-2. **Align**: Runs one or multiple MSA tools in parallel.
+3. **Align**: Runs one or multiple MSA tools in parallel.
 4. **Evaluate**: The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skip by --skip_eval
 5. **Compress**: As the final MSA files are very large, compression tools will be used before storing the final result. Skip by --skip_compress
 
-Available GUIDE TREE methods: 
+Available GUIDE TREE methods:
+
 - CLUSTALO
 - FAMSA
 
-Available ALIGN methods: 
+Available ALIGN methods:
+
 - CLUSTALO
 - FAMSA
 - TCOFFEE
@@ -97,7 +99,7 @@ For more details about the output files and reports, please refer to the
 
 nf-core/multiplesequencealign was originally written by Luisa Santus ([@luisas](https://github.com/luisas)) and Jose Espinosa-Carrasco ([@JoseEspinosa](https://github.com/JoseEspinosa)) from The Comparative Bioinformatics Group at The Centre for Genomic Regulation, Spain.
 
-We thank the following people for their extensive assistance in the development of this pipeline: 
+We thank the following people for their extensive assistance in the development of this pipeline:
 
 <!-- TODO nf-core: If applicable, make list of people who have also contributed -->
 

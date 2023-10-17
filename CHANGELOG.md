@@ -20,8 +20,8 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 
 [#61](https://github.com/nf-core/multiplesequencealign/issues/61) - Fix filtering of unique guidetree compuation instructions: no double GT computation.
 [#57](https://github.com/nf-core/multiplesequencealign/issues/57) - Update naming in the naming of the meta channels.
-[#66](https://github.com/nf-core/multiplesequencealign/issues/66) - README: add new metromap and available tool list. 
-[#54](https://github.com/nf-core/multiplesequencealign/issues/54) - Update modules versions from nf-core tools. 
+[#66](https://github.com/nf-core/multiplesequencealign/issues/66) - README: add new metromap and available tool list.
+[#54](https://github.com/nf-core/multiplesequencealign/issues/54) - Update modules versions from nf-core tools.
 
 ### `Dependencies`
 
