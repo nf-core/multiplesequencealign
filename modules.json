@@ -55,6 +55,11 @@
                         "git_sha": "a6e11ac655e744f7ebc724be669dd568ffdc0e80",
                         "installed_by": ["modules"]
                     },
+                    "muscle5/super5": {
+                        "branch": "master",
+                        "git_sha": "1a3b00999deb0dc0e87fa4817d05712d4c343e4d",
+                        "installed_by": ["modules"]
+                    },
                     "tcoffee/align": {
                         "branch": "master",
                         "git_sha": "98f05ea2f3fe405e14fdc6ac362fef446549e237",

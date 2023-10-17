@@ -9,6 +9,7 @@ include {   KALIGN_ALIGN                      } from '../../modules/nf-core/kali
 include {   LEARNMSA_ALIGN                    } from '../../modules/nf-core/learnmsa/align/main'
 include {   TCOFFEE_ALIGN                     } from '../../modules/nf-core/tcoffee/align/main'
 include {   TCOFFEE_ALIGN as TCOFFEE3D_ALIGN  } from '../../modules/nf-core/tcoffee/align/main'
+include {   MUSCLE5_SUPER5                    } from '../../modules/nf-core/muscle5/super5/main'
 
 // Include local modules
 include {   CREATE_TCOFFEETEMPLATE            } from '../../modules/local/create_tcoffee_template' 
@@ -59,6 +60,7 @@ workflow ALIGN {
             kalign:              it[0]["aligner"] == "KALIGN"
             learnmsa:            it[0]["aligner"] == "LEARNMSA"
             mtmalign:            it[0]["aligner"] == "MTMALIGN"
+            muscle5:             it[0]["aligner"] == "MUSCLE5"
         }
         .set { ch_fasta_trees }
 
@@ -109,7 +111,6 @@ workflow ALIGN {
     LEARNMSA_ALIGN(ch_fasta_learnmsa.fasta)
     ch_versions = ch_versions.mix(LEARNMSA_ALIGN.out.versions.first())
 
-
     // ---------------- MAFFT -----------------------
     ch_fasta_mafft = ch_fasta_trees.mafft
                                 .multiMap{
@@ -118,7 +119,6 @@ workflow ALIGN {
                                 }
     MAFFT(ch_fasta_mafft.fasta, [])
     ch_versions = ch_versions.mix(MAFFT.out.versions.first())
-
 
     // -----------------  TCOFFEE  ------------------
     ch_fasta_trees_tcoffee = ch_fasta_trees.tcoffee
@@ -144,6 +144,16 @@ workflow ALIGN {
     ch_versions = ch_versions.mix(TCOFFEE3D_ALIGN.out.versions.first())
     msa = msa.mix(TCOFFEE3D_ALIGN.out.msa)
 
+    // -----------------  MUSCLE5  ------------------
+    ch_fasta_muscle5 = ch_fasta_trees.muscle5
+                                .multiMap{
+                                    meta, fastafile, treefile ->
+                                    fasta: [ meta, fastafile ]
+                                }
+    MUSCLE5_SUPER5(ch_fasta_muscle5.fasta)
+    ch_versions = ch_versions.mix(MUSCLE5_SUPER5.out.versions.first())
+    msa = msa.mix(MTMALIGN_ALIGN.out.msa.first())
+    
 
     emit:
     msa                             
