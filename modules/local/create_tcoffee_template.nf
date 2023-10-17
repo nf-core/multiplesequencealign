@@ -6,7 +6,7 @@ process CREATE_TCOFFEETEMPLATE {
     tuple val(meta), path(accessory_informations)
 
     output:
-    tuple val (meta), path("*_template.txt"), path (accessory_informations), emit: structure_and_template
+    tuple val (meta), path("*_template.txt"), emit: template
 
     when:
     task.ext.when == null || task.ext.when

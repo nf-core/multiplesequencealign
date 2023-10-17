@@ -15,8 +15,6 @@ include { CLUSTALO_GUIDETREE } from '../../modules/nf-core/clustalo/guidetree/ma
    // 
    // Render the required guide trees  
    //
-
-   // Branch each guide tree rendering into a separate channel
    ch_fastas_fortrees = ch_fastas
                            .combine(tree_tools)
                            .map{ metafasta, fasta, metatree -> [metafasta+metatree, fasta] }

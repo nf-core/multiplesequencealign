@@ -23,7 +23,6 @@ workflow ALIGN {
     main:
 
     ch_versions = Channel.empty()
-
     // Branch the toolsheet information into two channels
     // This way, it can direct the computation of guidetrees
     // and aligners separately
@@ -40,7 +39,7 @@ workflow ALIGN {
     trees = COMPUTE_TREES.out.trees
     ch_versions = ch_versions.mix(COMPUTE_TREES.out.versions)
 
-    ch_fastas.combine(ch_tools).view()
+    ch_fastas.combine(ch_tools)
         .map{ metafasta, fasta, metatree, metaalign -> [metafasta+metatree , metaalign, fasta] }
         .set { ch_fasta_tools }
 
@@ -48,7 +47,7 @@ workflow ALIGN {
     // Add back trees to the fasta channel
     // ------------------------------------------------
     ch_fasta_tools
-        .join(trees, by: [0], remainder:true ).view()
+        .join(trees, by: [0], remainder:true )
         .map { metafasta_tree, metaalign, fasta, tree -> [metafasta_tree + metaalign, fasta, tree]}
         .map { meta, fasta, tree ->  tree ? [meta,fasta, tree] : [meta, fasta, []] }
         .branch {
@@ -133,11 +132,10 @@ workflow ALIGN {
     msa = msa.mix(TCOFFEE_ALIGN.out.msa)
 
     // -----------------  3DCOFFEE  ------------------ 
-    ch_structures_and_template = CREATE_TCOFFEETEMPLATE(ch_structures).structure_and_template
     ch_fasta_trees_3dcoffee = ch_fasta_trees.tcoffee3d.map{ meta, fasta, tree -> [meta["id"], meta, fasta, tree] }
-                                                   .combine(ch_structures_and_template.map{ meta, template, structures -> [meta["id"], template, structures]}, by: 0)
+                                                   .combine(ch_structures.map{ meta, structures, template -> [meta["id"], structures, template]}, by: 0)
                                                    .multiMap{
-                                                                merging_id, meta, fastafile, treefile, templatefile, structuresfiles ->
+                                                                merging_id, meta, fastafile, treefile, structuresfiles, templatefile ->
                                                                 fasta:      [ meta, fastafile       ]
                                                                 tree:       [ meta, treefile        ]
                                                                 structures: [ meta, templatefile, structuresfiles ]
@@ -146,17 +144,6 @@ workflow ALIGN {
     ch_versions = ch_versions.mix(TCOFFEE3D_ALIGN.out.versions.first())
     msa = msa.mix(TCOFFEE3D_ALIGN.out.msa)
 
-    // -----------------  MTMALIGN  ------------------
-
-    ch_fasta_mtmalign = ch_fasta_trees.mtmalign.map{ meta, fasta, tree -> [meta["id"], meta, fasta, tree] }
-                                                    .combine(ch_structures.map{ meta, structures -> [meta["id"], structures]}, by: 0)   
-                                                    .multiMap{merging_id, meta, fastafile, treefile, structuresfiles ->
-                                                              fasta:      [ meta, fastafile       ]
-                                                              structures: [ meta, structuresfiles ]
-                                                             }
-    MTMALIGN_ALIGN(ch_fasta_mtmalign.fasta, ch_fasta_mtmalign.structures)
-    //ch_versions = ch_versions.mix(MTMALIGN_ALIGN.out.versions.first())
-    msa = msa.mix(MTMALIGN_ALIGN.out.msa)
 
     emit:
     msa                             

@@ -35,6 +35,7 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 include { STATS                       } from '../subworkflows/local/stats'
 include { ALIGN                       } from '../subworkflows/local/align'
 include { EVALUATE                    } from '../subworkflows/local/evaluate'
+include { CREATE_TCOFFEETEMPLATE      } from '../modules/local/create_tcoffee_template' 
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -86,34 +87,57 @@ workflow MULTIPLESEQUENCEALIGN {
                     }
 
 
-    ch_seqs       = ch_input.map{ sample -> [ sample[0], file(sample[1]) ]}
-    ch_refs       = ch_input.map{ sample -> [ sample[0], file(sample[2]) ]}
-    ch_input
-        .map { 
-            sample -> [ sample[0], sample[3] ] 
-        }
-        .filter { it[1].size() > 0 }
-        .set { ch_structures }
+    ch_seqs       = ch_input.map{ meta,fasta,ref,str,template -> [ meta, file(fasta)    ]}
+    ch_refs       = ch_input.filter{ it[2].size() > 0}.map{ meta,fasta,ref,str,template -> [ meta, file(ref)      ]}
+    ch_templates  = ch_input.filter{ it[4].size() > 0}.map{ meta,fasta,ref,str,template -> [ meta, file(template) ]}
+    ch_structures = ch_input.map{ meta,fasta,ref,str,template -> [ meta, str            ]}.filter{ it[1].size() > 0 }
     
+    // ----------------
+    // STRUCTURES 
+    // ----------------
+    // Structures are taken from a directory of PDB files.
+    // If the directory is compressed, it is uncompressed first.
     ch_structures.branch {
         compressed:   it[1].endsWith('.tar.gz')
         uncompressed: true
-    }
-    .set { ch_structures }
+    }.set { ch_structures }
 
     UNTAR ( ch_structures.compressed )
         .untar
         .mix( ch_structures.uncompressed )
-        .set { ch_structures }
-
-
-    ch_structures
         .map { 
             meta,dir -> 
                 [ meta,file(dir).listFiles().collect() ] 
         }
         .set { ch_structures }
+    
 
+    // ----------------
+    // TEMPLATES 
+    // ----------------
+    // If a family does not present a template, create one. 
+    ch_structures_template = ch_structures.join(ch_templates, by:0, remainder:true)
+    ch_structures_template.branch{
+                                    template: it[2] != null
+                                    no_template: true
+                            }.set { ch_structures_branched }
+
+    // Create the new templates and merge them with the existing templates
+    CREATE_TCOFFEETEMPLATE(ch_structures_branched.no_template
+                                                        .map{ 
+                                                            meta,structures,template 
+                                                                            -> [ meta, structures ] 
+                                                            })
+    new_templates = CREATE_TCOFFEETEMPLATE.out.template
+    forced_templates = ch_structures_branched.template
+                                                .map{ 
+                                                    meta,structures,template 
+                                                                        -> [ meta, template ] 
+                                                }
+    ch_templates_merged = forced_templates.mix( new_templates)
+
+    // Merge the structures and templates channels, ready for the alignment
+    ch_structures_template = ch_structures.combine(ch_templates_merged, by:0)
 
     // Compute summary statistics about the input sequences
     //
@@ -126,7 +150,7 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // Align
     //
-    ALIGN(ch_seqs, ch_tools, ch_structures)
+    ALIGN(ch_seqs, ch_tools, ch_structures_template )
     ch_versions = ch_versions.mix(ALIGN.out.versions)
 
     //
