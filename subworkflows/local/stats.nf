@@ -2,9 +2,11 @@
 // Compute stats about the input sequences
 //
 
-include {   TCOFFEE_SEQREFORMAT_SIM       } from '../../modules/local/tcoffee_seqreformat_sim.nf'
-include {   CALCULATE_SEQSTATS            } from '../../modules/local/calculate_seqstats.nf'
-include {   MERGE_STATS                   } from '../../modules/local/merge_stats.nf'
+include {   TCOFFEE_SEQREFORMAT_SIM              } from '../../modules/local/tcoffee_seqreformat_sim.nf'
+include {   CALCULATE_SEQSTATS                   } from '../../modules/local/calculate_seqstats.nf'
+include {   CSVTK_CONCAT  as CONCAT_SEQSTATS     } from '../../modules/nf-core/csvtk/concat/main.nf'
+include {   CSVTK_CONCAT  as CONCAT_SIMSTATS     } from '../../modules/nf-core/csvtk/concat/main.nf'
+include {   CSVTK_JOIN    as MERGE_STATS         } from '../../modules/nf-core/csvtk/join/main.nf'
 
 
 workflow STATS {
@@ -15,43 +17,53 @@ workflow STATS {
     main:
 
     ch_versions = Channel.empty()
+
+    // -------------------------------------------
+    //      SEQUENCE SIMILARITY 
+    // -------------------------------------------
     TCOFFEE_SEQREFORMAT_SIM(ch_seqs)
     tcoffee_seqreformat_sim = TCOFFEE_SEQREFORMAT_SIM.out.perc_sim
     tcoffee_seqreformat_simtot = TCOFFEE_SEQREFORMAT_SIM.out.perc_sim_tot
-    ch_versions = ch_versions.mix(TCOFFEE_SEQREFORMAT_SIM.out.versions.first())                    
+    //ch_versions = ch_versions.mix(TCOFFEE_SEQREFORMAT_SIM.out.versions.first()) 
+    
+    ch_sim_summary = tcoffee_seqreformat_simtot.map{ 
+                                                meta, csv -> csv
+                                            }.collect().unique().map{
+                                                csv -> [ [id_simstats:"summary_simstats"], csv]
+                                            }
+    CONCAT_SIMSTATS(ch_sim_summary, "csv", "csv")
 
+    // -------------------------------------------
+    //      SEQUENCE GENERAL STATS
+    //      Sequence length, # of sequences, etc 
+    // -------------------------------------------
     CALCULATE_SEQSTATS(ch_seqs)
     seqstats = CALCULATE_SEQSTATS.out.seqstats
     seqstats_summary = CALCULATE_SEQSTATS.out.seqstats_summary
     ch_versions = ch_versions.mix(CALCULATE_SEQSTATS.out.versions.first())
 
-
-    // 
-    // Summarize stats into one summary file
-    //  
-    tcoffee_seqreformat_simtot.map{ it ->  "${it[1].text}" }.collectFile( name: 'tcoffee_seqreformat_simtot_summary.csv',
-                                                                          keepHeader : true,
-                                                                          skip:1,                                         
-                                                                          newLine: false)
-                                                            .set { tcoffee_seqreformat_simtot_summary }
+    ch_seqstats_summary = seqstats_summary.map{ 
+                                                meta, csv -> csv
+                                            }.collect().unique().map{
+                                                csv -> [ [id_seqstats:"summary_seqstats"], csv]
+                                            }
+    CONCAT_SEQSTATS(ch_seqstats_summary, "csv", "csv")
 
 
-    seqstats_summary.map{ it ->  "${it[1].text}" }.collectFile( name: 'seqstats.csv',
-                                                                          keepHeader : true,
-                                                                          skip:1,                                         
-                                                                          newLine: false)
-                                                  .set { seqstats_summary }
+    // -------------------------------------------
+    //      MERGE ALL STATS
+    // -------------------------------------------
 
-    MERGE_STATS( tcoffee_seqreformat_simtot_summary,
-                 seqstats_summary )
-    
+    csv_sim      = CONCAT_SIMSTATS.out.csv.map{ meta, csv -> csv }
+    csv_seqstats = CONCAT_SEQSTATS.out.csv.map{ meta, csv -> csv }
+
+    csvs_stats = csv_sim.mix(csv_seqstats).collect().map{ csvs -> [[id:"summary_stats"], csvs] }
+    csvs_stats.view()
+    MERGE_STATS(csvs_stats)
+    stats_summary = MERGE_STATS.out.csv
     ch_versions = ch_versions.mix(MERGE_STATS.out.versions)                      
 
-
     emit:
-    tcoffee_seqreformat_sim                           
-    tcoffee_seqreformat_simtot 
-    seqstats
-    seqstats_summary                              
+    stats_summary                             
     versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
 }
