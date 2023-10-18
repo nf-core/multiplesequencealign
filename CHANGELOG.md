@@ -25,7 +25,6 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 [#54](https://github.com/nf-core/multiplesequencealign/issues/54) - Update modules versions from nf-core tools.
 [#32](https://github.com/nf-core/multiplesequencealign/issues/32) - Update Stats workflow with nf-core modules for merging.
 
-
 ### `Dependencies`
 
 ### `Deprecated`
