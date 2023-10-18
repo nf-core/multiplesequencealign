@@ -23,6 +23,8 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 [#57](https://github.com/nf-core/multiplesequencealign/issues/57) - Update naming in the naming of the meta channels.
 [#66](https://github.com/nf-core/multiplesequencealign/issues/66) - README: add new metromap and available tool list.
 [#54](https://github.com/nf-core/multiplesequencealign/issues/54) - Update modules versions from nf-core tools.
+[#32](https://github.com/nf-core/multiplesequencealign/issues/32) - Update Stats workflow with nf-core modules for merging.
+
 
 ### `Dependencies`
 
