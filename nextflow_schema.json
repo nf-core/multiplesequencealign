@@ -80,6 +80,18 @@
                 }
             }
         },
+        "compression": {
+            "title": "Compression",
+            "type": "object",
+            "description": "Define wether to run compression",
+            "default": "",
+            "properties": {
+                "skip_compres": {
+                    "type": "boolean",
+                    "description": "Skip the compression of all alignment files"
+                }
+            }
+        },
         "institutional_config_options": {
             "title": "Institutional config options",
             "type": "object",
@@ -284,6 +296,9 @@
         },
         {
             "$ref": "#/definitions/eval_options"
+        },
+        {
+            "$ref": "#/definitions/compression"
         },
         {
             "$ref": "#/definitions/institutional_config_options"

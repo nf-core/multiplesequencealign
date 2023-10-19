@@ -155,6 +155,7 @@ workflow MULTIPLESEQUENCEALIGN {
     ALIGN(ch_seqs, ch_tools, ch_structures_template )
     ch_versions = ch_versions.mix(ALIGN.out.versions)
 
+
     //
     // Evaluate the quality of the alignment
     //
@@ -171,7 +172,7 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // MODULE: zip
     //
-    if( !params.skip_compression ){
+    if( !params.skip_compres ){
         ZIP(ALIGN.out.msa)
         ch_versions = ch_versions.mix(ZIP.out.versions)
     }
