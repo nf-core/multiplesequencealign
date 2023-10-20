@@ -46,10 +46,12 @@ include { CREATE_TCOFFEETEMPLATE      } from '../modules/local/create_tcoffee_te
 //
 // MODULE: Installed directly from nf-core/modules
 //
+
 include { FASTQC                      } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { UNTAR                       } from '../modules/nf-core/untar/main'
+include { ZIP                         } from '../modules/nf-core/zip/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -153,6 +155,7 @@ workflow MULTIPLESEQUENCEALIGN {
     ALIGN(ch_seqs, ch_tools, ch_structures_template )
     ch_versions = ch_versions.mix(ALIGN.out.versions)
 
+
     //
     // Evaluate the quality of the alignment
     //
@@ -165,6 +168,14 @@ workflow MULTIPLESEQUENCEALIGN {
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
+
+    //
+    // MODULE: zip
+    //
+    if( !params.skip_compress ){
+        ZIP(ALIGN.out.msa)
+        ch_versions = ch_versions.mix(ZIP.out.versions)
+    }
 
     //
     // MODULE: MultiQC

@@ -16,6 +16,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 [#60](https://github.com/nf-core/multiplesequencealign/issues/60) - Add module Tcoffee3D_align and handle structures input
 [#35](https://github.com/nf-core/multiplesequencealign/issues/35) - Add module MUSCLE5_SUPER5
 [#59](https://github.com/nf-core/multiplesequencealign/issues/59) - Add support for passing structure template in samplesheet.
+[#77](https://github.com/nf-core/multiplesequencealign/issues/77) - Add module zip
 
 ### `Fixed`
 
