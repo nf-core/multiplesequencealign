@@ -172,7 +172,7 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // MODULE: zip
     //
-    if( !params.skip_compres ){
+    if( !params.skip_compress ){
         ZIP(ALIGN.out.msa)
         ch_versions = ch_versions.mix(ZIP.out.versions)
     }
