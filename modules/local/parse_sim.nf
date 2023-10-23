@@ -19,7 +19,7 @@ process PARSE_SIM {
     grep ^TOT $infile | cut -f4 >> tmp
 
     echo "id,perc_sim" > ${prefix}.sim_tot
-    cat tmp | tr '\\n' ',' | awk 'gsub(/,\$/,x)' >>  ${prefix}.sim_tot   
+    cat tmp | tr '\\n' ',' | awk 'gsub(/,\$/,x)' >>  ${prefix}.sim_tot
     """
 
     stub:
