@@ -1,6 +1,6 @@
 
 
-process TCOFFEE_SEQREFORMAT_SIM {
+process TCOFFEE_SEQREFORMAT {
     tag "$meta.id"
     label 'process_low'
 
@@ -11,10 +11,10 @@ process TCOFFEE_SEQREFORMAT_SIM {
 
     input:
     tuple val(meta), path(fasta)
+    val(seq_reformat_type)
 
     output:
-    tuple val(meta), path("*.sim"), emit: perc_sim
-    tuple val(meta), path("*.sim_tot"), emit: perc_sim_tot
+    tuple val(meta), path("${prefix}_${seq_reformat_type}.txt"), emit: formatted_file
     path "versions.yml" , emit: versions
 
 
@@ -25,8 +25,13 @@ process TCOFFEE_SEQREFORMAT_SIM {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    t_coffee -other_pg seq_reformat -in ${fasta} -output=sim_idscore > "${prefix}.sim"
+    t_coffee -other_pg seq_reformat
+         -in ${fasta}
+         $args
+         -output=${seq_reformat_type}
+         > "${prefix}_${seq_reformat_type}.txt"
 
+    
     echo "$prefix" > tmp
     grep ^TOT ${prefix}.sim | cut -f4 >> tmp
 
