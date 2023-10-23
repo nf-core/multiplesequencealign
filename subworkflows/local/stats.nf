@@ -1,12 +1,11 @@
 //
 // Compute stats about the input sequences
 //
-
-include {   TCOFFEE_SEQREFORMAT_SIM              } from '../../modules/local/tcoffee_seqreformat_sim.nf'
-include {   CALCULATE_SEQSTATS                   } from '../../modules/local/calculate_seqstats.nf'
-include {   CSVTK_CONCAT  as CONCAT_SEQSTATS     } from '../../modules/nf-core/csvtk/concat/main.nf'
-include {   CSVTK_CONCAT  as CONCAT_SIMSTATS     } from '../../modules/nf-core/csvtk/concat/main.nf'
-include {   CSVTK_JOIN    as MERGE_STATS         } from '../../modules/nf-core/csvtk/join/main.nf'
+include {   CALCULATE_SEQSTATS                             } from '../../modules/local/calculate_seqstats.nf'
+include {   TCOFFEE_SEQREFORMAT as TCOFFEE_SEQREFORMAT_SIM } from '../../modules/nf-core/tcoffee/seqreformat/main.nf'
+include {   CSVTK_CONCAT  as CONCAT_SEQSTATS               } from '../../modules/nf-core/csvtk/concat/main.nf'
+include {   CSVTK_CONCAT  as CONCAT_SIMSTATS               } from '../../modules/nf-core/csvtk/concat/main.nf'
+include {   CSVTK_JOIN    as MERGE_STATS                   } from '../../modules/nf-core/csvtk/join/main.nf'
 
 
 workflow STATS {
@@ -24,7 +23,7 @@ workflow STATS {
     TCOFFEE_SEQREFORMAT_SIM(ch_seqs)
     tcoffee_seqreformat_sim = TCOFFEE_SEQREFORMAT_SIM.out.perc_sim
     tcoffee_seqreformat_simtot = TCOFFEE_SEQREFORMAT_SIM.out.perc_sim_tot
-    //ch_versions = ch_versions.mix(TCOFFEE_SEQREFORMAT_SIM.out.versions.first()) 
+    ch_versions = ch_versions.mix(TCOFFEE_SEQREFORMAT_SIM.out.versions.first()) 
     
     ch_sim_summary = tcoffee_seqreformat_simtot.map{ 
                                                 meta, csv -> csv

@@ -75,6 +75,11 @@
                         "git_sha": "98f05ea2f3fe405e14fdc6ac362fef446549e237",
                         "installed_by": ["modules"]
                     },
+                    "tcoffee/seqreformat": {
+                        "branch": "master",
+                        "git_sha": "f759fd45ecabb40c761df1338a4bb3851171a7f7",
+                        "installed_by": ["modules"]
+                    },
                     "untar": {
                         "branch": "master",
                         "git_sha": "d0b4fc03af52a1cc8c6fb4493b921b57352b1dd8",
