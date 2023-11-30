@@ -117,7 +117,7 @@ workflow ALIGN {
                                     meta, fastafile, treefile ->
                                     fasta: [ meta, fastafile ]
                                 }
-    MAFFT(ch_fasta_mafft.fasta, [])
+    MAFFT(ch_fasta_mafft.fasta, [ [:], [] ], [ [:], [] ], [ [:], [] ], [ [:], [] ], [ [:], [] ])
     ch_versions = ch_versions.mix(MAFFT.out.versions.first())
 
     // -----------------  TCOFFEE  ------------------
@@ -129,7 +129,7 @@ workflow ALIGN {
                                 }
     TCOFFEE_ALIGN(ch_fasta_trees_tcoffee.fasta, ch_fasta_trees_tcoffee.tree,  [[:],[], []])
     ch_versions = ch_versions.mix(TCOFFEE_ALIGN.out.versions.first())
-    msa = msa.mix(TCOFFEE_ALIGN.out.msa)
+    msa = msa.mix(TCOFFEE_ALIGN.out.alignment)
 
     // -----------------  3DCOFFEE  ------------------ 
     ch_fasta_trees_3dcoffee = ch_fasta_trees.tcoffee3d.map{ meta, fasta, tree -> [meta["id"], meta, fasta, tree] }
@@ -142,7 +142,7 @@ workflow ALIGN {
                                                             }
     TCOFFEE3D_ALIGN(ch_fasta_trees_3dcoffee.fasta, ch_fasta_trees_3dcoffee.tree, ch_fasta_trees_3dcoffee.structures)
     ch_versions = ch_versions.mix(TCOFFEE3D_ALIGN.out.versions.first())
-    msa = msa.mix(TCOFFEE3D_ALIGN.out.msa)
+    msa = msa.mix(TCOFFEE3D_ALIGN.out.alignment)
 
     // -----------------  MUSCLE5  ------------------
     ch_fasta_muscle5 = ch_fasta_trees.muscle5
@@ -152,7 +152,7 @@ workflow ALIGN {
                                 }
     MUSCLE5_SUPER5(ch_fasta_muscle5.fasta)
     ch_versions = ch_versions.mix(MUSCLE5_SUPER5.out.versions.first())
-    msa = msa.mix(MUSCLE5_SUPER5.out.aligned_fasta.first())
+    msa = msa.mix(MUSCLE5_SUPER5.out.alignment.first())
     
 
     emit:
