@@ -16,11 +16,12 @@ workflow STATS {
 
     main:
 
+    ch_seqs.view()
     ch_versions = Channel.empty()
 
-    // -------------------------------------------
-    //      SEQUENCE SIMILARITY 
-    // -------------------------------------------
+    // // -------------------------------------------
+    // //      SEQUENCE SIMILARITY 
+    // // -------------------------------------------
     TCOFFEE_SEQREFORMAT_SIM(ch_seqs)
     tcoffee_seqreformat_sim = TCOFFEE_SEQREFORMAT_SIM.out.formatted_file
     ch_versions = ch_versions.mix(TCOFFEE_SEQREFORMAT_SIM.out.versions.first()) 
@@ -28,7 +29,7 @@ workflow STATS {
         
     ch_sim_summary = tcoffee_seqreformat_simtot.map{ 
                                                 meta, csv -> csv
-                                            }.collect().unique().map{
+                                            }.collect().map{
                                                 csv -> [ [id_simstats:"summary_simstats"], csv]
                                             }
     CONCAT_SIMSTATS(ch_sim_summary, "csv", "csv")
@@ -44,9 +45,10 @@ workflow STATS {
 
     ch_seqstats_summary = seqstats_summary.map{ 
                                                 meta, csv -> csv
-                                            }.collect().unique().map{
+                                            }.collect().map{
                                                 csv -> [ [id_seqstats:"summary_seqstats"], csv]
                                             }
+
     CONCAT_SEQSTATS(ch_seqstats_summary, "csv", "csv")
 
 
@@ -62,6 +64,7 @@ workflow STATS {
     MERGE_STATS(csvs_stats)
     stats_summary = MERGE_STATS.out.csv
     ch_versions = ch_versions.mix(MERGE_STATS.out.versions)                      
+
 
     emit:
     stats_summary                             
