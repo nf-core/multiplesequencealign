@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from Bio import SeqIO
 import pandas as pd
-import time
 import sys
 
 fam_name = sys.argv[1]

@@ -15,6 +15,16 @@
                         "git_sha": "1f253ec05723293df7757af8769f8389b7a1884e",
                         "installed_by": ["modules"]
                     },
+                    "csvtk/concat": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "csvtk/join": {
+                        "branch": "master",
+                        "git_sha": "b2420a8bbd8af137380aa0a0c2e9a92456e5bb21",
+                        "installed_by": ["modules"]
+                    },
                     "custom/dumpsoftwareversions": {
                         "branch": "master",
                         "git_sha": "bba7e362e4afead70653f84d8700588ea28d0f9e",
@@ -63,6 +73,11 @@
                     "tcoffee/align": {
                         "branch": "master",
                         "git_sha": "c83c78835ca6d7a55b3f200718d887cbc7149d37",
+                        "installed_by": ["modules"]
+                    },
+                    "tcoffee/seqreformat": {
+                        "branch": "master",
+                        "git_sha": "f759fd45ecabb40c761df1338a4bb3851171a7f7",
                         "installed_by": ["modules"]
                     },
                     "untar": {

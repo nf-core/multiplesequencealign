@@ -26,6 +26,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 [#66](https://github.com/nf-core/multiplesequencealign/issues/66) - README: add new metromap and available tool list.
 [#54](https://github.com/nf-core/multiplesequencealign/issues/54) - Update modules versions from nf-core tools.
 [#80](https://github.com/nf-core/multiplesequencealign/pull/80) - Update modules versions from nf-core tools with nf-test.
+[#32](https://github.com/nf-core/multiplesequencealign/issues/32) - Update Stats workflow with nf-core modules for merging.
 
 ### `Dependencies`
 
