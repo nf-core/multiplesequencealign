@@ -17,6 +17,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 [#35](https://github.com/nf-core/multiplesequencealign/issues/35) - Add module MUSCLE5_SUPER5
 [#59](https://github.com/nf-core/multiplesequencealign/issues/59) - Add support for passing structure template in samplesheet.
 [#77](https://github.com/nf-core/multiplesequencealign/issues/77) - Add module zip
+[#77](https://github.com/nf-core/multiplesequencealign/issues/77) - Add module zip
 
 ### `Fixed`
 
@@ -24,6 +25,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 [#57](https://github.com/nf-core/multiplesequencealign/issues/57) - Update naming in the naming of the meta channels.
 [#66](https://github.com/nf-core/multiplesequencealign/issues/66) - README: add new metromap and available tool list.
 [#54](https://github.com/nf-core/multiplesequencealign/issues/54) - Update modules versions from nf-core tools.
+[#80](https://github.com/nf-core/multiplesequencealign/pull/80)   - Update modules versions from nf-core tools with nf-test.
 [#32](https://github.com/nf-core/multiplesequencealign/issues/32) - Update Stats workflow with nf-core modules for merging.
 
 ### `Dependencies`
