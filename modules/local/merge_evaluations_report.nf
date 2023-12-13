@@ -4,7 +4,8 @@ process MERGE_EVALUATIONS_REPORT {
     label 'process_low'
 
     input:
-    path(tcoffee_alncompare_scores_summary)
+    path(sp)
+    path(tc)
     path(tcoffee_irmsd_scores_summary)
 
     output:

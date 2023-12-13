@@ -15,6 +15,8 @@ def tcoffee_irmsd_parse(input, output):
     df = df.transpose()
     # header = ",".join(list(df.columns.str.replace("\s","", regex = True)))
     # values = ",".join(list(df.iloc[0].tolist()))
+    # remove all spaces from column names
+    df.columns = df.columns.str.replace("\s", "", regex=True)
     df.to_csv(output, index=False)
 
 
