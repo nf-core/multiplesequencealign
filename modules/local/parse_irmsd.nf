@@ -18,7 +18,7 @@ process PARSE_IRMSD {
     def values = meta.values().join(",")
     """
     # Parse irmsd file
-    grep "TOTAL" $infile > ${prefix}.total_irmsd 
+    grep "TOTAL" $infile > ${prefix}.total_irmsd
 
     parsers.py -i ${prefix}.total_irmsd -o ${prefix}.scores.csv
 
