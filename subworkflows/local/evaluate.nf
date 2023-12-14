@@ -87,7 +87,6 @@ workflow EVALUATE {
 
     csvs_stats = csv_sp.mix(csv_tc).mix(csv_irmsd).collect().map{ csvs -> [[id:"summary_eval"], csvs] }
     MERGE_EVAL(csvs_stats)
-    stats_summary = MERGE_EVAL.out.csv
     ch_versions = ch_versions.mix(MERGE_EVAL.out.versions)    
 
 
