@@ -1,13 +1,13 @@
 
 
-include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_SP    } from '../../modules/nf-core/tcoffee/alncompare' 
-include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_TC    } from '../../modules/nf-core/tcoffee/alncompare'                                                                                                                                 
-include { TCOFFEE_IRMSD                                  } from '../../modules/nf-core/tcoffee/irmsd'
-include { CSVTK_CONCAT  as CONCAT_SP                     } from '../../modules/nf-core/csvtk/concat/main.nf'
-include { CSVTK_CONCAT  as CONCAT_TC                     } from '../../modules/nf-core/csvtk/concat/main.nf'
-include { CSVTK_CONCAT  as CONCAT_IRMSD                  } from '../../modules/nf-core/csvtk/concat/main.nf'
-include { CSVTK_JOIN    as MERGE_EVAL                    } from '../../modules/nf-core/csvtk/join/main.nf'
-include { PARSE_IRMSD                                    } from '../../modules/local/parse_irmsd.nf'         
+include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_SP } from '../../modules/nf-core/tcoffee/alncompare' 
+include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_TC } from '../../modules/nf-core/tcoffee/alncompare'                                                                                                                                 
+include { TCOFFEE_IRMSD                               } from '../../modules/nf-core/tcoffee/irmsd'
+include { CSVTK_CONCAT  as CONCAT_SP                  } from '../../modules/nf-core/csvtk/concat/main.nf'
+include { CSVTK_CONCAT  as CONCAT_TC                  } from '../../modules/nf-core/csvtk/concat/main.nf'
+include { CSVTK_CONCAT  as CONCAT_IRMSD               } from '../../modules/nf-core/csvtk/concat/main.nf'
+include { CSVTK_JOIN    as MERGE_EVAL                 } from '../../modules/nf-core/csvtk/join/main.nf'
+include { PARSE_IRMSD                                 } from '../../modules/local/parse_irmsd.nf'         
 
 workflow EVALUATE {
 
