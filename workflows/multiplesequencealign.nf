@@ -139,7 +139,7 @@ workflow MULTIPLESEQUENCEALIGN {
     ch_templates_merged = forced_templates.mix( new_templates)
 
     // Merge the structures and templates channels, ready for the alignment
-    ch_structures_template = ch_structures.combine(ch_templates_merged, by:0)
+    ch_structures_template = ch_templates_merged.combine(ch_structures, by:0)
 
     // Compute summary statistics about the input sequences
     //
@@ -160,7 +160,7 @@ workflow MULTIPLESEQUENCEALIGN {
     // Evaluate the quality of the alignment
     //
     if( !params.skip_eval ){
-        EVALUATE(ALIGN.out.msa, ch_refs, ch_structures)
+        EVALUATE(ALIGN.out.msa, ch_refs, ch_structures_template)
         ch_versions = ch_versions.mix(EVALUATE.out.versions)
     }
 

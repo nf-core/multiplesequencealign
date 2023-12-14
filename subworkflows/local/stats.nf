@@ -16,7 +16,6 @@ workflow STATS {
 
     main:
 
-    ch_seqs.view()
     ch_versions = Channel.empty()
 
     // // -------------------------------------------
@@ -60,7 +59,6 @@ workflow STATS {
     csv_seqstats = CONCAT_SEQSTATS.out.csv.map{ meta, csv -> csv }
 
     csvs_stats = csv_sim.mix(csv_seqstats).collect().map{ csvs -> [[id:"summary_stats"], csvs] }
-    csvs_stats.view()
     MERGE_STATS(csvs_stats)
     stats_summary = MERGE_STATS.out.csv
     ch_versions = ch_versions.mix(MERGE_STATS.out.versions)                      

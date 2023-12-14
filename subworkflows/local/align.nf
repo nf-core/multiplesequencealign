@@ -13,7 +13,6 @@ include {   MUSCLE5_SUPER5                    } from '../../modules/nf-core/musc
 
 // Include local modules
 include {   CREATE_TCOFFEETEMPLATE            } from '../../modules/local/create_tcoffee_template' 
-include {   MTMALIGN_ALIGN                    } from '../../modules/local/mtmalign_align'
 
 workflow ALIGN {
     take:
@@ -59,7 +58,6 @@ workflow ALIGN {
             mafft:               it[0]["aligner"] == "MAFFT"
             kalign:              it[0]["aligner"] == "KALIGN"
             learnmsa:            it[0]["aligner"] == "LEARNMSA"
-            mtmalign:            it[0]["aligner"] == "MTMALIGN"
             muscle5:             it[0]["aligner"] == "MUSCLE5"
         }
         .set { ch_fasta_trees }
@@ -133,9 +131,9 @@ workflow ALIGN {
 
     // -----------------  3DCOFFEE  ------------------ 
     ch_fasta_trees_3dcoffee = ch_fasta_trees.tcoffee3d.map{ meta, fasta, tree -> [meta["id"], meta, fasta, tree] }
-                                                   .combine(ch_structures.map{ meta, structures, template -> [meta["id"], structures, template]}, by: 0)
+                                                   .combine(ch_structures.map{ meta, template, structures -> [meta["id"], template, structures]}, by: 0)
                                                    .multiMap{
-                                                                merging_id, meta, fastafile, treefile, structuresfiles, templatefile ->
+                                                                merging_id, meta, fastafile, treefile, templatefile, structuresfiles ->
                                                                 fasta:      [ meta, fastafile       ]
                                                                 tree:       [ meta, treefile        ]
                                                                 structures: [ meta, templatefile, structuresfiles ]
