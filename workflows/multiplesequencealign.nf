@@ -180,6 +180,8 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // MODULE: MultiQC
     //
+    if (!params.skip_multiqc) {
+
     workflow_summary    = WorkflowMultiplesequencealign.paramsSummaryMultiqc(workflow, summary_params)
     ch_workflow_summary = Channel.value(workflow_summary)
 
@@ -198,6 +200,7 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_multiqc_logo.toList()
     )
     multiqc_report = MULTIQC.out.report.toList()
+    }
 }
 
 /*

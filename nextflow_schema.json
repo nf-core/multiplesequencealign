@@ -80,6 +80,19 @@
                 }
             }
         },
+        "reports_options": {
+            "title": "Reports options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define wether to run stats.",
+            "properties": {
+                "skip_multiqc": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Skip the multiqc report generation."
+                }
+            }
+        },
         "compression": {
             "title": "Compression",
             "type": "object",
@@ -296,6 +309,9 @@
         },
         {
             "$ref": "#/definitions/eval_options"
+        },
+        {
+            "$ref": "#/definitions/reports_options"
         },
         {
             "$ref": "#/definitions/compression"
