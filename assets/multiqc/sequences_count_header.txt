@@ -1,0 +1,10 @@
+# id: 'sequences_counts'
+# section_name: 'Sequences Counts'
+# description: "shows amount of sequences per fasta file."
+# plot_type: 'bargraph'
+# anchor: 'sequences_counts'
+# pconfig:
+#     id: "sequences_counts_plot"
+#     title: "Sequences per input file"
+#     xlab: "# Sequences"
+#     cpswitch_counts_label: "Number of Sequences"

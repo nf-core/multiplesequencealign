@@ -26,6 +26,11 @@ ch_multiqc_custom_config   = params.multiqc_config ? Channel.fromPath( params.mu
 ch_multiqc_logo            = params.multiqc_logo   ? Channel.fromPath( params.multiqc_logo, checkIfExists: true ) : Channel.empty()
 ch_multiqc_custom_methods_description = params.multiqc_methods_description ? file(params.multiqc_methods_description, checkIfExists: true) : file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
 
+
+
+// Header files for MultiQC
+ch_sequences_count_header_multiqc   = file("$projectDir/assets/multiqc/sequences_count_header.txt", checkIfExists: true)
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT LOCAL MODULES/SUBWORKFLOWS
@@ -36,6 +41,7 @@ include { STATS                       } from '../subworkflows/local/stats'
 include { ALIGN                       } from '../subworkflows/local/align'
 include { EVALUATE                    } from '../subworkflows/local/evaluate'
 include { CREATE_TCOFFEETEMPLATE      } from '../modules/local/create_tcoffee_template' 
+include { MULTIQC                     } from '../modules/local/multiqc'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,7 +54,6 @@ include { CREATE_TCOFFEETEMPLATE      } from '../modules/local/create_tcoffee_te
 //
 
 include { FASTQC                      } from '../modules/nf-core/fastqc/main'
-include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { UNTAR                       } from '../modules/nf-core/untar/main'
 include { ZIP                         } from '../modules/nf-core/zip/main'
@@ -144,7 +149,7 @@ workflow MULTIPLESEQUENCEALIGN {
     // Compute summary statistics about the input sequences
     //
     if( !params.skip_stats ){
-        STATS(ch_seqs)
+        STATS(ch_seqs, ch_sequences_count_header_multiqc)
         ch_versions = ch_versions.mix(STATS.out.versions)
     }
     
@@ -197,7 +202,8 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_multiqc_files.collect(),
         ch_multiqc_config.toList(),
         ch_multiqc_custom_config.toList(),
-        ch_multiqc_logo.toList()
+        ch_multiqc_logo.toList(),
+        STATS.out.multiqc_tsv_sequences_count.collect{it[1]}.ifEmpty([])
     )
     multiqc_report = MULTIQC.out.report.toList()
     }

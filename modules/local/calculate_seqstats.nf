@@ -10,10 +10,12 @@ process CALCULATE_SEQSTATS {
 
     input:
     tuple val(meta), path(fasta)
+    path header
 
     output:
     tuple val(meta), path("*_seqstats.csv"), emit: seqstats
     tuple val(meta), path("*_seqstats_summary.csv"), emit: seqstats_summary
+    tuple val(meta), path("*_mqc.tsv"), emit: multiqc_tsv
     path "versions.yml" , emit: versions
 
 
@@ -25,7 +27,15 @@ process CALCULATE_SEQSTATS {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def id = meta.id
     """
-    calc_seqstats.py $id ${fasta} "${prefix}_seqstats.csv" "${prefix}_seqstats_summary.csv"
+    cat $header - >> "${prefix}_mqc.tsv"
+
+    calc_seqstats.py $id \
+        ${fasta} \
+        "${prefix}_seqstats.csv" \
+        "${prefix}_seqstats_summary.csv" \
+        "${prefix}_multiqc.tsv" 
+    
+    cat ${prefix}_multiqc.tsv >> "${prefix}_mqc.tsv"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
