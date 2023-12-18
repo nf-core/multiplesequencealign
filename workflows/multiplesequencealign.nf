@@ -26,11 +26,6 @@ ch_multiqc_custom_config   = params.multiqc_config ? Channel.fromPath( params.mu
 ch_multiqc_logo            = params.multiqc_logo   ? Channel.fromPath( params.multiqc_logo, checkIfExists: true ) : Channel.empty()
 ch_multiqc_custom_methods_description = params.multiqc_methods_description ? file(params.multiqc_methods_description, checkIfExists: true) : file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
 
-
-
-// Header files for MultiQC
-ch_sequences_count_header_multiqc   = file("$projectDir/assets/multiqc/sequences_count_header.txt", checkIfExists: true)
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT LOCAL MODULES/SUBWORKFLOWS
@@ -53,10 +48,11 @@ include { MULTIQC                     } from '../modules/local/multiqc'
 // MODULE: Installed directly from nf-core/modules
 //
 
-include { FASTQC                      } from '../modules/nf-core/fastqc/main'
-include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
-include { UNTAR                       } from '../modules/nf-core/untar/main'
-include { ZIP                         } from '../modules/nf-core/zip/main'
+include { FASTQC                                 } from '../modules/nf-core/fastqc/main'
+include { CUSTOM_DUMPSOFTWAREVERSIONS            } from '../modules/nf-core/custom/dumpsoftwareversions/main'
+include { UNTAR                                  } from '../modules/nf-core/untar/main'
+include { ZIP                                    } from '../modules/nf-core/zip/main'
+include { CSVTK_JOIN    as MERGE_STATS_EVAL      } from '../modules/nf-core/csvtk/join/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -149,7 +145,7 @@ workflow MULTIPLESEQUENCEALIGN {
     // Compute summary statistics about the input sequences
     //
     if( !params.skip_stats ){
-        STATS(ch_seqs, ch_sequences_count_header_multiqc)
+        STATS(ch_seqs)
         ch_versions = ch_versions.mix(STATS.out.versions)
     }
     
@@ -168,6 +164,13 @@ workflow MULTIPLESEQUENCEALIGN {
         EVALUATE(ALIGN.out.msa, ch_refs, ch_structures_template)
         ch_versions = ch_versions.mix(EVALUATE.out.versions)
     }
+
+
+    stats_summary_csv = STATS.out.stats_summary.map{ meta, csv -> csv }
+    eval_summary_csv  = EVALUATE.out.eval_summary.map{ meta, csv -> csv }
+    stats_and_evaluation = eval_summary_csv.mix(stats_summary_csv).collect().map{ csvs -> [[id:"summary_stats_eval"], csvs] }
+    MERGE_STATS_EVAL(stats_and_evaluation)
+    ch_versions = ch_versions.mix(MERGE_STATS_EVAL.out.versions)
 
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
@@ -203,7 +206,7 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_multiqc_config.toList(),
         ch_multiqc_custom_config.toList(),
         ch_multiqc_logo.toList(),
-        STATS.out.multiqc_tsv_sequences_count.collect{it[1]}.ifEmpty([])
+        MERGE_STATS_EVAL.out.csv.collect{it[1]}.ifEmpty([])
     )
     multiqc_report = MULTIQC.out.report.toList()
     }

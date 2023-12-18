@@ -12,7 +12,6 @@ include {   CSVTK_JOIN    as MERGE_STATS                   } from '../../modules
 workflow STATS {
     take:
     ch_seqs                //      channel: meta, /path/to/file.fasta
-    seq_count_header
 
     main:
 
@@ -37,7 +36,7 @@ workflow STATS {
     //      SEQUENCE GENERAL STATS
     //      Sequence length, # of sequences, etc 
     // -------------------------------------------
-    CALCULATE_SEQSTATS(ch_seqs, seq_count_header)
+    CALCULATE_SEQSTATS(ch_seqs)
     seqstats = CALCULATE_SEQSTATS.out.seqstats
     seqstats_summary = CALCULATE_SEQSTATS.out.seqstats_summary
     ch_versions = ch_versions.mix(CALCULATE_SEQSTATS.out.versions.first())
@@ -61,11 +60,10 @@ workflow STATS {
     csvs_stats = csv_sim.mix(csv_seqstats).collect().map{ csvs -> [[id:"summary_stats"], csvs] }
     MERGE_STATS(csvs_stats)
     stats_summary = MERGE_STATS.out.csv
-    ch_versions = ch_versions.mix(MERGE_STATS.out.versions)                      
+    ch_versions = ch_versions.mix(MERGE_STATS.out.versions) 
 
 
     emit:
     stats_summary
-    multiqc_tsv_sequences_count = CALCULATE_SEQSTATS.out.multiqc_tsv                             
     versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
 }

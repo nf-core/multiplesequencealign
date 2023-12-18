@@ -10,7 +10,6 @@ process CALCULATE_SEQSTATS {
 
     input:
     tuple val(meta), path(fasta)
-    path header
 
     output:
     tuple val(meta), path("*_seqstats.csv"), emit: seqstats
@@ -27,8 +26,6 @@ process CALCULATE_SEQSTATS {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def id = meta.id
     """
-    cat $header - >> "${prefix}_mqc.tsv"
-
     calc_seqstats.py $id \
         ${fasta} \
         "${prefix}_seqstats.csv" \

@@ -10,10 +10,77 @@ report_section_order:
   "nf-core-multiplesequencealign-summary":
     order: -1002
 
+
+report_header_info:
+    - Application Type: 'Muliple Sequence Alignment deplyoment and benchmarking.'
+
+
 export_plots: true
 
 
 run_modules:
   - custom_content
 
+
+custom_data: 
+  summary_stats: 
+    id: "summary_stats"
+    section_name: "Summary Stats"
+    plot_type: "table"
+    anchor: 'summary_stats'
+    namespace: 'summary_stats'
+    pconfig: 
+      id: "summary_stats"
+      title: "Summary statistics"
+  barplot_counts:
+    id: "barplot_counts"
+    section_name: "Barplot"
+    plot_type: "bargraph"
+    anchor: 'barplot_counts'
+    namespace: 'barplot_counts'
+    pconfig: 
+      id: "barplot_counts"
+      title: "Barplot of sequence counts"
+      xlab: "# Sequences"
+      cpswitch_counts_label: "Number of Sequences"
+    cats: 
+      - "n_sequences"
+  
+
+
+custom_table_header_config:
+  summary_stats:
+    perc_sim:
+      description: 'Average percentage similarity between all sequences in the input fasta file.' 
+      group: "Fasta"
+      max: 100
+      format: "{:,.2f}"
+      suffix : "%"
+    n_sequences:
+      description: 'Number of sequences in the input fasta file.' 
+      hidden: False
+      group: "Fasta"
+      format: "{:,.2f}"
+    seqlength_mean:
+      description: 'Average sequence length in the input fasta file.' 
+      hidden: False
+      group: "Fasta"
+      format: "{:,.2f}"
+    seqlength_max:
+      description: 'Maximum sequence length in the input fasta file.' 
+      hidden: True
+      group: "Fasta"
+      format: "{:,.2f}"
+    seqlength_median:
+      description: 'Median sequence length in the input fasta file.' 
+      hidden: True
+      group: "Fasta"
+      format: "{:,.2f}"
+
+
+sp: 
+  summary_stats: 
+    fn: "complete_summary_stats.csv"
+  barplot_counts:
+    fn: "*_seqstats_summary.csv"
 

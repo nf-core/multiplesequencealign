@@ -12,7 +12,7 @@ process MULTIQC {
     path software_versions
     path workflow_summary
 
-    path ('stats/fasta/*')
+    path ('stats/*')
 
 
     output:
