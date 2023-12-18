@@ -10,77 +10,146 @@ report_section_order:
   "nf-core-multiplesequencealign-summary":
     order: -1002
 
-
 report_header_info:
-    - Application Type: 'Muliple Sequence Alignment deplyoment and benchmarking.'
-
+  - Application Type: "Muliple Sequence Alignment deplyoment and benchmarking."
 
 export_plots: true
-
 
 run_modules:
   - custom_content
 
-
-custom_data: 
-  summary_stats: 
+custom_data:
+  summary_stats:
     id: "summary_stats"
     section_name: "Summary Stats"
     plot_type: "table"
-    anchor: 'summary_stats'
-    namespace: 'summary_stats'
-    pconfig: 
+    anchor: "summary_stats"
+    namespace: "summary_stats"
+    pconfig:
       id: "summary_stats"
       title: "Summary statistics"
   barplot_counts:
     id: "barplot_counts"
     section_name: "Barplot"
     plot_type: "bargraph"
-    anchor: 'barplot_counts'
-    namespace: 'barplot_counts'
-    pconfig: 
+    anchor: "barplot_counts"
+    namespace: "barplot_counts"
+    pconfig:
       id: "barplot_counts"
       title: "Barplot of sequence counts"
       xlab: "# Sequences"
       cpswitch_counts_label: "Number of Sequences"
-    cats: 
-      - "n_sequences"
-  
-
 
 custom_table_header_config:
   summary_stats:
     perc_sim:
-      description: 'Average percentage similarity between all sequences in the input fasta file.' 
+      description: "Average percentage similarity between all sequences in the input fasta file."
       group: "Fasta"
       max: 100
       format: "{:,.2f}"
-      suffix : "%"
+      suffix: "%"
     n_sequences:
-      description: 'Number of sequences in the input fasta file.' 
+      description: "Number of sequences in the input fasta file."
       hidden: False
       group: "Fasta"
-      format: "{:,.2f}"
+      scale: "Set2"
     seqlength_mean:
-      description: 'Average sequence length in the input fasta file.' 
+      description: "Average sequence length in the input fasta file."
       hidden: False
       group: "Fasta"
-      format: "{:,.2f}"
+      format: "{:,.1f}"
     seqlength_max:
-      description: 'Maximum sequence length in the input fasta file.' 
+      description: "Maximum sequence length in the input fasta file."
       hidden: True
       group: "Fasta"
-      format: "{:,.2f}"
+      format: "{:,.1f}"
     seqlength_median:
-      description: 'Median sequence length in the input fasta file.' 
+      description: "Median sequence length in the input fasta file."
       hidden: True
       group: "Fasta"
-      format: "{:,.2f}"
+      format: "{:,.1f}"
+    sp:
+      description: "Sum of Pairs metric."
+      hidden: False
+      group: "Alignment"
+      format: "{:,.1f}"
+      max: 100
+    tc:
+      description: "Total Column metric."
+      hidden: False
+      group: "Alignment"
+      format: "{:,.1f}"
+      max: 100
+    EVALUATED:
+      description: "EVALUATED metric."
+      hidden: True
+      group: "Alignment"
+      format: "{:,.1f}"
+      max: 100
+    APDB:
+      description: "APDB metric."
+      hidden: True
+      group: "Alignment"
+      format: "{:,.1f}"
+    iRMSD:
+      description: "iRMSD metric."
+      hidden: True
+      group: "Alignment"
+      format: "{:,.1f}"
+    NiRMSD:
+      description: "NiRMSD metric."
+      hidden: False
+      group: "Alignment"
+      format: "{:,.1f}"
+      min: 0
+    tree:
+      description: "Tree used in the alignment."
+      hidden: False
+      group: "Alignment"
+      scale: "Paired"
+    args_tree:
+      description: "Arguments used to build the tree."
+      hidden: True
+      group: "Alignment"
+    args_tree_clean:
+      description: "Arguments used to build the tree."
+      hidden: True
+      group: "Alignment"
+    aligner:
+      description: "Aligner used."
+      hidden: False
+      group: "Alignment"
+      scale: "Paired"
+    args_aligner:
+      description: "Arguments used to run the aligner."
+      hidden: True
+      group: "Alignment"
+    args_aligner_clean:
+      description: "Arguments used to run the aligner."
+      hidden: True
+      group: "Alignment"
 
+table_columns_placement:
+  summary_stats:
+    id: 100
+    tree: 150
+    args_tree: 170
+    aligner: 190
+    args_aligner: 220
+    n_sequences: 250
+    seqlength_mean: 280
+    seqlength_median: 310
+    seqlength_max: 340
+    perc_sim: 370
+    sp: 400
+    tc: 430
+    EVALUATED: 470
+    APDB: 500
+    iRMSD: 530
+    NiRMSD: 560
 
-sp: 
-  summary_stats: 
-    fn: "complete_summary_stats.csv"
+sp:
+  summary_stats:
+    fn: "complete_summary_stats_eval.csv"
   barplot_counts:
     fn: "*_seqstats_summary.csv"
-
