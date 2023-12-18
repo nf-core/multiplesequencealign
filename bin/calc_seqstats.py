@@ -17,7 +17,10 @@ def get_seq_lengths(fasta_file):
         name, sequence = fasta.id, str(fasta.seq)
         l = len(sequence)
         name = name.replace("/", "_")
-        entry = pd.DataFrame([{"id": fam_name, "sequence": name, "sequence length": l}])
+        #entry = pd.DataFrame([{"id": fam_name, "sequence": name, "sequence length": l}])
+        entry = pd.DataFrame([{"id": fam_name, "sequence length": l}])
+        # count number of sequences per sequence length
+        #entry = entry.groupby(by=["id", "sequence length"]).size().reset_index(name="count")
         summary = pd.concat([summary, entry], ignore_index=True)
     return summary
 

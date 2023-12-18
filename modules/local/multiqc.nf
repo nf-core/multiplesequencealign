@@ -13,7 +13,7 @@ process MULTIQC {
     path workflow_summary
 
     path ('stats/*')
-
+    path (seqstats_summary)
 
     output:
     path "*multiqc_report.html", emit: report

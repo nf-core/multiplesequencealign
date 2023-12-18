@@ -28,6 +28,15 @@ custom_data:
     pconfig:
       id: "summary_stats"
       title: "Summary statistics"
+  summary_sequence_lenghts: 
+    id: "summary_sequence_lenghts"
+    section_name: "Summary Sequence Lenghts"
+    plot_type: "table"
+    anchor: "summary_sequence_lenghts"
+    namespace: "summary_sequence_lenghts"
+    pconfig:
+      id: "summary_sequence_lenghts"
+      title: "Summary sequence lenghts"
   barplot_counts:
     id: "barplot_counts"
     section_name: "Barplot"
@@ -153,3 +162,5 @@ sp:
     fn: "complete_summary_stats_eval.csv"
   barplot_counts:
     fn: "*_seqstats_summary.csv"
+  summary_sequence_lenghts:
+    fn: "*_seqstats.csv"

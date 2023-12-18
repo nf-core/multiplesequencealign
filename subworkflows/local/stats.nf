@@ -64,6 +64,7 @@ workflow STATS {
 
 
     emit:
+    seqstats         = CALCULATE_SEQSTATS.out.seqstats
     stats_summary
     versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
 }
