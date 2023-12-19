@@ -90,6 +90,17 @@
                     "type": "boolean",
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Skip the multiqc report generation."
+                },
+                "skip_shiny": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Skip the shiny report generation."
+                },
+                "shiny_app": {
+                    "type": "string",
+                    "format": "file-path",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "File containing the main shiny app."
                 }
             }
         },

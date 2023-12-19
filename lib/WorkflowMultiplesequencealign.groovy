@@ -103,6 +103,7 @@ class WorkflowMultiplesequencealign {
     public static cleanArgs(argString) {
         def cleanArgs = argString.toString().trim().replace("-", "").replace("  ", " ").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
         // if clearnArgs is empty, return ""
+
         if (cleanArgs == null || cleanArgs == "") {
             return ""
         }else{

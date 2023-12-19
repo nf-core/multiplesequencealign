@@ -14,19 +14,15 @@ sns.set(context="talk", style="white", font_scale=0.8)
 
 # Load file
 # ----------------------------------------------------------------------------
-summary_report = "./outdir/summary_report/evaluation_summary_report.csv"
-stats_report = "./outdir/stats/stats_summary_report.csv"
+summary_report = "./shiny_data.csv"
 
-summary_df = pd.read_csv(summary_report)
-stats_df = pd.read_csv(stats_report)
+inputfile = pd.read_csv(summary_report)
 
-cols_to_merge = ["id"]
 
-inputfile = summary_df.merge(stats_df, on=cols_to_merge, how="left")
 # ----------------------------------------------------------------------------
 
 options = {item: item for item in list(inputfile.columns)}
-options_color = {"align": "assembly", "tree": "tree"}
+options_color = {"aligner": "assembly", "tree": "tree"}
 options_eval = {
     "sp": "sum of pairs (SP)",
     "n_sequences": "# sequences",

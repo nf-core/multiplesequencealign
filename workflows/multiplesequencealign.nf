@@ -37,7 +37,8 @@ include { ALIGN                       } from '../subworkflows/local/align'
 include { EVALUATE                    } from '../subworkflows/local/evaluate'
 include { CREATE_TCOFFEETEMPLATE      } from '../modules/local/create_tcoffee_template' 
 include { MULTIQC                     } from '../modules/local/multiqc'
-
+include { MULTIQC_PREP_TABLE          } from '../modules/local/multiqc_prep_table'
+include { PREP_SHINY                  } from '../modules/local/prep_shiny'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
@@ -116,7 +117,7 @@ workflow MULTIPLESEQUENCEALIGN {
     // ----------------
     // TEMPLATES 
     // ----------------
-    // If a family does not present a template, create one. 
+    // If a family does not present a template but structures are provided, create one. 
     ch_structures_template = ch_structures.join(ch_templates, by:0, remainder:true)
     ch_structures_template.branch{
                                     template: it[2] != null
@@ -171,6 +172,9 @@ workflow MULTIPLESEQUENCEALIGN {
     ch_versions = ch_versions.mix(MERGE_STATS_EVAL.out.versions)
 
 
+    // STATS for MultiQC
+    MULTIQC_PREP_TABLE(MERGE_STATS_EVAL.out.csv)
+
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
@@ -204,11 +208,16 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_multiqc_config.toList(),
         ch_multiqc_custom_config.toList(),
         ch_multiqc_logo.toList(),
-        MERGE_STATS_EVAL.out.csv.collect{it[1]}.ifEmpty([]),
+        MULTIQC_PREP_TABLE.out.multiqc_table.collect{it[1]}.ifEmpty([]),
         STATS.out.seqstats.collect{it[1]}.ifEmpty([])
     )
     multiqc_report = MULTIQC.out.report.toList()
+
     }
+    if( !params.skip_shiny){
+        PREP_SHINY ( MERGE_STATS_EVAL.out.csv, file(params.shiny_app) )
+    }
+    
 }
 
 /*

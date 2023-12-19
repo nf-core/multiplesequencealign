@@ -28,26 +28,7 @@ custom_data:
     pconfig:
       id: "summary_stats"
       title: "Summary statistics"
-  summary_sequence_lenghts: 
-    id: "summary_sequence_lenghts"
-    section_name: "Summary Sequence Lenghts"
-    plot_type: "table"
-    anchor: "summary_sequence_lenghts"
-    namespace: "summary_sequence_lenghts"
-    pconfig:
-      id: "summary_sequence_lenghts"
-      title: "Summary sequence lenghts"
-  barplot_counts:
-    id: "barplot_counts"
-    section_name: "Barplot"
-    plot_type: "bargraph"
-    anchor: "barplot_counts"
-    namespace: "barplot_counts"
-    pconfig:
-      id: "barplot_counts"
-      title: "Barplot of sequence counts"
-      xlab: "# Sequences"
-      cpswitch_counts_label: "Number of Sequences"
+
 
 custom_table_header_config:
   summary_stats:
@@ -57,6 +38,10 @@ custom_table_header_config:
       max: 100
       format: "{:,.2f}"
       suffix: "%"
+    fasta: 
+      description: "Input fasta file."
+      hidden: False
+      group: "Fasta"
     n_sequences:
       description: "Number of sequences in the input fasta file."
       hidden: False
@@ -138,12 +123,13 @@ custom_table_header_config:
       hidden: True
       group: "Alignment"
 
+
 table_columns_placement:
   summary_stats:
-    id: 100
+    fasta: 90
     tree: 150
     args_tree: 170
-    aligner: 190
+    aligner: 200
     args_aligner: 220
     n_sequences: 250
     seqlength_mean: 280
@@ -159,8 +145,5 @@ table_columns_placement:
 
 sp:
   summary_stats:
-    fn: "complete_summary_stats_eval.csv"
-  barplot_counts:
-    fn: "*_seqstats_summary.csv"
-  summary_sequence_lenghts:
-    fn: "*_seqstats.csv"
+    fn: "summary_stats_eval_multiqc_table.csv"
+
