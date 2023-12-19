@@ -124,7 +124,6 @@ class WorkflowMultiplesequencealign {
                 args = args + " " + required_flag + " " + default_value
             }
         }
-    
         return args
     }
 

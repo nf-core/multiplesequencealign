@@ -30,8 +30,8 @@ process CALCULATE_SEQSTATS {
         ${fasta} \
         "${prefix}_seqstats.csv" \
         "${prefix}_seqstats_summary.csv" \
-        "${prefix}_multiqc.tsv" 
-    
+        "${prefix}_multiqc.tsv"
+
     cat ${prefix}_multiqc.tsv >> "${prefix}_mqc.tsv"
 
     cat <<-END_VERSIONS > versions.yml
