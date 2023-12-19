@@ -70,7 +70,6 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // Prepare input and metadata
     //
-
     ch_input = Channel.fromSamplesheet('input')
     ch_tools = Channel.fromSamplesheet('tools').map {
                         meta ->
@@ -83,12 +82,11 @@ workflow MULTIPLESEQUENCEALIGN {
                         treeMap["args_tree_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_tree)
 
                         alignMap["aligner"] = meta_clone["aligner"]
-                        alignMap["args_aligner"] = meta_clone["args_aligner"]
-                        alignMap["args_aligner_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_aligner)
+                        alignMap["args_aligner"] = WorkflowMultiplesequencealign.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
+                        alignMap["args_aligner_clean"] = WorkflowMultiplesequencealign.cleanArgs(alignMap["args_aligner"])
                         
                         [ treeMap, alignMap ]
                     }
-
 
     ch_seqs       = ch_input.map{ meta,fasta,ref,str,template -> [ meta, file(fasta)    ]}
     ch_refs       = ch_input.filter{ it[2].size() > 0}.map{ meta,fasta,ref,str,template -> [ meta, file(ref)      ]}
