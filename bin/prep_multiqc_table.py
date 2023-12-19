@@ -14,7 +14,7 @@ def prep_table(input, output):
     # replace in all rows the word null with default
 
     # add column with index as integer
-    df["id"] = df.index+1
+    df["id"] = df.index + 1
     # make it int
     df["id"] = df["id"].astype(int)
     # make it the first column

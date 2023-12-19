@@ -29,7 +29,6 @@ custom_data:
       id: "summary_stats"
       title: "Summary statistics"
 
-
 custom_table_header_config:
   summary_stats:
     perc_sim:
@@ -38,7 +37,7 @@ custom_table_header_config:
       max: 100
       format: "{:,.2f}"
       suffix: "%"
-    fasta: 
+    fasta:
       description: "Input fasta file."
       hidden: False
       group: "Fasta"
@@ -123,7 +122,6 @@ custom_table_header_config:
       hidden: True
       group: "Alignment"
 
-
 table_columns_placement:
   summary_stats:
     fasta: 90
@@ -146,4 +144,3 @@ table_columns_placement:
 sp:
   summary_stats:
     fn: "summary_stats_eval_multiqc_table.csv"
-
