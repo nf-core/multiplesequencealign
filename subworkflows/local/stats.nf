@@ -28,7 +28,7 @@ workflow STATS {
     ch_sim_summary = tcoffee_seqreformat_simtot.map{ 
                                                 meta, csv -> csv
                                             }.collect().map{
-                                                csv -> [ [id_simstats:"summary_simstats"], csv]
+                                                csv -> [ [id:"summary_simstats"], csv]
                                             }
     CONCAT_SIMSTATS(ch_sim_summary, "csv", "csv")
 
@@ -44,7 +44,7 @@ workflow STATS {
     ch_seqstats_summary = seqstats_summary.map{ 
                                                 meta, csv -> csv
                                             }.collect().map{
-                                                csv -> [ [id_seqstats:"summary_seqstats"], csv]
+                                                csv -> [ [id:"summary_seqstats"], csv]
                                             }
 
     CONCAT_SEQSTATS(ch_seqstats_summary, "csv", "csv")
