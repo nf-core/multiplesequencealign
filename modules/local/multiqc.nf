@@ -12,7 +12,6 @@ process MULTIQC {
     path software_versions
     path workflow_summary
 
-    path ('stats/*')
     path (seqstats_summary)
 
     output:

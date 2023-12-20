@@ -16,21 +16,26 @@ workflow STATS {
     main:
 
     ch_versions = Channel.empty()
+    sim_csv = Channel.empty()
+    seqstats_csv = Channel.empty()
 
     // // -------------------------------------------
     // //      SEQUENCE SIMILARITY 
     // // -------------------------------------------
-    TCOFFEE_SEQREFORMAT_SIM(ch_seqs)
-    tcoffee_seqreformat_sim = TCOFFEE_SEQREFORMAT_SIM.out.formatted_file
-    ch_versions = ch_versions.mix(TCOFFEE_SEQREFORMAT_SIM.out.versions.first()) 
-    tcoffee_seqreformat_simtot = PARSE_SIM(tcoffee_seqreformat_sim)
-        
-    ch_sim_summary = tcoffee_seqreformat_simtot.map{ 
-                                                meta, csv -> csv
-                                            }.collect().map{
-                                                csv -> [ [id:"summary_simstats"], csv]
-                                            }
-    CONCAT_SIMSTATS(ch_sim_summary, "csv", "csv")
+    if( params.calc_sim == true){
+        TCOFFEE_SEQREFORMAT_SIM(ch_seqs)
+        tcoffee_seqreformat_sim = TCOFFEE_SEQREFORMAT_SIM.out.formatted_file
+        ch_versions = ch_versions.mix(TCOFFEE_SEQREFORMAT_SIM.out.versions.first()) 
+        tcoffee_seqreformat_simtot = PARSE_SIM(tcoffee_seqreformat_sim)
+            
+        ch_sim_summary = tcoffee_seqreformat_simtot.map{ 
+                                                    meta, csv -> csv
+                                                }.collect().map{
+                                                    csv -> [ [id:"summary_simstats"], csv]
+                                                }
+        CONCAT_SIMSTATS(ch_sim_summary, "csv", "csv")
+        sim_csv = sim_csv.mix(CONCAT_SIMSTATS.out.csv)
+    }
 
     // -------------------------------------------
     //      SEQUENCE GENERAL STATS
@@ -48,23 +53,28 @@ workflow STATS {
                                             }
 
     CONCAT_SEQSTATS(ch_seqstats_summary, "csv", "csv")
+    seqstats_csv = seqstats_csv.mix(CONCAT_SEQSTATS.out.csv)
 
 
     // -------------------------------------------
     //      MERGE ALL STATS
     // -------------------------------------------
 
-    csv_sim      = CONCAT_SIMSTATS.out.csv.map{ meta, csv -> csv }
-    csv_seqstats = CONCAT_SEQSTATS.out.csv.map{ meta, csv -> csv }
+    sim      = sim_csv.map{ meta, csv -> csv }
+    seqstats = seqstats_csv.map{ meta, csv -> csv }
 
-    csvs_stats = csv_sim.mix(csv_seqstats).collect().map{ csvs -> [[id:"summary_stats"], csvs] }
-    MERGE_STATS(csvs_stats)
-    stats_summary = MERGE_STATS.out.csv
-    ch_versions = ch_versions.mix(MERGE_STATS.out.versions) 
-
+    
+    csvs_stats = sim.mix(seqstats).collect().map{ csvs -> [[id:"summary_stats"], csvs] }
+    def number_of_stats = [params.calc_sim, params.calc_seq_stats].count{ it == true }
+    if(number_of_stats >= 2){
+        MERGE_STATS(csvs_stats)
+        ch_versions = ch_versions.mix(MERGE_STATS.out.versions)
+        stats_summary = MERGE_STATS.out.csv
+    }else if(number_of_stats == 1){
+        stats_summary = csvs_stats
+    }
 
     emit:
-    seqstats         = CALCULATE_SEQSTATS.out.seqstats
     stats_summary
     versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
 }

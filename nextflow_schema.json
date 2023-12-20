@@ -64,6 +64,16 @@
                     "type": "boolean",
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Skip all of the statistics computation on the fasta file."
+                },
+                "calc_sim": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate the percentage similarity across the sequences in the input files."
+                },
+                "calc_seq_stats": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate general statistics on input files."
                 }
             }
         },
@@ -77,6 +87,21 @@
                     "type": "boolean",
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Skip all of the evaluations computation on the msa."
+                },
+                "calc_sp": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate the Sum of Pairs of alignment."
+                },
+                "calc_tc": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate the Total Column Score of alignment."
+                },
+                "calc_irmsd": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate the iRMSD of alignment."
                 }
             }
         },

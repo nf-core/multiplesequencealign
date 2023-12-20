@@ -26,9 +26,10 @@ ch_multiqc_custom_config   = params.multiqc_config ? Channel.fromPath( params.mu
 ch_multiqc_logo            = params.multiqc_logo   ? Channel.fromPath( params.multiqc_logo, checkIfExists: true ) : Channel.empty()
 ch_multiqc_custom_methods_description = params.multiqc_methods_description ? file(params.multiqc_methods_description, checkIfExists: true) : file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
 
-ch_multiqc_stats  = Channel.empty()
-ch_multiqc_table  = Channel.empty()
-
+ch_multiqc_table   = Channel.empty()
+evaluation_summary = Channel.empty()
+stats_summary      = Channel.empty()
+stats_and_evaluation_summary = Channel.empty()
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT LOCAL MODULES/SUBWORKFLOWS
@@ -144,12 +145,15 @@ workflow MULTIPLESEQUENCEALIGN {
     // Merge the structures and templates channels, ready for the alignment
     ch_structures_template = ch_templates_merged.combine(ch_structures, by:0)
 
+
+
+    //
     // Compute summary statistics about the input sequences
     //
     if( !params.skip_stats ){
         STATS(ch_seqs)
         ch_versions = ch_versions.mix(STATS.out.versions)
-        ch_multiqc_stats = ch_multiqc_stats.mix(STATS.out.seqstats.collect{it[1]}.ifEmpty([]))
+        stats_summary = stats_summary.mix(STATS.out.stats_summary)
     }
     
 
@@ -166,21 +170,26 @@ workflow MULTIPLESEQUENCEALIGN {
     if( !params.skip_eval ){
         EVALUATE(ALIGN.out.msa, ch_refs, ch_structures_template)
         ch_versions = ch_versions.mix(EVALUATE.out.versions)
-        if( !params.skip_stats ){
-            stats_summary_csv = STATS.out.stats_summary.map{ meta, csv -> csv }
-            eval_summary_csv  = EVALUATE.out.eval_summary.map{ meta, csv -> csv }
-            stats_and_evaluation = eval_summary_csv.mix(stats_summary_csv).collect().map{ csvs -> [[id:"summary_stats_eval"], csvs] }
-            MERGE_STATS_EVAL(stats_and_evaluation)
-            ch_versions = ch_versions.mix(MERGE_STATS_EVAL.out.versions)
-            // STATS for MultiQC
-            PREPARE_MULTIQC(MERGE_STATS_EVAL.out.csv)
-            ch_multiqc_table = ch_multiqc_table.mix(PREPARE_MULTIQC.out.multiqc_table.collect{it[1]}.ifEmpty([]))
-        }
+        evaluation_summary = evaluation_summary.mix(EVALUATE.out.eval_summary)
     }
 
+    //
+    // Combine stats and evaluation reports into a single CSV   
+    // 
+    stats_summary_csv = stats_summary.map{ meta, csv -> csv }
+    eval_summary_csv  = evaluation_summary.map{ meta, csv -> csv }
+    stats_and_evaluation = eval_summary_csv.mix(stats_summary_csv).collect().map{ csvs -> [[id:"summary_stats_eval"], csvs] }
+    if( !params.skip_stats && !params.skip_eval ){
+        MERGE_STATS_EVAL(stats_and_evaluation)
+        stats_and_evaluation_summary = MERGE_STATS_EVAL.out.csv
+        ch_versions = ch_versions.mix(MERGE_STATS_EVAL.out.versions)
+    }else{
+        stats_and_evaluation_summary = stats_and_evaluation
+    }
 
-
-
+    //
+    // Get software versions
+    //
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
@@ -191,6 +200,13 @@ workflow MULTIPLESEQUENCEALIGN {
     if( !params.skip_compress ){
         ZIP(ALIGN.out.msa)
         ch_versions = ch_versions.mix(ZIP.out.versions)
+    }
+
+    //
+    // MODULE: Shiny
+    //
+    if( !params.skip_shiny){
+        PREPARE_SHINY ( stats_and_evaluation_summary, file(params.shiny_app) )
     }
 
     //
@@ -209,20 +225,20 @@ workflow MULTIPLESEQUENCEALIGN {
     ch_multiqc_files = ch_multiqc_files.mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS.out.mqc_yml.collect())
 
+    PREPARE_MULTIQC(stats_and_evaluation_summary)
+    ch_multiqc_table = ch_multiqc_table.mix(PREPARE_MULTIQC.out.multiqc_table.collect{it[1]}.ifEmpty([]))
+
     MULTIQC (
         ch_multiqc_files.collect(),
         ch_multiqc_config.toList(),
         ch_multiqc_custom_config.toList(),
         ch_multiqc_logo.toList(),
-        ch_multiqc_table,
-        ch_multiqc_stats
+        ch_multiqc_table
     )
     multiqc_report = MULTIQC.out.report.toList()
 
     }
-    if( !params.skip_shiny){
-        PREPARE_SHINY ( MERGE_STATS_EVAL.out.csv, file(params.shiny_app) )
-    }
+
     
 }
 
