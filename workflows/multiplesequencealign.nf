@@ -208,7 +208,7 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_multiqc_config.toList(),
         ch_multiqc_custom_config.toList(),
         ch_multiqc_logo.toList(),
-        MULTIQC_PREP_TABLE.out.multiqc_table.collect{it[1]}.ifEmpty([]),
+        PREPARE_MULTIQC.out.multiqc_table.collect{it[1]}.ifEmpty([]),
         STATS.out.seqstats.collect{it[1]}.ifEmpty([])
     )
     multiqc_report = MULTIQC.out.report.toList()
