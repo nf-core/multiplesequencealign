@@ -58,5 +58,5 @@ jobs:
           version: "${{ matrix.NXF_VER }}"
 
       - name: Test workflow parameters
-        run: |       
+        run: |
           nextflow run ${GITHUB_WORKSPACE} -profile test_align_only,docker --outdir ./results
