@@ -26,6 +26,9 @@ ch_multiqc_custom_config   = params.multiqc_config ? Channel.fromPath( params.mu
 ch_multiqc_logo            = params.multiqc_logo   ? Channel.fromPath( params.multiqc_logo, checkIfExists: true ) : Channel.empty()
 ch_multiqc_custom_methods_description = params.multiqc_methods_description ? file(params.multiqc_methods_description, checkIfExists: true) : file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
 
+ch_multiqc_stats  = Channel.empty()
+ch_multiqc_table  = Channel.empty()
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT LOCAL MODULES/SUBWORKFLOWS
@@ -146,6 +149,7 @@ workflow MULTIPLESEQUENCEALIGN {
     if( !params.skip_stats ){
         STATS(ch_seqs)
         ch_versions = ch_versions.mix(STATS.out.versions)
+        ch_multiqc_stats = ch_multiqc_stats.mix(STATS.out.seqstats)
     }
     
 
@@ -162,18 +166,20 @@ workflow MULTIPLESEQUENCEALIGN {
     if( !params.skip_eval ){
         EVALUATE(ALIGN.out.msa, ch_refs, ch_structures_template)
         ch_versions = ch_versions.mix(EVALUATE.out.versions)
+        if( !params.skip_stats ){
+            stats_summary_csv = STATS.out.stats_summary.map{ meta, csv -> csv }
+            eval_summary_csv  = EVALUATE.out.eval_summary.map{ meta, csv -> csv }
+            stats_and_evaluation = eval_summary_csv.mix(stats_summary_csv).collect().map{ csvs -> [[id:"summary_stats_eval"], csvs] }
+            MERGE_STATS_EVAL(stats_and_evaluation)
+            ch_versions = ch_versions.mix(MERGE_STATS_EVAL.out.versions)
+            // STATS for MultiQC
+            PREPARE_MULTIQC(MERGE_STATS_EVAL.out.csv)
+            ch_multiqc_table = ch_multiqc_table.mix(PREPARE_MULTIQC.out.multiqc_table.collect{it[1]}.ifEmpty([]))
+        }
     }
 
 
-    stats_summary_csv = STATS.out.stats_summary.map{ meta, csv -> csv }
-    eval_summary_csv  = EVALUATE.out.eval_summary.map{ meta, csv -> csv }
-    stats_and_evaluation = eval_summary_csv.mix(stats_summary_csv).collect().map{ csvs -> [[id:"summary_stats_eval"], csvs] }
-    MERGE_STATS_EVAL(stats_and_evaluation)
-    ch_versions = ch_versions.mix(MERGE_STATS_EVAL.out.versions)
 
-
-    // STATS for MultiQC
-    PREPARE_MULTIQC(MERGE_STATS_EVAL.out.csv)
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
@@ -208,8 +214,8 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_multiqc_config.toList(),
         ch_multiqc_custom_config.toList(),
         ch_multiqc_logo.toList(),
-        PREPARE_MULTIQC.out.multiqc_table.collect{it[1]}.ifEmpty([]),
-        STATS.out.seqstats.collect{it[1]}.ifEmpty([])
+        ch_multiqc_table,
+        ch_multiqc_stats
     )
     multiqc_report = MULTIQC.out.report.toList()
 
