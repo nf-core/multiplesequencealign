@@ -59,4 +59,4 @@ jobs:
 
       - name: Test workflow parameters
         run: |       
-          nextflow run ${GITHUB_WORKSPACE} -profile test_align_only,singularity --outdir ./results
+          nextflow run ${GITHUB_WORKSPACE} -profile test_align_only,docker --outdir ./results
