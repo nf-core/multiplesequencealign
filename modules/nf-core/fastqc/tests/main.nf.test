@@ -106,4 +106,5 @@ nextflow_process {
 
 //     FASTQC ( input )
 // }
+
 }
