@@ -215,7 +215,7 @@ workflow MULTIPLESEQUENCEALIGN {
 
     }
     if( !params.skip_shiny){
-        PREP_SHINY ( MERGE_STATS_EVAL.out.csv, file(params.shiny_app) )
+        PREPARE_SHINY ( MERGE_STATS_EVAL.out.csv, file(params.shiny_app) )
     }
     
 }
