@@ -149,7 +149,7 @@ workflow MULTIPLESEQUENCEALIGN {
     if( !params.skip_stats ){
         STATS(ch_seqs)
         ch_versions = ch_versions.mix(STATS.out.versions)
-        ch_multiqc_stats = ch_multiqc_stats.mix(STATS.out.seqstats)
+        ch_multiqc_stats = ch_multiqc_stats.mix(STATS.out.seqstats.collect{it[1]}.ifEmpty([]))
     }
     
 
