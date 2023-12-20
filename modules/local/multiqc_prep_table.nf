@@ -1,4 +1,4 @@
-process MULTIQC_PREP_TABLE {
+process PREPARE_MULTIQC {
     tag "$meta.id"
     label 'process_low'
 
