@@ -173,7 +173,7 @@ workflow MULTIPLESEQUENCEALIGN {
 
 
     // STATS for MultiQC
-    MULTIQC_PREP_TABLE(MERGE_STATS_EVAL.out.csv)
+    PREPARE_MULTIQC(MERGE_STATS_EVAL.out.csv)
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
