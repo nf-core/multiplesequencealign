@@ -17,6 +17,8 @@ process PARSE_SIM {
     """
     echo "$prefix" > tmp
     grep ^TOT $infile | cut -f4 >> tmp
+    #remove empty spaces
+    sed -i 's/ //g' tmp
 
     echo "id,perc_sim" > ${prefix}.sim_tot
     cat tmp | tr '\\n' ',' | awk 'gsub(/,\$/,x)' >>  ${prefix}.sim_tot

@@ -10,6 +10,7 @@ include {   LEARNMSA_ALIGN                    } from '../../modules/nf-core/lear
 include {   TCOFFEE_ALIGN                     } from '../../modules/nf-core/tcoffee/align/main'
 include {   TCOFFEE_ALIGN as TCOFFEE3D_ALIGN  } from '../../modules/nf-core/tcoffee/align/main'
 include {   MUSCLE5_SUPER5                    } from '../../modules/nf-core/muscle5/super5/main'
+include {   TCOFFEE_ALIGN as REGRESSIVE_ALIGN } from '../../modules/nf-core/tcoffee/align/main'
 
 // Include local modules
 include {   CREATE_TCOFFEETEMPLATE            } from '../../modules/local/create_tcoffee_template' 
@@ -54,6 +55,7 @@ workflow ALIGN {
             famsa:               it[0]["aligner"] == "FAMSA"
             tcoffee:             it[0]["aligner"] == "TCOFFEE"
             tcoffee3d:           it[0]["aligner"] == "3DCOFFEE"
+            regressive:          it[0]["aligner"] == "REGRESSIVE"
             clustalo:            it[0]["aligner"] == "CLUSTALO"
             mafft:               it[0]["aligner"] == "MAFFT"
             kalign:              it[0]["aligner"] == "KALIGN"
@@ -141,6 +143,18 @@ workflow ALIGN {
     TCOFFEE3D_ALIGN(ch_fasta_trees_3dcoffee.fasta, ch_fasta_trees_3dcoffee.tree, ch_fasta_trees_3dcoffee.structures)
     ch_versions = ch_versions.mix(TCOFFEE3D_ALIGN.out.versions.first())
     msa = msa.mix(TCOFFEE3D_ALIGN.out.alignment)
+
+    // -----------------  REGRESSIVE  ------------------
+    ch_fasta_trees_regressive = ch_fasta_trees.regressive
+                                .multiMap{
+                                    meta, fastafile, treefile ->
+                                    fasta: [ meta, fastafile ]
+                                    tree:  [ meta, treefile ]
+                                }
+    REGRESSIVE_ALIGN(ch_fasta_trees_regressive.fasta, ch_fasta_trees_regressive.tree, [[:],[], []])
+    ch_versions = ch_versions.mix(REGRESSIVE_ALIGN.out.versions.first())
+    msa = msa.mix(REGRESSIVE_ALIGN.out.alignment)
+
 
     // -----------------  MUSCLE5  ------------------
     ch_fasta_muscle5 = ch_fasta_trees.muscle5

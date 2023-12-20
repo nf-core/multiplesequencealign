@@ -91,7 +91,7 @@ workflow EVALUATE {
 
 
     emit:
-    stats_summary = MERGE_EVAL.out.csv      
+    eval_summary = MERGE_EVAL.out.csv      
     versions                    = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
 
 }

@@ -26,6 +26,9 @@ ch_multiqc_custom_config   = params.multiqc_config ? Channel.fromPath( params.mu
 ch_multiqc_logo            = params.multiqc_logo   ? Channel.fromPath( params.multiqc_logo, checkIfExists: true ) : Channel.empty()
 ch_multiqc_custom_methods_description = params.multiqc_methods_description ? file(params.multiqc_methods_description, checkIfExists: true) : file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
 
+ch_multiqc_stats  = Channel.empty()
+ch_multiqc_table  = Channel.empty()
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT LOCAL MODULES/SUBWORKFLOWS
@@ -36,7 +39,9 @@ include { STATS                       } from '../subworkflows/local/stats'
 include { ALIGN                       } from '../subworkflows/local/align'
 include { EVALUATE                    } from '../subworkflows/local/evaluate'
 include { CREATE_TCOFFEETEMPLATE      } from '../modules/local/create_tcoffee_template' 
-
+include { MULTIQC         } from '../modules/local/multiqc'
+include { PREPARE_MULTIQC } from '../modules/local/prepare_multiqc'
+include { PREPARE_SHINY   } from '../modules/local/prepare_shiny'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
@@ -47,11 +52,11 @@ include { CREATE_TCOFFEETEMPLATE      } from '../modules/local/create_tcoffee_te
 // MODULE: Installed directly from nf-core/modules
 //
 
-include { FASTQC                      } from '../modules/nf-core/fastqc/main'
-include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
-include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
-include { UNTAR                       } from '../modules/nf-core/untar/main'
-include { ZIP                         } from '../modules/nf-core/zip/main'
+include { FASTQC                         } from '../modules/nf-core/fastqc/main'
+include { CUSTOM_DUMPSOFTWAREVERSIONS    } from '../modules/nf-core/custom/dumpsoftwareversions/main'
+include { UNTAR                          } from '../modules/nf-core/untar/main'
+include { ZIP                            } from '../modules/nf-core/zip/main'
+include { CSVTK_JOIN as MERGE_STATS_EVAL } from '../modules/nf-core/csvtk/join/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -69,7 +74,6 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // Prepare input and metadata
     //
-
     ch_input = Channel.fromSamplesheet('input')
     ch_tools = Channel.fromSamplesheet('tools').map {
                         meta ->
@@ -82,12 +86,11 @@ workflow MULTIPLESEQUENCEALIGN {
                         treeMap["args_tree_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_tree)
 
                         alignMap["aligner"] = meta_clone["aligner"]
-                        alignMap["args_aligner"] = meta_clone["args_aligner"]
-                        alignMap["args_aligner_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_aligner)
+                        alignMap["args_aligner"] = WorkflowMultiplesequencealign.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
+                        alignMap["args_aligner_clean"] = WorkflowMultiplesequencealign.cleanArgs(alignMap["args_aligner"])
                         
                         [ treeMap, alignMap ]
                     }
-
 
     ch_seqs       = ch_input.map{ meta,fasta,ref,str,template -> [ meta, file(fasta)    ]}
     ch_refs       = ch_input.filter{ it[2].size() > 0}.map{ meta,fasta,ref,str,template -> [ meta, file(ref)      ]}
@@ -117,7 +120,7 @@ workflow MULTIPLESEQUENCEALIGN {
     // ----------------
     // TEMPLATES 
     // ----------------
-    // If a family does not present a template, create one. 
+    // If a family does not present a template but structures are provided, create one. 
     ch_structures_template = ch_structures.join(ch_templates, by:0, remainder:true)
     ch_structures_template.branch{
                                     template: it[2] != null
@@ -146,6 +149,7 @@ workflow MULTIPLESEQUENCEALIGN {
     if( !params.skip_stats ){
         STATS(ch_seqs)
         ch_versions = ch_versions.mix(STATS.out.versions)
+        ch_multiqc_stats = ch_multiqc_stats.mix(STATS.out.seqstats.collect{it[1]}.ifEmpty([]))
     }
     
 
@@ -162,7 +166,19 @@ workflow MULTIPLESEQUENCEALIGN {
     if( !params.skip_eval ){
         EVALUATE(ALIGN.out.msa, ch_refs, ch_structures_template)
         ch_versions = ch_versions.mix(EVALUATE.out.versions)
+        if( !params.skip_stats ){
+            stats_summary_csv = STATS.out.stats_summary.map{ meta, csv -> csv }
+            eval_summary_csv  = EVALUATE.out.eval_summary.map{ meta, csv -> csv }
+            stats_and_evaluation = eval_summary_csv.mix(stats_summary_csv).collect().map{ csvs -> [[id:"summary_stats_eval"], csvs] }
+            MERGE_STATS_EVAL(stats_and_evaluation)
+            ch_versions = ch_versions.mix(MERGE_STATS_EVAL.out.versions)
+            // STATS for MultiQC
+            PREPARE_MULTIQC(MERGE_STATS_EVAL.out.csv)
+            ch_multiqc_table = ch_multiqc_table.mix(PREPARE_MULTIQC.out.multiqc_table.collect{it[1]}.ifEmpty([]))
+        }
     }
+
+
 
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
@@ -180,6 +196,8 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // MODULE: MultiQC
     //
+    if (!params.skip_multiqc) {
+
     workflow_summary    = WorkflowMultiplesequencealign.paramsSummaryMultiqc(workflow, summary_params)
     ch_workflow_summary = Channel.value(workflow_summary)
 
@@ -195,9 +213,17 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_multiqc_files.collect(),
         ch_multiqc_config.toList(),
         ch_multiqc_custom_config.toList(),
-        ch_multiqc_logo.toList()
+        ch_multiqc_logo.toList(),
+        ch_multiqc_table,
+        ch_multiqc_stats
     )
     multiqc_report = MULTIQC.out.report.toList()
+
+    }
+    if( !params.skip_shiny){
+        PREPARE_SHINY ( MERGE_STATS_EVAL.out.csv, file(params.shiny_app) )
+    }
+    
 }
 
 /*
