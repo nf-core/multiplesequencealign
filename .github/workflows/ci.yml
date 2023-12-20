@@ -38,4 +38,25 @@ jobs:
       - name: Run pipeline with test data
         run: |
           nextflow run ${GITHUB_WORKSPACE} -profile test,docker --outdir ./results
+
+  parameters:
+    name: Test workflow parameters
+    if: "${{ github.event_name != 'push' || (github.event_name == 'push' && github.repository == 'nf-core/multiplesequencealign') }}"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        NXF_VER:
+          - "23.04.0"
+          - "latest-everything"
+    steps:
+      - name: Check out pipeline code
+        uses: actions/checkout@v4
+
+      - name: Install Nextflow
+        uses: nf-core/setup-nextflow@v1
+        with:
+          version: "${{ matrix.NXF_VER }}"
+
+      - name: Test workflow parameters
+        run: |       
           nextflow run ${GITHUB_WORKSPACE} -profile test_align_only,singularity --outdir ./results
