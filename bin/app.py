@@ -16,7 +16,11 @@ sns.set(context="talk", style="white", font_scale=0.8)
 # ----------------------------------------------------------------------------
 summary_report = "./shiny_data.csv"
 
-inputfile = pd.read_csv(summary_report)
+try:
+    inputfile = pd.read_csv(summary_report)
+except:
+    print("ERROR: file not found: ", summary_report)
+    sys.exit(1)
 
 
 # ----------------------------------------------------------------------------
