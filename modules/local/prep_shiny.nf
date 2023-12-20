@@ -1,4 +1,4 @@
-process PREP_SHINY {
+process PREPARE_SHINY {
     tag "$meta.id"
     label 'process_low'
 
