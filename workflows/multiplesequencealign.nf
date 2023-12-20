@@ -36,9 +36,9 @@ include { STATS                       } from '../subworkflows/local/stats'
 include { ALIGN                       } from '../subworkflows/local/align'
 include { EVALUATE                    } from '../subworkflows/local/evaluate'
 include { CREATE_TCOFFEETEMPLATE      } from '../modules/local/create_tcoffee_template' 
-include { MULTIQC                     } from '../modules/local/multiqc'
-include { MULTIQC_PREP_TABLE          } from '../modules/local/multiqc_prep_table'
-include { PREP_SHINY                  } from '../modules/local/prep_shiny'
+include { MULTIQC         } from '../modules/local/multiqc'
+include { PREPARE_MULTIQC } from '../modules/local/prepare_multiqc'
+include { PREPARE_SHINY   } from '../modules/local/prepare_shiny'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
