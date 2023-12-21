@@ -18,6 +18,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 [#59](https://github.com/nf-core/multiplesequencealign/issues/59) - Add support for passing structure template in samplesheet.
 [#77](https://github.com/nf-core/multiplesequencealign/issues/77) - Add module zip
 [#93](https://github.com/nf-core/multiplesequencealign/pull/93) - Add multiqc basic support. Add custom params validation. Add basic shiny app.
+[#100](https://github.com/nf-core/multiplesequencealign/pull/100) - Add support for optional stats and evals. Clean tests.
 
 ### `Fixed`
 
