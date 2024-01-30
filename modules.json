@@ -70,6 +70,11 @@
                         "git_sha": "f883758bfbfd0dea01013750581d378e8c98aafc",
                         "installed_by": ["modules"]
                     },
+                    "pigz/compress": {
+                        "branch": "master",
+                        "git_sha": "0eab94fc1e48703c1b0a8704bd665f554905c39d",
+                        "installed_by": ["modules"]
+                    },
                     "tcoffee/align": {
                         "branch": "master",
                         "git_sha": "c83c78835ca6d7a55b3f200718d887cbc7149d37",
@@ -91,11 +96,6 @@
                         "installed_by": ["modules"]
                     },
                     "untar": {
-                        "branch": "master",
-                        "git_sha": "3f5420aa22e00bd030a2556dfdffc9e164ec0ec5",
-                        "installed_by": ["modules"]
-                    },
-                    "zip": {
                         "branch": "master",
                         "git_sha": "3f5420aa22e00bd030a2556dfdffc9e164ec0ec5",
                         "installed_by": ["modules"]
