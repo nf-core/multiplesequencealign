@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "https://raw.githubusercontent.com/nf-core/msa/master/assets/schema_tools.json",
+    "title": "nf-core/msa pipeline - params.tools schema",
+    "description": "Schema for the file provided with params.tools",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "tree": {
+                "type": "string",
+                "errorMessage": "tree name cannot contain spaces",
+                "meta": ["tree"]
+            },
+            "args_tree": {
+                "type": "string",
+                "meta": ["args_tree"]
+            },
+            "aligner": {
+                "type": "string",
+                "meta": ["aligner"],
+                "errorMessage": "align name must be provided and cannot contain spaces"
+            },
+            "args_aligner": {
+                "type": "string",
+                "meta": ["args_aligner"]
+            }
+        },
+        "required": ["aligner"]
+    }
+}

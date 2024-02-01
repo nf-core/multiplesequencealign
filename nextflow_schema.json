@@ -17,9 +17,21 @@
                     "format": "file-path",
                     "exists": true,
                     "mimetype": "text/csv",
+                    "schema": "assets/schema_input.json",
                     "pattern": "^\\S+\\.csv$",
                     "description": "Path to comma-separated file containing information about the samples in the experiment.",
                     "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/multiplesequencealign/usage#samplesheet-input).",
+                    "fa_icon": "fas fa-file-csv"
+                },
+                "tools": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "mimetype": "text/csv",
+                    "schema": "assets/schema_tools.json",
+                    "pattern": "^\\S+\\.csv$",
+                    "description": "Path to comma-separated file containing information about the tools to be used in the experiment.",
+                    "help_text": "You will need to create a design file with information about the tools to be used before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/msa/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
                 },
                 "outdir": {
@@ -42,34 +54,90 @@
                 }
             }
         },
-        "reference_genome_options": {
-            "title": "Reference genome options",
+        "stats_options": {
+            "title": "Stats options",
             "type": "object",
-            "fa_icon": "fas fa-dna",
-            "description": "Reference genome related files and options required for the workflow.",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define wether to run stats.",
             "properties": {
-                "genome": {
-                    "type": "string",
-                    "description": "Name of iGenomes reference.",
-                    "fa_icon": "fas fa-book",
-                    "help_text": "If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. \n\nSee the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details."
+                "skip_stats": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Skip all of the statistics computation on the fasta file."
                 },
-                "fasta": {
+                "calc_sim": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate the percentage similarity across the sequences in the input files."
+                },
+                "calc_seq_stats": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate general statistics on input files."
+                }
+            }
+        },
+        "eval_options": {
+            "title": "Eval options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define wether to run stats.",
+            "properties": {
+                "skip_eval": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Skip all of the evaluations computation on the msa."
+                },
+                "calc_sp": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate the Sum of Pairs of alignment."
+                },
+                "calc_tc": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate the Total Column Score of alignment."
+                },
+                "calc_irmsd": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate the iRMSD of alignment."
+                }
+            }
+        },
+        "reports_options": {
+            "title": "Reports options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define wether to run stats.",
+            "properties": {
+                "skip_multiqc": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Skip the multiqc report generation."
+                },
+                "skip_shiny": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Skip the shiny report generation."
+                },
+                "shiny_app": {
                     "type": "string",
                     "format": "file-path",
-                    "exists": true,
-                    "mimetype": "text/plain",
-                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
-                    "description": "Path to FASTA genome file.",
-                    "help_text": "This parameter is *mandatory* if `--genome` is not specified. If you don't have a BWA index available this will be generated for you automatically. Combine with `--save_reference` to save BWA index for future runs.",
-                    "fa_icon": "far fa-file-code"
-                },
-                "igenomes_ignore": {
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "File containing the main shiny app."
+                }
+            }
+        },
+        "compression": {
+            "title": "Compression",
+            "type": "object",
+            "description": "Define wether to run compression",
+            "default": "",
+            "properties": {
+                "skip_compress": {
                     "type": "boolean",
-                    "description": "Do not load the iGenomes reference config.",
-                    "fa_icon": "fas fa-ban",
-                    "hidden": true,
-                    "help_text": "Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`."
+                    "description": "Skip the compression of all alignment files"
                 }
             }
         },
@@ -273,7 +341,16 @@
             "$ref": "#/definitions/input_output_options"
         },
         {
-            "$ref": "#/definitions/reference_genome_options"
+            "$ref": "#/definitions/stats_options"
+        },
+        {
+            "$ref": "#/definitions/eval_options"
+        },
+        {
+            "$ref": "#/definitions/reports_options"
+        },
+        {
+            "$ref": "#/definitions/compression"
         },
         {
             "$ref": "#/definitions/institutional_config_options"
