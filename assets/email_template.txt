@@ -4,7 +4,7 @@
   |\\ | |__  __ /  ` /  \\ |__) |__         }  {
   | \\| |       \\__, \\__/ |  \\ |___     \\`-._,-`-,
                                         `._,._,'
-  nf-core/multiplesequencealign v${version}
+  nf-core/multiplesequencealign ${version}
 ----------------------------------------------------
 Run Name: $runName
 
