@@ -1,4 +1,3 @@
-
 process CALCULATE_SEQSTATS {
     tag "$meta.id"
     label 'process_low'
@@ -17,16 +16,14 @@ process CALCULATE_SEQSTATS {
     tuple val(meta), path("*_mqc.tsv"), emit: multiqc_tsv
     path "versions.yml" , emit: versions
 
-
     when:
     task.ext.when == null || task.ext.when
 
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def id = meta.id
     """
-    calc_seqstats.py $id \
+    calc_seqstats.py ${meta.id} \
         ${fasta} \
         "${prefix}_seqstats.csv" \
         "${prefix}_seqstats_summary.csv" \
@@ -38,6 +35,14 @@ process CALCULATE_SEQSTATS {
     "${task.process}":
         python: \$(python --version | sed 's/Python //g')
     END_VERSIONS
+    """
+
+    stub:
+    def prefix = task.ext.prefix ?: "${meta.id}"
+    """
+    touch ${prefix}_seqstats.csv
+    touch ${prefix}_seqstats_summary.csv
+    touch ${prefix}_multiqc.tsv
     """
 }
 

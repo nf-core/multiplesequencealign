@@ -12,8 +12,6 @@ process PREPARE_SHINY {
     path ("run.sh"), emit: run
 
     when:
-
-    when:
     task.ext.when == null || task.ext.when
 
     script:
@@ -27,7 +25,6 @@ process PREPARE_SHINY {
     """
 
     stub:
-    def prefix = task.ext.prefix ?: "${meta.id}"
     """
     touch shiny_data.csv
     touch shiny_app.R
