@@ -20,15 +20,15 @@ workflow STATS {
     seqstats_csv = Channel.empty()
 
     // // -------------------------------------------
-    // //      SEQUENCE SIMILARITY 
+    // //      SEQUENCE SIMILARITY
     // // -------------------------------------------
     if( params.calc_sim == true){
         TCOFFEE_SEQREFORMAT_SIM(ch_seqs)
         tcoffee_seqreformat_sim = TCOFFEE_SEQREFORMAT_SIM.out.formatted_file
-        ch_versions = ch_versions.mix(TCOFFEE_SEQREFORMAT_SIM.out.versions.first()) 
+        ch_versions = ch_versions.mix(TCOFFEE_SEQREFORMAT_SIM.out.versions.first())
         tcoffee_seqreformat_simtot = PARSE_SIM(tcoffee_seqreformat_sim)
-            
-        ch_sim_summary = tcoffee_seqreformat_simtot.map{ 
+
+        ch_sim_summary = tcoffee_seqreformat_simtot.map{
                                                     meta, csv -> csv
                                                 }.collect().map{
                                                     csv -> [ [id:"summary_simstats"], csv]
@@ -39,14 +39,14 @@ workflow STATS {
 
     // -------------------------------------------
     //      SEQUENCE GENERAL STATS
-    //      Sequence length, # of sequences, etc 
+    //      Sequence length, # of sequences, etc
     // -------------------------------------------
     CALCULATE_SEQSTATS(ch_seqs)
     seqstats = CALCULATE_SEQSTATS.out.seqstats
     seqstats_summary = CALCULATE_SEQSTATS.out.seqstats_summary
     ch_versions = ch_versions.mix(CALCULATE_SEQSTATS.out.versions.first())
 
-    ch_seqstats_summary = seqstats_summary.map{ 
+    ch_seqstats_summary = seqstats_summary.map{
                                                 meta, csv -> csv
                                             }.collect().map{
                                                 csv -> [ [id:"summary_seqstats"], csv]
@@ -63,7 +63,6 @@ workflow STATS {
     sim      = sim_csv.map{ meta, csv -> csv }
     seqstats = seqstats_csv.map{ meta, csv -> csv }
 
-    
     csvs_stats = sim.mix(seqstats).collect().map{ csvs -> [[id:"summary_stats"], csvs] }
     def number_of_stats = [params.calc_sim, params.calc_seq_stats].count{ it == true }
     if(number_of_stats >= 2){

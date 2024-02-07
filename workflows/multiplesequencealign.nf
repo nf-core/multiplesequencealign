@@ -39,7 +39,7 @@ stats_and_evaluation_summary = Channel.empty()
 include { STATS                       } from '../subworkflows/local/stats'
 include { ALIGN                       } from '../subworkflows/local/align'
 include { EVALUATE                    } from '../subworkflows/local/evaluate'
-include { CREATE_TCOFFEETEMPLATE      } from '../modules/local/create_tcoffee_template' 
+include { CREATE_TCOFFEETEMPLATE      } from '../modules/local/create_tcoffee_template'
 include { MULTIQC         } from '../modules/local/multiqc'
 include { PREPARE_MULTIQC } from '../modules/local/prepare_multiqc'
 include { PREPARE_SHINY   } from '../modules/local/prepare_shiny'
@@ -89,7 +89,7 @@ workflow MULTIPLESEQUENCEALIGN {
                         alignMap["aligner"] = meta_clone["aligner"]
                         alignMap["args_aligner"] = WorkflowMultiplesequencealign.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
                         alignMap["args_aligner_clean"] = WorkflowMultiplesequencealign.cleanArgs(alignMap["args_aligner"])
-                        
+
                         [ treeMap, alignMap ]
                     }
 
@@ -97,9 +97,9 @@ workflow MULTIPLESEQUENCEALIGN {
     ch_refs       = ch_input.filter{ it[2].size() > 0}.map{ meta,fasta,ref,str,template -> [ meta, file(ref)      ]}
     ch_templates  = ch_input.filter{ it[4].size() > 0}.map{ meta,fasta,ref,str,template -> [ meta, file(template) ]}
     ch_structures = ch_input.map{ meta,fasta,ref,str,template -> [ meta, str            ]}.filter{ it[1].size() > 0 }
-    
+
     // ----------------
-    // STRUCTURES 
+    // STRUCTURES
     // ----------------
     // Structures are taken from a directory of PDB files.
     // If the directory is compressed, it is uncompressed first.
@@ -111,17 +111,17 @@ workflow MULTIPLESEQUENCEALIGN {
     UNTAR ( ch_structures.compressed )
         .untar
         .mix( ch_structures.uncompressed )
-        .map { 
-            meta,dir -> 
-                [ meta,file(dir).listFiles().collect() ] 
+        .map {
+            meta,dir ->
+                [ meta,file(dir).listFiles().collect() ]
         }
         .set { ch_structures }
-    
+
 
     // ----------------
-    // TEMPLATES 
+    // TEMPLATES
     // ----------------
-    // If a family does not present a template but structures are provided, create one. 
+    // If a family does not present a template but structures are provided, create one.
     ch_structures_template = ch_structures.join(ch_templates, by:0, remainder:true)
     ch_structures_template.branch{
                                     template: it[2] != null
@@ -130,15 +130,15 @@ workflow MULTIPLESEQUENCEALIGN {
 
     // Create the new templates and merge them with the existing templates
     CREATE_TCOFFEETEMPLATE(ch_structures_branched.no_template
-                                                        .map{ 
-                                                            meta,structures,template 
-                                                                            -> [ meta, structures ] 
+                                                        .map{
+                                                            meta,structures,template
+                                                                            -> [ meta, structures ]
                                                             })
     new_templates = CREATE_TCOFFEETEMPLATE.out.template
     forced_templates = ch_structures_branched.template
-                                                .map{ 
-                                                    meta,structures,template 
-                                                                        -> [ meta, template ] 
+                                                .map{
+                                                    meta,structures,template
+                                                                        -> [ meta, template ]
                                                 }
     ch_templates_merged = forced_templates.mix( new_templates)
 
@@ -155,7 +155,7 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_versions = ch_versions.mix(STATS.out.versions)
         stats_summary = stats_summary.mix(STATS.out.stats_summary)
     }
-    
+
 
     //
     // Align
@@ -174,8 +174,8 @@ workflow MULTIPLESEQUENCEALIGN {
     }
 
     //
-    // Combine stats and evaluation reports into a single CSV   
-    // 
+    // Combine stats and evaluation reports into a single CSV
+    //
     stats_summary_csv = stats_summary.map{ meta, csv -> csv }
     eval_summary_csv  = evaluation_summary.map{ meta, csv -> csv }
     stats_and_evaluation = eval_summary_csv.mix(stats_summary_csv).collect().map{ csvs -> [[id:"summary_stats_eval"], csvs] }
@@ -239,7 +239,7 @@ workflow MULTIPLESEQUENCEALIGN {
 
     }
 
-    
+
 }
 
 /*

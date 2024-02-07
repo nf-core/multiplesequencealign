@@ -13,7 +13,7 @@ include {   MUSCLE5_SUPER5                    } from '../../modules/nf-core/musc
 include {   TCOFFEE_ALIGN as REGRESSIVE_ALIGN } from '../../modules/nf-core/tcoffee/align/main'
 
 // Include local modules
-include {   CREATE_TCOFFEETEMPLATE            } from '../../modules/local/create_tcoffee_template' 
+include {   CREATE_TCOFFEETEMPLATE            } from '../../modules/local/create_tcoffee_template'
 
 workflow ALIGN {
     take:
@@ -28,9 +28,9 @@ workflow ALIGN {
     // This way, it can direct the computation of guidetrees
     // and aligners separately
     ch_tools_split = ch_tools
-                        .multiMap{ it -> 
-                          tree: it[0]
-                          align: it[1]
+                        .multiMap{ it ->
+                            tree: it[0]
+                            align: it[1]
                         }
 
     // ------------------------------------------------
@@ -64,7 +64,7 @@ workflow ALIGN {
         }
         .set { ch_fasta_trees }
 
-    // ------------------------------------------------   
+    // ------------------------------------------------
     // Compute the alignments
     // ------------------------------------------------
 
@@ -131,15 +131,16 @@ workflow ALIGN {
     ch_versions = ch_versions.mix(TCOFFEE_ALIGN.out.versions.first())
     msa = msa.mix(TCOFFEE_ALIGN.out.alignment)
 
-    // -----------------  3DCOFFEE  ------------------ 
+    // -----------------  3DCOFFEE  ------------------
     ch_fasta_trees_3dcoffee = ch_fasta_trees.tcoffee3d.map{ meta, fasta, tree -> [meta["id"], meta, fasta, tree] }
-                                                   .combine(ch_structures.map{ meta, template, structures -> [meta["id"], template, structures]}, by: 0)
-                                                   .multiMap{
-                                                                merging_id, meta, fastafile, treefile, templatefile, structuresfiles ->
-                                                                fasta:      [ meta, fastafile       ]
-                                                                tree:       [ meta, treefile        ]
-                                                                structures: [ meta, templatefile, structuresfiles ]
-                                                            }
+                                .combine(ch_structures.map{ meta, template, structures -> [meta["id"], template, structures]}, by: 0)
+                                .multiMap{
+                                            merging_id, meta, fastafile, treefile, templatefile, structuresfiles ->
+                                            fasta:      [ meta, fastafile       ]
+                                            tree:       [ meta, treefile        ]
+                                            structures: [ meta, templatefile, structuresfiles ]
+                                        }
+
     TCOFFEE3D_ALIGN(ch_fasta_trees_3dcoffee.fasta, ch_fasta_trees_3dcoffee.tree, ch_fasta_trees_3dcoffee.structures)
     ch_versions = ch_versions.mix(TCOFFEE3D_ALIGN.out.versions.first())
     msa = msa.mix(TCOFFEE3D_ALIGN.out.alignment)
@@ -165,11 +166,8 @@ workflow ALIGN {
     MUSCLE5_SUPER5(ch_fasta_muscle5.fasta)
     ch_versions = ch_versions.mix(MUSCLE5_SUPER5.out.versions.first())
     msa = msa.mix(MUSCLE5_SUPER5.out.alignment.first())
-    
 
     emit:
-    msa                             
+    msa
     versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
 }
-
-
