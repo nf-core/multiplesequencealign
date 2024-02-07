@@ -30,19 +30,28 @@ ch_multiqc_table   = Channel.empty()
 evaluation_summary = Channel.empty()
 stats_summary      = Channel.empty()
 stats_and_evaluation_summary = Channel.empty()
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT LOCAL MODULES/SUBWORKFLOWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+//
+// SUBWORKFLOW: Local subworkflows
+//
 include { STATS                       } from '../subworkflows/local/stats'
 include { ALIGN                       } from '../subworkflows/local/align'
 include { EVALUATE                    } from '../subworkflows/local/evaluate'
 include { CREATE_TCOFFEETEMPLATE      } from '../modules/local/create_tcoffee_template'
+
+//
+// MODULE: local modules
+//
 include { MULTIQC         } from '../modules/local/multiqc'
 include { PREPARE_MULTIQC } from '../modules/local/prepare_multiqc'
 include { PREPARE_SHINY   } from '../modules/local/prepare_shiny'
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
@@ -76,37 +85,62 @@ workflow MULTIPLESEQUENCEALIGN {
     // Prepare input and metadata
     //
     ch_input = Channel.fromSamplesheet('input')
-    ch_tools = Channel.fromSamplesheet('tools').map {
-                        meta ->
-                        def meta_clone = meta[0].clone()
-                        def treeMap = [:]
-                        def alignMap = [:]
+    ch_tools = Channel.fromSamplesheet('tools')
+                .map {
+                    meta ->
+                    def meta_clone = meta[0].clone()
+                    def treeMap = [:]
+                    def alignMap = [:]
 
-                        treeMap["tree"] = meta_clone["tree"]
-                        treeMap["args_tree"] = meta_clone["args_tree"]
-                        treeMap["args_tree_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_tree)
+                    treeMap["tree"] = meta_clone["tree"]
+                    treeMap["args_tree"] = meta_clone["args_tree"]
+                    treeMap["args_tree_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_tree)
 
-                        alignMap["aligner"] = meta_clone["aligner"]
-                        alignMap["args_aligner"] = WorkflowMultiplesequencealign.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
-                        alignMap["args_aligner_clean"] = WorkflowMultiplesequencealign.cleanArgs(alignMap["args_aligner"])
+                    alignMap["aligner"] = meta_clone["aligner"]
+                    alignMap["args_aligner"] = WorkflowMultiplesequencealign.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
+                    alignMap["args_aligner_clean"] = WorkflowMultiplesequencealign.cleanArgs(alignMap["args_aligner"])
 
-                        [ treeMap, alignMap ]
-                    }
+                    [ treeMap, alignMap ]
+                }
 
-    ch_seqs       = ch_input.map{ meta,fasta,ref,str,template -> [ meta, file(fasta)    ]}
-    ch_refs       = ch_input.filter{ it[2].size() > 0}.map{ meta,fasta,ref,str,template -> [ meta, file(ref)      ]}
-    ch_templates  = ch_input.filter{ it[4].size() > 0}.map{ meta,fasta,ref,str,template -> [ meta, file(template) ]}
-    ch_structures = ch_input.map{ meta,fasta,ref,str,template -> [ meta, str            ]}.filter{ it[1].size() > 0 }
+    ch_seqs       = ch_input
+                        .map {
+                            meta, fasta, ref, str, template ->
+                                [ meta, file(fasta) ]
+                        }
+
+    ch_refs       = ch_input
+                        .filter { it[2].size() > 0}
+                        .map {
+                            meta,fasta,ref,str,template ->
+                                [ meta, file(ref) ]
+                        }
+
+    ch_templates  = ch_input
+                        .filter { it[4].size() > 0}
+                        .map {
+                            meta,fasta,ref,str,template ->
+                                [ meta, file(template) ]
+                        }
+
+    ch_structures = ch_input
+                        .map {
+                            meta,fasta,ref,str,template ->
+                                [ meta, str ]
+                        }
+                        .filter { it[1].size() > 0 }
 
     // ----------------
     // STRUCTURES
     // ----------------
     // Structures are taken from a directory of PDB files.
     // If the directory is compressed, it is uncompressed first.
-    ch_structures.branch {
-        compressed:   it[1].endsWith('.tar.gz')
-        uncompressed: true
-    }.set { ch_structures }
+    ch_structures
+        .branch {
+            compressed:   it[1].endsWith('.tar.gz')
+            uncompressed: true
+        }
+        .set { ch_structures }
 
     UNTAR ( ch_structures.compressed )
         .untar
@@ -123,29 +157,31 @@ workflow MULTIPLESEQUENCEALIGN {
     // ----------------
     // If a family does not present a template but structures are provided, create one.
     ch_structures_template = ch_structures.join(ch_templates, by:0, remainder:true)
-    ch_structures_template.branch{
-                                    template: it[2] != null
-                                    no_template: true
-                            }.set { ch_structures_branched }
+    ch_structures_template
+        .branch{
+            template: it[2] != null
+            no_template: true
+        }
+        .set { ch_structures_branched }
 
     // Create the new templates and merge them with the existing templates
-    CREATE_TCOFFEETEMPLATE(ch_structures_branched.no_template
-                                                        .map{
-                                                            meta,structures,template
-                                                                            -> [ meta, structures ]
-                                                            })
+    CREATE_TCOFFEETEMPLATE (
+        ch_structures_branched.no_template
+            .map {
+                meta,structures,template
+                    -> [ meta, structures ]
+            }
+    )
     new_templates = CREATE_TCOFFEETEMPLATE.out.template
     forced_templates = ch_structures_branched.template
-                                                .map{
-                                                    meta,structures,template
-                                                                        -> [ meta, template ]
-                                                }
-    ch_templates_merged = forced_templates.mix( new_templates)
+                        .map{
+                            meta,structures,template
+                                -> [ meta, template ]
+                        }
+    ch_templates_merged = forced_templates.mix(new_templates)
 
     // Merge the structures and templates channels, ready for the alignment
     ch_structures_template = ch_templates_merged.combine(ch_structures, by:0)
-
-
 
     //
     // Compute summary statistics about the input sequences
@@ -155,7 +191,6 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_versions = ch_versions.mix(STATS.out.versions)
         stats_summary = stats_summary.mix(STATS.out.stats_summary)
     }
-
 
     //
     // Align
@@ -178,7 +213,14 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     stats_summary_csv = stats_summary.map{ meta, csv -> csv }
     eval_summary_csv  = evaluation_summary.map{ meta, csv -> csv }
-    stats_and_evaluation = eval_summary_csv.mix(stats_summary_csv).collect().map{ csvs -> [[id:"summary_stats_eval"], csvs] }
+    stats_and_evaluation = eval_summary_csv
+                            .mix(stats_summary_csv)
+                            .collect()
+                            .map {
+                                csvs ->
+                                    [ [ id:"summary_stats_eval" ], csvs ]
+                            }
+
     if( !params.skip_stats && !params.skip_eval ){
         MERGE_STATS_EVAL(stats_and_evaluation)
         stats_and_evaluation_summary = MERGE_STATS_EVAL.out.csv
