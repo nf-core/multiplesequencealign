@@ -34,7 +34,6 @@ process PARSE_IRMSD {
     # Add metadata info to output file
     paste -d, meta.csv ${prefix}.scores.csv > ${prefix}.irmsd_tot
 
-
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         tcoffee: \$( t_coffee -version | awk '{gsub("Version_", ""); print \$3}')
@@ -42,7 +41,6 @@ process PARSE_IRMSD {
     """
 
     stub:
-    def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
     """
     touch ${prefix}.irmsd_tot
