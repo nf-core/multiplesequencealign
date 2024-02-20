@@ -60,6 +60,11 @@
                         "git_sha": "c0a22acfb0accdf8ab3ea4f755a4865d538dc53f",
                         "installed_by": ["modules"]
                     },
+                    "mtmalign/align": {
+                        "branch": "master",
+                        "git_sha": "faf557ba56156ac0e5de76a25c1e3df11c944f59",
+                        "installed_by": ["modules"]
+                    },
                     "multiqc": {
                         "branch": "master",
                         "git_sha": "8ec825f465b9c17f9d83000022995b4f7de6fe93",
