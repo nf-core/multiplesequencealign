@@ -13,7 +13,7 @@ process CALCULATE_SEQSTATS {
     output:
     tuple val(meta), path("*_seqstats.csv"), emit: seqstats
     tuple val(meta), path("*_seqstats_summary.csv"), emit: seqstats_summary
-    tuple val(meta), path("*_mqc.tsv"), emit: multiqc_tsv
+    tuple val(meta), path("*_multiqc.tsv"), emit: multiqc_tsv
     path "versions.yml" , emit: versions
 
     when:
@@ -27,7 +27,7 @@ process CALCULATE_SEQSTATS {
         ${fasta} \
         "${prefix}_seqstats.csv" \
         "${prefix}_seqstats_summary.csv" \
-        "${prefix}_mqc.tsv"
+        "${prefix}_multiqc.tsv"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -40,7 +40,7 @@ process CALCULATE_SEQSTATS {
     """
     touch ${prefix}_seqstats.csv
     touch ${prefix}_seqstats_summary.csv
-    touch ${prefix}_mqc.tsv
+    touch ${prefix}_multiqc.tsv
     """
 }
 
