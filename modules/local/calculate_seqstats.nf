@@ -42,7 +42,7 @@ process CALCULATE_SEQSTATS {
     """
     touch ${prefix}_seqstats.csv
     touch ${prefix}_seqstats_summary.csv
-    touch ${prefix}_multiqc.tsv
+    touch ${prefix}_mqc.tsv
     """
 }
 
