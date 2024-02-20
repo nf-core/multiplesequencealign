@@ -15,6 +15,7 @@ include {   TCOFFEE_ALIGN                     } from '../../modules/nf-core/tcof
 include {   TCOFFEE_ALIGN as TCOFFEE3D_ALIGN  } from '../../modules/nf-core/tcoffee/align/main'
 include {   MUSCLE5_SUPER5                    } from '../../modules/nf-core/muscle5/super5/main'
 include {   TCOFFEE_ALIGN as REGRESSIVE_ALIGN } from '../../modules/nf-core/tcoffee/align/main'
+include {   MTMALIGN_ALIGN                    } from '../../modules/nf-core/mtmalign/align/main'
 
 // Include local modules
 include {   CREATE_TCOFFEETEMPLATE            } from '../../modules/local/create_tcoffee_template'
@@ -76,6 +77,9 @@ workflow ALIGN {
             kalign:              it[0]["aligner"] == "KALIGN"
             learnmsa:            it[0]["aligner"] == "LEARNMSA"
             muscle5:             it[0]["aligner"] == "MUSCLE5"
+            mtmalign:            it[0]["aligner"] == "MTMALIGN"
+            // MTMalign does not take FASTA input;
+            // because of the pipeline architecture it still takes a FASTA as input, but ignores its content
         }
         .set { ch_fasta_trees }
 
@@ -184,3 +188,17 @@ workflow ALIGN {
     msa
     versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
 }
+
+    // -----------------  MTMALIGN  ------------------
+    // this call discards the fasta, tree and template arguments, as MTMalign only takes pdb inputs
+    // nonetheless, this is required by the pipeline
+    ch_pdb_mtmalign = ch_fasta_trees.mtmalign.map{ meta, fasta, tree -> [meta["id"], meta] }
+                                .combine(ch_structures.map{ meta, template, structures -> [meta["id"], structures]}, by: 0)
+                                .multiMap{
+                                            merging_id, meta, templatefile, structuresfiles ->
+                                                structures: [ meta, structuresfiles ]
+                                }
+
+    MTMALIGN_ALIGN(ch_pdb_mtmalign.structures, false)
+    ch_versions = ch_versions.mix(MTMALIGN_ALIGN.out.versions.first())
+    msa = msa.mix(MTMALIGN_ALIGN.out.alignment)
