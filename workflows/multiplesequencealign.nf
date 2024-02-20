@@ -62,7 +62,6 @@ include { PREPARE_SHINY   } from '../modules/local/prepare_shiny'
 // MODULE: Installed directly from nf-core/modules
 //
 
-include { FASTQC                         } from '../modules/nf-core/fastqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS    } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 include { UNTAR                          } from '../modules/nf-core/untar/main'
 include { ZIP                            } from '../modules/nf-core/zip/main'
