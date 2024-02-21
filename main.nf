@@ -29,10 +29,8 @@ include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_mult
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-// TODO nf-core: Remove this line if you don't need a FASTA file
 //   This is an example of how to use getGenomeAttribute() to fetch parameters
 //   from igenomes.config using `--genome`
-params.fasta = getGenomeAttribute('fasta')
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -47,6 +45,7 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
 
     take:
     samplesheet // channel: samplesheet read in from --input
+    tools       // channel: samplesheet read in from --tools
 
     main:
 
@@ -54,11 +53,14 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
     // WORKFLOW: Run pipeline
     //
     MULTIPLESEQUENCEALIGN (
-        samplesheet
+        samplesheet,
+        tools
     )
 
-    emit:
-    multiqc_report = MULTIPLESEQUENCEALIGN.out.multiqc_report // channel: /path/to/multiqc_report.html
+    emit: 
+    multiqc_report =  MULTIPLESEQUENCEALIGN.out.multiqc
+
+
 
 }
 /*
@@ -81,14 +83,16 @@ workflow {
         params.monochrome_logs,
         args,
         params.outdir,
-        params.input
+        params.input, 
+        params.tools
     )
 
     //
     // WORKFLOW: Run main workflow
     //
     NFCORE_MULTIPLESEQUENCEALIGN (
-        PIPELINE_INITIALISATION.out.samplesheet
+        PIPELINE_INITIALISATION.out.samplesheet, 
+        PIPELINE_INITIALISATION.out.tools
     )
 
     //
