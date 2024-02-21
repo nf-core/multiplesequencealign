@@ -73,7 +73,7 @@ def multiqc_report = []
 
 workflow MULTIPLESEQUENCEALIGN {
 
-    take: 
+    take:
     ch_input
     ch_tools
 
@@ -258,7 +258,7 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_multiqc_logo.toList(),
         ch_multiqc_table
     )
-    
+
     emit:
     versions         = ch_versions
     multiqc          = MULTIQC.out.report.toList()                              // channel: [ path(versions.yml) ]

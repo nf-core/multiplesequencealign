@@ -91,11 +91,11 @@ workflow PIPELINE_INITIALISATION {
 
                         tree_map["tree"] = meta_clone["tree"]
                         tree_map["args_tree"] = meta_clone["args_tree"]
-                        tree_map["args_tree_clean"] = WorkflowMultiplesequencealign.cleanArgs(meta_clone.args_tree)
+                        tree_map["args_tree_clean"] = Utils.cleanArgs(meta_clone.args_tree)
 
                         align_map["aligner"] = meta_clone["aligner"]
-                        align_map["args_aligner"] = WorkflowMultiplesequencealign.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
-                        align_map["args_aligner_clean"] = WorkflowMultiplesequencealign.cleanArgs(align_map["args_aligner"])
+                        align_map["args_aligner"] = Utils.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
+                        align_map["args_aligner_clean"] = Utils.cleanArgs(align_map["args_aligner"])
 
                         [ tree_map, align_map ]
                 }

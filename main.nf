@@ -57,7 +57,7 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
         tools
     )
 
-    emit: 
+    emit:
     multiqc_report =  MULTIPLESEQUENCEALIGN.out.multiqc
 
 
@@ -83,7 +83,7 @@ workflow {
         params.monochrome_logs,
         args,
         params.outdir,
-        params.input, 
+        params.input,
         params.tools
     )
 
@@ -91,7 +91,7 @@ workflow {
     // WORKFLOW: Run main workflow
     //
     NFCORE_MULTIPLESEQUENCEALIGN (
-        PIPELINE_INITIALISATION.out.samplesheet, 
+        PIPELINE_INITIALISATION.out.samplesheet,
         PIPELINE_INITIALISATION.out.tools
     )
 
