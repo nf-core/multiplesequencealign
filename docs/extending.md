@@ -32,6 +32,7 @@ If it is not skipped, it is the last part of the pipeline to run.
 
 Adding a new evaluation module into the pipeline is a bit more tricky, since the output of the evaluation modules gets processed and merged in different ways in the pipeline.
 This requires changes in the `evaluate.nf` subworkflow and the pipeline config as well as adding an option to the main pipeline.
+The process of adding `ULTRAMSATRIC` evaluation to the pipeline may be a useful reference: [commit history](https://github.com/lrauschning/multiplesequencealign/commits/ultramsatric/).
 In general, the process of adding another evaluation module to the pipeline can be thought of as three steps:
 
   1. Create a local or nf-core module.
