@@ -36,6 +36,7 @@ workflow PIPELINE_INITIALISATION {
     nextflow_cli_args //   array: List of positional nextflow CLI args
     outdir            //  string: The output directory where the results will be saved
     input             //  string: Path to input samplesheet
+    tools            //  string: Path to input tools samplesheet
 
     main:
 
@@ -80,28 +81,28 @@ workflow PIPELINE_INITIALISATION {
     //
     // Create channel from input file provided through params.input
     //
-    Channel
-        .fromSamplesheet("input")
-        .map {
-            meta, fastq_1, fastq_2 ->
-                if (!fastq_2) {
-                    return [ meta.id, meta + [ single_end:true ], [ fastq_1 ] ]
-                } else {
-                    return [ meta.id, meta + [ single_end:false ], [ fastq_1, fastq_2 ] ]
+    ch_input = Channel.fromSamplesheet('input')
+    ch_tools = Channel.fromSamplesheet('tools')
+                .map {
+                    meta ->
+                        def meta_clone = meta[0].clone()
+                        def tree_map = [:]
+                        def align_map = [:]
+
+                        tree_map["tree"] = meta_clone["tree"]
+                        tree_map["args_tree"] = meta_clone["args_tree"]
+                        tree_map["args_tree_clean"] = Utils.cleanArgs(meta_clone.args_tree)
+
+                        align_map["aligner"] = meta_clone["aligner"]
+                        align_map["args_aligner"] = Utils.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
+                        align_map["args_aligner_clean"] = Utils.cleanArgs(align_map["args_aligner"])
+
+                        [ tree_map, align_map ]
                 }
-        }
-        .groupTuple()
-        .map {
-            validateInputSamplesheet(it)
-        }
-        .map {
-            meta, fastqs ->
-                return [ meta, fastqs.flatten() ]
-        }
-        .set { ch_samplesheet }
 
     emit:
-    samplesheet = ch_samplesheet
+    samplesheet = ch_input
+    tools       = ch_tools
     versions    = ch_versions
 }
 
@@ -248,4 +249,59 @@ def methodsDescriptionText(mqc_methods_yaml) {
     def description_html = engine.createTemplate(methods_text).make(meta)
 
     return description_html.toString()
+}
+
+
+import nextflow.Nextflow
+import groovy.text.SimpleTemplateEngine
+
+class Utils {
+
+
+
+    public static cleanArgs(argString) {
+        def cleanArgs = argString.toString().trim().replace("-", "").replace("  ", " ").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
+        // if clearnArgs is empty, return ""
+
+        if (cleanArgs == null || cleanArgs == "") {
+            return ""
+        }else{
+            return cleanArgs
+        }
+    }
+
+    public static fix_args(tool,args,tool_to_be_checked, required_flag, default_value) {
+        /*
+        This function checks if the required_flag is present in the args string for the tool_to_be_checked.
+        If not, it adds the required_flag and the default_value to the args string.
+        */
+        if(tool == tool_to_be_checked){
+            if( args == null || args == ""|| args == "null" || !args.contains(required_flag+" ")){
+                if(args == null || args == ""|| args == "null"){
+                    args = ""
+                }
+                args = args + " " + required_flag + " " + default_value
+            }
+        }
+        return args
+    }
+
+    public static check_required_args(tool,args){
+
+        // 3DCOFFEE
+        args = fix_args(tool,args,"3DCOFFEE", "-method", "TMalign_pair")
+        // REGRESSIVE
+        args = fix_args(tool,args,"REGRESSIVE", "-reg", "")
+        args = fix_args(tool,args,"REGRESSIVE", "-reg_method", "famsa_msa")
+        args = fix_args(tool,args,"REGRESSIVE", "-reg_nseq", "1000")
+        args = fix_args(tool,args,"REGRESSIVE", "-output", "fasta_aln")
+        // TCOFFEE
+        args = fix_args(tool,args,"TCOFFEE", "-output", "fasta_aln")
+
+        return args
+
+    }
+
+
+
 }
