@@ -22,7 +22,7 @@ process CREATE_TCOFFEETEMPLATE {
     """
     # Prep templates
     for structure in \$(ls *.pdb); do id=`echo \$structure| awk  {'gsub(".pdb", "", \$0); print'}`; echo -e ">"\$id "_P_" "\${id}" >>${prefix}_template.txt ; done
-   
+    
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         ubuntu: \$(cat /etc/lsb-release | grep "DISTRIB_DESCRIPTION" | awk '{gsub("DISTRIB_DESCRIPTION=", ""); print \$2}')
