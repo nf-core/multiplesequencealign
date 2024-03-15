@@ -29,7 +29,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 [#80](https://github.com/nf-core/multiplesequencealign/pull/80) - Update modules versions from nf-core tools with nf-test.
 [#32](https://github.com/nf-core/multiplesequencealign/issues/32) - Update Stats workflow with nf-core modules for merging.
 [#81](https://github.com/nf-core/multiplesequencealign/pull/81) - Update Eval workflow with nf-core modules for merging.
-[#](https://github.com/nf-core/multiplesequencealign/pull/) - Fix linting warnings (mostly versions)
+[#111](https://github.com/nf-core/multiplesequencealign/pull/111) - Fix linting warnings (mostly versions)
 
 ### `Dependencies`
 
