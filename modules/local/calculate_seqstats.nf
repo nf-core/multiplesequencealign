@@ -41,6 +41,10 @@ process CALCULATE_SEQSTATS {
     touch ${prefix}_seqstats.csv
     touch ${prefix}_seqstats_summary.csv
     touch ${prefix}_multiqc.tsv
+
+    "${task.process}":
+        python: \$(python --version | sed 's/Python //g')
+    END_VERSIONS
     """
 }
 

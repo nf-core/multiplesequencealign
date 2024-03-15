@@ -46,6 +46,7 @@ workflow EVALUATE {
                                             }
         CONCAT_SP(ch_sp_summary, "csv", "csv")
         sp_csv = CONCAT_SP.out.csv
+        ch_versions = ch_versions.mix(CONCAT_SP.out.versions)
     }
 
     // Total column score
@@ -61,6 +62,7 @@ workflow EVALUATE {
                                             }
         CONCAT_TC(ch_tc_summary, "csv", "csv")
         tc_csv = CONCAT_TC.out.csv
+        ch_versions = ch_versions.mix(CONCAT_TC.out.versions)
     }
 
 
@@ -83,7 +85,9 @@ workflow EVALUATE {
         TCOFFEE_IRMSD(msa_str.msa, msa_str.structures)
         tcoffee_irmsd_scores = TCOFFEE_IRMSD.out.irmsd
         ch_versions = ch_versions.mix(TCOFFEE_IRMSD.out.versions.first())
-        tcoffee_irmsd_scores_tot = PARSE_IRMSD(tcoffee_irmsd_scores)
+        PARSE_IRMSD(tcoffee_irmsd_scores)
+        tcoffee_irmsd_scores_tot = PARSE_IRMSD.out.irmsd_tot
+        ch_versions = ch_versions.mix(PARSE_IRMSD.out.versions)
 
         ch_irmsd_summary = tcoffee_irmsd_scores_tot.map{
                                                     meta, csv -> csv
@@ -92,6 +96,7 @@ workflow EVALUATE {
                                                 }
         CONCAT_IRMSD(ch_irmsd_summary, "csv", "csv")
         irmsd_csv = CONCAT_IRMSD.out.csv
+        versions = ch_versions.mix(CONCAT_IRMSD.out.versions)
     }
 
 
