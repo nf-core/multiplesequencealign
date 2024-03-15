@@ -3,8 +3,8 @@ process MULTIQC {
 
     conda 'bioconda::multiqc=1.13'
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/multiqc:1.13--pyhdfd78af_0' :
-        'biocontainers/multiqc:1.13--pyhdfd78af_0' }"
+        'https://depot.galaxyproject.org/singularity/multiqc:1.21--pyhdfd78af_0' :
+        'biocontainers/multiqc:1.21--pyhdfd78af_0' }"
 
     input:
     path multiqc_config

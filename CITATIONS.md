@@ -10,13 +10,58 @@
 
 ## Pipeline tools
 
+- [3DCoffee](https://pubmed.ncbi.nlm.nih.gov/15201059/)
+
+  > O'Sullivan O, Suhre K, Abergel C, Higgins DG, Notredame C. 3DCoffee: combining protein sequences and structures within multiple sequence alignments. J Mol Biol. 2004 Jul 2;340(2):385-95. doi: 10.1016/j.jmb.2004.04.058. PMID: 15201059.
+
+- [ClustalO](https://pubmed.ncbi.nlm.nih.gov/21988835/)
+
+  > Sievers F, Wilm A, Dineen D, Gibson TJ, Karplus K, Li W, Lopez R, McWilliam H, Remmert M, Söding J, Thompson JD, Higgins DG. Fast, scalable generation of high-quality protein multiple sequence alignments using Clustal Omega. Mol Syst Biol. 2011 Oct 11;7:539. doi: 10.1038/msb.2011.75. PMID: 21988835; PMCID: PMC3261699.
+
+- [csvtk](https://github.com/shenwei356/csvtk)
+
+- [FAMSA](https://pubmed.ncbi.nlm.nih.gov/27670777/)
+
+  > Deorowicz S, Debudaj-Grabysz A, Gudyś A. FAMSA: Fast and accurate multiple sequence alignment of huge protein families. Sci Rep. 2016 Sep 27;6:33964. doi: 10.1038/srep33964. PMID: 27670777; PMCID: PMC5037421.
+
 - [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 
   > Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data [Online].
 
+- [Kalign3](https://pubmed.ncbi.nlm.nih.gov/31665271/)
+
+  > Lassmann T. Kalign 3: multiple sequence alignment of large data sets. Bioinformatics. 2019 Oct 26;36(6):1928–9. doi: 10.1093/bioinformatics/btz795. Epub ahead of print. PMID: 31665271; PMCID: PMC7703769.
+
+- [learnMSA](https://pubmed.ncbi.nlm.nih.gov/36399060/)
+
+  > Becker F, Stanke M. learnMSA: learning and aligning large protein families. Gigascience. 2022 Nov 18;11:giac104. doi: 10.1093/gigascience/giac104. PMID: 36399060; PMCID: PMC9673500.
+
+- [MAFFT](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC135756/)
+
+  > Katoh K, Misawa K, Kuma K, Miyata T. MAFFT: a novel method for rapid multiple sequence alignment based on fast Fourier transform. Nucleic Acids Res. 2002 Jul 15;30(14):3059-66. doi: 10.1093/nar/gkf436. PMID: 12136088; PMCID: PMC135756.
+
 - [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)
 
   > Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354. Epub 2016 Jun 16. PubMed PMID: 27312411; PubMed Central PMCID: PMC5039924.
+
+- [mTM-align](https://pubmed.ncbi.nlm.nih.gov/29281009/)
+
+  > Dong R, Peng Z, Zhang Y, Yang J. mTM-align: an algorithm for fast and accurate multiple protein structure alignment. Bioinformatics. 2018 May 15;34(10):1719-1725. doi: 10.1093/bioinformatics/btx828. PMID: 29281009; PMCID: PMC5946935.
+
+- [Muscle5](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9664440/)
+
+  > Edgar RC. Muscle5: High-accuracy alignment ensembles enable unbiased assessments of sequence homology and phylogeny. Nat Commun. 2022 Nov 15;13(1):6968. doi: 10.1038/s41467-022-34630-w. PMID: 36379955; PMCID: PMC9664440.
+
+- [T-Coffee](https://pubmed.ncbi.nlm.nih.gov/10964570/)
+
+  > Notredame C, Higgins DG, Heringa J. T-Coffee: A novel method for fast and accurate multiple sequence alignment. J Mol Biol. 2000 Sep 8;302(1):205-17. doi: 10.1006/jmbi.2000.4042. PMID: 10964570.
+
+## Python packages
+
+- [Biopython](https://pubmed.ncbi.nlm.nih.gov/19304878/)
+
+  > Cock PJ, Antao T, Chang JT, Chapman BA, Cox CJ, Dalke A, Friedberg I, Hamelryck T, Kauff F, Wilczynski B, de Hoon MJ. Biopython: freely available Python tools for computational molecular biology and bioinformatics. Bioinformatics. 2009 Jun 1;25(11):1422-3. doi: 10.1093/bioinformatics/btp163. Epub 2009 Mar 20. PMID: 19304878; PMCID: PMC2682512.
+
 
 ## Software packaging/containerisation tools
 

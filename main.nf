@@ -45,7 +45,7 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
 
     take:
     samplesheet // channel: samplesheet read in from --input
-    tools       // channel: samplesheet read in from --tools
+    tools       // channel: toolsheet read in from --tools
 
     main:
 
