@@ -59,6 +59,7 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
 
     emit:
     multiqc_report =  MULTIPLESEQUENCEALIGN.out.multiqc
+    shiny_stats    =  MULTIPLESEQUENCEALIGN.out.shiny_stats
 
 
 
@@ -95,6 +96,7 @@ workflow {
         PIPELINE_INITIALISATION.out.tools
     )
 
+
     //
     // SUBWORKFLOW: Run completion tasks
     //
@@ -105,7 +107,9 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        NFCORE_MULTIPLESEQUENCEALIGN.out.multiqc_report
+        NFCORE_MULTIPLESEQUENCEALIGN.out.multiqc_report, 
+        params.shiny_dir,
+        params.outdir
     )
 }
 

@@ -11,7 +11,7 @@ process PREPARE_SHINY {
     path (app)
 
     output:
-    tuple val (meta), path("shiny_data.csv"), emit: data
+    path("shiny_data.csv"), emit: data
     path ("shiny_app.py"), emit: app
     path ("run.sh"), emit: run
     path "versions.yml", emit: versions
