@@ -1,0 +1,157 @@
+Mar-14 14:58:59.700 [main] DEBUG nextflow.cli.Launcher - $> nextflow -quiet -log /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/meta/nextflow.log run /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/meta/mock.nf -c /home/luisasantus/Desktop/multiplesequencealign/nextflow.config -c /home/luisasantus/Desktop/multiplesequencealign/tests/nextflow.config -params-file /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/meta/params.json -ansi-log false -profile test -with-trace /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/meta/trace.csv -w /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/work
+Mar-14 14:58:59.747 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.10.1
+Mar-14 14:58:59.764 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/luisasantus/.nextflow/plugins; core-plugins: nf-amazon@2.1.4,nf-azure@1.3.3,nf-cloudcache@0.3.0,nf-codecommit@0.1.5,nf-console@1.0.6,nf-ga4gh@1.1.0,nf-google@1.8.3,nf-tower@1.6.3,nf-wave@1.0.1
+Mar-14 14:58:59.772 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Mar-14 14:58:59.773 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Mar-14 14:58:59.775 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Mar-14 14:58:59.784 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Mar-14 14:58:59.798 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/luisasantus/Desktop/multiplesequencealign/nextflow.config
+Mar-14 14:58:59.799 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/luisasantus/Desktop/multiplesequencealign/tests/nextflow.config
+Mar-14 14:58:59.799 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/luisasantus/Desktop/multiplesequencealign/nextflow.config
+Mar-14 14:58:59.799 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/luisasantus/Desktop/multiplesequencealign/tests/nextflow.config
+Mar-14 14:58:59.823 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test`
+Mar-14 14:59:01.262 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test`
+Mar-14 14:59:01.286 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [cfc_dev, uzl_omics, ifb_core, denbi_qbic, alice, mjolnir_globe, uppmax, incliva, ilifu, uge, rosalind_uge, lugh, unibe_ibu, vai, czbiohub_aws, jax, ccga_med, scw, unc_longleaf, tigem, tubingen_apg, google, apollo, ipop_up, vsc_calcua, pdc_kth, googlels, daisybio, eddie, medair, biowulf, apptainer, bi, bigpurple, adcra, cedars, pawsey_setonix, vsc_kul_uhasselt, pawsey_nimbus, ucl_myriad, utd_ganymede, charliecloud, icr_davros, ceres, munin, arm, rosalind, hasta, cfc, uzh, ebi_codon_slurm, ebc, ku_sund_dangpu, ccga_dx, crick, marvin, biohpc_gen, shifter, mana, mamba, york_viking, unc_lccc, wehi, awsbatch, wustl_htcf, imperial, maestro, software_license, utd_europa, genotoul, nci_gadi, abims, janelia, nu_genomics, googlebatch, oist, sahmri, mpcdf, leicester, vsc_ugent, create, sage, cambridge, jex, podman, ebi_codon, cheaha, xanadu, nyu_hpc, test, computerome, ucd_sonic, seg_globe, sanger, dkfz, pasteur, ethz_euler, test_full, imb, ucl_cscluster, tuos_stanage, azurebatch, hki, test_parameters, crukmi, csiro_petrichor, qmul_apocrita, docker, engaging, gis, hypatia, psmn, eva, nygc, fgcz, conda, crg, singularity, self_hosted_runner, tufts, uw_hyak_pedslabs, utd_sysbio, debug, genouest, cbe, phoenix, gitpod, seawulf, uod_hpc, fub_curta, uct_hpc, aws_tower, binac]
+Mar-14 14:59:01.317 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 from script declararion
+Mar-14 14:59:01.329 [main] INFO  nextflow.cli.CmdRun - Launching `/home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/meta/mock.nf` [romantic_cray] DSL2 - revision: 14169a4616
+Mar-14 14:59:01.330 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins declared=[nf-validation@1.1.3]
+Mar-14 14:59:01.330 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Mar-14 14:59:01.330 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[nf-validation@1.1.3, nf-tower@1.6.3]
+Mar-14 14:59:01.331 [main] DEBUG nextflow.plugin.PluginUpdater - Installing plugin nf-validation version: 1.1.3
+Mar-14 14:59:01.334 [main] INFO  org.pf4j.AbstractPluginManager - Plugin 'nf-validation@1.1.3' resolved
+Mar-14 14:59:01.335 [main] INFO  org.pf4j.AbstractPluginManager - Start plugin 'nf-validation@1.1.3'
+Mar-14 14:59:01.340 [main] DEBUG nextflow.plugin.BasePlugin - Plugin started nf-validation@1.1.3
+Mar-14 14:59:01.341 [main] DEBUG nextflow.plugin.PluginUpdater - Installing plugin nf-tower version: 1.6.3
+Mar-14 14:59:01.342 [main] INFO  org.pf4j.AbstractPluginManager - Plugin 'nf-tower@1.6.3' resolved
+Mar-14 14:59:01.342 [main] INFO  org.pf4j.AbstractPluginManager - Start plugin 'nf-tower@1.6.3'
+Mar-14 14:59:01.349 [main] DEBUG nextflow.plugin.BasePlugin - Plugin started nf-tower@1.6.3
+Mar-14 14:59:01.355 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /home/luisasantus/.nextflow/secrets/store.json
+Mar-14 14:59:01.357 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@26c77f54] - activable => nextflow.secret.LocalSecretsProvider@26c77f54
+Mar-14 14:59:01.402 [main] DEBUG nextflow.Session - Session UUID: c475e177-4313-49a5-bec0-f5c360b7325a
+Mar-14 14:59:01.402 [main] DEBUG nextflow.Session - Run name: romantic_cray
+Mar-14 14:59:01.403 [main] DEBUG nextflow.Session - Executor pool size: 8
+Mar-14 14:59:01.408 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
+Mar-14 14:59:01.412 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=24; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Mar-14 14:59:01.430 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 23.10.1 build 5891
+  Created: 12-01-2024 22:01 UTC (23:01 CEST)
+  System: Linux 5.15.0-71-generic
+  Runtime: Groovy 3.0.19 on OpenJDK 64-Bit Server VM 11.0.18+10-post-Ubuntu-0ubuntu120.04.1
+  Encoding: UTF-8 (UTF-8)
+  Process: 189862@luisasantus-HP-EliteDesk-800-G5-TWR [127.0.1.1]
+  CPUs: 8 - Mem: 31.1 GB (1.6 GB) - Swap: 2 GB (2 GB)
+Mar-14 14:59:01.448 [main] DEBUG nextflow.Session - Work-dir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/work [ext2/ext3]
+Mar-14 14:59:01.459 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Mar-14 14:59:01.468 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Mar-14 14:59:01.473 [main] DEBUG nextflow.Session - Observer factory: TowerFactory
+Mar-14 14:59:01.495 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Mar-14 14:59:01.503 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 9; maxThreads: 1000
+Mar-14 14:59:01.594 [main] DEBUG nextflow.Session - Session start
+Mar-14 14:59:01.597 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow started -- trace file: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/meta/trace.csv
+Mar-14 14:59:01.758 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Mar-14 14:59:02.026 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name TCOFFEE_ALNCOMPARE
+Mar-14 14:59:02.027 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process TCOFFEE_ALNCOMPARE
+Mar-14 14:59:02.041 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:59:02.041 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:59:02.046 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Mar-14 14:59:02.051 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=31.1 GB; capacity=8; pollInterval=100ms; dumpInterval=5m
+Mar-14 14:59:02.053 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Mar-14 14:59:02.145 [main] DEBUG nextflow.Session - Config process names validation disabled as requested
+Mar-14 14:59:02.146 [main] DEBUG nextflow.Session - Igniting dataflow network (1)
+Mar-14 14:59:02.146 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > TCOFFEE_ALNCOMPARE
+Mar-14 14:59:02.146 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
+  Script_04b6f3509e155fe5: /home/luisasantus/Desktop/multiplesequencealign/./modules/nf-core/tcoffee/alncompare/tests/../main.nf
+  Script_d7dd00f6d396fac5: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/meta/mock.nf
+Mar-14 14:59:02.146 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Mar-14 14:59:02.147 [main] DEBUG nextflow.Session - Session await
+Mar-14 14:59:02.284 [FileTransfer-1] DEBUG nextflow.file.FilePorter - Copying foreign file https://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/testdata/setoxin-ref.fa to work dir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/work/stage-c475e177-4313-49a5-bec0-f5c360b7325a/77/d1f9077ece2b565e840d61c59bd348/setoxin-ref.fa
+Mar-14 14:59:02.284 [FileTransfer-2] DEBUG nextflow.file.FilePorter - Copying foreign file https://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/testdata/setoxin.ref to work dir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/work/stage-c475e177-4313-49a5-bec0-f5c360b7325a/7b/3033720141b8015e11edb9f1007223/setoxin.ref
+Mar-14 14:59:02.479 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:59:02.481 [Task submitter] INFO  nextflow.Session - [47/b2bc2f] Submitted process > TCOFFEE_ALNCOMPARE (test)
+Mar-14 14:59:02.591 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: TCOFFEE_ALNCOMPARE (test); status: COMPLETED; exit: 1; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/work/47/b2bc2f790e00c6d9b5d4af20ec6be5]
+Mar-14 14:59:02.594 [Task monitor] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
+  task: name=TCOFFEE_ALNCOMPARE (test); work-dir=/home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/work/47/b2bc2f790e00c6d9b5d4af20ec6be5
+  error [nextflow.exception.ProcessFailedException]: Process `TCOFFEE_ALNCOMPARE (test)` terminated with an error exit status (1)
+Mar-14 14:59:02.613 [Task monitor] ERROR nextflow.processor.TaskProcessor - Error executing process > 'TCOFFEE_ALNCOMPARE (test)'
+
+Caused by:
+  Process `TCOFFEE_ALNCOMPARE (test)` terminated with an error exit status (1)
+
+Command executed:
+
+  export TEMP='./'
+  t_coffee -other_pg aln_compare         -al1 setoxin.ref         -al2 setoxin-ref.fa         -compare_mode tc          | grep -v "seq1" | grep -v '*' |         awk '{ print $4}' ORS="	"         >> "scores.txt"
+  
+  # Add metadata info to output file
+  echo "id,tc" > "setoxin-ref.scores"
+  
+  # Add values
+  scores=$(awk '{sub(/[[:space:]]+$/, "")} 1' scores.txt | tr -s '[:blank:]' ',')
+  echo "test,$scores" >> "setoxin-ref.scores"
+  
+  cat <<-END_VERSIONS > versions.yml
+  "TCOFFEE_ALNCOMPARE":
+      tcoffee: $( t_coffee -version | awk '{gsub("Version_", ""); print $3}')
+  END_VERSIONS
+
+Command exit status:
+  1
+
+Command output:
+  (empty)
+
+Command error:
+  
+  
+  *************************************************************************************************
+  *                        FULL TRACE BACK PID: 190007                                    
+  190007 -- ERROR: COREDUMP: T-COFFEE Version_13.45.61.3c310a9 (Version_13.45.61.3c310a9)
+  *************************************************************************************************
+  
+  	******************************************************************
+  	* Abnormal Termination
+  	* Job NOT Completed:[T-COFFEE, Version_13.45.61.3c310a9]
+  	* Please CHECK:                                       
+  	* 	-1 The format of your Input Files                 
+  	* 	-2 The parameters                                 
+  	* 	-3 The use of special characters in sequence names:
+  	* 		 (@, |, %...)
+  	* 	-4 The Online Doc (http://www.tcoffee.org)                   
+  	* 	-5 Send the file:
+  	*
+  	*	    t_coffee.ErrorReport 
+  	* to:
+  	* 		cedric.notredame@gmail.com
+  	* If you run T-Coffee over the WEB:
+  	* 	Windows Cut and Paste is sometimes erratic and
+  	* 	it can loose carriage returns. If you suspect this,
+  	* 	try to cut and paste through an intermediate application
+  	* 	(word pad) and inspect the results
+  
+  
+  	* CONFIDENTIALITY:
+  	* 	The File t_coffee.ErrorReport may contain your personal DATA
+  	* 	Remove ALL confidential DATA from this file BEFORE sending it
+  	******************************************************************
+  # Command Line: t_coffee -other_pg aln_compare -al1 setoxin.ref -al2 setoxin-ref.fa -compare_mode tc  [PROGRAM:T-COFFEE]
+  
+  # TERMINATION STATUS: FAILURE [PROGRAM: T-COFFEE pid 190007 ppid 190002
+  #CL: t_coffee -other_pg aln_compare -al1 setoxin.ref -al2 setoxin-ref.fa -compare_mode tc 
+
+Work dir:
+  /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/work/47/b2bc2f790e00c6d9b5d4af20ec6be5
+
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+Mar-14 14:59:02.617 [main] DEBUG nextflow.Session - Session await > all processes finished
+Mar-14 14:59:02.620 [Task monitor] INFO  nextflow.Session - Execution cancelled -- Finishing pending tasks before exit
+Mar-14 14:59:02.627 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local) - terminating tasks monitor poll loop
+Mar-14 14:59:02.627 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Mar-14 14:59:02.632 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=0; failedCount=1; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=0ms; failedDuration=58ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=1; peakCpus=2; peakMemory=3 GB; ]
+Mar-14 14:59:02.633 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow completed -- saving trace file
+Mar-14 14:59:02.665 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Mar-14 14:59:02.665 [main] INFO  org.pf4j.AbstractPluginManager - Stop plugin 'nf-tower@1.6.3'
+Mar-14 14:59:02.665 [main] DEBUG nextflow.plugin.BasePlugin - Plugin stopped nf-tower
+Mar-14 14:59:02.665 [main] INFO  org.pf4j.AbstractPluginManager - Stop plugin 'nf-validation@1.1.3'
+Mar-14 14:59:02.665 [main] DEBUG nextflow.plugin.BasePlugin - Plugin stopped nf-validation
+Mar-14 14:59:02.675 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'FileTransfer' shutdown completed (hard=false)
+Mar-14 14:59:02.675 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

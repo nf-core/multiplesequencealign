@@ -1,0 +1,24 @@
+nextflow_pipeline {
+
+    name "Test pipeline"
+    script "../main.nf"
+    tag "multiplesequencealign"
+    tag "PIPELINE"
+
+    test("Run with profile test") {
+
+        when {
+            params {
+                input  = 'https://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/samplesheet/v1.0/samplesheet_test.csv'
+                tools  = 'https://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/toolsheet/v1.0/toolsheet.csv'
+
+                // Output directory
+                outdir = "./outdir/"
+            }
+        }
+
+        then {
+            assert workflow.success
+        }
+    }
+}

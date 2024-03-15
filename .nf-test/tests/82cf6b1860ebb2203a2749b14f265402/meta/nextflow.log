@@ -1,0 +1,96 @@
+Mar-14 14:59:07.444 [main] DEBUG nextflow.cli.Launcher - $> nextflow -quiet -log /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/82cf6b1860ebb2203a2749b14f265402/meta/nextflow.log run /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/82cf6b1860ebb2203a2749b14f265402/meta/mock.nf -c /home/luisasantus/Desktop/multiplesequencealign/nextflow.config -c /home/luisasantus/Desktop/multiplesequencealign/tests/nextflow.config -params-file /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/82cf6b1860ebb2203a2749b14f265402/meta/params.json -ansi-log false -profile test -with-trace /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/82cf6b1860ebb2203a2749b14f265402/meta/trace.csv -w /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/82cf6b1860ebb2203a2749b14f265402/work
+Mar-14 14:59:07.493 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.10.1
+Mar-14 14:59:07.511 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/luisasantus/.nextflow/plugins; core-plugins: nf-amazon@2.1.4,nf-azure@1.3.3,nf-cloudcache@0.3.0,nf-codecommit@0.1.5,nf-console@1.0.6,nf-ga4gh@1.1.0,nf-google@1.8.3,nf-tower@1.6.3,nf-wave@1.0.1
+Mar-14 14:59:07.519 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Mar-14 14:59:07.520 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Mar-14 14:59:07.523 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Mar-14 14:59:07.531 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Mar-14 14:59:07.549 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/luisasantus/Desktop/multiplesequencealign/nextflow.config
+Mar-14 14:59:07.549 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/luisasantus/Desktop/multiplesequencealign/tests/nextflow.config
+Mar-14 14:59:07.549 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/luisasantus/Desktop/multiplesequencealign/nextflow.config
+Mar-14 14:59:07.549 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/luisasantus/Desktop/multiplesequencealign/tests/nextflow.config
+Mar-14 14:59:07.574 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test`
+Mar-14 14:59:09.065 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test`
+Mar-14 14:59:09.088 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [cfc_dev, uzl_omics, ifb_core, denbi_qbic, alice, mjolnir_globe, uppmax, incliva, ilifu, uge, rosalind_uge, lugh, unibe_ibu, vai, czbiohub_aws, jax, ccga_med, scw, unc_longleaf, tigem, tubingen_apg, google, apollo, ipop_up, vsc_calcua, pdc_kth, googlels, daisybio, eddie, medair, biowulf, apptainer, bi, bigpurple, adcra, cedars, pawsey_setonix, vsc_kul_uhasselt, pawsey_nimbus, ucl_myriad, utd_ganymede, charliecloud, icr_davros, ceres, munin, arm, rosalind, hasta, cfc, uzh, ebi_codon_slurm, ebc, ku_sund_dangpu, ccga_dx, crick, marvin, biohpc_gen, shifter, mana, mamba, york_viking, unc_lccc, wehi, awsbatch, wustl_htcf, imperial, maestro, software_license, utd_europa, genotoul, nci_gadi, abims, janelia, nu_genomics, googlebatch, oist, sahmri, mpcdf, leicester, vsc_ugent, create, sage, cambridge, jex, podman, ebi_codon, cheaha, xanadu, nyu_hpc, test, computerome, ucd_sonic, seg_globe, sanger, dkfz, pasteur, ethz_euler, test_full, imb, ucl_cscluster, tuos_stanage, azurebatch, hki, test_parameters, crukmi, csiro_petrichor, qmul_apocrita, docker, engaging, gis, hypatia, psmn, eva, nygc, fgcz, conda, crg, singularity, self_hosted_runner, tufts, uw_hyak_pedslabs, utd_sysbio, debug, genouest, cbe, phoenix, gitpod, seawulf, uod_hpc, fub_curta, uct_hpc, aws_tower, binac]
+Mar-14 14:59:09.117 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 from script declararion
+Mar-14 14:59:09.130 [main] INFO  nextflow.cli.CmdRun - Launching `/home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/82cf6b1860ebb2203a2749b14f265402/meta/mock.nf` [infallible_gutenberg] DSL2 - revision: 8051772370
+Mar-14 14:59:09.130 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins declared=[nf-validation@1.1.3]
+Mar-14 14:59:09.130 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Mar-14 14:59:09.131 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[nf-validation@1.1.3, nf-tower@1.6.3]
+Mar-14 14:59:09.131 [main] DEBUG nextflow.plugin.PluginUpdater - Installing plugin nf-validation version: 1.1.3
+Mar-14 14:59:09.134 [main] INFO  org.pf4j.AbstractPluginManager - Plugin 'nf-validation@1.1.3' resolved
+Mar-14 14:59:09.135 [main] INFO  org.pf4j.AbstractPluginManager - Start plugin 'nf-validation@1.1.3'
+Mar-14 14:59:09.140 [main] DEBUG nextflow.plugin.BasePlugin - Plugin started nf-validation@1.1.3
+Mar-14 14:59:09.141 [main] DEBUG nextflow.plugin.PluginUpdater - Installing plugin nf-tower version: 1.6.3
+Mar-14 14:59:09.142 [main] INFO  org.pf4j.AbstractPluginManager - Plugin 'nf-tower@1.6.3' resolved
+Mar-14 14:59:09.142 [main] INFO  org.pf4j.AbstractPluginManager - Start plugin 'nf-tower@1.6.3'
+Mar-14 14:59:09.148 [main] DEBUG nextflow.plugin.BasePlugin - Plugin started nf-tower@1.6.3
+Mar-14 14:59:09.153 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /home/luisasantus/.nextflow/secrets/store.json
+Mar-14 14:59:09.156 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@f5bf288] - activable => nextflow.secret.LocalSecretsProvider@f5bf288
+Mar-14 14:59:09.200 [main] DEBUG nextflow.Session - Session UUID: 063cda17-9354-43e4-8bb2-189d3e7db8d4
+Mar-14 14:59:09.200 [main] DEBUG nextflow.Session - Run name: infallible_gutenberg
+Mar-14 14:59:09.200 [main] DEBUG nextflow.Session - Executor pool size: 8
+Mar-14 14:59:09.205 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
+Mar-14 14:59:09.209 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=24; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Mar-14 14:59:09.227 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 23.10.1 build 5891
+  Created: 12-01-2024 22:01 UTC (23:01 CEST)
+  System: Linux 5.15.0-71-generic
+  Runtime: Groovy 3.0.19 on OpenJDK 64-Bit Server VM 11.0.18+10-post-Ubuntu-0ubuntu120.04.1
+  Encoding: UTF-8 (UTF-8)
+  Process: 190289@luisasantus-HP-EliteDesk-800-G5-TWR [127.0.1.1]
+  CPUs: 8 - Mem: 31.1 GB (1.6 GB) - Swap: 2 GB (2 GB)
+Mar-14 14:59:09.245 [main] DEBUG nextflow.Session - Work-dir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/82cf6b1860ebb2203a2749b14f265402/work [ext2/ext3]
+Mar-14 14:59:09.256 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Mar-14 14:59:09.267 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Mar-14 14:59:09.272 [main] DEBUG nextflow.Session - Observer factory: TowerFactory
+Mar-14 14:59:09.294 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Mar-14 14:59:09.303 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 9; maxThreads: 1000
+Mar-14 14:59:09.394 [main] DEBUG nextflow.Session - Session start
+Mar-14 14:59:09.398 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow started -- trace file: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/82cf6b1860ebb2203a2749b14f265402/meta/trace.csv
+Mar-14 14:59:09.596 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Mar-14 14:59:09.875 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_single` matches labels `process_single` for process with name UNTAR
+Mar-14 14:59:09.876 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process UNTAR
+Mar-14 14:59:09.891 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:59:09.891 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:59:09.896 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Mar-14 14:59:09.901 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=31.1 GB; capacity=8; pollInterval=100ms; dumpInterval=5m
+Mar-14 14:59:09.903 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Mar-14 14:59:10.043 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name TCOFFEE_IRMSD
+Mar-14 14:59:10.044 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:TCOFFEE_IRMSD` matches process TCOFFEE_IRMSD
+Mar-14 14:59:10.045 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process TCOFFEE_IRMSD
+Mar-14 14:59:10.046 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:59:10.046 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:59:10.057 [main] DEBUG nextflow.Session - Config process names validation disabled as requested
+Mar-14 14:59:10.058 [main] DEBUG nextflow.Session - Igniting dataflow network (2)
+Mar-14 14:59:10.058 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > UNTAR
+Mar-14 14:59:10.059 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > TCOFFEE_IRMSD
+Mar-14 14:59:10.059 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
+  Script_20da6bedc891c847: /home/luisasantus/Desktop/multiplesequencealign/./modules/nf-core/tcoffee/irmsd/tests/../main.nf
+  Script_e644fb6da94d4bab: /home/luisasantus/Desktop/multiplesequencealign/./modules/nf-core/tcoffee/irmsd/tests/../../../untar/main.nf
+  Script_6bd3b1ff4df92e6c: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/82cf6b1860ebb2203a2749b14f265402/meta/mock.nf
+Mar-14 14:59:10.059 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Mar-14 14:59:10.059 [main] DEBUG nextflow.Session - Session await
+Mar-14 14:59:10.194 [FileTransfer-1] DEBUG nextflow.file.FilePorter - Copying foreign file https://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/testdata/structures/seatoxin-ref.tar.gz to work dir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/82cf6b1860ebb2203a2749b14f265402/work/stage-063cda17-9354-43e4-8bb2-189d3e7db8d4/55/aaef81c6a8f350dc5f069c31ff69d3/seatoxin-ref.tar.gz
+Mar-14 14:59:10.384 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:59:10.386 [Task submitter] INFO  nextflow.Session - [b1/fced18] Submitted process > UNTAR (seatoxin-ref.tar.gz)
+Mar-14 14:59:10.524 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: UNTAR (seatoxin-ref.tar.gz); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/82cf6b1860ebb2203a2749b14f265402/work/b1/fced18770ae304d6e4659ca51f57d0]
+Mar-14 14:59:10.854 [FileTransfer-2] DEBUG nextflow.file.FilePorter - Copying foreign file https://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/testdata/setoxin.ref to work dir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/82cf6b1860ebb2203a2749b14f265402/work/stage-063cda17-9354-43e4-8bb2-189d3e7db8d4/23/638a4f25fe433b228517d452771814/setoxin.ref
+Mar-14 14:59:10.854 [FileTransfer-3] DEBUG nextflow.file.FilePorter - Copying foreign file https://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/testdata/templates/seatoxin-ref_template.txt to work dir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/82cf6b1860ebb2203a2749b14f265402/work/stage-063cda17-9354-43e4-8bb2-189d3e7db8d4/5a/b3d6ffae5af16e07e8018552ad8181/seatoxin-ref_template.txt
+Mar-14 14:59:10.944 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:59:10.944 [Task submitter] INFO  nextflow.Session - [83/fcbd5c] Submitted process > TCOFFEE_IRMSD (test)
+Mar-14 14:59:12.898 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 2; name: TCOFFEE_IRMSD (test); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/82cf6b1860ebb2203a2749b14f265402/work/83/fcbd5c8649cf6ce642dcf3fdca81d5]
+Mar-14 14:59:12.909 [Task monitor] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'PublishDir' minSize=10; maxSize=24; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Mar-14 14:59:12.911 [main] DEBUG nextflow.Session - Session await > all processes finished
+Mar-14 14:59:12.912 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local) - terminating tasks monitor poll loop
+Mar-14 14:59:12.912 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Mar-14 14:59:12.914 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'PublishDir' shutdown completed (hard=false)
+Mar-14 14:59:12.921 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=2; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=3.9s; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=1; peakCpus=2; peakMemory=3 GB; ]
+Mar-14 14:59:12.921 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow completed -- saving trace file
+Mar-14 14:59:12.925 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Mar-14 14:59:12.925 [main] INFO  org.pf4j.AbstractPluginManager - Stop plugin 'nf-tower@1.6.3'
+Mar-14 14:59:12.925 [main] DEBUG nextflow.plugin.BasePlugin - Plugin stopped nf-tower
+Mar-14 14:59:12.925 [main] INFO  org.pf4j.AbstractPluginManager - Stop plugin 'nf-validation@1.1.3'
+Mar-14 14:59:12.925 [main] DEBUG nextflow.plugin.BasePlugin - Plugin stopped nf-validation
+Mar-14 14:59:12.934 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'FileTransfer' shutdown completed (hard=false)
+Mar-14 14:59:12.934 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

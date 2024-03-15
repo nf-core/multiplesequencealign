@@ -1,0 +1,55 @@
+Mar-14 14:56:08.668 [main] DEBUG nextflow.cli.Launcher - $> nextflow -quiet -log /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/a11ec83dfc1fcb6b02f55cb68832db4c/meta/nextflow.log run /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/a11ec83dfc1fcb6b02f55cb68832db4c/meta/mock.nf -c /home/luisasantus/Desktop/multiplesequencealign/nextflow.config -c /home/luisasantus/Desktop/multiplesequencealign/tests/nextflow.config -c /home/luisasantus/Desktop/multiplesequencealign/subworkflows/nf-core/utils_nextflow_pipeline/tests/nextflow.config -params-file /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/a11ec83dfc1fcb6b02f55cb68832db4c/meta/params.json -ansi-log false -profile test -with-trace /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/a11ec83dfc1fcb6b02f55cb68832db4c/meta/trace.csv -w /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/a11ec83dfc1fcb6b02f55cb68832db4c/work
+Mar-14 14:56:08.734 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.10.1
+Mar-14 14:56:08.758 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/luisasantus/.nextflow/plugins; core-plugins: nf-amazon@2.1.4,nf-azure@1.3.3,nf-cloudcache@0.3.0,nf-codecommit@0.1.5,nf-console@1.0.6,nf-ga4gh@1.1.0,nf-google@1.8.3,nf-tower@1.6.3,nf-wave@1.0.1
+Mar-14 14:56:08.769 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Mar-14 14:56:08.770 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Mar-14 14:56:08.773 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Mar-14 14:56:08.780 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Mar-14 14:56:08.808 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/luisasantus/Desktop/multiplesequencealign/nextflow.config
+Mar-14 14:56:08.810 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/luisasantus/Desktop/multiplesequencealign/tests/nextflow.config
+Mar-14 14:56:08.810 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/luisasantus/Desktop/multiplesequencealign/subworkflows/nf-core/utils_nextflow_pipeline/tests/nextflow.config
+Mar-14 14:56:08.810 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/luisasantus/Desktop/multiplesequencealign/nextflow.config
+Mar-14 14:56:08.810 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/luisasantus/Desktop/multiplesequencealign/tests/nextflow.config
+Mar-14 14:56:08.810 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/luisasantus/Desktop/multiplesequencealign/subworkflows/nf-core/utils_nextflow_pipeline/tests/nextflow.config
+Mar-14 14:56:08.853 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test`
+Mar-14 14:56:11.043 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test`
+Mar-14 14:56:11.079 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test`
+Mar-14 14:56:11.105 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [cfc_dev, uzl_omics, ifb_core, denbi_qbic, alice, mjolnir_globe, uppmax, incliva, ilifu, uge, rosalind_uge, lugh, unibe_ibu, vai, czbiohub_aws, jax, ccga_med, scw, unc_longleaf, tigem, tubingen_apg, google, apollo, ipop_up, vsc_calcua, pdc_kth, googlels, daisybio, eddie, medair, biowulf, apptainer, bi, bigpurple, adcra, cedars, pawsey_setonix, vsc_kul_uhasselt, pawsey_nimbus, ucl_myriad, utd_ganymede, charliecloud, icr_davros, ceres, munin, arm, rosalind, hasta, cfc, uzh, ebi_codon_slurm, ebc, ku_sund_dangpu, ccga_dx, crick, marvin, biohpc_gen, shifter, mana, mamba, york_viking, unc_lccc, wehi, awsbatch, wustl_htcf, imperial, maestro, software_license, utd_europa, genotoul, nci_gadi, abims, janelia, nu_genomics, googlebatch, oist, sahmri, mpcdf, leicester, vsc_ugent, create, sage, cambridge, jex, podman, ebi_codon, cheaha, xanadu, nyu_hpc, test, computerome, ucd_sonic, seg_globe, sanger, dkfz, pasteur, ethz_euler, test_full, imb, ucl_cscluster, tuos_stanage, azurebatch, hki, test_parameters, crukmi, csiro_petrichor, qmul_apocrita, docker, engaging, gis, hypatia, psmn, eva, nygc, fgcz, conda, crg, singularity, self_hosted_runner, tufts, uw_hyak_pedslabs, utd_sysbio, debug, genouest, cbe, phoenix, gitpod, seawulf, uod_hpc, fub_curta, uct_hpc, aws_tower, binac]
+Mar-14 14:56:11.156 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 from script declararion
+Mar-14 14:56:11.175 [main] INFO  nextflow.cli.CmdRun - Launching `/home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/a11ec83dfc1fcb6b02f55cb68832db4c/meta/mock.nf` [jovial_austin] DSL2 - revision: fd7ad6b7bd
+Mar-14 14:56:11.175 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins declared=[nf-validation@1.1.3]
+Mar-14 14:56:11.175 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Mar-14 14:56:11.176 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[nf-validation@1.1.3, nf-tower@1.6.3]
+Mar-14 14:56:11.176 [main] DEBUG nextflow.plugin.PluginUpdater - Installing plugin nf-validation version: 1.1.3
+Mar-14 14:56:11.181 [main] INFO  org.pf4j.AbstractPluginManager - Plugin 'nf-validation@1.1.3' resolved
+Mar-14 14:56:11.182 [main] INFO  org.pf4j.AbstractPluginManager - Start plugin 'nf-validation@1.1.3'
+Mar-14 14:56:11.193 [main] DEBUG nextflow.plugin.BasePlugin - Plugin started nf-validation@1.1.3
+Mar-14 14:56:11.194 [main] DEBUG nextflow.plugin.PluginUpdater - Installing plugin nf-tower version: 1.6.3
+Mar-14 14:56:11.196 [main] INFO  org.pf4j.AbstractPluginManager - Plugin 'nf-tower@1.6.3' resolved
+Mar-14 14:56:11.197 [main] INFO  org.pf4j.AbstractPluginManager - Start plugin 'nf-tower@1.6.3'
+Mar-14 14:56:11.211 [main] DEBUG nextflow.plugin.BasePlugin - Plugin started nf-tower@1.6.3
+Mar-14 14:56:11.223 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /home/luisasantus/.nextflow/secrets/store.json
+Mar-14 14:56:11.226 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@4168f3d9] - activable => nextflow.secret.LocalSecretsProvider@4168f3d9
+Mar-14 14:56:11.305 [main] DEBUG nextflow.Session - Session UUID: 16adfccc-e79b-4ea0-b577-418ca2975959
+Mar-14 14:56:11.306 [main] DEBUG nextflow.Session - Run name: jovial_austin
+Mar-14 14:56:11.307 [main] DEBUG nextflow.Session - Executor pool size: 8
+Mar-14 14:56:11.315 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
+Mar-14 14:56:11.323 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=24; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Mar-14 14:56:11.357 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 23.10.1 build 5891
+  Created: 12-01-2024 22:01 UTC (23:01 CEST)
+  System: Linux 5.15.0-71-generic
+  Runtime: Groovy 3.0.19 on OpenJDK 64-Bit Server VM 11.0.18+10-post-Ubuntu-0ubuntu120.04.1
+  Encoding: UTF-8 (UTF-8)
+  Process: 182465@luisasantus-HP-EliteDesk-800-G5-TWR [127.0.1.1]
+  CPUs: 8 - Mem: 31.1 GB (740.3 MB) - Swap: 2 GB (2 GB)
+Mar-14 14:56:11.389 [main] DEBUG nextflow.Session - Work-dir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/a11ec83dfc1fcb6b02f55cb68832db4c/work [ext2/ext3]
+Mar-14 14:56:11.407 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Mar-14 14:56:11.425 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Mar-14 14:56:11.435 [main] DEBUG nextflow.Session - Observer factory: TowerFactory
+Mar-14 14:56:11.465 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Mar-14 14:56:11.475 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 9; maxThreads: 1000
+Mar-14 14:56:11.610 [main] DEBUG nextflow.Session - Session start
+Mar-14 14:56:11.613 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow started -- trace file: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/a11ec83dfc1fcb6b02f55cb68832db4c/meta/trace.csv
+Mar-14 14:56:11.911 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Mar-14 14:56:12.138 [main] INFO  nextflow.Nextflow - nextflow_workflow v9.9.9

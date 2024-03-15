@@ -1,0 +1,490 @@
+Mar-14 14:57:06.595 [main] DEBUG nextflow.cli.Launcher - $> nextflow -quiet -log /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/meta/nextflow.log run /home/luisasantus/Desktop/multiplesequencealign/./tests/../main.nf -c /home/luisasantus/Desktop/multiplesequencealign/nextflow.config -c /home/luisasantus/Desktop/multiplesequencealign/tests/nextflow.config -params-file /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/meta/params.json -ansi-log false -profile test -with-trace /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/meta/trace.csv -w /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work
+Mar-14 14:57:06.680 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.10.1
+Mar-14 14:57:06.707 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/luisasantus/.nextflow/plugins; core-plugins: nf-amazon@2.1.4,nf-azure@1.3.3,nf-cloudcache@0.3.0,nf-codecommit@0.1.5,nf-console@1.0.6,nf-ga4gh@1.1.0,nf-google@1.8.3,nf-tower@1.6.3,nf-wave@1.0.1
+Mar-14 14:57:06.721 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Mar-14 14:57:06.722 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Mar-14 14:57:06.725 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Mar-14 14:57:06.737 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Mar-14 14:57:06.761 [main] DEBUG nextflow.config.ConfigBuilder - Found config base: /home/luisasantus/Desktop/multiplesequencealign/nextflow.config
+Mar-14 14:57:06.767 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/luisasantus/Desktop/multiplesequencealign/nextflow.config
+Mar-14 14:57:06.768 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/luisasantus/Desktop/multiplesequencealign/tests/nextflow.config
+Mar-14 14:57:06.768 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/luisasantus/Desktop/multiplesequencealign/nextflow.config
+Mar-14 14:57:06.769 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/luisasantus/Desktop/multiplesequencealign/nextflow.config
+Mar-14 14:57:06.769 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/luisasantus/Desktop/multiplesequencealign/tests/nextflow.config
+Mar-14 14:57:06.826 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test`
+Mar-14 14:57:09.561 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test`
+Mar-14 14:57:10.022 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test`
+Mar-14 14:57:10.060 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [cfc_dev, uzl_omics, ifb_core, denbi_qbic, alice, mjolnir_globe, uppmax, incliva, ilifu, uge, rosalind_uge, lugh, unibe_ibu, vai, czbiohub_aws, jax, ccga_med, scw, unc_longleaf, tigem, tubingen_apg, google, apollo, ipop_up, vsc_calcua, pdc_kth, googlels, daisybio, eddie, medair, biowulf, apptainer, bi, bigpurple, adcra, cedars, pawsey_setonix, vsc_kul_uhasselt, pawsey_nimbus, ucl_myriad, utd_ganymede, charliecloud, icr_davros, ceres, munin, arm, rosalind, hasta, cfc, uzh, ebi_codon_slurm, ebc, ku_sund_dangpu, ccga_dx, crick, marvin, biohpc_gen, shifter, mana, mamba, york_viking, unc_lccc, wehi, awsbatch, wustl_htcf, imperial, maestro, software_license, utd_europa, genotoul, nci_gadi, abims, janelia, nu_genomics, googlebatch, oist, sahmri, mpcdf, leicester, vsc_ugent, create, sage, cambridge, jex, podman, ebi_codon, cheaha, xanadu, nyu_hpc, test, computerome, ucd_sonic, seg_globe, sanger, dkfz, pasteur, ethz_euler, test_full, imb, ucl_cscluster, tuos_stanage, azurebatch, hki, test_parameters, crukmi, csiro_petrichor, qmul_apocrita, docker, engaging, gis, hypatia, psmn, eva, nygc, fgcz, conda, crg, singularity, self_hosted_runner, tufts, uw_hyak_pedslabs, utd_sysbio, debug, genouest, cbe, phoenix, gitpod, seawulf, uod_hpc, fub_curta, uct_hpc, aws_tower, binac]
+Mar-14 14:57:10.115 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 from script declararion
+Mar-14 14:57:10.140 [main] INFO  nextflow.cli.CmdRun - Launching `/home/luisasantus/Desktop/multiplesequencealign/./tests/../main.nf` [nostalgic_ampere] DSL2 - revision: a5ebd81660
+Mar-14 14:57:10.141 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins declared=[nf-validation@1.1.3]
+Mar-14 14:57:10.142 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Mar-14 14:57:10.142 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[nf-validation@1.1.3, nf-tower@1.6.3]
+Mar-14 14:57:10.143 [main] DEBUG nextflow.plugin.PluginUpdater - Installing plugin nf-validation version: 1.1.3
+Mar-14 14:57:10.147 [main] INFO  org.pf4j.AbstractPluginManager - Plugin 'nf-validation@1.1.3' resolved
+Mar-14 14:57:10.148 [main] INFO  org.pf4j.AbstractPluginManager - Start plugin 'nf-validation@1.1.3'
+Mar-14 14:57:10.160 [main] DEBUG nextflow.plugin.BasePlugin - Plugin started nf-validation@1.1.3
+Mar-14 14:57:10.160 [main] DEBUG nextflow.plugin.PluginUpdater - Installing plugin nf-tower version: 1.6.3
+Mar-14 14:57:10.161 [main] INFO  org.pf4j.AbstractPluginManager - Plugin 'nf-tower@1.6.3' resolved
+Mar-14 14:57:10.162 [main] INFO  org.pf4j.AbstractPluginManager - Start plugin 'nf-tower@1.6.3'
+Mar-14 14:57:10.175 [main] DEBUG nextflow.plugin.BasePlugin - Plugin started nf-tower@1.6.3
+Mar-14 14:57:10.189 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /home/luisasantus/.nextflow/secrets/store.json
+Mar-14 14:57:10.196 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@1c74d19] - activable => nextflow.secret.LocalSecretsProvider@1c74d19
+Mar-14 14:57:10.296 [main] DEBUG nextflow.Session - Session UUID: 2b4ad66e-90a8-4110-a1fc-fac94322e8d4
+Mar-14 14:57:10.296 [main] DEBUG nextflow.Session - Run name: nostalgic_ampere
+Mar-14 14:57:10.297 [main] DEBUG nextflow.Session - Executor pool size: 8
+Mar-14 14:57:10.310 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
+Mar-14 14:57:10.316 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=24; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Mar-14 14:57:10.392 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 23.10.1 build 5891
+  Created: 12-01-2024 22:01 UTC (23:01 CEST)
+  System: Linux 5.15.0-71-generic
+  Runtime: Groovy 3.0.19 on OpenJDK 64-Bit Server VM 11.0.18+10-post-Ubuntu-0ubuntu120.04.1
+  Encoding: UTF-8 (UTF-8)
+  Process: 183482@luisasantus-HP-EliteDesk-800-G5-TWR [127.0.1.1]
+  CPUs: 8 - Mem: 31.1 GB (702.9 MB) - Swap: 2 GB (2 GB)
+Mar-14 14:57:10.453 [main] DEBUG nextflow.Session - Work-dir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work [ext2/ext3]
+Mar-14 14:57:10.472 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Mar-14 14:57:10.490 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Mar-14 14:57:10.496 [main] DEBUG nextflow.Session - Observer factory: TowerFactory
+Mar-14 14:57:10.529 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Mar-14 14:57:10.544 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 9; maxThreads: 1000
+Mar-14 14:57:10.624 [main] DEBUG nextflow.Session - Session start
+Mar-14 14:57:10.627 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow started -- trace file: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/meta/trace.csv
+Mar-14 14:57:10.802 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Mar-14 14:57:11.578 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [paramsSummaryMap:paramsSummaryMap]; plugin Id: nf-validation
+Mar-14 14:57:12.176 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [paramsHelp:paramsHelp]; plugin Id: nf-validation
+Mar-14 14:57:12.177 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [paramsSummaryLog:paramsSummaryLog]; plugin Id: nf-validation
+Mar-14 14:57:12.177 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [validateParameters:validateParameters]; plugin Id: nf-validation
+Mar-14 14:57:12.178 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [paramsSummaryMap:paramsSummaryMap]; plugin Id: nf-validation
+Mar-14 14:57:12.178 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [fromSamplesheet:fromSamplesheet]; plugin Id: nf-validation
+Mar-14 14:57:15.342 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [paramsHelp:paramsHelp]; plugin Id: nf-validation
+Mar-14 14:57:15.342 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [paramsSummaryLog:paramsSummaryLog]; plugin Id: nf-validation
+Mar-14 14:57:15.342 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [validateParameters:validateParameters]; plugin Id: nf-validation
+Mar-14 14:57:15.344 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [paramsSummaryMap:paramsSummaryMap]; plugin Id: nf-validation
+Mar-14 14:57:15.345 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [fromSamplesheet:fromSamplesheet]; plugin Id: nf-validation
+Mar-14 14:57:15.543 [main] DEBUG nextflow.Nextflow - Using schema file: nextflow_schema.json
+Mar-14 14:57:15.545 [main] WARN  nextflow.script.ScriptBinding - Access to undefined parameter `monochromeLogs` -- Initialise it to a default value eg. `params.monochromeLogs = some_value`
+Mar-14 14:57:15.562 [main] INFO  nextflow.Nextflow - 
+
+-[2m----------------------------------------------------[0m-
+                                        [0;32m,--.[0;30m/[0;32m,-.[0m
+[0;34m        ___     __   __   __   ___     [0;32m/,-._.--~'[0m
+[0;34m  |\ | |__  __ /  ` /  \ |__) |__         [0;33m}  {[0m
+[0;34m  | \| |       \__, \__/ |  \ |___     [0;32m\`-._,-`-,[0m
+                                        [0;32m`._,._,'[0m
+[0;35m  nf-core/multiplesequencealign v0.1.0dev[0m
+-[2m----------------------------------------------------[0m-
+[1mCore Nextflow options[0m
+  [0;34mrunName                   : [0;32mnostalgic_ampere[0m
+  [0;34mlaunchDir                 : [0;32m/home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7[0m
+  [0;34mworkDir                   : [0;32m/home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work[0m
+  [0;34mprojectDir                : [0;32m/home/luisasantus/Desktop/multiplesequencealign[0m
+  [0;34muserName                  : [0;32mluisasantus[0m
+  [0;34mprofile                   : [0;32mtest[0m
+  [0;34mconfigFiles               : [0;32m[0m
+
+[1mInput/output options[0m
+  [0;34minput                     : [0;32mhttps://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/samplesheet/v1.0/samplesheet_test.csv[0m
+  [0;34mtools                     : [0;32mhttps://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/toolsheet/v1.0/toolsheet.csv[0m
+  [0;34moutdir                    : [0;32m./outdir/[0m
+
+[1mStats options[0m
+  [0;34mcalc_seq_stats            : [0;32mtrue[0m
+
+[1mEval options[0m
+  [0;34mcalc_sp                   : [0;32mtrue[0m
+  [0;34mcalc_tc                   : [0;32mtrue[0m
+  [0;34mcalc_irmsd                : [0;32mtrue[0m
+
+[1mReports options[0m
+  [0;34mshiny_app                 : [0;32m/home/luisasantus/Desktop/multiplesequencealign/bin/app.py[0m
+
+[1mInstitutional config options[0m
+  [0;34mconfig_profile_name       : [0;32mTest profile[0m
+  [0;34mconfig_profile_description: [0;32mMinimal test dataset to check pipeline function[0m
+
+[1mMax job request options[0m
+  [0;34mmax_cpus                  : [0;32m2[0m
+  [0;34mmax_memory                : [0;32m6.GB[0m
+  [0;34mmax_time                  : [0;32m6.h[0m
+
+!! Only displaying parameters that differ from the pipeline defaults !!
+-[2m----------------------------------------------------[0m-
+If you use nf-core/multiplesequencealign for your analysis please cite:
+
+* The pipeline
+  
+
+* The nf-core framework
+  https://doi.org/10.1038/s41587-020-0439-x
+
+* Software dependencies
+  https://github.com/nf-core/multiplesequencealign/blob/master/CITATIONS.md
+-[2m----------------------------------------------------[0m-
+Mar-14 14:57:15.564 [main] DEBUG nextflow.validation.SchemaValidator - Starting parameters validation
+Mar-14 14:57:16.239 [main] DEBUG nextflow.validation.SchemaValidator - Starting validation: 'input': '/nf-core/test-datasets/multiplesequencealign/samplesheet/v1.0/samplesheet_test.csv' with '/home/luisasantus/Desktop/multiplesequencealign/assets/schema_input.json'
+Mar-14 14:57:16.312 [main] DEBUG nextflow.validation.SchemaValidator - Validation passed: 'input': '/nf-core/test-datasets/multiplesequencealign/samplesheet/v1.0/samplesheet_test.csv' with '/home/luisasantus/Desktop/multiplesequencealign/assets/schema_input.json'
+Mar-14 14:57:16.312 [main] DEBUG nextflow.validation.SchemaValidator - Starting validation: 'tools': '/nf-core/test-datasets/multiplesequencealign/toolsheet/v1.0/toolsheet.csv' with '/home/luisasantus/Desktop/multiplesequencealign/assets/schema_tools.json'
+Mar-14 14:57:16.328 [main] DEBUG nextflow.validation.SchemaValidator - Validation passed: 'tools': '/nf-core/test-datasets/multiplesequencealign/toolsheet/v1.0/toolsheet.csv' with '/home/luisasantus/Desktop/multiplesequencealign/assets/schema_tools.json'
+Mar-14 14:57:16.328 [main] DEBUG nextflow.validation.SchemaValidator - Finishing parameters validation
+Mar-14 14:57:16.329 [main] WARN  nextflow.script.ScriptBinding - Access to undefined parameter `genomes` -- Initialise it to a default value eg. `params.genomes = some_value`
+Mar-14 14:57:16.332 [main] DEBUG nextflow.validation.SchemaValidator - Starting validation: '/nf-core/test-datasets/multiplesequencealign/samplesheet/v1.0/samplesheet_test.csv' with '/home/luisasantus/Desktop/multiplesequencealign/assets/schema_input.json'
+Mar-14 14:57:16.351 [main] DEBUG nextflow.validation.SchemaValidator - Validation passed: '/nf-core/test-datasets/multiplesequencealign/samplesheet/v1.0/samplesheet_test.csv' with '/home/luisasantus/Desktop/multiplesequencealign/assets/schema_input.json'
+Mar-14 14:57:16.373 [main] DEBUG nextflow.validation.SchemaValidator - Starting validation: '/nf-core/test-datasets/multiplesequencealign/toolsheet/v1.0/toolsheet.csv' with '/home/luisasantus/Desktop/multiplesequencealign/assets/schema_tools.json'
+Mar-14 14:57:16.388 [main] DEBUG nextflow.validation.SchemaValidator - Validation passed: '/nf-core/test-datasets/multiplesequencealign/toolsheet/v1.0/toolsheet.csv' with '/home/luisasantus/Desktop/multiplesequencealign/assets/schema_tools.json'
+Mar-14 14:57:16.618 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_single` matches labels `process_single` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:UNTAR
+Mar-14 14:57:16.621 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:UNTAR
+Mar-14 14:57:16.621 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:UNTAR
+Mar-14 14:57:16.628 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:16.628 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:16.638 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Mar-14 14:57:16.646 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=31.1 GB; capacity=8; pollInterval=100ms; dumpInterval=5m
+Mar-14 14:57:16.654 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Mar-14 14:57:16.768 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:CREATE_TCOFFEETEMPLATE
+Mar-14 14:57:16.769 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:CREATE_TCOFFEETEMPLATE` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:CREATE_TCOFFEETEMPLATE
+Mar-14 14:57:16.771 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:CREATE_TCOFFEETEMPLATE
+Mar-14 14:57:16.771 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:CREATE_TCOFFEETEMPLATE
+Mar-14 14:57:16.772 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:16.772 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:16.814 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CALCULATE_SEQSTATS
+Mar-14 14:57:16.816 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:CALCULATE_SEQSTATS` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CALCULATE_SEQSTATS
+Mar-14 14:57:16.819 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CALCULATE_SEQSTATS
+Mar-14 14:57:16.820 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CALCULATE_SEQSTATS
+Mar-14 14:57:16.822 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:16.822 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:16.869 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CONCAT_SEQSTATS
+Mar-14 14:57:16.871 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CONCAT_SEQSTATS
+Mar-14 14:57:16.872 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:CONCAT_SEQSTATS` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CONCAT_SEQSTATS
+Mar-14 14:57:16.873 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CONCAT_SEQSTATS
+Mar-14 14:57:16.873 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CONCAT_SEQSTATS
+Mar-14 14:57:16.876 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:16.877 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:16.960 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:COMPUTE_TREES:FAMSA_GUIDETREE
+Mar-14 14:57:16.961 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:FAMSA_GUIDETREE` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:COMPUTE_TREES:FAMSA_GUIDETREE
+Mar-14 14:57:16.961 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:COMPUTE_TREES:FAMSA_GUIDETREE
+Mar-14 14:57:16.961 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:COMPUTE_TREES:FAMSA_GUIDETREE
+Mar-14 14:57:16.962 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:16.962 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:16.977 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:COMPUTE_TREES:CLUSTALO_GUIDETREE
+Mar-14 14:57:16.977 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:CLUSTALO_GUIDETREE` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:COMPUTE_TREES:CLUSTALO_GUIDETREE
+Mar-14 14:57:16.978 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:COMPUTE_TREES:CLUSTALO_GUIDETREE
+Mar-14 14:57:16.978 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:COMPUTE_TREES:CLUSTALO_GUIDETREE
+Mar-14 14:57:16.978 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:16.978 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.026 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:CLUSTALO_ALIGN
+Mar-14 14:57:17.026 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MAFFT|CLUSTALO_ALIGN|TCOFFEE_ALIGN|MUSCLE5_SUPER5|TCOFFEE3D_ALIGN|FAMSA_ALIGN|LEARNMSA_ALIGN|REGRESSIVE` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:CLUSTALO_ALIGN
+Mar-14 14:57:17.026 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:CLUSTALO_ALIGN
+Mar-14 14:57:17.027 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:CLUSTALO_ALIGN
+Mar-14 14:57:17.028 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.028 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.047 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:FAMSA_ALIGN
+Mar-14 14:57:17.048 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MAFFT|CLUSTALO_ALIGN|TCOFFEE_ALIGN|MUSCLE5_SUPER5|TCOFFEE3D_ALIGN|FAMSA_ALIGN|LEARNMSA_ALIGN|REGRESSIVE` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:FAMSA_ALIGN
+Mar-14 14:57:17.049 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:FAMSA_ALIGN
+Mar-14 14:57:17.051 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:FAMSA_ALIGN
+Mar-14 14:57:17.053 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.053 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.071 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:KALIGN_ALIGN
+Mar-14 14:57:17.072 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:KALIGN_ALIGN
+Mar-14 14:57:17.072 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:KALIGN_ALIGN
+Mar-14 14:57:17.073 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.073 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.085 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:LEARNMSA_ALIGN
+Mar-14 14:57:17.086 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MAFFT|CLUSTALO_ALIGN|TCOFFEE_ALIGN|MUSCLE5_SUPER5|TCOFFEE3D_ALIGN|FAMSA_ALIGN|LEARNMSA_ALIGN|REGRESSIVE` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:LEARNMSA_ALIGN
+Mar-14 14:57:17.087 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:LEARNMSA_ALIGN
+Mar-14 14:57:17.087 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:LEARNMSA_ALIGN
+Mar-14 14:57:17.088 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.088 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.104 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_high` matches labels `process_high` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:MAFFT
+Mar-14 14:57:17.105 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MAFFT|CLUSTALO_ALIGN|TCOFFEE_ALIGN|MUSCLE5_SUPER5|TCOFFEE3D_ALIGN|FAMSA_ALIGN|LEARNMSA_ALIGN|REGRESSIVE` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:MAFFT
+Mar-14 14:57:17.105 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:MAFFT
+Mar-14 14:57:17.105 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:MAFFT
+Mar-14 14:57:17.107 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.107 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.122 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:TCOFFEE_ALIGN
+Mar-14 14:57:17.123 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MAFFT|CLUSTALO_ALIGN|TCOFFEE_ALIGN|MUSCLE5_SUPER5|TCOFFEE3D_ALIGN|FAMSA_ALIGN|LEARNMSA_ALIGN|REGRESSIVE` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:TCOFFEE_ALIGN
+Mar-14 14:57:17.124 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:TCOFFEE_ALIGN
+Mar-14 14:57:17.124 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:TCOFFEE_ALIGN
+Mar-14 14:57:17.125 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.125 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.139 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:TCOFFEE3D_ALIGN
+Mar-14 14:57:17.140 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MAFFT|CLUSTALO_ALIGN|TCOFFEE_ALIGN|MUSCLE5_SUPER5|TCOFFEE3D_ALIGN|FAMSA_ALIGN|LEARNMSA_ALIGN|REGRESSIVE` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:TCOFFEE3D_ALIGN
+Mar-14 14:57:17.140 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:TCOFFEE3D_ALIGN
+Mar-14 14:57:17.140 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MAFFT|CLUSTALO_ALIGN|TCOFFEE_ALIGN|MUSCLE5_SUPER5|TCOFFEE3D_ALIGN|FAMSA_ALIGN|LEARNMSA_ALIGN|REGRESSIVE` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:TCOFFEE3D_ALIGN
+Mar-14 14:57:17.140 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:TCOFFEE3D_ALIGN
+Mar-14 14:57:17.141 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:TCOFFEE3D_ALIGN
+Mar-14 14:57:17.141 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.141 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.156 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:REGRESSIVE_ALIGN
+Mar-14 14:57:17.157 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MAFFT|CLUSTALO_ALIGN|TCOFFEE_ALIGN|MUSCLE5_SUPER5|TCOFFEE3D_ALIGN|FAMSA_ALIGN|LEARNMSA_ALIGN|REGRESSIVE` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:REGRESSIVE_ALIGN
+Mar-14 14:57:17.158 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:REGRESSIVE_ALIGN
+Mar-14 14:57:17.158 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:REGRESSIVE_ALIGN
+Mar-14 14:57:17.158 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:REGRESSIVE_ALIGN
+Mar-14 14:57:17.160 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.160 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.178 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:MUSCLE5_SUPER5
+Mar-14 14:57:17.179 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MAFFT|CLUSTALO_ALIGN|TCOFFEE_ALIGN|MUSCLE5_SUPER5|TCOFFEE3D_ALIGN|FAMSA_ALIGN|LEARNMSA_ALIGN|REGRESSIVE` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:MUSCLE5_SUPER5
+Mar-14 14:57:17.179 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:MUSCLE5_SUPER5
+Mar-14 14:57:17.180 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:MUSCLE5_SUPER5
+Mar-14 14:57:17.183 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.185 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.226 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_SP
+Mar-14 14:57:17.227 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_SP
+Mar-14 14:57:17.228 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:TCOFFEE_ALNCOMPARE_SP` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_SP
+Mar-14 14:57:17.228 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_SP
+Mar-14 14:57:17.228 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_SP
+Mar-14 14:57:17.229 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.229 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.259 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_SP
+Mar-14 14:57:17.260 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_SP
+Mar-14 14:57:17.260 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:CONCAT_SP|CONCAT_TC` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_SP
+Mar-14 14:57:17.261 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_SP
+Mar-14 14:57:17.261 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_SP
+Mar-14 14:57:17.262 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.262 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.270 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_TC
+Mar-14 14:57:17.271 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_TC
+Mar-14 14:57:17.271 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:TCOFFEE_ALNCOMPARE_TC` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_TC
+Mar-14 14:57:17.271 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_TC
+Mar-14 14:57:17.271 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_TC
+Mar-14 14:57:17.272 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.272 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.279 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_TC
+Mar-14 14:57:17.279 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_TC
+Mar-14 14:57:17.279 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:CONCAT_SP|CONCAT_TC` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_TC
+Mar-14 14:57:17.280 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:CONCAT_TC` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_TC
+Mar-14 14:57:17.280 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_TC
+Mar-14 14:57:17.280 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_TC
+Mar-14 14:57:17.281 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.281 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.303 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_IRMSD
+Mar-14 14:57:17.304 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:TCOFFEE_IRMSD` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_IRMSD
+Mar-14 14:57:17.304 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_IRMSD
+Mar-14 14:57:17.304 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_IRMSD
+Mar-14 14:57:17.306 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.306 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.316 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:PARSE_IRMSD
+Mar-14 14:57:17.317 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:PARSE_IRMSD` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:PARSE_IRMSD
+Mar-14 14:57:17.318 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:PARSE_IRMSD
+Mar-14 14:57:17.319 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:PARSE_IRMSD
+Mar-14 14:57:17.319 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.320 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.329 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_IRMSD
+Mar-14 14:57:17.329 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_IRMSD
+Mar-14 14:57:17.329 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:CONCAT_IRMSD` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_IRMSD
+Mar-14 14:57:17.329 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_IRMSD
+Mar-14 14:57:17.329 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_IRMSD
+Mar-14 14:57:17.330 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.331 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.355 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_single` matches labels `process_single` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:MERGE_EVAL
+Mar-14 14:57:17.355 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:MERGE_EVAL
+Mar-14 14:57:17.355 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MERGE_EVAL` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:MERGE_EVAL
+Mar-14 14:57:17.356 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:MERGE_EVAL
+Mar-14 14:57:17.356 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:MERGE_EVAL
+Mar-14 14:57:17.357 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.357 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.377 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_single` matches labels `process_single` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MERGE_STATS_EVAL
+Mar-14 14:57:17.378 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MERGE_STATS_EVAL
+Mar-14 14:57:17.378 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MERGE_STATS_EVAL` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MERGE_STATS_EVAL
+Mar-14 14:57:17.378 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MERGE_STATS_EVAL
+Mar-14 14:57:17.378 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MERGE_STATS_EVAL
+Mar-14 14:57:17.378 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.378 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.390 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_single` matches labels `process_single` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ZIP
+Mar-14 14:57:17.390 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:ZIP` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ZIP
+Mar-14 14:57:17.391 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ZIP
+Mar-14 14:57:17.391 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ZIP
+Mar-14 14:57:17.392 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.392 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.404 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:PREPARE_SHINY
+Mar-14 14:57:17.404 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:PREPARE_SHINY` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:PREPARE_SHINY
+Mar-14 14:57:17.404 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:PREPARE_SHINY
+Mar-14 14:57:17.405 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:PREPARE_SHINY
+Mar-14 14:57:17.406 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.406 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.508 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:PREPARE_MULTIQC
+Mar-14 14:57:17.509 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:PREPARE_MULTIQC
+Mar-14 14:57:17.509 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:PREPARE_MULTIQC
+Mar-14 14:57:17.509 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.509 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.526 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MULTIQC
+Mar-14 14:57:17.526 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MULTIQC` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MULTIQC
+Mar-14 14:57:17.526 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MULTIQC
+Mar-14 14:57:17.526 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:.*` matches process NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MULTIQC
+Mar-14 14:57:17.527 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Mar-14 14:57:17.527 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Mar-14 14:57:17.535 [main] DEBUG nextflow.Session - Config process names validation disabled as requested
+Mar-14 14:57:17.537 [main] DEBUG nextflow.Session - Igniting dataflow network (56)
+Mar-14 14:57:17.558 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:UNTAR
+Mar-14 14:57:17.560 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:CREATE_TCOFFEETEMPLATE
+Mar-14 14:57:17.561 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CALCULATE_SEQSTATS
+Mar-14 14:57:17.579 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CONCAT_SEQSTATS
+Mar-14 14:57:17.580 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:COMPUTE_TREES:FAMSA_GUIDETREE
+Mar-14 14:57:17.580 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:COMPUTE_TREES:CLUSTALO_GUIDETREE
+Mar-14 14:57:17.580 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:CLUSTALO_ALIGN
+Mar-14 14:57:17.580 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:FAMSA_ALIGN
+Mar-14 14:57:17.580 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:KALIGN_ALIGN
+Mar-14 14:57:17.580 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:LEARNMSA_ALIGN
+Mar-14 14:57:17.580 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:MAFFT
+Mar-14 14:57:17.580 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:TCOFFEE_ALIGN
+Mar-14 14:57:17.580 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:TCOFFEE3D_ALIGN
+Mar-14 14:57:17.580 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:REGRESSIVE_ALIGN
+Mar-14 14:57:17.580 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:MUSCLE5_SUPER5
+Mar-14 14:57:17.581 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_SP
+Mar-14 14:57:17.591 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_SP
+Mar-14 14:57:17.592 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_TC
+Mar-14 14:57:17.592 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_TC
+Mar-14 14:57:17.593 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_IRMSD
+Mar-14 14:57:17.593 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:PARSE_IRMSD
+Mar-14 14:57:17.593 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_IRMSD
+Mar-14 14:57:17.593 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:MERGE_EVAL
+Mar-14 14:57:17.593 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MERGE_STATS_EVAL
+Mar-14 14:57:17.593 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ZIP
+Mar-14 14:57:17.594 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:PREPARE_SHINY
+Mar-14 14:57:17.595 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:PREPARE_MULTIQC
+Mar-14 14:57:17.596 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MULTIQC
+Mar-14 14:57:17.597 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
+  Script_43d190c23b845d87: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../modules/local/prepare_shiny.nf
+  Script_4a7de29e0ae73c78: /home/luisasantus/Desktop/multiplesequencealign/./workflows/multiplesequencealign.nf
+  Script_280283fe61ad500a: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/local/create_tcoffee_template.nf
+  Script_f74c9983303a8407: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/utils_nfcore_multiplesequencealign_pipeline/main.nf
+  Script_5b17869a6db90d46: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/local/parse_irmsd.nf
+  Script_d85a577044922074: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/nf-core/clustalo/align/main.nf
+  Script_2d82cdecc736d708: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/nf-core/mafft/main.nf
+  Script_88bdc361448c010e: /home/luisasantus/Desktop/multiplesequencealign/main.nf
+  Script_9dab89ae14af093d: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../modules/nf-core/zip/main.nf
+  Script_bb2575001554d29c: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/nf-core/tcoffee/align/main.nf
+  Script_34a6e65ee7dbdbe0: /home/luisasantus/Desktop/multiplesequencealign/./subworkflows/local/utils_nfcore_multiplesequencealign_pipeline/../../nf-core/utils_nextflow_pipeline/main.nf
+  Script_a7d371fe23db7aab: /home/luisasantus/Desktop/multiplesequencealign/./subworkflows/local/utils_nfcore_multiplesequencealign_pipeline/../../nf-core/utils_nfvalidation_plugin/main.nf
+  Script_fe7f747eb20df311: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/nf-core/kalign/align/main.nf
+  Script_33b11582e37afc2a: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/local/parse_sim.nf
+  Script_e644fb6da94d4bab: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../modules/nf-core/untar/main.nf
+  Script_4ba798786ecd6418: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../modules/nf-core/fastqc/main.nf
+  Script_828628c6a3c30c28: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/nf-core/csvtk/join/main.nf
+  Script_c84c26ba47b49dd0: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/align.nf
+  Script_3bff136fcab3160d: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/stats.nf
+  Script_c011e84452a4c12f: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/local/calculate_seqstats.nf
+  Script_0dd893b3b9df6f1f: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../subworkflows/local/../../modules/nf-core/clustalo/guidetree/main.nf
+  Script_1d6920cd72c881de: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/nf-core/csvtk/concat/main.nf
+  Script_04b6f3509e155fe5: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/nf-core/tcoffee/alncompare/main.nf
+  Script_20da6bedc891c847: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/nf-core/tcoffee/irmsd/main.nf
+  Script_38cb43493a97fd4f: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../modules/local/prepare_multiqc.nf
+  Script_ad9cb3686fd9a35b: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/evaluate.nf
+  Script_5450dbea33e707c5: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../subworkflows/local/../../modules/nf-core/famsa/guidetree/main.nf
+  Script_be0adedc591c66cc: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/utils_nfcore_multiplesequencealign_pipeline/../../nf-core/utils_nfcore_pipeline/main.nf
+  Script_fcfb3bff3692cf89: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/nf-core/famsa/align/main.nf
+  Script_6f61de3f6513b081: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../modules/local/multiqc.nf
+  Script_2947db89fb927300: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/nf-core/tcoffee/seqreformat/main.nf
+  Script_b68575cb49ed39f4: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/nf-core/muscle5/super5/main.nf
+  Script_129b95e08fec449a: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../modules/nf-core/learnmsa/align/main.nf
+  Script_b6212e695d862b3c: /home/luisasantus/Desktop/multiplesequencealign/./workflows/../subworkflows/local/../../subworkflows/local/compute_trees.nf
+Mar-14 14:57:17.597 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Mar-14 14:57:17.597 [main] DEBUG nextflow.Session - Session await
+Mar-14 14:57:17.641 [Actor Thread 35] DEBUG nextflow.file.FileCollector - Deleting file collector temp dir: /tmp/nxf-1184448508576928279
+Mar-14 14:57:17.812 [Actor Thread 31] DEBUG nextflow.sort.BigSort - Sort completed -- entries: 1; slices: 1; internal sort time: 0.001 s; external sort time: 0.018 s; total time: 0.019 s
+Mar-14 14:57:17.827 [Actor Thread 31] DEBUG nextflow.file.FileCollector - Saved collect-files list to: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/collect-file/ca0a34f333e3add6873406d848107531
+Mar-14 14:57:17.836 [Actor Thread 31] DEBUG nextflow.file.FileCollector - Deleting file collector temp dir: /tmp/nxf-9872961468879801695
+Mar-14 14:57:18.561 [FileTransfer-1] DEBUG nextflow.file.FilePorter - Copying foreign file https://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/testdata/setoxin-ref.fa to work dir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/stage-2b4ad66e-90a8-4110-a1fc-fac94322e8d4/35/bdd2197a6461e14099e366bc46893a/setoxin-ref.fa
+Mar-14 14:57:18.562 [FileTransfer-2] DEBUG nextflow.file.FilePorter - Copying foreign file https://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/testdata/toxin-ref.fa to work dir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/stage-2b4ad66e-90a8-4110-a1fc-fac94322e8d4/ed/03f6708ba01a70b28b7d06e0aa68fc/toxin-ref.fa
+Mar-14 14:57:18.562 [FileTransfer-3] DEBUG nextflow.file.FilePorter - Copying foreign file https://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/testdata/structures/seatoxin-ref.tar.gz to work dir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/stage-2b4ad66e-90a8-4110-a1fc-fac94322e8d4/28/67479ae58703f61b57564b176ef432/seatoxin-ref.tar.gz
+Mar-14 14:57:18.757 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:18.758 [Task submitter] INFO  nextflow.Session - [52/db3d64] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CALCULATE_SEQSTATS (seatoxin-ref)
+Mar-14 14:57:18.770 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:18.771 [Task submitter] INFO  nextflow.Session - [b3/c6d80a] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:COMPUTE_TREES:FAMSA_GUIDETREE (toxin-ref)
+Mar-14 14:57:18.776 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:18.776 [Task submitter] INFO  nextflow.Session - [47/4834a2] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:COMPUTE_TREES:FAMSA_GUIDETREE (seatoxin-ref)
+Mar-14 14:57:18.783 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:18.783 [Task submitter] INFO  nextflow.Session - [bf/29d796] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CALCULATE_SEQSTATS (toxin-ref)
+Mar-14 14:57:18.940 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 5; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:COMPUTE_TREES:FAMSA_GUIDETREE (toxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/b3/c6d80a171d0dc0440047f8b00002b0]
+Mar-14 14:57:18.945 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:18.946 [Task submitter] INFO  nextflow.Session - [f2/d0ca72] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:UNTAR (seatoxin-ref.tar.gz)
+Mar-14 14:57:19.064 [Task monitor] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'PublishDir' minSize=10; maxSize=24; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Mar-14 14:57:19.080 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 4; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:COMPUTE_TREES:FAMSA_GUIDETREE (seatoxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/47/4834a2fda1a7dc2a99b88fe73bdc5c]
+Mar-14 14:57:19.100 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:19.117 [Task submitter] INFO  nextflow.Session - [8f/ca150f] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:FAMSA_ALIGN (toxin-ref)
+Mar-14 14:57:19.371 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 6; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:FAMSA_ALIGN (toxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/8f/ca150f2ec22171ecc05661cbeb7554]
+Mar-14 14:57:19.377 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:19.378 [Task submitter] INFO  nextflow.Session - [99/d880db] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:KALIGN_ALIGN (toxin-ref)
+Mar-14 14:57:19.521 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 9; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:KALIGN_ALIGN (toxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/99/d880db025e24d22ed8e4d83ab26305]
+Mar-14 14:57:19.527 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:19.527 [Task submitter] INFO  nextflow.Session - [93/926cbe] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:FAMSA_ALIGN (seatoxin-ref)
+Mar-14 14:57:19.600 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:UNTAR (seatoxin-ref.tar.gz); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/f2/d0ca7261bada0e3178ea372b484960]
+Mar-14 14:57:19.606 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:19.607 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 7; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:FAMSA_ALIGN (seatoxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/93/926cbed1b081cbde57a79d7b3e2b01]
+Mar-14 14:57:19.627 [Task submitter] INFO  nextflow.Session - [91/211c7a] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:KALIGN_ALIGN (seatoxin-ref)
+Mar-14 14:57:19.633 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:19.634 [Task submitter] INFO  nextflow.Session - [09/016ea2] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ZIP (toxin-ref_FAMSA-args-null_FAMSA-args-null)
+Mar-14 14:57:19.668 [FileTransfer-4] DEBUG nextflow.file.FilePorter - Copying foreign file https://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/testdata/toxin.ref to work dir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/stage-2b4ad66e-90a8-4110-a1fc-fac94322e8d4/d0/b6e40fd77bc6d4755c7c5c7b736129/toxin.ref
+Mar-14 14:57:19.788 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 8; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ALIGN:KALIGN_ALIGN (seatoxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/91/211c7a58c6996b45ba62675223bddd]
+Mar-14 14:57:19.798 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:19.803 [Task submitter] INFO  nextflow.Session - [6c/a9c687] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:CREATE_TCOFFEETEMPLATE (seatoxin-ref)
+Mar-14 14:57:19.808 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 10; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ZIP (toxin-ref_FAMSA-args-null_FAMSA-args-null); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/09/016ea2ab8a70acedf1ae6f379d150e]
+Mar-14 14:57:19.813 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:19.813 [Task submitter] INFO  nextflow.Session - [3f/674f53] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ZIP (seatoxin-ref_FAMSA-args-null_FAMSA-args-null)
+Mar-14 14:57:19.906 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 13; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:CREATE_TCOFFEETEMPLATE (seatoxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/6c/a9c6873a907d56b6e52e2f76328fba]
+Mar-14 14:57:19.912 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:19.912 [Task submitter] INFO  nextflow.Session - [bd/847c66] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_TC (toxin-ref)
+Mar-14 14:57:19.928 [FileTransfer-5] DEBUG nextflow.file.FilePorter - Copying foreign file https://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/testdata/setoxin.ref to work dir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/stage-2b4ad66e-90a8-4110-a1fc-fac94322e8d4/80/f9282b8c85b2ee896d1d78918adab7/setoxin.ref
+Mar-14 14:57:19.937 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 14; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:ZIP (seatoxin-ref_FAMSA-args-null_FAMSA-args-null); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/3f/674f531ccdc19d9c7e2f8652f31d6f]
+Mar-14 14:57:19.956 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:19.957 [Task submitter] INFO  nextflow.Session - [e9/f6b091] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_SP (toxin-ref)
+Mar-14 14:57:20.327 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 11; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_TC (toxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/bd/847c66809f7d34cb296600d9af6bfa]
+Mar-14 14:57:20.333 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:20.334 [Task submitter] INFO  nextflow.Session - [6b/70a077] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_IRMSD (seatoxin-ref)
+Mar-14 14:57:20.393 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 2; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CALCULATE_SEQSTATS (seatoxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/52/db3d6478f7769312182b0c1205bd7a]
+Mar-14 14:57:20.397 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:20.399 [Task submitter] INFO  nextflow.Session - [12/afb415] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_TC (seatoxin-ref)
+Mar-14 14:57:20.427 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 3; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CALCULATE_SEQSTATS (toxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/bf/29d796826399c0cb5cf2b550d90330]
+Mar-14 14:57:20.430 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:20.431 [Task submitter] INFO  nextflow.Session - [49/73e2b8] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_SP (seatoxin-ref)
+Mar-14 14:57:20.458 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 12; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_SP (toxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/e9/f6b091ca117148238cef568ab6a37c]
+Mar-14 14:57:20.470 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:20.471 [Task submitter] INFO  nextflow.Session - [68/3ff65a] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CONCAT_SEQSTATS (summary_seqstats)
+Mar-14 14:57:20.583 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 18; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:STATS:CONCAT_SEQSTATS (summary_seqstats); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/68/3ff65a9eecd15294d421c012d23e06]
+Mar-14 14:57:20.628 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 16; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_SP (seatoxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/49/73e2b8b8144e1e179b336bd1cb3c81]
+Mar-14 14:57:20.643 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:20.643 [Task submitter] INFO  nextflow.Session - [a9/768e30] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_SP (summary_sp)
+Mar-14 14:57:20.688 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 15; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_TC (seatoxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/12/afb415e3654006ac4cfa8e2f95fda2]
+Mar-14 14:57:20.693 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 19; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_SP (summary_sp); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/a9/768e30462c6068ff7c41e64495af34]
+Mar-14 14:57:20.697 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:20.697 [Task submitter] INFO  nextflow.Session - [94/dcf048] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_TC (summary_tc)
+Mar-14 14:57:20.743 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 20; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_TC (summary_tc); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/94/dcf04845e5fb8e4fffdc344e8d31eb]
+Mar-14 14:57:25.659 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 17; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_IRMSD (seatoxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/6b/70a077ac19ff6380f2ec91326b4dd2]
+Mar-14 14:57:25.671 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:25.671 [Task submitter] INFO  nextflow.Session - [f3/d1837a] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:PARSE_IRMSD (seatoxin-ref)
+Mar-14 14:57:26.190 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 21; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:PARSE_IRMSD (seatoxin-ref); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/f3/d1837ac58076b86d1fa7a3ca866c9d]
+Mar-14 14:57:26.197 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:26.198 [Task submitter] INFO  nextflow.Session - [af/ba01a8] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_IRMSD (summary_irmsd)
+Mar-14 14:57:26.255 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 22; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:CONCAT_IRMSD (summary_irmsd); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/af/ba01a81be2c412c1491462f463c297]
+Mar-14 14:57:26.263 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:26.264 [Task submitter] INFO  nextflow.Session - [9c/dde61c] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:MERGE_EVAL (summary_eval)
+Mar-14 14:57:26.317 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 23; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:MERGE_EVAL (summary_eval); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/9c/dde61c55c5261747619e83e84a707c]
+Mar-14 14:57:26.325 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:26.325 [Task submitter] INFO  nextflow.Session - [5e/1dcb19] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MERGE_STATS_EVAL (summary_stats_eval)
+Mar-14 14:57:26.374 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 24; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MERGE_STATS_EVAL (summary_stats_eval); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/5e/1dcb190d9d68819f635b49fdca226f]
+Mar-14 14:57:26.384 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:26.384 [Actor Thread 15] DEBUG nextflow.sort.BigSort - Sort completed -- entries: 11; slices: 1; internal sort time: 0.004 s; external sort time: 0.003 s; total time: 0.007 s
+Mar-14 14:57:26.385 [Task submitter] INFO  nextflow.Session - [4a/ee1fdd] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:PREPARE_MULTIQC (summary_stats_eval)
+Mar-14 14:57:26.389 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:26.389 [Task submitter] INFO  nextflow.Session - [62/bff8ae] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:PREPARE_SHINY (summary_stats_eval)
+Mar-14 14:57:26.393 [Actor Thread 15] DEBUG nextflow.file.FileCollector - Saved collect-files list to: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/collect-file/ac7381d58080c3d4cc2e3320cb7e5ef4
+Mar-14 14:57:26.395 [Actor Thread 15] DEBUG nextflow.file.FileCollector - Deleting file collector temp dir: /tmp/nxf-17483378193249562434
+Mar-14 14:57:26.454 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 26; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:PREPARE_SHINY (summary_stats_eval); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/62/bff8ae06f94f7c6b10c881ae4f69b4]
+Mar-14 14:57:26.799 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 25; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:PREPARE_MULTIQC (summary_stats_eval); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/4a/ee1fdd84d533b05daeae7f3d2a8955]
+Mar-14 14:57:26.819 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Mar-14 14:57:26.819 [Task submitter] INFO  nextflow.Session - [c0/8edca3] Submitted process > NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MULTIQC (1)
+Mar-14 14:57:29.604 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 27; name: NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:MULTIQC (1); status: COMPLETED; exit: 0; error: -; workDir: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/e094a244ec8d75b9baabc5f22f0080c7/work/c0/8edca3556228e9995c81289d6e148b]
+Mar-14 14:57:29.608 [main] DEBUG nextflow.Session - Session await > all processes finished
+Mar-14 14:57:29.610 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local) - terminating tasks monitor poll loop
+Mar-14 14:57:29.610 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Mar-14 14:57:29.612 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'PublishDir' shutdown completed (hard=false)
+Mar-14 14:57:29.614 [main] INFO  nextflow.Nextflow - -[0;35m[nf-core/multiplesequencealign][0;32m Pipeline completed successfully[0m-
+Mar-14 14:57:29.619 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=27; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=26.2s; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=4; peakCpus=8; peakMemory=12 GB; ]
+Mar-14 14:57:29.619 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow completed -- saving trace file
+Mar-14 14:57:29.622 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Mar-14 14:57:29.622 [main] INFO  org.pf4j.AbstractPluginManager - Stop plugin 'nf-tower@1.6.3'
+Mar-14 14:57:29.622 [main] DEBUG nextflow.plugin.BasePlugin - Plugin stopped nf-tower
+Mar-14 14:57:29.622 [main] INFO  org.pf4j.AbstractPluginManager - Stop plugin 'nf-validation@1.1.3'
+Mar-14 14:57:29.622 [main] DEBUG nextflow.plugin.BasePlugin - Plugin stopped nf-validation
+Mar-14 14:57:29.642 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'FileTransfer' shutdown completed (hard=false)
+Mar-14 14:57:29.644 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

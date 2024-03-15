@@ -1,0 +1,2 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+1	ac/280caa	190192	TCOFFEE_SEQREFORMAT (test)	COMPLETED	0	2024-03-14 14:59:06.321	84ms	14ms	100.0%	3.2 MB	11.8 MB	211.3 KB	685 B

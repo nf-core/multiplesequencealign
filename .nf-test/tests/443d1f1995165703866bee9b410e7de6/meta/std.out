@@ -1,0 +1,3 @@
+ERROR ~ Cannot get property 'generic' on null object
+
+ -- Check script 'meta/mock.nf' at line: 31 or see '/home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/443d1f1995165703866bee9b410e7de6/meta/nextflow.log' file for more details

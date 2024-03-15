@@ -1,0 +1,72 @@
+ERROR ~ Error executing process > 'TCOFFEE_ALNCOMPARE (test)'
+
+Caused by:
+  Process `TCOFFEE_ALNCOMPARE (test)` terminated with an error exit status (1)
+
+Command executed:
+
+  export TEMP='./'
+  t_coffee -other_pg aln_compare         -al1 setoxin.ref         -al2 setoxin-ref.fa         -compare_mode tc          | grep -v "seq1" | grep -v '*' |         awk '{ print $4}' ORS="	"         >> "scores.txt"
+  
+  # Add metadata info to output file
+  echo "id,tc" > "setoxin-ref.scores"
+  
+  # Add values
+  scores=$(awk '{sub(/[[:space:]]+$/, "")} 1' scores.txt | tr -s '[:blank:]' ',')
+  echo "test,$scores" >> "setoxin-ref.scores"
+  
+  cat <<-END_VERSIONS > versions.yml
+  "TCOFFEE_ALNCOMPARE":
+      tcoffee: $( t_coffee -version | awk '{gsub("Version_", ""); print $3}')
+  END_VERSIONS
+
+Command exit status:
+  1
+
+Command output:
+  (empty)
+
+Command error:
+  
+  
+  *************************************************************************************************
+  *                        FULL TRACE BACK PID: 190007                                    
+  190007 -- ERROR: COREDUMP: T-COFFEE Version_13.45.61.3c310a9 (Version_13.45.61.3c310a9)
+  *************************************************************************************************
+  
+  	******************************************************************
+  	* Abnormal Termination
+  	* Job NOT Completed:[T-COFFEE, Version_13.45.61.3c310a9]
+  	* Please CHECK:                                       
+  	* 	-1 The format of your Input Files                 
+  	* 	-2 The parameters                                 
+  	* 	-3 The use of special characters in sequence names:
+  	* 		 (@, |, %...)
+  	* 	-4 The Online Doc (http://www.tcoffee.org)                   
+  	* 	-5 Send the file:
+  	*
+  	*	    t_coffee.ErrorReport 
+  	* to:
+  	* 		cedric.notredame@gmail.com
+  	* If you run T-Coffee over the WEB:
+  	* 	Windows Cut and Paste is sometimes erratic and
+  	* 	it can loose carriage returns. If you suspect this,
+  	* 	try to cut and paste through an intermediate application
+  	* 	(word pad) and inspect the results
+  
+  
+  	* CONFIDENTIALITY:
+  	* 	The File t_coffee.ErrorReport may contain your personal DATA
+  	* 	Remove ALL confidential DATA from this file BEFORE sending it
+  	******************************************************************
+  # Command Line: t_coffee -other_pg aln_compare -al1 setoxin.ref -al2 setoxin-ref.fa -compare_mode tc  [PROGRAM:T-COFFEE]
+  
+  # TERMINATION STATUS: FAILURE [PROGRAM: T-COFFEE pid 190007 ppid 190002
+  #CL: t_coffee -other_pg aln_compare -al1 setoxin.ref -al2 setoxin-ref.fa -compare_mode tc 
+
+Work dir:
+  /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/work/47/b2bc2f790e00c6d9b5d4af20ec6be5
+
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+
+ -- Check '/home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/183bc50fcdf236163870e98a3abb7535/meta/nextflow.log' file for details
