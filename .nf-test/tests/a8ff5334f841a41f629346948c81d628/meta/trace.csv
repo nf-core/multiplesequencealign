@@ -1,3 +1,0 @@
-task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
-1	dd/3a9512	189544	UNTAR (seatoxin-ref.tar.gz)	COMPLETED	0	2024-03-14 14:58:58.101	243ms	35ms	88.9%	3.2 MB	11.8 MB	6.9 MB	8.3 MB
-2	d5/98b7ae	189691	TCOFFEE_ALIGN (test)	COMPLETED	0	2024-03-14 14:58:58.511	136ms	110ms	120.4%	33.5 MB	46 MB	521.1 KB	158.4 KB

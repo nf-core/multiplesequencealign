@@ -1,2 +1,0 @@
-task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
-1	47/b2bc2f	189970	TCOFFEE_ALNCOMPARE (test)	FAILED	1	2024-03-14 14:59:02.480	109ms	29ms	-	-	-	-	-

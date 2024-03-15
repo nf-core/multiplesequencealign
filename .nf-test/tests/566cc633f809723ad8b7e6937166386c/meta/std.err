@@ -1,5 +1,0 @@
-The following invalid input values have been detected:
-
-* --outdir: expected type: String, found: Integer (1)
-
- -- Check script '/home/luisasantus/Desktop/multiplesequencealign/./subworkflows/nf-core/utils_nfvalidation_plugin/tests/../main.nf' at line: 57 or see '/home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/566cc633f809723ad8b7e6937166386c/meta/nextflow.log' file for more details

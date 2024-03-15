@@ -1,3 +1,0 @@
-ERROR ~ Cannot get property 'sarscov2' on null object
-
- -- Check script 'meta/mock.nf' at line: 31 or see '/home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/86915b23faf7823626ffd2fc19d43243/meta/nextflow.log' file for more details

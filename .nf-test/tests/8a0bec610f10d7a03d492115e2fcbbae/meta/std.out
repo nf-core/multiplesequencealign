@@ -1,3 +1,0 @@
-ERROR ~ Cannot get property 'homo_sapiens' on null object
-
- -- Check script 'meta/mock.nf' at line: 31 or see '/home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/8a0bec610f10d7a03d492115e2fcbbae/meta/nextflow.log' file for more details

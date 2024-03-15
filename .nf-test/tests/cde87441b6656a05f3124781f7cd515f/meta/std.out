@@ -1,3 +1,0 @@
-ERROR ~ No such file or directory: /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/cde87441b6656a05f3124781f7cd515f/nullgenomics/sarscov2/illumina/fastq/test_1.fastq.gz
-
- -- Check script 'meta/mock.nf' at line: 33 or see '/home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/cde87441b6656a05f3124781f7cd515f/meta/nextflow.log' file for more details

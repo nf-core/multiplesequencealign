@@ -1,2 +1,0 @@
-task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
-1	42/f99267	189166	TCOFFEE_ALIGN (test)	COMPLETED	0	2024-03-14 14:58:46.438	232ms	164ms	111.8%	44.8 MB	57.2 MB	517.6 KB	153.5 KB
