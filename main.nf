@@ -108,7 +108,7 @@ workflow {
         params.monochrome_logs,
         params.hook_url,
         NFCORE_MULTIPLESEQUENCEALIGN.out.multiqc_report, 
-        params.shiny_dir,
+        params.shinydir,
         params.outdir
     )
 }

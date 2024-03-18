@@ -122,7 +122,7 @@ workflow PIPELINE_COMPLETION {
     monochrome_logs // boolean: Disable ANSI colour codes in log output
     hook_url        //  string: hook URL for notifications
     multiqc_report  //  string: Path to MultiQC report
-    shiny_dir     //  string: Path to shiny stats file
+    shinydir        //  string: Path to shiny stats file
     trace_infos     //  string: Path to trace file
 
     main:
@@ -143,13 +143,22 @@ workflow PIPELINE_COMPLETION {
             imNotification(summary_params, hook_url)
         }
 
-        print("Testing how to use the trace files in shiny")
+        print(shinydir)
+        print(trace_infos)
 
-        // move the trace file to the output directory
-        def trace_file = new File("${trace_infos}/pipeline_info/execution")
+        // TODO have an input parameter that specifies which tracefile to use 
+        // or to use all and merge or to use the latest
+
+        // Preprocess the trace file and move it to shiny directory 
+        def trace_file = new File("${trace_infos}/pipeline_info/trace.txt")
         
         if (trace_file.exists()) {
             trace_infos = filterTraceForShiny(trace_file)
+            print(trace_infos)
+            // move trace_infos to shinydir
+            def shiny_trace_file = new File("${shinydir}/trace.txt")
+            shiny_trace_file.write(trace_infos.join("\n"))
+
         }else{
             print("No trace file found in the pipeline_info directory")
         }
@@ -162,9 +171,13 @@ def filterTraceForShiny(trace_file){
     def shiny_trace_lines = []
     print("Filtering trace file for shiny")
     for (line in trace_lines){
-        if (line.contains("COMPLETED") && line.contains("MULTIPLESEQUENCEALIGN:ALIGN")){
-            shiny_trace_lines.add(line)
-        }
+        // if (line.contains("hash")){
+        //     shiny_trace_lines.add(line)
+        // }
+        // if (line.contains("COMPLETED") && line.contains("MULTIPLESEQUENCEALIGN:ALIGN")){
+        //     shiny_trace_lines.add(line)
+        // }
+        shiny_trace_lines.add(line)
     }
     return shiny_trace_lines
 }
