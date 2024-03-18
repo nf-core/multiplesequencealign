@@ -75,7 +75,7 @@ The column `fasta` contains the path to the fasta file that contains the sequenc
 
 The column reference is optional and contains the path to the reference alignment. It is used for certain evaluation steps. It can be left empty.
 
-The column structures is also optional and contains the path to the folder that contains the protein structures for the sequences to be aligned. It is used for structural aligners and certain evaluation steps. It can be left empty.
+The column `structures` is also optional and contains the path to the folder that contains the protein structures for the sequences to be aligned. It is used for structural aligners and certain evaluation steps. It can be left empty.
 
 Then, you should prepare a toolsheet which defines which tools to run as follows:
 
