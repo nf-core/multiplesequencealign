@@ -71,7 +71,7 @@ Each row represents a set of sequences (in this case the seatoxin and toxin prot
 
 `id` is the name of the set of sequences. It can correspond to the protein family name or to an internal id.
 
-The column fasta contains the path to the fasta file that contains the sequences.
+The column `fasta` contains the path to the fasta file that contains the sequences.
 
 The column reference is optional and contains the path to the reference alignment. It is used for certain evaluation steps. It can be left empty.
 
