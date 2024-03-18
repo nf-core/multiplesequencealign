@@ -87,6 +87,14 @@ FAMSA, -gt upgma -partree, FAMSA,
 , ,TCOFFEE, -output fasta_aln
 ```
 
+`tree` is the tool used to build the tree.
+
+Arguments to the tree tool can be provided using `args_tree`.
+
+The `aligner` column contains the tool to run the alignment.
+
+Finally, the arguments to the aligner tool can be set by using the `args_alginer` column.
+
 Now, you can run the pipeline using:
 
 ```bash
