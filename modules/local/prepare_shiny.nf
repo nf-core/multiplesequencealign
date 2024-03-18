@@ -30,7 +30,7 @@ process PREPARE_SHINY {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        ubuntu: \$(cat /etc/lsb-release | grep "DISTRIB_DESCRIPTION" | awk '{gsub("DISTRIB_DESCRIPTION=", ""); print \$2}')
+        bash: \$(echo \$(bash --version | grep -Eo 'version [[:alnum:].]+' | sed 's/version //'))
     END_VERSIONS
     """
 
@@ -41,7 +41,7 @@ process PREPARE_SHINY {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        ubuntu: \$(cat /etc/lsb-release | grep "DISTRIB_DESCRIPTION" | awk '{gsub("DISTRIB_DESCRIPTION=", ""); print \$2}')
-    END_VERSIONS
+        bash: \$(echo \$(bash --version | grep -Eo 'version [[:alnum:].]+' | sed 's/version //'))
+    END_VERSIONS  
     """
 }
