@@ -6,6 +6,7 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 import sys
+import os
 
 
 # Style
@@ -14,7 +15,10 @@ sns.set(context="talk", style="white", font_scale=0.8)
 
 # Load file
 # ----------------------------------------------------------------------------
-summary_report = "./shiny_data.csv"
+summary_report = "./shiny_data_with_trace.csv"
+
+if not os.path.exists(summary_report):
+    summary_report = "./shiny_data.csv"
 
 try:
     inputfile = pd.read_csv(summary_report)
@@ -33,6 +37,10 @@ options_eval = {
     "tc": "total column score (TC)",
     "perc_sim": "sequences avg similarity",
     "seq_length_mean": "sequence length (mean)",
+    "time_tree": "tree time (min)",
+    "time_align": "alignment time (min)",
+    "memory_tree": "tree memory (GB)",
+    "memory_align": "alignment memory (GB)"
 }
 
 app_ui = ui.page_fluid(

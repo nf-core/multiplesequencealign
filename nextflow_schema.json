@@ -129,8 +129,8 @@
                 },
                 "shiny_app": {
                     "type": "string",
-                    "format": "file-path",
-                    "fa_icon": "fas fa-fast-forward",
+                    "format": "directory-path",
+                    "fa_icon": "fas fa-folder-open",    
                     "description": "File containing the main shiny app."
                 }
             }
