@@ -69,7 +69,7 @@ toxin,toxin.fa,toxin-ref.fa,toxin_structures
 
 Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be processed.
 
-id is the name of the set of sequences. It can correspond to a the protein family name or to an internal id.
+`id` is the name of the set of sequences. It can correspond to the protein family name or to an internal id.
 
 The column fasta contains the path to the fasta file that contains the sequences.
 
