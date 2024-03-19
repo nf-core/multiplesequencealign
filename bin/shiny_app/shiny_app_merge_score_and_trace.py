@@ -1,15 +1,5 @@
 import pandas as pd
 
-data_file = 'shiny_data.csv'
-trace_file = 'trace.txt'
-out_file_name = 'shiny_data_with_trace.csv'
-
-# read in shiny_data.csv
-data = pd.read_csv(data_file)
-# read in trace
-trace = pd.read_csv(trace_file, sep='\t')
-
-
 def convert_time(time):
     if time is not None:
         if "ms" in time:
@@ -38,7 +28,7 @@ def convert_memory(memory):
             memory = float(memory)/1000000
     return memory
 
-def clean_trace(trace):
+def cleanTrace(trace):
     # Update trace file
     def extract_element(row, nelement):
         elements = row.split(':')
@@ -90,14 +80,20 @@ def prep_align_trace(trace):
     trace_align["memory_align"] = trace_align["memory_align"].apply(convert_memory)
     return trace_align
 
-clean_trace = clean_trace(trace)
-trace_trees = prep_tree_trace(clean_trace)
-trace_align = prep_align_trace(clean_trace)
 
-#merge data and trace_trees
-data_tree = pd.merge(data, trace_trees, on=["id", "tree", "args_tree"], how="left")
-data_tree_align = pd.merge(data_tree, trace_align, on=["id", "aligner", "args_aligner"], how="left")
+def merge_data_and_trace(data_file,trace_file,out_file_name):
+        # read in shiny_data.csv
+    data = pd.read_csv(data_file)
+    # read in trace
+    trace = pd.read_csv(trace_file, sep='\t')
+    clean_trace = cleanTrace(trace)
+    trace_trees = prep_tree_trace(clean_trace)
+    trace_align = prep_align_trace(clean_trace)
 
+    #merge data and trace_trees
+    data_tree = pd.merge(data, trace_trees, on=["id", "tree", "args_tree"], how="left")
+    data_tree_align = pd.merge(data_tree, trace_align, on=["id", "aligner", "args_aligner"], how="left")
 
-# write to file
-data_tree_align.to_csv(out_file_name, index=False)
+    # write to file
+    data_tree_align.to_csv(out_file_name, index=False)
+

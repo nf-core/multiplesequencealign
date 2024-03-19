@@ -306,9 +306,10 @@ def takeLatestComplete(traceInfos) {
             latestEntries[name] = values
         }
     }
-    def filteredData = latestEntries.values()
+    def filteredData = colnames.join('\t') + '\n'
+    filteredData = filteredData + latestEntries.values().collect { it.join('\t') }.join('\n')
     
-    def result = [traceInfos.first()]
+    def result = []
     result.addAll(filteredData)
     
     return result
@@ -344,7 +345,7 @@ def getTraceForShiny(trace_dir_path, shiny_dir_path, shiny_trace_mode){
             if(trace_infos.size() == 0){
                 print("There is an issue with your trace file!")
             }
-            print(takeLatestComplete(trace_infos))
+            trace_infos = takeLatestComplete(trace_infos)
 
             def shiny_trace_file = new File("${shiny_dir_path}/trace.txt")
             shiny_trace_file.write(trace_infos.join("\n"))
