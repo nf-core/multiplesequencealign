@@ -33,10 +33,10 @@ workflow PIPELINE_INITIALISATION {
     help              // boolean: Display help text
     validate_params   // boolean: Boolean whether to validate parameters against the schema at runtime
     monochrome_logs   // boolean: Do not use coloured log outputs
-    nextflow_cli_args //   array: List of positional nextflow CLI args
+    nextflow_cli_args //  array: List of positional nextflow CLI args
     outdir            //  string: The output directory where the results will be saved
     input             //  string: Path to input samplesheet
-    tools            //  string: Path to input tools samplesheet
+    tools             //  string: Path to input tools samplesheet
 
     main:
 
@@ -152,104 +152,6 @@ workflow PIPELINE_COMPLETION {
 }
 
 
-def getHeader(trace_file){
-    def trace_lines = trace_file.readLines()
-    def header = trace_lines[0]
-    return header
-}
-
-def filterTraceForShiny(trace_file){
-    def trace_lines = trace_file.readLines()
-    def shiny_trace_lines = []
-    for (line in trace_lines){
-        if (line.contains("COMPLETED") && line.contains("MULTIPLESEQUENCEALIGN:ALIGN")){
-            shiny_trace_lines.add(line)
-        }
-    }
-    return shiny_trace_lines
-}
-
-// if multiple lines have the same name column
-// only the one with the latest timestamp will be kept
-def takeLatestComplete(traceInfos) {
-    // Remove the first line
-    colnames = traceInfos.first().split('\t')
-    // strip all the white spaces
-    
-    // get index of name and submit
-    def name_index = colnames.indexOf("name")
-    def submit_index = colnames.indexOf("start")
-    traceInfos = traceInfos.drop(1)
-    
-    // Initialize a map to store entries by their names and latest submit timestamps
-    def latestEntries = [:]
-    
-    // Iterate over each line
-    traceInfos.each { line ->
-        // Split the line into values
-        def values = line.split('\t')
-        
-        // Extract necessary data from the line
-        def name = values[name_index] // Assuming 'name' is at index 3
-        def submit = values[submit_index] // Assuming 'submit' is at index 6
-        
-        // If the name is not present in the map or if the current submit timestamp is later than the stored one
-        if (!latestEntries.containsKey(name) || submit > latestEntries[name][6]) {
-            // Store the current entry
-            latestEntries[name] = values
-        }
-    }
-    
-    // Convert the map values back to a list
-    def filteredData = latestEntries.values()
-    
-    // Add the header line back to the filtered data
-    def result = [traceInfos.first()]
-    
-    // Append filtered entries to the result
-    result.addAll(filteredData)
-    
-    return result
-}
-
-def getTraceForShiny(trace_dir_path, shiny_dir_path, shiny_trace_mode){
-        // According to the mode selected, get either the latest trace file or all trace files
-        // If all trace files are selected, it is assumed that the trace files were generated with the "resume" mode
-        def trace_dir = new File("${trace_dir_path}")
-        def trace_files = []
-        if (shiny_trace_mode == "all"){
-            trace_files = trace_dir.listFiles().findAll { it.name.startsWith("execution_trace") }
-        }
-        else if(shiny_trace_mode == "latest"){
-            trace_files = trace_dir.listFiles().findAll { it.name.startsWith("execution_trace") }.sort { -it.lastModified() }.take(1)
-        }
-        else{
-            print("Invalid shiny trace mode. Please use either 'latest' or 'all'")
-        }
-        // Filter the trace files for shiny
-        // and move the trace file to the shiny directory
-        if (trace_files.size() > 0) {
-            def trace_infos = []
-            def header_added = false
-            for (file in trace_files){
-                if( !header_added ){
-                    trace_infos = trace_infos + getHeader(file)
-                    header_added = true
-                }
-                trace_infos = trace_infos + filterTraceForShiny(file)
-            }
-
-            print(takeLatestComplete(trace_infos))
-
-            def shiny_trace_file = new File("${shiny_dir_path}/trace.txt")
-            shiny_trace_file.write(trace_infos.join("\n"))
-        }else{
-            print("No trace file found in the " + trace_dir_path + " directory.")
-        }
-}
-
-
-
 /*
 ========================================================================================
     FUNCTIONS
@@ -358,6 +260,97 @@ def methodsDescriptionText(mqc_methods_yaml) {
     return description_html.toString()
 }
 
+def getHeader(trace_file){
+    // Get the header of the trace file
+    def trace_lines = trace_file.readLines()
+    def header = trace_lines[0]
+    return header
+}
+
+def filterTraceForShiny(trace_file){
+    // Retain only the lines that contain "COMPLETED" and "MULTIPLESEQUENCEALIGN:ALIGN"
+    def trace_lines = trace_file.readLines()
+    def shiny_trace_lines = []
+    for (line in trace_lines){
+        if (line.contains("COMPLETED") && line.contains("MULTIPLESEQUENCEALIGN:ALIGN")){
+            shiny_trace_lines.add(line)
+        }
+    }
+    return shiny_trace_lines
+}
+
+// if multiple lines have the same name column
+// only the one with the latest timestamp will be kept
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+def takeLatestComplete(traceInfos) {
+
+    // colnames and the position of the columns name and start
+    colnames = traceInfos.first().split('\t').collect { it.trim() } 
+    def name_index = colnames.indexOf("name")
+    def start_index = colnames.indexOf("start") 
+    // remove the column name line
+    traceInfos = traceInfos.drop(1)
+    // Initialize a map to store entries by their names and latest submit timestamps
+    def latestEntries = [:]
+    def formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+
+    // Iterate over each line
+    traceInfos.each { line ->
+        def values = line.split('\t')
+        def name = values[name_index] 
+        def submit = LocalDateTime.parse(values[start_index], formatter)
+        if (!latestEntries.containsKey(name) || submit.isBefore(latestEntries[name][start_index])) {
+            latestEntries[name] = values
+        }
+    }
+    def filteredData = latestEntries.values()
+    
+    def result = [traceInfos.first()]
+    result.addAll(filteredData)
+    
+    return result
+}
+
+def getTraceForShiny(trace_dir_path, shiny_dir_path, shiny_trace_mode){
+        // According to the mode selected, get either the latest trace file or all trace files
+        // If all trace files are selected, it is assumed that the trace files were generated with the "resume" mode
+        def trace_dir = new File("${trace_dir_path}")
+        def trace_files = []
+        if (shiny_trace_mode == "all"){
+            trace_files = trace_dir.listFiles().findAll { it.name.startsWith("execution_trace") }
+        }
+        else if(shiny_trace_mode == "latest"){
+            trace_files = trace_dir.listFiles().findAll { it.name.startsWith("execution_trace") }.sort { -it.lastModified() }.take(1)
+        }
+        else{
+            print("Invalid shiny trace mode. Please use either 'latest' or 'all'")
+        }
+        // Filter the trace files for shiny
+        // and move the trace file to the shiny directory
+        if (trace_files.size() > 0) {
+            def trace_infos = []
+            def header_added = false
+            for (file in trace_files){
+                if( !header_added ){
+                    trace_infos = trace_infos + getHeader(file)
+                    header_added = true
+                }
+                trace_infos = trace_infos + filterTraceForShiny(file)
+            }
+            // if trace infos is empty then print a message
+            if(trace_infos.size() == 0){
+                print("There is an issue with your trace file!")
+            }
+            print(takeLatestComplete(trace_infos))
+
+            def shiny_trace_file = new File("${shiny_dir_path}/trace.txt")
+            shiny_trace_file.write(trace_infos.join("\n"))
+        }else{
+            print("No trace file found in the " + trace_dir_path + " directory.")
+        }
+}
 
 import nextflow.Nextflow
 import groovy.text.SimpleTemplateEngine
