@@ -69,13 +69,13 @@ toxin,toxin.fa,toxin-ref.fa,toxin_structures
 
 Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be processed.
 
-id is the name of the set of sequences. It can correspond to a the protein family name or to an internal id.
+`id` is the name of the set of sequences. It can correspond to the protein family name or to an internal id.
 
-The column fasta contains the path to the fasta file that contains the sequences.
+The column `fasta` contains the path to the fasta file that contains the sequences.
 
-The column reference is optional and contains the path to the reference alignment. It is used for certain evaluation steps. It can be left empty.
+The column `reference` is optional and contains the path to the reference alignment. It is used for certain evaluation steps. It can be left empty.
 
-The column structures is also optional and contains the path to the folder that contains the protein structures for the sequences to be aligned. It is used for structural aligners and certain evaluation steps. It can be left empty.
+The column `structures` is also optional and contains the path to the folder that contains the protein structures for the sequences to be aligned. It is used for structural aligners and certain evaluation steps. It can be left empty.
 
 Then, you should prepare a toolsheet which defines which tools to run as follows:
 
@@ -86,6 +86,14 @@ tree,args_tree,aligner,args_aligner,
 FAMSA, -gt upgma -partree, FAMSA,
 , ,TCOFFEE, -output fasta_aln
 ```
+
+`tree` is the tool used to build the tree.
+
+Arguments to the tree tool can be provided using `args_tree`.
+
+The `aligner` column contains the tool to run the alignment.
+
+Finally, the arguments to the aligner tool can be set by using the `args_alginer` column.
 
 Now, you can run the pipeline using:
 

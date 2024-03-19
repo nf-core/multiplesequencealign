@@ -30,7 +30,8 @@ process PARSE_SIM {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        ubuntu: \$(cat /etc/lsb-release | grep "DISTRIB_DESCRIPTION" | awk '{gsub("DISTRIB_DESCRIPTION=", ""); print \$2}')
+        awk: \$(awk -V | grep "GNU Awk" | sed 's/GNU Awk //')
+        cat: \$(echo \$(cat --version 2>&1) | sed 's/^.*coreutils) //; s/ .*\$//')
     END_VERSIONS
     """
 
@@ -41,7 +42,8 @@ process PARSE_SIM {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        ubuntu: \$(cat /etc/lsb-release | grep "DISTRIB_DESCRIPTION" | awk '{gsub("DISTRIB_DESCRIPTION=", ""); print \$2}')
+        awk: \$(awk -V | grep "GNU Awk" | sed 's/GNU Awk //')
+        cat: \$(echo \$(cat --version 2>&1) | sed 's/^.*coreutils) //; s/ .*\$//')
     END_VERSIONS
     """
 }
