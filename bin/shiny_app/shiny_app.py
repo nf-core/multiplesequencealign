@@ -19,6 +19,8 @@ summary_report = "./shiny_data_with_trace.csv"
 
 if not os.path.exists(summary_report):
     summary_report = "./shiny_data.csv"
+    # run merge script here
+    
 
 try:
     inputfile = pd.read_csv(summary_report)

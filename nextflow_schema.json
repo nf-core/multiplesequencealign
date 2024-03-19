@@ -51,12 +51,6 @@
                     "type": "string",
                     "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
                     "fa_icon": "fas fa-file-signature"
-                },
-                "shinydir": {
-                    "type": "string",
-                    "format": "directory-path",
-                    "description": "The output directory for the shiny app where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
-                    "fa_icon": "fas fa-folder-open"
                 }
             }
         },
@@ -132,6 +126,10 @@
                     "format": "directory-path",
                     "fa_icon": "fas fa-folder-open",    
                     "description": "File containing the main shiny app."
+                },
+                "shiny_trace_mode": {
+                    "type": "string",
+                    "description": "variable containing the shiny_trace mode to be used."
                 }
             }
         },

@@ -108,8 +108,9 @@ workflow {
         params.monochrome_logs,
         params.hook_url,
         NFCORE_MULTIPLESEQUENCEALIGN.out.multiqc_report, 
-        params.shinydir,
-        params.outdir
+        "${params.outdir}/shiny_app",
+        "${params.outdir}/pipeline_info",
+        params.shiny_trace_mode
     )
 }
 

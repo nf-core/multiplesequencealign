@@ -115,15 +115,16 @@ workflow PIPELINE_INITIALISATION {
 workflow PIPELINE_COMPLETION {
 
     take:
-    email           //  string: email address
-    email_on_fail   //  string: email address sent on pipeline failure
-    plaintext_email // boolean: Send plain-text email instead of HTML
-    outdir          //    path: Path to output directory where results will be published
-    monochrome_logs // boolean: Disable ANSI colour codes in log output
-    hook_url        //  string: hook URL for notifications
-    multiqc_report  //  string: Path to MultiQC report
-    shinydir        //  string: Path to shiny stats file
-    trace_infos     //  string: Path to trace file
+    email            //  string: email address
+    email_on_fail    //  string: email address sent on pipeline failure
+    plaintext_email  // boolean: Send plain-text email instead of HTML
+    outdir           //    path: Path to output directory where results will be published
+    monochrome_logs  // boolean: Disable ANSI colour codes in log output
+    hook_url         //  string: hook URL for notifications
+    multiqc_report   //  string: Path to MultiQC report
+    shiny_dir_path   //  string: Path to shiny stats file
+    trace_dir_path   //  string: Path to trace file
+    shiny_trace_mode // string: Mode to use for shiny trace file (default: "latest", options: "latest", "all")
 
     main:
 
@@ -143,43 +144,108 @@ workflow PIPELINE_COMPLETION {
             imNotification(summary_params, hook_url)
         }
 
-        print(shinydir)
-        print(trace_infos)
-
-        // TODO have an input parameter that specifies which tracefile to use 
-        // or to use all and merge or to use the latest
-
-        // Preprocess the trace file and move it to shiny directory 
-        def trace_file = new File("${trace_infos}/pipeline_info/trace.txt")
-        
-        if (trace_file.exists()) {
-            trace_infos = filterTraceForShiny(trace_file)
-            print(trace_infos)
-            // move trace_infos to shinydir
-            def shiny_trace_file = new File("${shinydir}/trace.txt")
-            shiny_trace_file.write(trace_infos.join("\n"))
-
-        }else{
-            print("No trace file found in the pipeline_info directory")
+        if (shiny_trace_mode) {
+            getTraceForShiny(trace_dir_path, shiny_dir_path, shiny_trace_mode)
         }
+
     }
 }
 
 
+def getHeader(trace_file){
+    def trace_lines = trace_file.readLines()
+    def header = trace_lines[0]
+    return header
+}
+
 def filterTraceForShiny(trace_file){
     def trace_lines = trace_file.readLines()
     def shiny_trace_lines = []
-    print("Filtering trace file for shiny")
     for (line in trace_lines){
-        // if (line.contains("hash")){
-        //     shiny_trace_lines.add(line)
-        // }
-        // if (line.contains("COMPLETED") && line.contains("MULTIPLESEQUENCEALIGN:ALIGN")){
-        //     shiny_trace_lines.add(line)
-        // }
-        shiny_trace_lines.add(line)
+        if (line.contains("COMPLETED") && line.contains("MULTIPLESEQUENCEALIGN:ALIGN")){
+            shiny_trace_lines.add(line)
+        }
     }
     return shiny_trace_lines
+}
+
+// if multiple lines have the same name column
+// only the one with the latest timestamp will be kept
+def takeLatestComplete(traceInfos) {
+    // Remove the first line
+    colnames = traceInfos.first().split('\t')
+    // strip all the white spaces
+    
+    // get index of name and submit
+    def name_index = colnames.indexOf("name")
+    def submit_index = colnames.indexOf("start")
+    traceInfos = traceInfos.drop(1)
+    
+    // Initialize a map to store entries by their names and latest submit timestamps
+    def latestEntries = [:]
+    
+    // Iterate over each line
+    traceInfos.each { line ->
+        // Split the line into values
+        def values = line.split('\t')
+        
+        // Extract necessary data from the line
+        def name = values[name_index] // Assuming 'name' is at index 3
+        def submit = values[submit_index] // Assuming 'submit' is at index 6
+        
+        // If the name is not present in the map or if the current submit timestamp is later than the stored one
+        if (!latestEntries.containsKey(name) || submit > latestEntries[name][6]) {
+            // Store the current entry
+            latestEntries[name] = values
+        }
+    }
+    
+    // Convert the map values back to a list
+    def filteredData = latestEntries.values()
+    
+    // Add the header line back to the filtered data
+    def result = [traceInfos.first()]
+    
+    // Append filtered entries to the result
+    result.addAll(filteredData)
+    
+    return result
+}
+
+def getTraceForShiny(trace_dir_path, shiny_dir_path, shiny_trace_mode){
+        // According to the mode selected, get either the latest trace file or all trace files
+        // If all trace files are selected, it is assumed that the trace files were generated with the "resume" mode
+        def trace_dir = new File("${trace_dir_path}")
+        def trace_files = []
+        if (shiny_trace_mode == "all"){
+            trace_files = trace_dir.listFiles().findAll { it.name.startsWith("execution_trace") }
+        }
+        else if(shiny_trace_mode == "latest"){
+            trace_files = trace_dir.listFiles().findAll { it.name.startsWith("execution_trace") }.sort { -it.lastModified() }.take(1)
+        }
+        else{
+            print("Invalid shiny trace mode. Please use either 'latest' or 'all'")
+        }
+        // Filter the trace files for shiny
+        // and move the trace file to the shiny directory
+        if (trace_files.size() > 0) {
+            def trace_infos = []
+            def header_added = false
+            for (file in trace_files){
+                if( !header_added ){
+                    trace_infos = trace_infos + getHeader(file)
+                    header_added = true
+                }
+                trace_infos = trace_infos + filterTraceForShiny(file)
+            }
+
+            print(takeLatestComplete(trace_infos))
+
+            def shiny_trace_file = new File("${shiny_dir_path}/trace.txt")
+            shiny_trace_file.write(trace_infos.join("\n"))
+        }else{
+            print("No trace file found in the " + trace_dir_path + " directory.")
+        }
 }
 
 
