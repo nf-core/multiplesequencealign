@@ -287,9 +287,9 @@ import java.time.format.DateTimeFormatter
 def takeLatestComplete(traceInfos) {
 
     // colnames and the position of the columns name and start
-    colnames = traceInfos.first().split('\t').collect { it.trim() } 
+    colnames = traceInfos.first().split('\t').collect { it.trim() }
     def name_index = colnames.indexOf("name")
-    def start_index = colnames.indexOf("start") 
+    def start_index = colnames.indexOf("start")
     // remove the column name line
     traceInfos = traceInfos.drop(1)
     // Initialize a map to store entries by their names and latest submit timestamps
@@ -300,7 +300,7 @@ def takeLatestComplete(traceInfos) {
     // If the name is not in the map or the submit timestamp is after the latest one, update the map
     traceInfos.each { line ->
         def values = line.split('\t')
-        def name = values[name_index] 
+        def name = values[name_index]
         def submit = LocalDateTime.parse(values[start_index], formatter)
         if (!latestEntries.containsKey(name) || submit.isAfter(latestEntries[name][start_index])) {
             latestEntries[name] = values
@@ -308,10 +308,8 @@ def takeLatestComplete(traceInfos) {
     }
     def filteredData = colnames.join('\t') + '\n'
     filteredData = filteredData + latestEntries.values().collect { it.join('\t') }.join('\n')
-    
     def result = []
     result.addAll(filteredData)
-    
     return result
 }
 

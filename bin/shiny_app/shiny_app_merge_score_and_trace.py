@@ -41,7 +41,7 @@ def cleanTrace(trace):
     trace["process"] = trace.full_name.apply(extract_element, nelement=-1)
     trace["subworkflow"] = trace.full_name.apply(extract_element, nelement=-2)
     trace.replace('null', pd.NA, inplace=True)
-    return trace 
+    return trace
 
 def prep_tree_trace(trace):
     trace_trees = trace[trace["subworkflow"] == "COMPUTE_TREES"]

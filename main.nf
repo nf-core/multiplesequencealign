@@ -59,9 +59,6 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
 
     emit:
     multiqc_report =  MULTIPLESEQUENCEALIGN.out.multiqc
-    shiny_stats    =  MULTIPLESEQUENCEALIGN.out.shiny_stats
-
-
 
 }
 /*

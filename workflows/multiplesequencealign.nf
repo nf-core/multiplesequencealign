@@ -267,8 +267,7 @@ workflow MULTIPLESEQUENCEALIGN {
 
     emit:
     versions         = ch_versions
-    multiqc          = multiqc_out 
-    shiny_stats      = ch_shiny_stats                             // channel: [ path(versions.yml) ]
+    multiqc          = multiqc_out
 }
 
 

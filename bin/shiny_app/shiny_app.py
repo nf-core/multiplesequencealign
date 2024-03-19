@@ -26,7 +26,6 @@ if not os.path.exists(summary_report):
     else:
         summary_report = summary_report_no_trace
 
-    
 try:
     inputfile = pd.read_csv(summary_report)
 except:
