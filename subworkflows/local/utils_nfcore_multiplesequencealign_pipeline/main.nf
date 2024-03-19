@@ -297,11 +297,12 @@ def takeLatestComplete(traceInfos) {
     def formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
 
     // Iterate over each line
+    // If the name is not in the map or the submit timestamp is after the latest one, update the map
     traceInfos.each { line ->
         def values = line.split('\t')
         def name = values[name_index] 
         def submit = LocalDateTime.parse(values[start_index], formatter)
-        if (!latestEntries.containsKey(name) || submit.isBefore(latestEntries[name][start_index])) {
+        if (!latestEntries.containsKey(name) || submit.isAfter(latestEntries[name][start_index])) {
             latestEntries[name] = values
         }
     }
