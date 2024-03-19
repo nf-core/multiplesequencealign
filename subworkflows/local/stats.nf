@@ -27,6 +27,7 @@ workflow STATS {
         tcoffee_seqreformat_sim = TCOFFEE_SEQREFORMAT_SIM.out.formatted_file
         ch_versions = ch_versions.mix(TCOFFEE_SEQREFORMAT_SIM.out.versions.first())
         tcoffee_seqreformat_simtot = PARSE_SIM(tcoffee_seqreformat_sim)
+        ch_versions = ch_versions.mix(PARSE_SIM.out.versions)
 
         ch_sim_summary = tcoffee_seqreformat_simtot.map{
                                                     meta, csv -> csv
@@ -35,6 +36,7 @@ workflow STATS {
                                                 }
         CONCAT_SIMSTATS(ch_sim_summary, "csv", "csv")
         sim_csv = sim_csv.mix(CONCAT_SIMSTATS.out.csv)
+        ch_versions = ch_versions.mix(CONCAT_SIMSTATS.out.versions)
     }
 
     // -------------------------------------------
@@ -54,6 +56,7 @@ workflow STATS {
 
     CONCAT_SEQSTATS(ch_seqstats_summary, "csv", "csv")
     seqstats_csv = seqstats_csv.mix(CONCAT_SEQSTATS.out.csv)
+    ch_versions = ch_versions.mix(CONCAT_SEQSTATS.out.versions)
 
 
     // -------------------------------------------

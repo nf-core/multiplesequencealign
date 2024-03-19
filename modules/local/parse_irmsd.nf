@@ -12,6 +12,7 @@ process PARSE_IRMSD {
 
     output:
     tuple val(meta), path("${prefix}.irmsd_tot"), emit: irmsd_tot
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -36,7 +37,7 @@ process PARSE_IRMSD {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        tcoffee: \$( t_coffee -version | awk '{gsub("Version_", ""); print \$3}')
+        python: \$(python --version | sed 's/Python //g')
     END_VERSIONS
     """
 
@@ -47,7 +48,7 @@ process PARSE_IRMSD {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        tcoffee: \$( t_coffee -version | awk '{gsub("Version_", ""); print \$3}')
+        python: \$(python --version | sed 's/Python //g')
     END_VERSIONS
     """
 }

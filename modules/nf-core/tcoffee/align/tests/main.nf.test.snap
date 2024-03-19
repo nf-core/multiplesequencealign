@@ -48,5 +48,18 @@
             ]
         ],
         "timestamp": "2023-11-28T12:26:36.702189365"
+    },
+    "alignment": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "test"
+                    },
+                    "test_null-args-null_null-args-null.aln:md5,fd9552c58a7cf34ff3d6c927f69119fb"
+                ]
+            ]
+        ],
+        "timestamp": "2024-03-14T14:58:46.938037"
     }
 }

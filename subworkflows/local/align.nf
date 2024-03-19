@@ -16,9 +16,6 @@ include {   TCOFFEE_ALIGN as TCOFFEE3D_ALIGN  } from '../../modules/nf-core/tcof
 include {   MUSCLE5_SUPER5                    } from '../../modules/nf-core/muscle5/super5/main'
 include {   TCOFFEE_ALIGN as REGRESSIVE_ALIGN } from '../../modules/nf-core/tcoffee/align/main'
 
-// Include local modules
-include {   CREATE_TCOFFEETEMPLATE            } from '../../modules/local/create_tcoffee_template'
-
 workflow ALIGN {
     take:
     ch_fastas      //      channel: meta, /path/to/file.fasta
