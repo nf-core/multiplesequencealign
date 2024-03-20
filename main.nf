@@ -87,6 +87,7 @@ workflow {
         params.tools
     )
 
+    print(params.extract_plddt)
     //
     // WORKFLOW: Run main workflow
     //

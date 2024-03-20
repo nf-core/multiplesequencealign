@@ -7,17 +7,19 @@ include {   TCOFFEE_SEQREFORMAT as TCOFFEE_SEQREFORMAT_SIM } from '../../modules
 include {   CSVTK_CONCAT  as CONCAT_SEQSTATS               } from '../../modules/nf-core/csvtk/concat/main.nf'
 include {   CSVTK_CONCAT  as CONCAT_SIMSTATS               } from '../../modules/nf-core/csvtk/concat/main.nf'
 include {   CSVTK_JOIN    as MERGE_STATS                   } from '../../modules/nf-core/csvtk/join/main.nf'
-
+include {   EXTRACT_PLDDT                                  } from '../../modules/local/extract_plddt.nf'
 
 workflow STATS {
     take:
     ch_seqs                //      channel: meta, /path/to/file.fasta
+    ch_structures          //      channel: meta, /path/to/structures_dir
 
     main:
 
     ch_versions = Channel.empty()
     sim_csv = Channel.empty()
     seqstats_csv = Channel.empty()
+    plddts_csv = Channel.empty()
 
     // // -------------------------------------------
     // //      SEQUENCE SIMILARITY
@@ -60,14 +62,33 @@ workflow STATS {
 
 
     // -------------------------------------------
+    //      EXTRACT PLDDT
+    // -------------------------------------------
+    if (params.calc_plddt == true){
+        EXTRACT_PLDDT(ch_structures)
+        ch_versions = ch_versions.mix(EXTRACT_PLDDT.out.versions)
+        plddt_summary = CALCULATE_SEQSTATS.out.plddt_summary
+        ch_plddts_summary = plddt_summary.map{
+                                            meta, csv -> csv
+                                        }.collect().map{
+                                            csv -> [ [id:"summary_plddts"], csv]
+                                        }
+
+        CONCAT_PLDDTS(ch_plddts_summary, "csv", "csv")
+        plddts_csv = plddts_csv.mix(CONCAT_PLDDTS.out.csv)
+        ch_versions = ch_versions.mix(CONCAT_PLDDTS.out.versions)
+    }
+
+    // -------------------------------------------
     //      MERGE ALL STATS
     // -------------------------------------------
 
     sim      = sim_csv.map{ meta, csv -> csv }
     seqstats = seqstats_csv.map{ meta, csv -> csv }
+    plddts   = plddts_csv.map{ meta, csv -> csv }
 
-    csvs_stats = sim.mix(seqstats).collect().map{ csvs -> [[id:"summary_stats"], csvs] }
-    def number_of_stats = [params.calc_sim, params.calc_seq_stats].count{ it == true }
+    csvs_stats = sim.mix(seqstats).mix(plddts).collect().map{ csvs -> [[id:"summary_stats"], csvs] }
+    def number_of_stats = [params.calc_sim, params.calc_seq_stats, params.extract_plddt].count{ it == true }
     if(number_of_stats >= 2){
         MERGE_STATS(csvs_stats)
         ch_versions = ch_versions.mix(MERGE_STATS.out.versions)
