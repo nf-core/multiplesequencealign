@@ -6,6 +6,7 @@ include {   PARSE_SIM                                      } from '../../modules
 include {   TCOFFEE_SEQREFORMAT as TCOFFEE_SEQREFORMAT_SIM } from '../../modules/nf-core/tcoffee/seqreformat/main.nf'
 include {   CSVTK_CONCAT  as CONCAT_SEQSTATS               } from '../../modules/nf-core/csvtk/concat/main.nf'
 include {   CSVTK_CONCAT  as CONCAT_SIMSTATS               } from '../../modules/nf-core/csvtk/concat/main.nf'
+include {   CSVTK_CONCAT  as CONCAT_PLDDTS               } from '../../modules/nf-core/csvtk/concat/main.nf'
 include {   CSVTK_JOIN    as MERGE_STATS                   } from '../../modules/nf-core/csvtk/join/main.nf'
 include {   EXTRACT_PLDDT                                  } from '../../modules/local/extract_plddt.nf'
 
@@ -65,10 +66,10 @@ workflow STATS {
     // -------------------------------------------
     //      EXTRACT PLDDT
     // -------------------------------------------
-    if (params.calc_plddt == true){
+    if (params.extract_plddt == true){
         EXTRACT_PLDDT(ch_structures)
         ch_versions = ch_versions.mix(EXTRACT_PLDDT.out.versions)
-        plddt_summary = CALCULATE_SEQSTATS.out.plddt_summary
+        plddt_summary = EXTRACT_PLDDT.out.plddt_summary
         ch_plddts_summary = plddt_summary.map{
                                             meta, csv -> csv
                                         }.collect().map{

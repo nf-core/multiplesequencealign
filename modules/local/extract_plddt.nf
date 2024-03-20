@@ -10,7 +10,8 @@ process EXTRACT_PLDDT {
     tuple val(meta), path(structures)
 
     output:
-    tuple val (meta), path("*_plddt.csv"), emit: template
+    tuple val (meta), path("*_plddt.csv"), emit: plddt_summary
+    tuple val (meta), path("*full_plddt.csv"), emit: plddts
     path "versions.yml", emit: versions
 
     when:
@@ -20,9 +21,14 @@ process EXTRACT_PLDDT {
     def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    # Prep templates
-    for structure in \$(ls *.pdb); do protein_name=\$(basename "\$structure" .pdb); avg=\$(awk '{if(\$1=="ATOM" && \$3=="CA") print \$6}' "\$structure" | awk '{sum+=\$1} END {print sum/NR}'); echo "\$protein_name,\$avg" >> proteins_plddts.csv; done
+    # Extract plddt per protein
+    echo "id,plddt" > ${prefix}_full_plddt.csv
+    for structure in \$(ls *.pdb); do protein_name=\$(basename "\$structure" .pdb); avg=\$(awk '{if(\$1=="ATOM" && \$3=="CA") print \$11}' "\$structure" | awk '{sum+=\$1} END {print sum/NR}'); echo "\$protein_name,\$avg" >> ${prefix}_full_plddt.csv; done
 
+    # Extract plddt summary
+    echo "id,plddt" > ${prefix}_plddt.csv
+    plddt=\$(awk -F, 'NR>1 {sum+=\$2} END {print sum/NR}' ${prefix}_full_plddt.csv); echo "${prefix},\$plddt" >> ${prefix}_plddt.csv
+    
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         awk: \$(awk -V | grep "GNU Awk" | sed 's/GNU Awk //')
