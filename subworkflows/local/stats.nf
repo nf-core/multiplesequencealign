@@ -18,6 +18,7 @@ workflow STATS {
     ch_versions = Channel.empty()
     sim_csv = Channel.empty()
     seqstats_csv = Channel.empty()
+    stats_summary = Channel.empty()
 
     // // -------------------------------------------
     // //      SEQUENCE SIMILARITY

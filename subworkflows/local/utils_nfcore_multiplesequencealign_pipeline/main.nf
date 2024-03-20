@@ -152,7 +152,8 @@ workflow PIPELINE_COMPLETION {
 // Check and validate pipeline parameters
 //
 def validateInputParameters() {
-    genomeExistsError()
+    statsParamsError()
+    evalParamsError()
 }
 
 //
@@ -169,29 +170,52 @@ def validateInputSamplesheet(input) {
 
     return [ metas[0], fastqs ]
 }
+
 //
-// Get attribute from genome config file e.g. fasta
+// Exit pipeline if incorrect combination of stats parameters are used
 //
-def getGenomeAttribute(attribute) {
-    if (params.genomes && params.genome && params.genomes.containsKey(params.genome)) {
-        if (params.genomes[ params.genome ].containsKey(attribute)) {
-            return params.genomes[ params.genome ][ attribute ]
+def statsParamsError() {
+    if (params.skip_stats){
+        if(params.calc_sim || params.calc_seq_stats) {
+            def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+                "  The param skip_stats is set to '${params.skip_stats}'.\n" +
+                "  The following params have values calc_sim: ${params.calc_sim} and calc_seq_stats: ${params.calc_seq_stats} \n" +
+                "  If skip_stats is set to false, the params.calc_sim and params.calc_seq_stats have to be set to false too. \n" +
+                "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+            error(error_string)
         }
     }
-    return null
+    if (!params.skip_stats && !params.calc_sim && !params.calc_seq_stats){
+        def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+                "  The param skip_stats is set to '${params.skip_stats}'.\n" +
+                "  The following params have values calc_sim: ${params.calc_sim} and calc_seq_stats: ${params.calc_seq_stats} \n" +
+                "  At least one of them needs to be set to true. If you want to skip the stats, please set skip_stats to true. \n" +
+                "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        error(error_string)
+    }
 }
 
 //
-// Exit pipeline if incorrect --genome key provided
+// Exit pipeline if incorrect combination of eval parameters are used
 //
-def genomeExistsError() {
-    if (params.genomes && params.genome && !params.genomes.containsKey(params.genome)) {
-        def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-            "  Genome '${params.genome}' not found in any config files provided to the pipeline.\n" +
-            "  Currently, the available genome keys are:\n" +
-            "  ${params.genomes.keySet().join(", ")}\n" +
-            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        error(error_string)
+def evalParamsError() {
+    if (params.skip_eval){
+        if(params.calc_sp || params.calc_tc || params.calc_irmsd) {
+            def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+                "  The param skip_eval is set to '${params.skip_eval}'.\n" +
+                "  The following params have values params.calc_sp: ${params.calc_sp}, params.calc_tc: ${params.calc_tc} and params.calc_irms: ${params.calc_irmsd} \n" +
+                "  If skip_eval is set to false, the params.calc_sp, params.calc_tc and params.calc_irmsd have to be set to false too. \n" +
+                "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+            error(error_string)
+        }
+    }
+    if (!params.skip_eval && !params.calc_sp && !params.calc_tc && !params.calc_irmsd ){
+            def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+                "  The param skip_eval is set to '${params.skip_eval}'.\n" +
+                "  The following params have values params.calc_sp: ${params.calc_sp}, params.calc_tc: ${params.calc_tc} and params.calc_irms: ${params.calc_irmsd} \n" +
+                "  At least one of them needs to be set to true. If you want to skip the evaluation, please set skip_eval to true. \n" +
+                "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+            error(error_string)
     }
 }
 
