@@ -3,9 +3,11 @@
 include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_SP } from '../../modules/nf-core/tcoffee/alncompare'
 include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_TC } from '../../modules/nf-core/tcoffee/alncompare'
 include { TCOFFEE_IRMSD                               } from '../../modules/nf-core/tcoffee/irmsd'
+include { TCOFFEE_TCS                                 } from '../../modules/nf-core/tcoffee/tcs'
 include { CSVTK_CONCAT  as CONCAT_SP                  } from '../../modules/nf-core/csvtk/concat/main.nf'
 include { CSVTK_CONCAT  as CONCAT_TC                  } from '../../modules/nf-core/csvtk/concat/main.nf'
 include { CSVTK_CONCAT  as CONCAT_IRMSD               } from '../../modules/nf-core/csvtk/concat/main.nf'
+include { CSVTK_CONCAT  as CONCAT_TCS                 } from '../../modules/nf-core/csvtk/concat/main.nf'
 include { CSVTK_JOIN    as MERGE_EVAL                 } from '../../modules/nf-core/csvtk/join/main.nf'
 include { PARSE_IRMSD                                 } from '../../modules/local/parse_irmsd.nf'
 
@@ -101,15 +103,39 @@ workflow EVALUATE {
 
 
     // -------------------------------------------
+    // intrinsic evaluation metrics
+    // -------------------------------------------
+
+    // TCS
+    if( params.calc_tcs == true){
+        // the second argument is empty but a lib file can be fed to it
+        TCOFFEE_TCS(ch_msa, [[], []])
+        tcs_scores = TCOFFEE_TCS.out.scores
+        ch_versions = ch_versions.mix(TCOFFEE_TCS.out.versions.first())
+
+        ch_tcs_summary = tcs_scores.map{
+                                                meta, csv -> csv
+                                            }.collect().map{
+                                                csv -> [ [id:"summary_tcs"], csv]
+                                            }
+        CONCAT_TCS(ch_tcs_summary, "csv", "csv")
+        tcs_csv = CONCAT_TCS.out.csv
+        ch_versions = ch_versions.mix(CONCAT_TCS.out.versions)
+        
+    }
+
+
+    // -------------------------------------------
     //      MERGE ALL STATS
     // -------------------------------------------
 
     sp      = sp_csv.map{ meta, csv -> csv }
     tc      = tc_csv.map{ meta, csv -> csv }
     irmsd   = irmsd_csv.map{ meta, csv -> csv }
+    tcs     = tcs_csv.map{ meta, csv -> csv }
 
-    def number_of_evals = [params.calc_sp, params.calc_tc, params.calc_irmsd].count(true)
-    csvs_stats = sp.mix(tc).mix(irmsd).collect().map{ csvs -> [[id:"summary_eval"], csvs] }
+    def number_of_evals = [params.calc_sp, params.calc_tc, params.calc_irmsd, params.calc_tcs].count(true)
+    csvs_stats = sp.mix(tc).mix(irmsd).mix(tcs).collect().map{ csvs -> [[id:"summary_eval"], csvs] }
     if(number_of_evals >= 2){
         MERGE_EVAL(csvs_stats)
         ch_versions = ch_versions.mix(MERGE_EVAL.out.versions)
