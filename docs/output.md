@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This document describes the output produced by the pipeline.  See [`main README.md`](../README.md) for a condensed overview of the steps in the pipeline, and the bioinformatics tools used at each step.
+This document describes the output produced by the pipeline. See [`main README.md`](../README.md) for a condensed overview of the steps in the pipeline, and the bioinformatics tools used at each step.
 
 The directories listed below will be created in the results directory after the pipeline has finished. All paths are relative to the top-level results directory.
 
@@ -15,7 +15,6 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [FastQC](#fastqc) - Raw read QC
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
-
 
 ### MultiQC
 
