@@ -88,13 +88,8 @@ workflow STATS {
     seqstats = seqstats_csv.map{ meta, csv -> csv }
     plddts   = plddts_csv.map{ meta, csv -> csv }
 
-<<<<<<< HEAD
     csvs_stats = sim.mix(seqstats).mix(plddts).collect().map{ csvs -> [[id:"summary_stats"], csvs] }
     def number_of_stats = [params.calc_sim, params.calc_seq_stats, params.extract_plddt].count{ it == true }
-=======
-    csvs_stats = sim.mix(seqstats).collect().map{ csvs -> [[id:"summary_stats"], csvs] }
-    def number_of_stats = [params.calc_sim, params.calc_seq_stats].count(true)
->>>>>>> dev
     if(number_of_stats >= 2){
         MERGE_STATS(csvs_stats)
         ch_versions = ch_versions.mix(MERGE_STATS.out.versions)
