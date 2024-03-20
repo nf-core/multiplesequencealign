@@ -322,7 +322,6 @@ def takeLatestComplete(traceInfos) {
     // Initialize a map to store entries by their names and latest submit timestamps
     def latestEntries = [:]
     def formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
-    print(colnames)
     // Iterate over each line
     // If the name is not in the map or the submit timestamp is after the latest one, update the map
     traceInfos.each { line ->

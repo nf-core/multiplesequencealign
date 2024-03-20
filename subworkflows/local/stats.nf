@@ -34,7 +34,6 @@ workflow STATS {
         tcoffee_seqreformat_simtot = PARSE_SIM.out.sim_tot
         ch_versions = ch_versions.mix(PARSE_SIM.out.versions)
 
-        tcoffee_seqreformat_simtot.view()
         ch_sim_summary = tcoffee_seqreformat_simtot.map{
                                                     meta, csv -> csv
                                                 }.collect().map{
