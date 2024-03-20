@@ -316,6 +316,7 @@ def takeLatestComplete(traceInfos) {
     colnames = traceInfos.first().split('\t').collect { it.trim() }
     def name_index = colnames.indexOf("name")
     def start_index = colnames.indexOf("start")
+
     // remove the column name line
     traceInfos = traceInfos.drop(1)
     // Initialize a map to store entries by their names and latest submit timestamps
@@ -332,8 +333,12 @@ def takeLatestComplete(traceInfos) {
             latestEntries[name] = values
         }
     }
+    print(colnames)
+    print(latestEntries)
     def filteredData = colnames.join('\t') + '\n'
+    print(filteredData)
     filteredData = filteredData + latestEntries.values().collect { it.join('\t') }.join('\n')
+    print(filteredData)
     def result = []
     result.addAll(filteredData)
     return result
@@ -369,8 +374,8 @@ def getTraceForShiny(trace_dir_path, shiny_dir_path, shiny_trace_mode){
             if(trace_infos.size() == 0){
                 print("There is an issue with your trace file!")
             }
+            
             trace_infos = takeLatestComplete(trace_infos)
-
             def shiny_trace_file = new File("${shiny_dir_path}/trace.txt")
             shiny_trace_file.write(trace_infos.join("\n"))
         }else{
