@@ -177,21 +177,22 @@ def validateInputSamplesheet(input) {
 def statsParamsError() {
     if (params.skip_stats){
         if(params.calc_sim || params.calc_seq_stats) {
-            def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-                "  The param skip_stats is set to '${params.skip_stats}'.\n" +
+            def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+                "  WARNING: The param skip_stats is set to '${params.skip_stats}'.\n" +
                 "  The following params have values calc_sim: ${params.calc_sim} and calc_seq_stats: ${params.calc_seq_stats} \n" +
-                "  If skip_stats is set to false, the params.calc_sim and params.calc_seq_stats have to be set to false too. \n" +
+                "  If skip_stats is set to false, the params.calc_sim and params.calc_seq_stats are set by default to false too. \n" +
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-            error(error_string)
+            println(warning_string)
         }
     }
     if (!params.skip_stats && !params.calc_sim && !params.calc_seq_stats){
-        def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+        params.skip_stats = true
+        def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
                 "  The param skip_stats is set to '${params.skip_stats}'.\n" +
                 "  The following params have values calc_sim: ${params.calc_sim} and calc_seq_stats: ${params.calc_seq_stats} \n" +
-                "  At least one of them needs to be set to true. If you want to skip the stats, please set skip_stats to true. \n" +
+                "  params.skip_stats will be set to true. \n" +
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        error(error_string)
+        println(warning_string)
     }
 }
 
@@ -201,21 +202,22 @@ def statsParamsError() {
 def evalParamsError() {
     if (params.skip_eval){
         if(params.calc_sp || params.calc_tc || params.calc_irmsd) {
-            def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-                "  The param skip_eval is set to '${params.skip_eval}'.\n" +
+            def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+                "  WARNING: The param skip_eval is set to '${params.skip_eval}'.\n" +
                 "  The following params have values params.calc_sp: ${params.calc_sp}, params.calc_tc: ${params.calc_tc} and params.calc_irms: ${params.calc_irmsd} \n" +
-                "  If skip_eval is set to false, the params.calc_sp, params.calc_tc and params.calc_irmsd have to be set to false too. \n" +
+                "  If skip_eval is set to false, the params.calc_sp, params.calc_tc and params.calc_irmsd are set by default to false too. \n" +
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-            error(error_string)
+            println(warning_string)
         }
     }
     if (!params.skip_eval && !params.calc_sp && !params.calc_tc && !params.calc_irmsd ){
-            def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-                "  The param skip_eval is set to '${params.skip_eval}'.\n" +
+            params.skip_eval = true
+            def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+                "  WARNING: The param skip_eval is set to '${params.skip_eval}'.\n" +
                 "  The following params have values params.calc_sp: ${params.calc_sp}, params.calc_tc: ${params.calc_tc} and params.calc_irms: ${params.calc_irmsd} \n" +
-                "  At least one of them needs to be set to true. If you want to skip the evaluation, please set skip_eval to true. \n" +
+                "  params.skip_eval will be set to true. \n" +
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-            error(error_string)
+            println(error_string)
     }
 }
 
