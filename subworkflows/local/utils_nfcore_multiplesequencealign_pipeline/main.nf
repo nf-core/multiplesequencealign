@@ -180,7 +180,7 @@ def statsParamsError() {
             def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
                 "  WARNING: The param skip_stats is set to '${params.skip_stats}'.\n" +
                 "  The following params have values calc_sim: ${params.calc_sim} and calc_seq_stats: ${params.calc_seq_stats} \n" +
-                "  If skip_stats is set to false, the params.calc_sim and params.calc_seq_stats are set by default to false too. \n" +
+                "  As skip_stats is set to true, the params.calc_sim and params.calc_seq_stats will be set by default to false. \n" +
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
             println(warning_string)
         }
@@ -188,9 +188,9 @@ def statsParamsError() {
     if (!params.skip_stats && !params.calc_sim && !params.calc_seq_stats){
         params.skip_stats = true
         def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-                "  The param skip_stats is set to '${params.skip_stats}'.\n" +
-                "  The following params have values calc_sim: ${params.calc_sim} and calc_seq_stats: ${params.calc_seq_stats} \n" +
-                "  params.skip_stats will be set to true. \n" +
+                "  WARNING: The param skip_stats has been changed from false to true'.\n" +
+                "  None of the modules withing the stats subworkflow was activated.  \n" +
+                "  To activate them you can use param.calc_sim, params.calc_seq_stats.  \n" +
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         println(warning_string)
     }
@@ -205,7 +205,7 @@ def evalParamsError() {
             def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
                 "  WARNING: The param skip_eval is set to '${params.skip_eval}'.\n" +
                 "  The following params have values params.calc_sp: ${params.calc_sp}, params.calc_tc: ${params.calc_tc} and params.calc_irms: ${params.calc_irmsd} \n" +
-                "  If skip_eval is set to false, the params.calc_sp, params.calc_tc and params.calc_irmsd are set by default to false too. \n" +
+                "  As skip_eval is set to true, the params.calc_sp, params.calc_tc and params.calc_irmsd are set by default to false. \n" +
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
             println(warning_string)
         }
@@ -213,11 +213,11 @@ def evalParamsError() {
     if (!params.skip_eval && !params.calc_sp && !params.calc_tc && !params.calc_irmsd ){
             params.skip_eval = true
             def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-                "  WARNING: The param skip_eval is set to '${params.skip_eval}'.\n" +
-                "  The following params have values params.calc_sp: ${params.calc_sp}, params.calc_tc: ${params.calc_tc} and params.calc_irms: ${params.calc_irmsd} \n" +
-                "  params.skip_eval will be set to true. \n" +
-                "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-            println(error_string)
+                    "  WARNING: The param skip_eval has been changed from false to true'.\n" +
+                    "  None of the modules withing the stats subworkflow was activated.  \n" +
+                    "  To activate them you can use param.calc_sp, params.calc_tc, params.calc_irmsd.  \n" +
+                    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+            println(warning_string)
     }
 }
 
