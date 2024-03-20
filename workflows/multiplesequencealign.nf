@@ -224,9 +224,11 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // MODULE: Shiny
     //
+    ch_shiny_stats = Channel.empty()
     if( !params.skip_shiny){
         PREPARE_SHINY ( stats_and_evaluation_summary, file(params.shiny_app) )
         ch_versions = ch_versions.mix(PREPARE_SHINY.out.versions)
+        ch_shiny_stats = PREPARE_SHINY.out.data.toList()
     }
 
     softwareVersionsToYAML(ch_versions)
@@ -263,8 +265,8 @@ workflow MULTIPLESEQUENCEALIGN {
     }
 
     emit:
-    versions         = ch_versions
-    multiqc          = multiqc_out                              // channel: [ path(versions.yml) ]
+    versions         = ch_versions // channel: [ path(versions.yml) ]
+    multiqc          = multiqc_out
 }
 
 
