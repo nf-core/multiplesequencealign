@@ -205,8 +205,8 @@ workflow MULTIPLESEQUENCEALIGN {
         .set { stats_and_evaluation }
 
     if( !params.skip_stats && !params.skip_eval ){
-        def number_of_stats = [params.calc_sim, params.calc_seq_stats].count{ it == true }
-        def number_of_evals = [params.calc_sp, params.calc_tc, params.calc_irmsd].count{ it == true }
+        def number_of_stats = [params.calc_sim, params.calc_seq_stats].count(true)
+        def number_of_evals = [params.calc_sp, params.calc_tc, params.calc_irmsd].count(true)
         if (number_of_evals > 0 && number_of_stats > 0 ){
             MERGE_STATS_EVAL(stats_and_evaluation)
             stats_and_evaluation_summary = MERGE_STATS_EVAL.out.csv
