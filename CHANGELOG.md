@@ -21,6 +21,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 [#100](https://github.com/nf-core/multiplesequencealign/pull/100) - Add support for optional stats and evals. Clean tests.
 [#110](https://github.com/nf-core/multiplesequencealign/issues/110) - Add Readme documentation. Add nf-test for the pipeline.
 [#76](https://github.com/nf-core/multiplesequencealign/issues/76) - Add reading of trace files for shiny app.
+[#99](https://github.com/nf-core/multiplesequencealign/issues/99) - Add check for conflicting input parameters for stats and eval.
 
 ### `Fixed`
 
