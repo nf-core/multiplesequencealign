@@ -13,7 +13,6 @@ process CALCULATE_SEQSTATS {
     output:
     tuple val(meta), path("*_seqstats.csv"), emit: seqstats
     tuple val(meta), path("*_seqstats_summary.csv"), emit: seqstats_summary
-    tuple val(meta), path("*_multiqc.tsv"), emit: multiqc_tsv
     path "versions.yml" , emit: versions
 
     when:
