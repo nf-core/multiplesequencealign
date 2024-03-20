@@ -93,7 +93,6 @@ workflow {
         PIPELINE_INITIALISATION.out.tools
     )
 
-
     //
     // SUBWORKFLOW: Run completion tasks
     //
