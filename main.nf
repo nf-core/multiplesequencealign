@@ -21,17 +21,6 @@ include { MULTIPLESEQUENCEALIGN  } from './workflows/multiplesequencealign'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_multiplesequencealign_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_multiplesequencealign_pipeline'
 
-include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_multiplesequencealign_pipeline'
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    GENOME PARAMETER VALUES
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-//   This is an example of how to use getGenomeAttribute() to fetch parameters
-//   from igenomes.config using `--genome`
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     NAMED WORKFLOWS FOR PIPELINE
@@ -59,8 +48,6 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
 
     emit:
     multiqc_report =  MULTIPLESEQUENCEALIGN.out.multiqc
-
-
 
 }
 /*
@@ -106,7 +93,10 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        NFCORE_MULTIPLESEQUENCEALIGN.out.multiqc_report
+        NFCORE_MULTIPLESEQUENCEALIGN.out.multiqc_report,
+        "${params.outdir}/shiny_app",
+        "${params.outdir}/pipeline_info",
+        params.shiny_trace_mode
     )
 }
 

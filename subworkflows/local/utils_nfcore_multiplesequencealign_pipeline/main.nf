@@ -33,10 +33,10 @@ workflow PIPELINE_INITIALISATION {
     help              // boolean: Display help text
     validate_params   // boolean: Boolean whether to validate parameters against the schema at runtime
     monochrome_logs   // boolean: Do not use coloured log outputs
-    nextflow_cli_args //   array: List of positional nextflow CLI args
+    nextflow_cli_args //  array: List of positional nextflow CLI args
     outdir            //  string: The output directory where the results will be saved
     input             //  string: Path to input samplesheet
-    tools            //  string: Path to input tools samplesheet
+    tools             //  string: Path to input tools samplesheet
 
     main:
 
@@ -115,13 +115,16 @@ workflow PIPELINE_INITIALISATION {
 workflow PIPELINE_COMPLETION {
 
     take:
-    email           //  string: email address
-    email_on_fail   //  string: email address sent on pipeline failure
-    plaintext_email // boolean: Send plain-text email instead of HTML
-    outdir          //    path: Path to output directory where results will be published
-    monochrome_logs // boolean: Disable ANSI colour codes in log output
-    hook_url        //  string: hook URL for notifications
-    multiqc_report  //  string: Path to MultiQC report
+    email            //  string: email address
+    email_on_fail    //  string: email address sent on pipeline failure
+    plaintext_email  // boolean: Send plain-text email instead of HTML
+    outdir           //    path: Path to output directory where results will be published
+    monochrome_logs  // boolean: Disable ANSI colour codes in log output
+    hook_url         //  string: hook URL for notifications
+    multiqc_report   //  string: Path to MultiQC report
+    shiny_dir_path   //  string: Path to shiny stats file
+    trace_dir_path   //  string: Path to trace file
+    shiny_trace_mode // string: Mode to use for shiny trace file (default: "latest", options: "latest", "all")
 
     main:
 
@@ -140,8 +143,14 @@ workflow PIPELINE_COMPLETION {
         if (hook_url) {
             imNotification(summary_params, hook_url)
         }
+
+        if (shiny_trace_mode) {
+            getTraceForShiny(trace_dir_path, shiny_dir_path, shiny_trace_mode)
+        }
+
     }
 }
+
 
 /*
 ========================================================================================
@@ -152,7 +161,8 @@ workflow PIPELINE_COMPLETION {
 // Check and validate pipeline parameters
 //
 def validateInputParameters() {
-    genomeExistsError()
+    statsParamsWarning()
+    evalParamsWarning()
 }
 
 //
@@ -169,29 +179,54 @@ def validateInputSamplesheet(input) {
 
     return [ metas[0], fastqs ]
 }
+
 //
-// Get attribute from genome config file e.g. fasta
+// Warning if incorrect combination of stats parameters are used
 //
-def getGenomeAttribute(attribute) {
-    if (params.genomes && params.genome && params.genomes.containsKey(params.genome)) {
-        if (params.genomes[ params.genome ].containsKey(attribute)) {
-            return params.genomes[ params.genome ][ attribute ]
+def statsParamsWarning() {
+    if (params.skip_stats){
+        if(params.calc_sim || params.calc_seq_stats) {
+            def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+                "  WARNING: The param skip_stats is set to '${params.skip_stats}'.\n" +
+                "  The following params have values calc_sim: ${params.calc_sim} and calc_seq_stats: ${params.calc_seq_stats} \n" +
+                "  As skip_stats is set to true, the params.calc_sim and params.calc_seq_stats will be set by default to false. \n" +
+                "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+            println(warning_string)
         }
     }
-    return null
+    if (!params.skip_stats && !params.calc_sim && !params.calc_seq_stats){
+        params.skip_stats = true
+        def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+                "  WARNING: The param skip_stats has been changed from false to true'.\n" +
+                "  None of the modules withing the stats subworkflow was activated.  \n" +
+                "  To activate them you can use param.calc_sim, params.calc_seq_stats.  \n" +
+                "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        println(warning_string)
+    }
 }
 
 //
-// Exit pipeline if incorrect --genome key provided
+// Warning if incorrect combination of eval parameters are used
 //
-def genomeExistsError() {
-    if (params.genomes && params.genome && !params.genomes.containsKey(params.genome)) {
-        def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-            "  Genome '${params.genome}' not found in any config files provided to the pipeline.\n" +
-            "  Currently, the available genome keys are:\n" +
-            "  ${params.genomes.keySet().join(", ")}\n" +
-            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        error(error_string)
+def evalParamsWarning() {
+    if (params.skip_eval){
+        if(params.calc_sp || params.calc_tc || params.calc_irmsd) {
+            def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+                "  WARNING: The param skip_eval is set to '${params.skip_eval}'.\n" +
+                "  The following params have values params.calc_sp: ${params.calc_sp}, params.calc_tc: ${params.calc_tc} and params.calc_irms: ${params.calc_irmsd} \n" +
+                "  As skip_eval is set to true, the params.calc_sp, params.calc_tc and params.calc_irmsd are set by default to false. \n" +
+                "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+            println(warning_string)
+        }
+    }
+    if (!params.skip_eval && !params.calc_sp && !params.calc_tc && !params.calc_irmsd ){
+            params.skip_eval = true
+            def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+                    "  WARNING: The param skip_eval has been changed from false to true'.\n" +
+                    "  None of the modules withing the stats subworkflow was activated.  \n" +
+                    "  To activate them you can use param.calc_sp, params.calc_tc, params.calc_irmsd.  \n" +
+                    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+            println(warning_string)
     }
 }
 
@@ -251,6 +286,97 @@ def methodsDescriptionText(mqc_methods_yaml) {
     return description_html.toString()
 }
 
+def getHeader(trace_file){
+    // Get the header of the trace file
+    def trace_lines = trace_file.readLines()
+    def header = trace_lines[0]
+    return header
+}
+
+def filterTraceForShiny(trace_file){
+    // Retain only the lines that contain "COMPLETED" and "MULTIPLESEQUENCEALIGN:ALIGN"
+    def trace_lines = trace_file.readLines()
+    def shiny_trace_lines = []
+    for (line in trace_lines){
+        if (line.contains("COMPLETED") && line.contains("MULTIPLESEQUENCEALIGN:ALIGN")){
+            shiny_trace_lines.add(line)
+        }
+    }
+    return shiny_trace_lines
+}
+
+// if multiple lines have the same name column
+// only the one with the latest timestamp will be kept
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+def takeLatestComplete(traceInfos) {
+
+    // colnames and the position of the columns name and start
+    colnames = traceInfos.first().split('\t').collect { it.trim() }
+    def name_index = colnames.indexOf("name")
+    def start_index = colnames.indexOf("start")
+    // remove the column name line
+    traceInfos = traceInfos.drop(1)
+    // Initialize a map to store entries by their names and latest submit timestamps
+    def latestEntries = [:]
+    def formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+
+    // Iterate over each line
+    // If the name is not in the map or the submit timestamp is after the latest one, update the map
+    traceInfos.each { line ->
+        def values = line.split('\t')
+        def name = values[name_index]
+        def submit = LocalDateTime.parse(values[start_index], formatter)
+        if (!latestEntries.containsKey(name) || submit.isAfter(latestEntries[name][start_index])) {
+            latestEntries[name] = values
+        }
+    }
+    def filteredData = colnames.join('\t') + '\n'
+    filteredData = filteredData + latestEntries.values().collect { it.join('\t') }.join('\n')
+    def result = []
+    result.addAll(filteredData)
+    return result
+}
+
+def getTraceForShiny(trace_dir_path, shiny_dir_path, shiny_trace_mode){
+        // According to the mode selected, get either the latest trace file or all trace files
+        // If all trace files are selected, it is assumed that the trace files were generated with the "resume" mode
+        def trace_dir = new File("${trace_dir_path}")
+        def trace_files = []
+        if (shiny_trace_mode == "all"){
+            trace_files = trace_dir.listFiles().findAll { it.name.startsWith("execution_trace") }
+        }
+        else if(shiny_trace_mode == "latest"){
+            trace_files = trace_dir.listFiles().findAll { it.name.startsWith("execution_trace") }.sort { -it.lastModified() }.take(1)
+        }
+        else{
+            print("Invalid shiny trace mode. Please use either 'latest' or 'all'")
+        }
+        // Filter the trace files for shiny
+        // and move the trace file to the shiny directory
+        if (trace_files.size() > 0) {
+            def trace_infos = []
+            def header_added = false
+            for (file in trace_files){
+                if( !header_added ){
+                    trace_infos = trace_infos + getHeader(file)
+                    header_added = true
+                }
+                trace_infos = trace_infos + filterTraceForShiny(file)
+            }
+            // if trace infos is empty then print a message
+            if(trace_infos.size() == 0){
+                print("There is an issue with your trace file!")
+            }
+            trace_infos = takeLatestComplete(trace_infos)
+
+            def shiny_trace_file = new File("${shiny_dir_path}/trace.txt")
+            shiny_trace_file.write(trace_infos.join("\n"))
+        }else{
+            print("No trace file found in the " + trace_dir_path + " directory.")
+        }
+}
 
 import nextflow.Nextflow
 import groovy.text.SimpleTemplateEngine
@@ -260,7 +386,7 @@ class Utils {
 
 
     public static cleanArgs(argString) {
-        def cleanArgs = argString.toString().trim().replace("-", "").replace("  ", " ").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
+        def cleanArgs = argString.toString().trim().replace("  ", " ").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
         // if clearnArgs is empty, return ""
 
         if (cleanArgs == null || cleanArgs == "") {
@@ -301,6 +427,8 @@ class Utils {
         return args
 
     }
+
+
 
 
 

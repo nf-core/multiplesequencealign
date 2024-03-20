@@ -205,9 +205,13 @@ workflow MULTIPLESEQUENCEALIGN {
         .set { stats_and_evaluation }
 
     if( !params.skip_stats && !params.skip_eval ){
-        MERGE_STATS_EVAL(stats_and_evaluation)
-        stats_and_evaluation_summary = MERGE_STATS_EVAL.out.csv
-        ch_versions                  = ch_versions.mix(MERGE_STATS_EVAL.out.versions)
+        def number_of_stats = [params.calc_sim, params.calc_seq_stats].count(true)
+        def number_of_evals = [params.calc_sp, params.calc_tc, params.calc_irmsd].count(true)
+        if (number_of_evals > 0 && number_of_stats > 0 ){
+            MERGE_STATS_EVAL(stats_and_evaluation)
+            stats_and_evaluation_summary = MERGE_STATS_EVAL.out.csv
+            ch_versions                  = ch_versions.mix(MERGE_STATS_EVAL.out.versions)
+        }
     }else{
         stats_and_evaluation_summary = stats_and_evaluation
     }
@@ -224,9 +228,11 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // MODULE: Shiny
     //
+    ch_shiny_stats = Channel.empty()
     if( !params.skip_shiny){
         PREPARE_SHINY ( stats_and_evaluation_summary, file(params.shiny_app) )
         ch_versions = ch_versions.mix(PREPARE_SHINY.out.versions)
+        ch_shiny_stats = PREPARE_SHINY.out.data.toList()
     }
 
     softwareVersionsToYAML(ch_versions)
@@ -263,8 +269,8 @@ workflow MULTIPLESEQUENCEALIGN {
     }
 
     emit:
-    versions         = ch_versions
-    multiqc          = multiqc_out                              // channel: [ path(versions.yml) ]
+    versions         = ch_versions // channel: [ path(versions.yml) ]
+    multiqc          = multiqc_out
 }
 
 
