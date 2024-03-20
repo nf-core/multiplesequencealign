@@ -265,7 +265,7 @@ workflow MULTIPLESEQUENCEALIGN {
     }
 
     emit:
-    versions         = ch_versions
+    versions         = ch_versions // channel: [ path(versions.yml) ]
     multiqc          = multiqc_out
 }
 
