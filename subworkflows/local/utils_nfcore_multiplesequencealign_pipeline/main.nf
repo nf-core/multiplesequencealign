@@ -161,8 +161,8 @@ workflow PIPELINE_COMPLETION {
 // Check and validate pipeline parameters
 //
 def validateInputParameters() {
-    statsParamsError()
-    evalParamsError()
+    statsParamsWarning()
+    evalParamsWarning()
 }
 
 //
@@ -181,9 +181,9 @@ def validateInputSamplesheet(input) {
 }
 
 //
-// Exit pipeline if incorrect combination of stats parameters are used
+// Warning if incorrect combination of stats parameters are used
 //
-def statsParamsError() {
+def statsParamsWarning() {
     if (params.skip_stats){
         if(params.calc_sim || params.calc_seq_stats) {
             def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
@@ -206,9 +206,9 @@ def statsParamsError() {
 }
 
 //
-// Exit pipeline if incorrect combination of eval parameters are used
+// Warning if incorrect combination of eval parameters are used
 //
-def evalParamsError() {
+def evalParamsWarning() {
     if (params.skip_eval){
         if(params.calc_sp || params.calc_tc || params.calc_irmsd) {
             def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
