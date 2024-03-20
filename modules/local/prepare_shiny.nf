@@ -11,8 +11,8 @@ process PREPARE_SHINY {
     path (app)
 
     output:
-    tuple val (meta), path("shiny_data.csv"), emit: data
-    path ("shiny_app.py"), emit: app
+    path ("shiny_data.csv"), emit: data
+    path ("shiny_app*"), emit: app
     path ("run.sh"), emit: run
     path "versions.yml", emit: versions
 
@@ -23,8 +23,9 @@ process PREPARE_SHINY {
     def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    mv $table shiny_data.csv
-    mv $app shiny_app.py
+    cp $table shiny_data.csv
+    cp $app/* .
+    rm $app
     echo "shiny run --reload shiny_app.py" > run.sh
     chmod +x run.sh
 

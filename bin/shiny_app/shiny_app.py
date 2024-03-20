@@ -6,7 +6,8 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 import sys
-
+import os
+import shiny_app_merge_score_and_trace as ms
 
 # Style
 sns.set(context="talk", style="white", font_scale=0.8)
@@ -14,7 +15,16 @@ sns.set(context="talk", style="white", font_scale=0.8)
 
 # Load file
 # ----------------------------------------------------------------------------
-summary_report = "./shiny_data.csv"
+summary_report = "./shiny_data_with_trace.csv"
+trace = "./trace.txt"
+
+if not os.path.exists(summary_report):
+    summary_report_no_trace = "./shiny_data.csv"
+    # run merge script here
+    if os.path.exists(trace):
+        ms.merge_data_and_trace(summary_report_no_trace, trace, summary_report)
+    else:
+        summary_report = summary_report_no_trace
 
 try:
     inputfile = pd.read_csv(summary_report)
@@ -33,6 +43,10 @@ options_eval = {
     "tc": "total column score (TC)",
     "perc_sim": "sequences avg similarity",
     "seq_length_mean": "sequence length (mean)",
+    "time_tree": "tree time (min)",
+    "time_align": "alignment time (min)",
+    "memory_tree": "tree memory (GB)",
+    "memory_align": "alignment memory (GB)"
 }
 
 app_ui = ui.page_fluid(
