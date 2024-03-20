@@ -30,9 +30,11 @@ workflow STATS {
         TCOFFEE_SEQREFORMAT_SIM(ch_seqs)
         tcoffee_seqreformat_sim = TCOFFEE_SEQREFORMAT_SIM.out.formatted_file
         ch_versions = ch_versions.mix(TCOFFEE_SEQREFORMAT_SIM.out.versions.first())
-        tcoffee_seqreformat_simtot = PARSE_SIM(tcoffee_seqreformat_sim)
+        PARSE_SIM(tcoffee_seqreformat_sim)
+        tcoffee_seqreformat_simtot = PARSE_SIM.out.sim_tot
         ch_versions = ch_versions.mix(PARSE_SIM.out.versions)
 
+        tcoffee_seqreformat_simtot.view()
         ch_sim_summary = tcoffee_seqreformat_simtot.map{
                                                     meta, csv -> csv
                                                 }.collect().map{
@@ -47,20 +49,22 @@ workflow STATS {
     //      SEQUENCE GENERAL STATS
     //      Sequence length, # of sequences, etc
     // -------------------------------------------
-    CALCULATE_SEQSTATS(ch_seqs)
-    seqstats = CALCULATE_SEQSTATS.out.seqstats
-    seqstats_summary = CALCULATE_SEQSTATS.out.seqstats_summary
-    ch_versions = ch_versions.mix(CALCULATE_SEQSTATS.out.versions.first())
+    if( params.calc_seq_stats == true){
+        CALCULATE_SEQSTATS(ch_seqs)
+        seqstats = CALCULATE_SEQSTATS.out.seqstats
+        seqstats_summary = CALCULATE_SEQSTATS.out.seqstats_summary
+        ch_versions = ch_versions.mix(CALCULATE_SEQSTATS.out.versions.first())
 
-    ch_seqstats_summary = seqstats_summary.map{
-                                                meta, csv -> csv
-                                            }.collect().map{
-                                                csv -> [ [id:"summary_seqstats"], csv]
-                                            }
+        ch_seqstats_summary = seqstats_summary.map{
+                                                    meta, csv -> csv
+                                                }.collect().map{
+                                                    csv -> [ [id:"summary_seqstats"], csv]
+                                                }
 
-    CONCAT_SEQSTATS(ch_seqstats_summary, "csv", "csv")
-    seqstats_csv = seqstats_csv.mix(CONCAT_SEQSTATS.out.csv)
-    ch_versions = ch_versions.mix(CONCAT_SEQSTATS.out.versions)
+        CONCAT_SEQSTATS(ch_seqstats_summary, "csv", "csv")
+        seqstats_csv = seqstats_csv.mix(CONCAT_SEQSTATS.out.csv)
+        ch_versions = ch_versions.mix(CONCAT_SEQSTATS.out.versions)
+    }
 
 
     // -------------------------------------------

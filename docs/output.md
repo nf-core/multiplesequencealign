@@ -23,7 +23,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - `stats/`
   - `complete_summary_stats.csv`: csv file containing the summary for all the statistics computed on the input file.
   - `sequences/`
-    - `*_seqstats.csv`: file containing the sequence input length for each sequence in the family defined by the file name. If `--calc_seq_stats` is specified.
+    - `seqstats/*_seqstats.csv`: file containing the sequence input length for each sequence in the family defined by the file name. If `--calc_seq_stats` is specified.
+    - `perc_sim/*_txt`: file containing the pairwise sequence similarity for all input sequences. If `--calc_sim` is specified.
   - `structures/`
     - `*_full_plddt.csv`: file containing the plddt of the structures for each sequence in the input file.  If `--extract_plddt` is specified.
 </details>
