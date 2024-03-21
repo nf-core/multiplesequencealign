@@ -151,17 +151,11 @@ workflow EVALUATE {
     sp      = sp_csv.map{ meta, csv -> csv }
     tc      = tc_csv.map{ meta, csv -> csv }
     irmsd   = irmsd_csv.map{ meta, csv -> csv }
-<<<<<<< HEAD
     gaps    = gaps_csv.map{ meta, csv -> csv }
-
-    def number_of_evals = [params.calc_sp, params.calc_tc, params.calc_irmsd, params.calc_gaps].count(true)
-    csvs_stats = sp.mix(tc).mix(irmsd).mix(gaps).collect().map{ csvs -> [[id:"summary_eval"], csvs] }
-=======
     tcs     = tcs_csv.map{ meta, csv -> csv }
 
-    def number_of_evals = [params.calc_sp, params.calc_tc, params.calc_irmsd, params.calc_tcs].count(true)
-    csvs_stats = sp.mix(tc).mix(irmsd).mix(tcs).collect().map{ csvs -> [[id:"summary_eval"], csvs] }
->>>>>>> dev
+    def number_of_evals = [params.calc_sp, params.calc_tc, params.calc_irmsd, params.calc_gaps, params.calc_tcs].count(true)
+    csvs_stats = sp.mix(tc).mix(irmsd).mix(gaps).mix(tcs).collect().map{ csvs -> [[id:"summary_eval"], csvs] }
     if(number_of_evals >= 2){
         MERGE_EVAL(csvs_stats)
         ch_versions = ch_versions.mix(MERGE_EVAL.out.versions)

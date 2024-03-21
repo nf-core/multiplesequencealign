@@ -23,8 +23,9 @@ process CALC_GAPS {
     def values = meta.values().join(",")
     """
     echo "${header},total_gaps,avg_gaps" > ${prefix}_gaps.csv
-    total_gaps=\$(grep -v ">" $msa | awk -F "-" '{total += NF-1; seq_count++} END {print total}'); 
-    avg_gaps=\$(grep -v ">" $msa | awk -F "-" '{total += NF-1; seq_count++} END {avg = total / seq_count; print avg}'); 
+    total_gaps=\$(grep -v ">" $msa | awk -F "-" '{total += NF-1;} END {print total}'); 
+    nseq=\$(grep -c ">" $msa);
+    avg_gaps=\$(awk -v var1="\$total_gaps" -v var2="\$nseq" 'BEGIN { print var1 / var2 }')
     echo "${values},\$total_gaps,\$avg_gaps" >> ${prefix}_gaps.csv
     
     cat <<-END_VERSIONS > versions.yml

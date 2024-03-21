@@ -96,6 +96,16 @@ custom_table_header_config:
       hidden: True
       group: "Alignment"
       format: "{:,.1f}"
+    total_gaps:
+      description: "Total amount of gaps."
+      hidden: True
+      group: "Alignment"
+      format: "{:,.1f}"
+    avg_gaps:
+      description: "Average amount of gaps per sequence."
+      hidden: True
+      group: "Alignment"
+      format: "{:,.1f}"
     NiRMSD:
       description: "NiRMSD metric."
       hidden: False
@@ -148,6 +158,8 @@ table_columns_placement:
     iRMSD: 530
     NiRMSD: 560
     TCS: 590
+    total_gaps: 620
+    avg_gaps: 650
 
 sp:
   summary_stats:

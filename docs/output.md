@@ -60,6 +60,7 @@ All MSA computed are stored here.
 
 - `evaluation/`
   - `tcoffee_irmsd/`: directory containing the files with the complete iRMSD files. If `--calc_irmsd` is specified. 
+  - `tcoffee_tcs/`: directory containing the files with the complete TCS files. If `--calc_tcs` is specified. 
   - `complete_summary_eval.csv`: csv file containing the summary of all evaluation metrics for each input file.
 </details>
 
