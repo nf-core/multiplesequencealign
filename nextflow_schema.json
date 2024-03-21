@@ -102,6 +102,11 @@
                     "type": "boolean",
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Calculate the iRMSD of alignment."
+                },
+                "calc_tcs": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate the Transitive Consistency Score (TCS) of alignment."
                 }
             }
         },

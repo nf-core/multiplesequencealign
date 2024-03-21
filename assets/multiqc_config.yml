@@ -91,6 +91,11 @@ custom_table_header_config:
       hidden: True
       group: "Alignment"
       format: "{:,.1f}"
+    TCS:
+      description: "TCS metric."
+      hidden: True
+      group: "Alignment"
+      format: "{:,.1f}"
     NiRMSD:
       description: "NiRMSD metric."
       hidden: False
@@ -142,6 +147,7 @@ table_columns_placement:
     APDB: 500
     iRMSD: 530
     NiRMSD: 560
+    TCS: 590
 
 sp:
   summary_stats:
