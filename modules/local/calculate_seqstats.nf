@@ -25,7 +25,7 @@ process CALCULATE_SEQSTATS {
     calc_seqstats.py ${meta.id} \
         ${fasta} \
         "${prefix}_seqstats.csv" \
-        "${prefix}_seqstats_summary.csv" 
+        "${prefix}_seqstats_summary.csv"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

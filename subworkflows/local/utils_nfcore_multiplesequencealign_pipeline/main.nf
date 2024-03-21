@@ -369,7 +369,7 @@ def getTraceForShiny(trace_dir_path, shiny_dir_path, shiny_trace_mode){
             if(trace_infos.size() == 0){
                 print("There is an issue with your trace file!")
             }
-            
+
             trace_infos = takeLatestComplete(trace_infos)
             def shiny_trace_file = new File("${shiny_dir_path}/trace.txt")
             shiny_trace_file.write(trace_infos.join("\n"))

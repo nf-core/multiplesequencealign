@@ -28,7 +28,7 @@ process EXTRACT_PLDDT {
     # Extract plddt summary
     echo "id,plddt" > ${prefix}_plddt_summary.csv
     plddt=\$(awk -F, 'NR>1 {sum+=\$2} END {print sum/NR}' ${prefix}_full_plddt.csv); echo "${prefix},\$plddt" >> ${prefix}_plddt_summary.csv
-    
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         awk: \$(awk -W version | grep "awk" | sed 's/mawk//')

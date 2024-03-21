@@ -46,7 +46,7 @@ options_eval = {
     "time_tree": "tree time (min)",
     "time_align": "alignment time (min)",
     "memory_tree": "tree memory (GB)",
-    "memory_align": "alignment memory (GB)", 
+    "memory_align": "alignment memory (GB)",
     "avg_plddt": "avg pLDDT"
 }
 
