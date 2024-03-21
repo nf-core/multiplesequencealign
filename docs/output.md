@@ -6,8 +6,6 @@ This document describes the output produced by the pipeline. See [`main README.m
 
 The directories listed below will be created in the results directory after the pipeline has finished. All paths are relative to the top-level results directory.
 
-<!-- TODO nf-core: Write this documentation describing your workflow's output -->
-
 ## Pipeline overview
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
@@ -61,7 +59,7 @@ All MSA computed are stored here.
 <summary>Output files</summary>
 
 - `evaluation/`
-  - `evaluation/`: directory containing the files with the complete iRMSD files. If `--calc_irmsd` is specified. 
+  - `tcoffee_irmsd/`: directory containing the files with the complete iRMSD files. If `--calc_irmsd` is specified. 
   - `complete_summary_eval.csv`: csv file containing the summary of all evaluation metrics for each input file.
 </details>
 
