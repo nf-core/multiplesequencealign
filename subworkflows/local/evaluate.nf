@@ -110,7 +110,7 @@ workflow EVALUATE {
     // TCS
     if( params.calc_tcs == true){
         // the second argument is empty but a lib file can be fed to it
-        TCOFFEE_TCS(ch_msa, [[], []])
+        TCOFFEE_TCS(ch_msa, [[:], []])
         tcs_scores = TCOFFEE_TCS.out.scores
         ch_versions = ch_versions.mix(TCOFFEE_TCS.out.versions.first())
 
