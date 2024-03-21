@@ -20,7 +20,7 @@ workflow EVALUATE {
 
     main:
 
-    ch_version   = Channel.empty()
+    ch_versions   = Channel.empty()
     sp_csv       = Channel.empty()
     tc_csv       = Channel.empty()
     irmsd_csv    = Channel.empty()
