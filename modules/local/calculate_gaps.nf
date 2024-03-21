@@ -30,7 +30,7 @@ process CALC_GAPS {
     
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        awk: \$(awk -V | grep "GNU Awk" | sed 's/GNU Awk //')
+        awk: \$(awk -W version | grep "awk" | sed 's/mawk//')
     END_VERSIONS
     """
 
@@ -41,7 +41,7 @@ process CALC_GAPS {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        awk: \$(awk -V | grep "GNU Awk" | sed 's/GNU Awk //')
+        awk: \$(awk -W version | grep "awk" | sed 's/mawk//')
     END_VERSIONS
     """
 }

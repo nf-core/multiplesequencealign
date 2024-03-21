@@ -30,7 +30,7 @@ process PARSE_SIM {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        awk: \$(awk -V | grep "GNU Awk" | sed 's/GNU Awk //')
+        awk: \$(awk -W version | grep "awk" | sed 's/mawk//')
         cat: \$(echo \$(cat --version 2>&1) | sed 's/^.*coreutils) //; s/ .*\$//')
     END_VERSIONS
     """
@@ -42,7 +42,7 @@ process PARSE_SIM {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        awk: \$(awk -V | grep "GNU Awk" | sed 's/GNU Awk //')
+        awk: \$(awk -W version | grep "awk" | sed 's/mawk//')
         cat: \$(echo \$(cat --version 2>&1) | sed 's/^.*coreutils) //; s/ .*\$//')
     END_VERSIONS
     """
