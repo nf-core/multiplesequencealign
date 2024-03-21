@@ -121,7 +121,7 @@ workflow EVALUATE {
         CONCAT_TCS(ch_tcs_summary, "csv", "csv")
         tcs_csv = CONCAT_TCS.out.csv
         ch_versions = ch_versions.mix(CONCAT_TCS.out.versions)
-        
+
     }
 
 
