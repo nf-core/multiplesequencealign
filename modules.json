@@ -113,7 +113,9 @@
                     "tcoffee/tcs": {
                         "branch": "master",
                         "git_sha": "2d5ea4959c36da8c21e74a0c5e8ecc6b101b999e",
-                        "installed_by": ["modules"]
+                        "installed_by": [
+                            "modules"
+                        ]
                     },
                     "untar": {
                         "branch": "master",
