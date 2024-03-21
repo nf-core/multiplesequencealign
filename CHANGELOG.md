@@ -24,6 +24,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 [#99](https://github.com/nf-core/multiplesequencealign/issues/99) - Add check for conflicting input parameters for stats and eval.
 [#89](https://github.com/nf-core/multiplesequencealign/issues/89) - Add collection of plddt metrics in stats subworkflow.
 [#96](https://github.com/nf-core/multiplesequencealign/issues/96) - Add collection of number of gaps in eval subworkflow.
+[#117](https://github.com/nf-core/multiplesequencealign/issues/117) - Add data for full datasets.
 
 ### `Fixed`
 

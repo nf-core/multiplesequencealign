@@ -8,6 +8,8 @@ include { CSVTK_CONCAT  as CONCAT_SP                  } from '../../modules/nf-c
 include { CSVTK_CONCAT  as CONCAT_TC                  } from '../../modules/nf-core/csvtk/concat/main.nf'
 include { CSVTK_CONCAT  as CONCAT_IRMSD               } from '../../modules/nf-core/csvtk/concat/main.nf'
 include { CSVTK_CONCAT  as CONCAT_GAPS                } from '../../modules/nf-core/csvtk/concat/main.nf'
+include { CSVTK_CONCAT  as CONCAT_TCS                 } from '../../modules/nf-core/csvtk/concat/main.nf'
+include { TCOFFEE_TCS                                 } from '../../modules/nf-core/tcoffee/tcs'
 include { CSVTK_JOIN    as MERGE_EVAL                 } from '../../modules/nf-core/csvtk/join/main.nf'
 include { PARSE_IRMSD                                 } from '../../modules/local/parse_irmsd.nf'
 
@@ -20,10 +22,11 @@ workflow EVALUATE {
 
     main:
 
-    ch_versions = Channel.empty()
-    sp_csv = Channel.empty()
-    tc_csv = Channel.empty()
-    irmsd_csv = Channel.empty()
+    ch_versions   = Channel.empty()
+    sp_csv       = Channel.empty()
+    tc_csv       = Channel.empty()
+    irmsd_csv    = Channel.empty()
+    tcs_csv      = Channel.empty()
     eval_summary = Channel.empty()
 
 
@@ -119,16 +122,46 @@ workflow EVALUATE {
 
 
     // -------------------------------------------
+    // intrinsic evaluation metrics
+    // -------------------------------------------
+
+    // TCS
+    if( params.calc_tcs == true){
+        // the second argument is empty but a lib file can be fed to it
+        TCOFFEE_TCS(ch_msa, [[:], []])
+        tcs_scores = TCOFFEE_TCS.out.scores
+        ch_versions = ch_versions.mix(TCOFFEE_TCS.out.versions.first())
+
+        ch_tcs_summary = tcs_scores.map{
+                                                meta, csv -> csv
+                                            }.collect().map{
+                                                csv -> [ [id:"summary_tcs"], csv]
+                                            }
+        CONCAT_TCS(ch_tcs_summary, "csv", "csv")
+        tcs_csv = CONCAT_TCS.out.csv
+        ch_versions = ch_versions.mix(CONCAT_TCS.out.versions)
+
+    }
+
+
+    // -------------------------------------------
     //      MERGE ALL STATS
     // -------------------------------------------
 
     sp      = sp_csv.map{ meta, csv -> csv }
     tc      = tc_csv.map{ meta, csv -> csv }
     irmsd   = irmsd_csv.map{ meta, csv -> csv }
+<<<<<<< HEAD
     gaps    = gaps_csv.map{ meta, csv -> csv }
 
     def number_of_evals = [params.calc_sp, params.calc_tc, params.calc_irmsd, params.calc_gaps].count(true)
     csvs_stats = sp.mix(tc).mix(irmsd).mix(gaps).collect().map{ csvs -> [[id:"summary_eval"], csvs] }
+=======
+    tcs     = tcs_csv.map{ meta, csv -> csv }
+
+    def number_of_evals = [params.calc_sp, params.calc_tc, params.calc_irmsd, params.calc_tcs].count(true)
+    csvs_stats = sp.mix(tc).mix(irmsd).mix(tcs).collect().map{ csvs -> [[id:"summary_eval"], csvs] }
+>>>>>>> dev
     if(number_of_evals >= 2){
         MERGE_EVAL(csvs_stats)
         ch_versions = ch_versions.mix(MERGE_EVAL.out.versions)
