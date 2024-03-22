@@ -170,7 +170,7 @@ workflow MULTIPLESEQUENCEALIGN {
     // Compute summary statistics about the input sequences
     //
     if( !params.skip_stats ){
-        STATS(ch_seqs)
+        STATS(ch_seqs, ch_structures)
         ch_versions   = ch_versions.mix(STATS.out.versions)
         stats_summary = stats_summary.mix(STATS.out.stats_summary)
     }

@@ -1,4 +1,4 @@
-process PARSE_SIM {
+process CALC_GAPS {
     tag "$meta.id"
     label 'process_low'
 
@@ -7,10 +7,10 @@ process PARSE_SIM {
     'nf-core/ubuntu:20.04' }"
 
     input:
-    tuple val(meta), path(infile)
+    tuple val(meta), path(msa)
 
     output:
-    tuple val (meta), path("${prefix}.sim_tot"), emit: sim_tot
+    tuple val (meta), path("*_gaps.csv"), emit: gaps
     path "versions.yml", emit: versions
 
     when:
@@ -19,31 +19,29 @@ process PARSE_SIM {
     script:
     def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
+    def header = meta.keySet().join(",")
+    def values = meta.values().join(",")
     """
-    echo "$prefix" > tmp
-    grep ^TOT $infile | cut -f4 >> tmp
-    #remove empty spaces
-    sed -i 's/ //g' tmp
-
-    echo "id,perc_sim" > ${prefix}.sim_tot
-    cat tmp | tr '\\n' ',' | awk 'gsub(/,\$/,x)' >>  ${prefix}.sim_tot
+    echo "${header},total_gaps,avg_gaps" > ${prefix}_gaps.csv
+    total_gaps=\$(grep -v ">" $msa | awk -F "-" '{total += NF-1;} END {print total}');
+    nseq=\$(grep -c ">" $msa);
+    avg_gaps=\$(awk -v var1="\$total_gaps" -v var2="\$nseq" 'BEGIN { print var1 / var2 }')
+    echo "${values},\$total_gaps,\$avg_gaps" >> ${prefix}_gaps.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         awk: \$(awk -W version | grep "awk" | sed 's/mawk//')
-        cat: \$(echo \$(cat --version 2>&1) | sed 's/^.*coreutils) //; s/ .*\$//')
     END_VERSIONS
     """
 
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    touch ${prefix}.sim_tot
+    touch ${prefix}_gaps.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         awk: \$(awk -W version | grep "awk" | sed 's/mawk//')
-        cat: \$(echo \$(cat --version 2>&1) | sed 's/^.*coreutils) //; s/ .*\$//')
     END_VERSIONS
     """
 }

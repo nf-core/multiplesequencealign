@@ -1,4 +1,4 @@
-process PARSE_SIM {
+process EXTRACT_PLDDT {
     tag "$meta.id"
     label 'process_low'
 
@@ -7,10 +7,11 @@ process PARSE_SIM {
     'nf-core/ubuntu:20.04' }"
 
     input:
-    tuple val(meta), path(infile)
+    tuple val(meta), path(structures)
 
     output:
-    tuple val (meta), path("${prefix}.sim_tot"), emit: sim_tot
+    tuple val (meta), path("*_plddt_summary.csv"), emit: plddt_summary
+    tuple val (meta), path("*full_plddt.csv"), emit: plddts
     path "versions.yml", emit: versions
 
     when:
@@ -20,30 +21,32 @@ process PARSE_SIM {
     def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    echo "$prefix" > tmp
-    grep ^TOT $infile | cut -f4 >> tmp
-    #remove empty spaces
-    sed -i 's/ //g' tmp
+    # Extract plddt per protein
+    echo "id,seq_id,plddt" > ${prefix}_full_plddt.csv
+    for structure in \$(ls *.pdb); do
+        protein_name=\$(basename "\$structure" .pdb)
+        avg=\$(awk '{if(\$1=="ATOM" && \$3=="CA") print \$11}' "\$structure" | awk '{sum+=\$1} END {print sum/NR}')
+        echo "${prefix},\$protein_name,\$avg" >> ${prefix}_full_plddt.csv
+    done
 
-    echo "id,perc_sim" > ${prefix}.sim_tot
-    cat tmp | tr '\\n' ',' | awk 'gsub(/,\$/,x)' >>  ${prefix}.sim_tot
+    # Extract plddt summary
+    echo "id,plddt" > ${prefix}_plddt_summary.csv
+    plddt=\$(awk -F, 'NR>1 {sum+=\$2} END {print sum/NR}' ${prefix}_full_plddt.csv); echo "${prefix},\$plddt" >> ${prefix}_plddt_summary.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         awk: \$(awk -W version | grep "awk" | sed 's/mawk//')
-        cat: \$(echo \$(cat --version 2>&1) | sed 's/^.*coreutils) //; s/ .*\$//')
     END_VERSIONS
     """
 
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    touch ${prefix}.sim_tot
+    touch ${prefix}_plddt.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         awk: \$(awk -W version | grep "awk" | sed 's/mawk//')
-        cat: \$(echo \$(cat --version 2>&1) | sed 's/^.*coreutils) //; s/ .*\$//')
     END_VERSIONS
     """
 }
