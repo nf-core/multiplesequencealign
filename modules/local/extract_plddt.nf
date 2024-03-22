@@ -23,7 +23,11 @@ process EXTRACT_PLDDT {
     """
     # Extract plddt per protein
     echo "id,seq_id,plddt" > ${prefix}_full_plddt.csv
-    for structure in \$(ls *.pdb); do protein_name=\$(basename "\$structure" .pdb); avg=\$(awk '{if(\$1=="ATOM" && \$3=="CA") print \$11}' "\$structure" | awk '{sum+=\$1} END {print sum/NR}'); echo "${prefix},\$protein_name,\$avg" >> ${prefix}_full_plddt.csv; done
+    for structure in \$(ls *.pdb); do
+        protein_name=\$(basename "\$structure" .pdb)
+        avg=\$(awk '{if(\$1=="ATOM" && \$3=="CA") print \$11}' "\$structure" | awk '{sum+=\$1} END {print sum/NR}')
+        echo "${prefix},\$protein_name,\$avg" >> ${prefix}_full_plddt.csv
+    done
 
     # Extract plddt summary
     echo "id,plddt" > ${prefix}_plddt_summary.csv
