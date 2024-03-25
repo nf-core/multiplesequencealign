@@ -181,11 +181,6 @@ workflow ALIGN {
     ch_versions = ch_versions.mix(MUSCLE5_SUPER5.out.versions.first())
     msa = msa.mix(MUSCLE5_SUPER5.out.alignment.first())
 
-    emit:
-    msa
-    versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
-}
-
     // -----------------  MTMALIGN  ------------------
     // this call discards the fasta, tree and template arguments, as MTMalign only takes pdb inputs
     // nonetheless, this is required by the pipeline
@@ -199,3 +194,9 @@ workflow ALIGN {
     MTMALIGN_ALIGN(ch_pdb_mtmalign.structures, false)
     ch_versions = ch_versions.mix(MTMALIGN_ALIGN.out.versions.first())
     msa = msa.mix(MTMALIGN_ALIGN.out.alignment)
+
+    emit:
+    msa
+    versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
+}
+
