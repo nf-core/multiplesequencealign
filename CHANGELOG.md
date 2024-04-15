@@ -26,6 +26,8 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 [#90](https://github.com/nf-core/multiplesequencealign/issues/90) - Add TCS evaluation metric.
 [#89](https://github.com/nf-core/multiplesequencealign/issues/89) - Add collection of plddt metrics in stats subworkflow.
 [#96](https://github.com/nf-core/multiplesequencealign/issues/96) - Add collection of number of gaps in eval subworkflow.
+[#84](https://github.com/nf-core/multiplesequencealign/issues/84) - Update Metromap. 
+
 
 ### `Fixed`
 
