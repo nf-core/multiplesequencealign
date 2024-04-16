@@ -109,7 +109,7 @@ workflow ALIGN {
                                     meta, fastafile, treefile ->
                                         fasta: [ meta, fastafile ]
                                 }
-    KALIGN_ALIGN(ch_fasta_kalign.fasta)
+    KALIGN_ALIGN(ch_fasta_kalign.fasta, false)
     ch_versions = ch_versions.mix(KALIGN_ALIGN.out.versions.first())
 
     // ---------------- LEARNMSA  ----------------------
@@ -118,7 +118,7 @@ workflow ALIGN {
                                     meta, fastafile, treefile ->
                                         fasta: [ meta, fastafile ]
                                 }
-    LEARNMSA_ALIGN(ch_fasta_learnmsa.fasta)
+    LEARNMSA_ALIGN(ch_fasta_learnmsa.fasta, false)
     ch_versions = ch_versions.mix(LEARNMSA_ALIGN.out.versions.first())
 
     // ---------------- MAFFT -----------------------
