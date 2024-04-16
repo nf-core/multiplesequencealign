@@ -2,11 +2,9 @@
 
 ## Introduction
 
-This document describes the output produced by the pipeline. Most of the plots are taken from the MultiQC report, which summarises results at the end of the pipeline.
+This document describes the output produced by the pipeline. See [`main README.md`](../README.md) for a condensed overview of the steps in the pipeline, and the bioinformatics tools used at each step.
 
 The directories listed below will be created in the results directory after the pipeline has finished. All paths are relative to the top-level results directory.
-
-<!-- TODO nf-core: Write this documentation describing your workflow's output -->
 
 ## Pipeline overview
 
@@ -16,28 +14,76 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
-### FastQC
+## Summary statistics of input files
 
 <details markdown="1">
 <summary>Output files</summary>
 
-- `fastqc/`
-  - `*_fastqc.html`: FastQC report containing quality metrics.
-  - `*_fastqc.zip`: Zip archive containing the FastQC report, tab-delimited data file and plot images.
+- `stats/`
+  - `complete_summary_stats.csv`: csv file containing the summary for all the statistics computed on the input file.
+  - `sequences/`
+    - `seqstats/*_seqstats.csv`: file containing the sequence input length for each sequence in the family defined by the file name. If `--calc_seq_stats` is specified.
+    - `perc_sim/*_txt`: file containing the pairwise sequence similarity for all input sequences. If `--calc_sim` is specified.
+  - `structures/` - `plddt/*_full_plddt.csv`: file containing the plddt of the structures for each sequence in the input file. If `--extract_plddt` is specified.
+  </details>
+
+The stats.nf subworkflow collects statistics about the input files and summarizes them into a final csv file.
+
+## Trees
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `trees/`
+  - `*.dnd`: guide tree files.
 
 </details>
 
-[FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) gives general quality metrics about your sequenced reads. It provides information about the quality score distribution across your reads, per base sequence content (%A/T/G/C), adapter contamination and overrepresented sequences. For further reading and documentation see the [FastQC help pages](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/).
+If you explicitly specifified (via the toolsheet) to compute guidetrees to be used by the MSA tool, those are stored here.
 
-![MultiQC - FastQC sequence counts plot](images/mqc_fastqc_counts.png)
+## Alignment
 
-![MultiQC - FastQC mean quality scores plot](images/mqc_fastqc_quality.png)
+<details markdown="1">
+<summary>Output files</summary>
 
-![MultiQC - FastQC adapter content plot](images/mqc_fastqc_adapter.png)
+- `alignment/`
+  - `*/*.fa`: each subdirectory is called as the input file. It contains all the alignments computed on it. The filename contains all the informations of the input file used and the tool.
+    The file naming convention is:
+    {Input*file}*{Tree}_args-{Tree_args}_{MSA}\_args-{MSA_args}.aln
 
-:::note
-The FastQC plots displayed in the MultiQC report shows _untrimmed_ reads. They may contain adapter sequence and potentially regions with low quality.
-:::
+</details>
+
+All MSA computed are stored here.
+
+## Evaluation
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `evaluation/`
+  - `tcoffee_irmsd/`: directory containing the files with the complete iRMSD files. If `--calc_irmsd` is specified.
+  - `tcoffee_tcs/`: directory containing the files with the complete TCS files. If `--calc_tcs` is specified.
+  - `complete_summary_eval.csv`: csv file containing the summary of all evaluation metrics for each input file.
+  </details>
+
+## shiny_app
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `shiny_app/`
+  - `run.sh`: executable to start the shiny app.
+  - `*.py*`: shiny app files.
+  - `*.csv`: csv file used by shiny app.
+  - `trace.txt`: trace file used by shiny app.
+  </details>
+
+The if `--skip_shiny=false` is specified, a shiny app is prepared to visualize the summary statistics and evaluation of the produced alignments.
+To run the shiny app:
+`cd shiny_app`
+`./run.sh`
+
+Be aware that you have to have shiny installed to access this feature.
 
 ### MultiQC
 

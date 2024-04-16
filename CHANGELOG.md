@@ -19,6 +19,14 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 [#77](https://github.com/nf-core/multiplesequencealign/issues/77) - Add module zip
 [#93](https://github.com/nf-core/multiplesequencealign/pull/93) - Add multiqc basic support. Add custom params validation. Add basic shiny app.
 [#100](https://github.com/nf-core/multiplesequencealign/pull/100) - Add support for optional stats and evals. Clean tests.
+[#110](https://github.com/nf-core/multiplesequencealign/issues/110) - Add Readme documentation. Add nf-test for the pipeline.
+[#76](https://github.com/nf-core/multiplesequencealign/issues/76) - Add reading of trace files for shiny app.
+[#99](https://github.com/nf-core/multiplesequencealign/issues/99) - Add check for conflicting input parameters for stats and eval.
+[#117](https://github.com/nf-core/multiplesequencealign/issues/117) - Add data for full datasets.
+[#90](https://github.com/nf-core/multiplesequencealign/issues/90) - Add TCS evaluation metric.
+[#89](https://github.com/nf-core/multiplesequencealign/issues/89) - Add collection of plddt metrics in stats subworkflow.
+[#96](https://github.com/nf-core/multiplesequencealign/issues/96) - Add collection of number of gaps in eval subworkflow.
+[#84](https://github.com/nf-core/multiplesequencealign/issues/84) - Update Metromap.
 
 ### `Fixed`
 
@@ -29,6 +37,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 [#80](https://github.com/nf-core/multiplesequencealign/pull/80) - Update modules versions from nf-core tools with nf-test.
 [#32](https://github.com/nf-core/multiplesequencealign/issues/32) - Update Stats workflow with nf-core modules for merging.
 [#81](https://github.com/nf-core/multiplesequencealign/pull/81) - Update Eval workflow with nf-core modules for merging.
+[#111](https://github.com/nf-core/multiplesequencealign/pull/111) - Fix linting warnings (mostly versions)
 
 ### `Dependencies`
 
