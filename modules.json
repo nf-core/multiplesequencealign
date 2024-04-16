@@ -60,11 +60,6 @@
                         "git_sha": "faf557ba56156ac0e5de76a25c1e3df11c944f59",
                         "installed_by": ["modules"]
                     },
-                    "pigz/compress": {
-                        "branch": "master",
-                        "git_sha": "0eab94fc1e48703c1b0a8704bd665f554905c39d",
-                        "installed_by": ["modules"]
-                    },
                     "tcoffee/align": {
                         "branch": "master",
                         "git_sha": "c65917d37cdaa9d6c26fccf8f7c313aab1a51d8a",
