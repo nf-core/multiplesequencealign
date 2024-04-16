@@ -154,9 +154,9 @@
             "description": "Define wether to run compression",
             "default": "",
             "properties": {
-                "skip_compress": {
+                "no_compression": {
                     "type": "boolean",
-                    "description": "Skip the compression of all alignment files"
+                    "description": "Produce uncompressed alignment files"
                 }
             }
         },
