@@ -42,7 +42,7 @@
                     },
                     "learnmsa/align": {
                         "branch": "master",
-                        "git_sha": "7ca2d77c844e4d0272da08f2ff56ce5cac14e456",
+                        "git_sha": "62007703c84bcfef92ce9e4a57cb1cc382917201",
                         "installed_by": ["modules"]
                     },
                     "mafft": {
