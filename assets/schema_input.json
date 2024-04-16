@@ -15,8 +15,8 @@
             },
             "fasta": {
                 "type": "string",
-                "pattern": "^\\S+\\.fa$",
-                "errorMessage": "fasta file. Must end with .fa"
+                "pattern": "^\\S+\\.f(ast)?a$",
+                "errorMessage": "fasta file. Must end with .fa or .fasta"
             },
             "reference": {
                 "type": "string"
