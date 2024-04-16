@@ -188,10 +188,10 @@ workflow ALIGN {
                                 .combine(ch_structures.map{ meta, template, structures -> [meta["id"], structures]}, by: 0)
                                 .multiMap{
                                             merging_id, meta, templatefile, structuresfiles ->
-                                                structures: [ meta, structuresfiles ]
+                                                pdbs: [ meta, structuresfiles ]
                                 }
 
-    MTMALIGN_ALIGN(ch_pdb_mtmalign.structures, false)
+    MTMALIGN_ALIGN(ch_pdb_mtmalign.pdbs, false)
     ch_versions = ch_versions.mix(MTMALIGN_ALIGN.out.versions.first())
     msa = msa.mix(MTMALIGN_ALIGN.out.alignment)
 
