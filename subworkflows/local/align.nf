@@ -145,8 +145,8 @@ workflow ALIGN {
 
     // -----------------  3DCOFFEE  ------------------
     ch_fasta_trees_3dcoffee = ch_fasta_trees.tcoffee3d.map{ meta, fasta, tree -> [meta["id"], meta, fasta, tree] }
-                                                   .combine(ch_structures.map{ meta, template, structures -> [meta["id"], template, structures]}, by: 0)
-                                                   .multiMap{
+                                .combine(ch_structures.map{ meta, template, structures -> [meta["id"], template, structures]}, by: 0)
+                                .multiMap{
                                                                 merging_id, meta, fastafile, treefile, templatefile, structuresfiles ->
                                                                 fasta:      [ meta, fastafile       ]
                                                                 tree:       [ meta, treefile        ]
