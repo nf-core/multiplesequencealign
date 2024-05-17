@@ -12,6 +12,7 @@ process PREPARE_MULTIQC {
 
     output:
     tuple val (meta), path("*_multiqc_table.csv"), emit: multiqc_table
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -21,11 +22,21 @@ process PREPARE_MULTIQC {
     prefix = task.ext.prefix ?: "${meta.id}"
     """
     prep_multiqc_table.py -i $csv -o ${prefix}_multiqc_table.csv
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        python: \$(python --version | sed 's/Python //g')
+    END_VERSIONS
     """
 
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
     touch ${prefix}_multiqc_table.csv
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        python: \$(python --version | sed 's/Python //g')
+    END_VERSIONS
     """
 }

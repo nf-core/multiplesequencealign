@@ -12,6 +12,7 @@ process PARSE_IRMSD {
 
     output:
     tuple val(meta), path("${prefix}.irmsd_tot"), emit: irmsd_tot
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -34,22 +35,20 @@ process PARSE_IRMSD {
     # Add metadata info to output file
     paste -d, meta.csv ${prefix}.scores.csv > ${prefix}.irmsd_tot
 
-
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        tcoffee: \$( t_coffee -version | awk '{gsub("Version_", ""); print \$3}')
+        python: \$(python --version | sed 's/Python //g')
     END_VERSIONS
     """
 
     stub:
-    def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
     """
     touch ${prefix}.irmsd_tot
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        tcoffee: \$( t_coffee -version | awk '{gsub("Version_", ""); print \$3}')
+        python: \$(python --version | sed 's/Python //g')
     END_VERSIONS
     """
 }
