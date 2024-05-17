@@ -42,7 +42,7 @@ In general, the process of adding another evaluation module to the pipeline can 
   2. Include the evaluation module in the evaluation subworkflow
     * Add a `calc_yourscore` parameter to the pipeline in `nextflow.config` and document it in `nextflow_schema.json`. The parameter can then be passed by the user to decide whether to run your evaluation workflow.
     * Add a codeblock to `subworkflows/local/evaluate` that calls the newly added evaluation module if the appropriate parameter is passed to the pipeline.
-    * For the called module to produce an output file with the appropriate name to use for merging the evaluation outputs, a config option neds to be added in `conf/modules.config`.
+    * For the called module to produce an output file with the appropriate name to use for merging the evaluation outputs, a config option needs to be added in `conf/modules.config`.
   3. Incorporate the evaluation output into the summary output.
     * After computing the scores of the different evaluation tools, the pipeline merges them into different summary CSVs (per metric, total and in combination with the dataset statistics).
     * For this to happen, the output of the individual evaluation runs needs to be concatenated using the `CSVTK_CONCAT` module twice, first in the evaluation call to merge all calls of a single evaluation tool and then in the merging step.
