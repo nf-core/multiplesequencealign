@@ -58,7 +58,6 @@ include { PREPARE_SHINY   } from '../modules/local/prepare_shiny'
 //
 
 include { UNTAR                          } from '../modules/nf-core/untar/main'
-include { ZIP                            } from '../modules/nf-core/zip/main'
 include { CSVTK_JOIN as MERGE_STATS_EVAL } from '../modules/nf-core/csvtk/join/main.nf'
 
 /*
@@ -218,14 +217,6 @@ workflow MULTIPLESEQUENCEALIGN {
 
 
     //
-    // MODULE: zip
-    //
-    if( !params.skip_compress ){
-        ZIP(ALIGN.out.msa)
-        ch_versions = ch_versions.mix(ZIP.out.versions)
-    }
-
-    //
     // MODULE: Shiny
     //
     ch_shiny_stats = Channel.empty()
@@ -236,8 +227,12 @@ workflow MULTIPLESEQUENCEALIGN {
     }
 
     softwareVersionsToYAML(ch_versions)
-        .collectFile(storeDir: "${params.outdir}/pipeline_info", name: 'nf_core_pipeline_software_mqc_versions.yml', sort: true, newLine: true)
-        .set { ch_collated_versions }
+        .collectFile(
+            storeDir: "${params.outdir}/pipeline_info",
+            name: 'nf_core_pipeline_software_mqc_versions.yml',
+            sort: true,
+            newLine: true
+        ).set { ch_collated_versions }
 
     //
     // MODULE: MultiQC
