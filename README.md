@@ -37,18 +37,20 @@ Available GUIDE TREE methods:
 
 - CLUSTALO
 - FAMSA
+- MAGUS
 
 Available ALIGN methods:
 
 - CLUSTALO
 - FAMSA
-- TCOFFEE
-- 3DCOFFEE
-- MAFFT
 - KALIGN
 - LEARNMSA
-- MTMALIGN
+- MAFFT
+- MAGUS
 - MUSCLE5
+- MTMALIGN
+- TCOFFEE
+- 3DCOFFEE
 
 ## Usage
 
