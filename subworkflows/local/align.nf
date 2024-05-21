@@ -24,6 +24,7 @@ workflow ALIGN {
 
     main:
 
+    msa         = Channel.empty()
     ch_versions = Channel.empty()
 
     compress = ! params.no_compression
@@ -91,7 +92,7 @@ workflow ALIGN {
                                 }
     CLUSTALO_ALIGN(ch_fasta_trees_clustalo.fasta, ch_fasta_trees_clustalo.tree, compress)
     ch_versions = ch_versions.mix(CLUSTALO_ALIGN.out.versions.first())
-    msa = CLUSTALO_ALIGN.out.alignment
+    msa = msa.mix(CLUSTALO_ALIGN.out.alignment)
 
     // -----------------   FAMSA ---------------------
     ch_fasta_trees_famsa = ch_fasta_trees.famsa
