@@ -19,20 +19,18 @@ The subworkflows are to a significant degree isolated from each other, and not a
 `subworkflows/local/evaluate.nf` handles the evaluation step. It calls the modules used for evaluation and merges their output into some summary statistics.
 If it is not skipped, it is the last part of the pipeline to run.
 
-
-
 ## Adding an aligner
 
 1. Create a local or nf-core module and ensure the output is in FASTA format
 2. Add the aligner to the README.md
 3. Add the aligner to the aligner config in `conf/modules.config`
-    - if required, also add other config options
-    - This will make sure the filenames match
+   - if required, also add other config options
+   - This will make sure the filenames match
 4. Include it in the alignment subworkflow (`subworkflows/local/align.nf`)
-    - Import the module in the top
-    - Add a branch to the alignment steps
-    - Call the aligner with the respective branch; you can either pass or discard a guidetree or structures using the multimap before the call step
-    - Feed the output alignment and versions channels back into the `msa` and `ch_versions` channels. Make sure to `mix()` them so they do not get overwritten!
+   - Import the module in the top
+   - Add a branch to the alignment steps
+   - Call the aligner with the respective branch; you can either pass or discard a guidetree or structures using the multimap before the call step
+   - Feed the output alignment and versions channels back into the `msa` and `ch_versions` channels. Make sure to `mix()` them so they do not get overwritten!
 
 Congratulations, your aligner is now in nf-core/multiplesequencalignment!
 
@@ -41,12 +39,12 @@ Congratulations, your aligner is now in nf-core/multiplesequencalignment!
 1. Create a local or nf-core module and ensure the output is in Newick format
 2. Add the estimator to the README.md
 3. Add a config to `conf/modules.config`
-    - You should be able to copy most of what is there from another guidetree estimator
-    - This will make sure the filenames match
+   - You should be able to copy most of what is there from another guidetree estimator
+   - This will make sure the filenames match
 4. Include it in the guidetree subworkflow (`subworkflows/local/compute_guidetrees.nf`)
-    - Import the module
-    - Add a branch for the estimator to the beginning of call block
-    - Call the estimator, and add the output to `ch_trees` and `ch_versions`
+   - Import the module
+   - Add a branch for the estimator to the beginning of call block
+   - Call the estimator, and add the output to `ch_trees` and `ch_versions`
 
 Congratulations, your guide tree estimator is now in nf-core/multiplesequencalignment!
 
