@@ -134,7 +134,7 @@ workflow ALIGN {
                                 }
     MAFFT(ch_fasta_mafft.fasta, [ [:], [] ], [ [:], [] ], [ [:], [] ], [ [:], [] ], [ [:], [] ], compress)
     ch_versions = ch_versions.mix(MAFFT.out.versions.first())
-    msa = msa.mix(MAFFT.out.alignment)
+    msa = msa.mix(MAFFT.out.fas) // the MAFFT module calls its output fas instead of alignment
 
     // -----------------  TCOFFEE  ------------------
     ch_fasta_trees_tcoffee = ch_fasta_trees.tcoffee
