@@ -143,7 +143,7 @@ workflow ALIGN {
                                 }
     MAGUS_ALIGN(ch_fasta_trees_magus.fasta, ch_fasta_trees_magus.tree, compress)
     ch_versions = ch_versions.mix(MAGUS_ALIGN.out.versions.first())
-    msa = MAGUS_ALIGN.out.alignment
+    msa = msa.mix(MAGUS_ALIGN.out.alignment)
 
     // -----------------  MUSCLE5  ------------------
     ch_fasta_muscle5 = ch_fasta_trees.muscle5
