@@ -113,6 +113,7 @@ workflow ALIGN {
                                 }
     KALIGN_ALIGN(ch_fasta_kalign.fasta, compress)
     ch_versions = ch_versions.mix(KALIGN_ALIGN.out.versions.first())
+    msa = msa.mix(KALIGN_ALIGN.out.alignment)
 
     // ---------------- LEARNMSA  ----------------------
     ch_fasta_learnmsa = ch_fasta_trees.learnmsa
@@ -122,6 +123,7 @@ workflow ALIGN {
                                 }
     LEARNMSA_ALIGN(ch_fasta_learnmsa.fasta, compress)
     ch_versions = ch_versions.mix(LEARNMSA_ALIGN.out.versions.first())
+    msa = msa.mix(LEARNMSA_ALIGN.out.alignment)
 
     // ---------------- MAFFT -----------------------
     ch_fasta_mafft = ch_fasta_trees.mafft
@@ -131,6 +133,7 @@ workflow ALIGN {
                                 }
     MAFFT(ch_fasta_mafft.fasta, [ [:], [] ], [ [:], [] ], [ [:], [] ], [ [:], [] ], [ [:], [] ], compress)
     ch_versions = ch_versions.mix(MAFFT.out.versions.first())
+    msa = msa.mix(MAFFT.out.alignment)
 
     // -----------------  TCOFFEE  ------------------
     ch_fasta_trees_tcoffee = ch_fasta_trees.tcoffee
