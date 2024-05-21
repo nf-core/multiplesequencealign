@@ -1,5 +1,6 @@
 
 
+include { PIGZ_UNCOMPRESS                             } from '../../modules/nf-core/pigz/uncompress/main.nf'
 include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_SP } from '../../modules/nf-core/tcoffee/alncompare'
 include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_TC } from '../../modules/nf-core/tcoffee/alncompare'
 include { TCOFFEE_IRMSD                               } from '../../modules/nf-core/tcoffee/irmsd'
@@ -22,17 +23,26 @@ workflow EVALUATE {
 
     main:
 
-    ch_versions   = Channel.empty()
+    ch_versions  = Channel.empty()
     sp_csv       = Channel.empty()
     tc_csv       = Channel.empty()
     irmsd_csv    = Channel.empty()
     tcs_csv      = Channel.empty()
     eval_summary = Channel.empty()
 
+    // ----------------------
+    // Decompress if required
+    // ----------------------
+    if( !params.no_compression ){
+        PIGZ_UNCOMPRESS(ch_msa)
+        ch_msa = PIGZ_UNCOMPRESS.out.file
+        ch_versions = ch_versions.mix(PIGZ_UNCOMPRESS.out.versions)
+    }
 
-    // -------------------------------------------
+
+    // --------------------------
     // Reference based evaluation
-    // -------------------------------------------
+    // --------------------------
     alignment_and_ref = ch_references.map { meta,ref -> [ meta.id, ref ] }
                             .cross (ch_msa.map { meta, aln -> [ meta.id, meta, aln ] })
                             .map { chref, chaln -> [ chaln[1], chaln[2], chref[1]  ] }

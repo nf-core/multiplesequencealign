@@ -27,11 +27,11 @@ On release, automated continuous integration tests run the pipeline on a full-si
 
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 
-1. **Collect Input Information**: computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc. Skip by --skip_stats.
+1. **Collect Input Information**: computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc. Skip by `--skip_stats` as a parameter.
 2. **Guide Tree**: (Optional, depends on alignment tools requirement) Renders a guide tree.
 3. **Align**: Runs one or multiple MSA tools in parallel.
-4. **Evaluate**: The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skip by --skip_eval.
-5. **Compress**: As the final MSA files are very large, compression tools will be used before storing the final result. Skip by --skip_compress.
+4. **Evaluate**: The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skip by passing `--skip_eval` as a parameter.
+5. **Compress**: As MSAs can be very large, by default all tools in the pipeline produce compressed output. For most of them, the compression happens through a pipe, such that uncompressed data never hits the disk. This compression can be turned off by passing `--no_compression` as a parameter.
 
 Available GUIDE TREE methods:
 

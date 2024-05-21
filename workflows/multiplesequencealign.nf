@@ -58,7 +58,6 @@ include { PREPARE_SHINY   } from '../modules/local/prepare_shiny'
 //
 
 include { UNTAR                          } from '../modules/nf-core/untar/main'
-include { ZIP                            } from '../modules/nf-core/zip/main'
 include { CSVTK_JOIN as MERGE_STATS_EVAL } from '../modules/nf-core/csvtk/join/main.nf'
 
 /*
@@ -216,14 +215,6 @@ workflow MULTIPLESEQUENCEALIGN {
         stats_and_evaluation_summary = stats_and_evaluation
     }
 
-
-    //
-    // MODULE: zip
-    //
-    if( !params.skip_compress ){
-        ZIP(ALIGN.out.msa)
-        ch_versions = ch_versions.mix(ZIP.out.versions)
-    }
 
     //
     // MODULE: Shiny

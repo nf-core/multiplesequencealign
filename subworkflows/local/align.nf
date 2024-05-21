@@ -26,6 +26,8 @@ workflow ALIGN {
 
     ch_versions = Channel.empty()
 
+    compress = ! params.no_compression
+
     // Branch the toolsheet information into two channels
     // This way, it can direct the computation of guidetrees
     // and aligners separately
@@ -87,7 +89,7 @@ workflow ALIGN {
                                         fasta: [ meta, fastafile ]
                                         tree:  [ meta, treefile ]
                                 }
-    CLUSTALO_ALIGN(ch_fasta_trees_clustalo.fasta, ch_fasta_trees_clustalo.tree)
+    CLUSTALO_ALIGN(ch_fasta_trees_clustalo.fasta, ch_fasta_trees_clustalo.tree, compress)
     ch_versions = ch_versions.mix(CLUSTALO_ALIGN.out.versions.first())
     msa = CLUSTALO_ALIGN.out.alignment
 
@@ -99,7 +101,7 @@ workflow ALIGN {
                                     tree:  [ meta, treefile  ]
                                 }
 
-    FAMSA_ALIGN(ch_fasta_trees_famsa.fasta, ch_fasta_trees_famsa.tree)
+    FAMSA_ALIGN(ch_fasta_trees_famsa.fasta, ch_fasta_trees_famsa.tree, compress)
     ch_versions = ch_versions.mix(FAMSA_ALIGN.out.versions.first())
     msa = msa.mix(FAMSA_ALIGN.out.alignment)
 
@@ -109,7 +111,7 @@ workflow ALIGN {
                                     meta, fastafile, treefile ->
                                         fasta: [ meta, fastafile ]
                                 }
-    KALIGN_ALIGN(ch_fasta_kalign.fasta)
+    KALIGN_ALIGN(ch_fasta_kalign.fasta, compress)
     ch_versions = ch_versions.mix(KALIGN_ALIGN.out.versions.first())
 
     // ---------------- LEARNMSA  ----------------------
@@ -118,7 +120,7 @@ workflow ALIGN {
                                     meta, fastafile, treefile ->
                                         fasta: [ meta, fastafile ]
                                 }
-    LEARNMSA_ALIGN(ch_fasta_learnmsa.fasta)
+    LEARNMSA_ALIGN(ch_fasta_learnmsa.fasta, compress)
     ch_versions = ch_versions.mix(LEARNMSA_ALIGN.out.versions.first())
 
     // ---------------- MAFFT -----------------------
@@ -127,7 +129,7 @@ workflow ALIGN {
                                     meta, fastafile, treefile ->
                                         fasta: [ meta, fastafile ]
                                 }
-    MAFFT(ch_fasta_mafft.fasta, [ [:], [] ], [ [:], [] ], [ [:], [] ], [ [:], [] ], [ [:], [] ])
+    MAFFT(ch_fasta_mafft.fasta, [ [:], [] ], [ [:], [] ], [ [:], [] ], [ [:], [] ], [ [:], [] ], compress)
     ch_versions = ch_versions.mix(MAFFT.out.versions.first())
 
     // -----------------  TCOFFEE  ------------------
@@ -137,7 +139,7 @@ workflow ALIGN {
                                         fasta: [ meta, fastafile ]
                                         tree: [ meta, treefile ]
                                 }
-    TCOFFEE_ALIGN(ch_fasta_trees_tcoffee.fasta, ch_fasta_trees_tcoffee.tree,  [ [:], [], [] ])
+    TCOFFEE_ALIGN(ch_fasta_trees_tcoffee.fasta, ch_fasta_trees_tcoffee.tree,  [[:],[], []], compress)
     ch_versions = ch_versions.mix(TCOFFEE_ALIGN.out.versions.first())
     msa = msa.mix(TCOFFEE_ALIGN.out.alignment)
 
@@ -145,13 +147,12 @@ workflow ALIGN {
     ch_fasta_trees_3dcoffee = ch_fasta_trees.tcoffee3d.map{ meta, fasta, tree -> [meta["id"], meta, fasta, tree] }
                                 .combine(ch_structures.map{ meta, template, structures -> [meta["id"], template, structures]}, by: 0)
                                 .multiMap{
-                                            merging_id, meta, fastafile, treefile, templatefile, structuresfiles ->
-                                                fasta:      [ meta, fastafile       ]
-                                                tree:       [ meta, treefile        ]
-                                                structures: [ meta, templatefile, structuresfiles ]
-                                }
-
-    TCOFFEE3D_ALIGN(ch_fasta_trees_3dcoffee.fasta, ch_fasta_trees_3dcoffee.tree, ch_fasta_trees_3dcoffee.structures)
+                                                                merging_id, meta, fastafile, treefile, templatefile, structuresfiles ->
+                                                                fasta:      [ meta, fastafile       ]
+                                                                tree:       [ meta, treefile        ]
+                                                                structures: [ meta, templatefile, structuresfiles ]
+                                                            }
+    TCOFFEE3D_ALIGN(ch_fasta_trees_3dcoffee.fasta, ch_fasta_trees_3dcoffee.tree, ch_fasta_trees_3dcoffee.structures, compress)
     ch_versions = ch_versions.mix(TCOFFEE3D_ALIGN.out.versions.first())
     msa = msa.mix(TCOFFEE3D_ALIGN.out.alignment)
 
@@ -162,7 +163,7 @@ workflow ALIGN {
                                         fasta: [ meta, fastafile ]
                                         tree:  [ meta, treefile ]
                                 }
-    REGRESSIVE_ALIGN(ch_fasta_trees_regressive.fasta, ch_fasta_trees_regressive.tree, [ [:],[], [] ])
+    REGRESSIVE_ALIGN(ch_fasta_trees_regressive.fasta, ch_fasta_trees_regressive.tree, [[:],[], []], compress)
     ch_versions = ch_versions.mix(REGRESSIVE_ALIGN.out.versions.first())
     msa = msa.mix(REGRESSIVE_ALIGN.out.alignment)
 
@@ -173,7 +174,7 @@ workflow ALIGN {
                                     meta, fastafile, treefile ->
                                         fasta: [ meta, fastafile ]
                                 }
-    MUSCLE5_SUPER5(ch_fasta_muscle5.fasta)
+    MUSCLE5_SUPER5(ch_fasta_muscle5.fasta, compress)
     ch_versions = ch_versions.mix(MUSCLE5_SUPER5.out.versions.first())
     msa = msa.mix(MUSCLE5_SUPER5.out.alignment.first())
 
