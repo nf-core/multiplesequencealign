@@ -24,6 +24,7 @@ workflow ALIGN {
 
     main:
 
+    msa         = Channel.empty()
     ch_versions = Channel.empty()
 
     compress = ! params.no_compression
@@ -91,7 +92,7 @@ workflow ALIGN {
                                 }
     CLUSTALO_ALIGN(ch_fasta_trees_clustalo.fasta, ch_fasta_trees_clustalo.tree, compress)
     ch_versions = ch_versions.mix(CLUSTALO_ALIGN.out.versions.first())
-    msa = CLUSTALO_ALIGN.out.alignment
+    msa = msa.mix(CLUSTALO_ALIGN.out.alignment)
 
     // -----------------   FAMSA ---------------------
     ch_fasta_trees_famsa = ch_fasta_trees.famsa
@@ -113,6 +114,7 @@ workflow ALIGN {
                                 }
     KALIGN_ALIGN(ch_fasta_kalign.fasta, compress)
     ch_versions = ch_versions.mix(KALIGN_ALIGN.out.versions.first())
+    msa = msa.mix(KALIGN_ALIGN.out.alignment)
 
     // ---------------- LEARNMSA  ----------------------
     ch_fasta_learnmsa = ch_fasta_trees.learnmsa
@@ -122,6 +124,7 @@ workflow ALIGN {
                                 }
     LEARNMSA_ALIGN(ch_fasta_learnmsa.fasta, compress)
     ch_versions = ch_versions.mix(LEARNMSA_ALIGN.out.versions.first())
+    msa = msa.mix(LEARNMSA_ALIGN.out.alignment)
 
     // ---------------- MAFFT -----------------------
     ch_fasta_mafft = ch_fasta_trees.mafft
@@ -131,6 +134,7 @@ workflow ALIGN {
                                 }
     MAFFT(ch_fasta_mafft.fasta, [ [:], [] ], [ [:], [] ], [ [:], [] ], [ [:], [] ], [ [:], [] ], compress)
     ch_versions = ch_versions.mix(MAFFT.out.versions.first())
+    msa = msa.mix(MAFFT.out.fas) // the MAFFT module calls its output fas instead of alignment
 
     // -----------------  TCOFFEE  ------------------
     ch_fasta_trees_tcoffee = ch_fasta_trees.tcoffee
