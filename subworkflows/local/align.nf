@@ -197,16 +197,6 @@ workflow ALIGN {
     msa = msa.mix(REGRESSIVE_ALIGN.out.alignment)
 
 
-    // -----------------  MUSCLE5  ------------------
-    ch_fasta_muscle5 = ch_fasta_trees.muscle5
-                                .multiMap{
-                                    meta, fastafile, treefile ->
-                                        fasta: [ meta, fastafile ]
-                                }
-    MUSCLE5_SUPER5(ch_fasta_muscle5.fasta, compress)
-    ch_versions = ch_versions.mix(MUSCLE5_SUPER5.out.versions.first())
-    msa = msa.mix(MUSCLE5_SUPER5.out.alignment.first())
-
     // -----------------  MTMALIGN  ------------------
     // this call discards the fasta, tree and template arguments, as MTMalign only takes pdb inputs
     // nonetheless, this is required by the pipeline
