@@ -52,6 +52,7 @@ Available ALIGN methods:
 - TCOFFEE
 - 3DCOFFEE
 
+
 ## Usage
 
 > [!NOTE]
