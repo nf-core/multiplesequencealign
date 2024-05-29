@@ -16,6 +16,7 @@ include {   MUSCLE5_SUPER5                    } from '../../modules/nf-core/musc
 include {   TCOFFEE_ALIGN                     } from '../../modules/nf-core/tcoffee/align/main'
 include {   TCOFFEE_ALIGN as TCOFFEE3D_ALIGN  } from '../../modules/nf-core/tcoffee/align/main'
 include {   TCOFFEE_ALIGN as REGRESSIVE_ALIGN } from '../../modules/nf-core/tcoffee/align/main'
+include {   MTMALIGN_ALIGN                    } from '../../modules/nf-core/mtmalign/align/main'
 
 workflow ALIGN {
     take:
@@ -75,6 +76,7 @@ workflow ALIGN {
             mafft:               it[0]["aligner"] == "MAFFT"
             magus:               it[0]["aligner"] == "MAGUS"
             muscle5:             it[0]["aligner"] == "MUSCLE5"
+            mtmalign:            it[0]["aligner"] == "MTMALIGN"
             tcoffee:             it[0]["aligner"] == "TCOFFEE"
             tcoffee3d:           it[0]["aligner"] == "3DCOFFEE"
             regressive:          it[0]["aligner"] == "REGRESSIVE"
@@ -195,7 +197,23 @@ workflow ALIGN {
     msa = msa.mix(REGRESSIVE_ALIGN.out.alignment)
 
 
+    // -----------------  MTMALIGN  ------------------
+    // this call discards the fasta, tree and template arguments, as MTMalign only takes pdb inputs
+    // nonetheless, this is required by the pipeline
+    ch_pdb_mtmalign = ch_fasta_trees.mtmalign.map{ meta, fasta, tree -> [meta["id"], meta] }
+                                .combine(ch_structures.map{ meta, template, structures -> [meta["id"], structures]}, by: 0)
+                                .multiMap{
+                                            merging_id, meta, templatefile, structuresfiles ->
+                                                pdbs: [ meta, structuresfiles ]
+                                }
+
+    MTMALIGN_ALIGN(ch_pdb_mtmalign.pdbs, false)
+    ch_versions = ch_versions.mix(MTMALIGN_ALIGN.out.versions.first())
+    msa = msa.mix(MTMALIGN_ALIGN.out.alignment)
+
+
     emit:
     msa
     versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
 }
+
