@@ -24,7 +24,7 @@ jobs:
     strategy:
       matrix:
         NXF_VER:
-          - "24.04.1"
+          - "23.04.0"
           - "latest-everything"
     steps:
       - name: Check out pipeline code
@@ -49,7 +49,7 @@ jobs:
     strategy:
       matrix:
         NXF_VER:
-          - "24.04.1"
+          - "23.04.0"
           - "latest-everything"
     steps:
       - name: Check out pipeline code
