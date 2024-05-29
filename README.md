@@ -49,7 +49,7 @@ Available ALIGN methods:
 - MAGUS
 - MUSCLE5
 - MTMALIGN
-- TCOFFEE
+- T-COFFEE
 - 3DCOFFEE
 
 ## Usage
