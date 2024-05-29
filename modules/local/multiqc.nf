@@ -1,10 +1,8 @@
 process MULTIQC {
     label 'process_medium'
 
-    conda 'bioconda::multiqc=1.21'
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/multiqc:1.21--pyhdfd78af_0' :
-        'biocontainers/multiqc:1.21--pyhdfd78af_0' }"
+    conda 'bioconda::multiqc=1.22.1'
+    container "community.wave.seqera.io/library/pip_multiqc:2c2e276ad8997cc4"
 
     input:
     path multiqc_config
