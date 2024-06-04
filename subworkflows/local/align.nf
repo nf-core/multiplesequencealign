@@ -21,15 +21,23 @@ include {   MTMALIGN_ALIGN                    } from '../../modules/nf-core/mtma
 workflow ALIGN {
     take:
     ch_fastas      //      channel: meta, /path/to/file.fasta
-    ch_tools       //      string:
+    ch_tools       //      channel: meta_tree, meta_aligner
+                   //      [[tree:<tree>, args_tree:<args_tree>, args_tree_clean: <args_tree_clean>], [aligner:<aligner>, args_aligner:<args_aligner>, args_aligner_clean:<args_aligner_clean>]]
+                   //      e.g.[[tree:FAMSA, args_tree:-gt upgma -parttree, args_tree_clean:-gt_upgma_-parttree], [aligner:FAMSA, args_aligner:null, args_aligner_clean:null]]
+                   //      e.g.[[tree:null, args_tree:null, args_tree_clean:null], [aligner:TCOFFEE, args_aligner:-output fasta_aln, args_aligner_clean:-output_fasta_aln]]
     ch_structures  //      channel: meta, [/path/to/file.pdb,/path/to/file.pdb,/path/to/file.pdb]
+    compress
+    // tree
+    // args_tree
+    // args_tree_clean
+    // aligner
+    // args_aligner
+    // args_aligner_clean
 
     main:
 
     msa         = Channel.empty()
     ch_versions = Channel.empty()
-
-    compress = ! params.no_compression
 
     // Branch the toolsheet information into two channels
     // This way, it can direct the computation of guidetrees
@@ -77,15 +85,27 @@ workflow ALIGN {
             magus:               it[0]["aligner"] == "MAGUS"
             muscle5:             it[0]["aligner"] == "MUSCLE5"
             mtmalign:            it[0]["aligner"] == "MTMALIGN"
+            regressive:          it[0]["aligner"] == "REGRESSIVE"
             tcoffee:             it[0]["aligner"] == "TCOFFEE"
             tcoffee3d:           it[0]["aligner"] == "3DCOFFEE"
-            regressive:          it[0]["aligner"] == "REGRESSIVE"
         }
         .set { ch_fasta_trees }
+
+    ch_structures.combine(ch_tools)
+        .map {
+            metastruct, template, struct, metatree, metaalign ->
+                [ metastruct+metatree+metaalign, template, struct ]
+        }
+        .branch{
+            mtmalign:            it[0]["aligner"] == "MTMALIGN"        
+        }
+        .set { ch_structures_tools }
 
     // ------------------------------------------------
     // Compute the alignments
     // ------------------------------------------------
+
+    // 1. SEQUENCE BASED
 
     // -----------------  CLUSTALO ------------------
     ch_fasta_trees_clustalo = ch_fasta_trees.clustalo
@@ -172,6 +192,19 @@ workflow ALIGN {
     ch_versions = ch_versions.mix(TCOFFEE_ALIGN.out.versions.first())
     msa = msa.mix(TCOFFEE_ALIGN.out.alignment)
 
+    // -----------------  REGRESSIVE  ------------------
+    ch_fasta_trees_regressive = ch_fasta_trees.regressive
+                                .multiMap{
+                                    meta, fastafile, treefile ->
+                                        fasta: [ meta, fastafile ]
+                                        tree:  [ meta, treefile ]
+                                }
+    REGRESSIVE_ALIGN(ch_fasta_trees_regressive.fasta, ch_fasta_trees_regressive.tree, [[:],[], []], compress)
+    ch_versions = ch_versions.mix(REGRESSIVE_ALIGN.out.versions.first())
+    msa = msa.mix(REGRESSIVE_ALIGN.out.alignment)
+
+    // 2. SEQUENCE + STRUCTURE BASED
+
     // -----------------  3DCOFFEE  ------------------
     ch_fasta_trees_3dcoffee = ch_fasta_trees.tcoffee3d.map{ meta, fasta, tree -> [meta["id"], meta, fasta, tree] }
                                 .combine(ch_structures.map{ meta, template, structures -> [meta["id"], template, structures]}, by: 0)
@@ -185,29 +218,17 @@ workflow ALIGN {
     ch_versions = ch_versions.mix(TCOFFEE3D_ALIGN.out.versions.first())
     msa = msa.mix(TCOFFEE3D_ALIGN.out.alignment)
 
-    // -----------------  REGRESSIVE  ------------------
-    ch_fasta_trees_regressive = ch_fasta_trees.regressive
-                                .multiMap{
-                                    meta, fastafile, treefile ->
-                                        fasta: [ meta, fastafile ]
-                                        tree:  [ meta, treefile ]
-                                }
-    REGRESSIVE_ALIGN(ch_fasta_trees_regressive.fasta, ch_fasta_trees_regressive.tree, [[:],[], []], compress)
-    ch_versions = ch_versions.mix(REGRESSIVE_ALIGN.out.versions.first())
-    msa = msa.mix(REGRESSIVE_ALIGN.out.alignment)
 
+    // 3. STRUCTURE BASED
 
     // -----------------  MTMALIGN  ------------------
-    // this call discards the fasta, tree and template arguments, as MTMalign only takes pdb inputs
-    // nonetheless, this is required by the pipeline
-    ch_pdb_mtmalign = ch_fasta_trees.mtmalign.map{ meta, fasta, tree -> [meta["id"], meta] }
-                                .combine(ch_structures.map{ meta, template, structures -> [meta["id"], structures]}, by: 0)
-                                .multiMap{
-                                            merging_id, meta, templatefile, structuresfiles ->
-                                                pdbs: [ meta, structuresfiles ]
-                                }
+    ch_structures_tools.mtmalign
+                    .multiMap{
+                        meta, template, struct ->
+                            pdbs: [ meta, struct ]
+                    }.set{ ch_pdb_mtmalign }
 
-    MTMALIGN_ALIGN(ch_pdb_mtmalign.pdbs, false)
+    MTMALIGN_ALIGN(ch_pdb_mtmalign.pdbs, compress)
     ch_versions = ch_versions.mix(MTMALIGN_ALIGN.out.versions.first())
     msa = msa.mix(MTMALIGN_ALIGN.out.alignment)
 

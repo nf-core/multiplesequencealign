@@ -31,7 +31,8 @@
                         "git_sha": "614abbf126f287a3068dc86997b2e1b6a93abe20",
                         "installed_by": [
                             "modules"
-                        ]
+                        ],
+                        "patch": "modules/nf-core/csvtk/join/csvtk-join.diff"
                     },
                     "famsa/align": {
                         "branch": "master",
@@ -91,7 +92,7 @@
                     },
                     "mtmalign/align": {
                         "branch": "master",
-                        "git_sha": "5caf7640a9ef1d18d765d55339be751bb0969dfa",
+                        "git_sha": "e2ea4d9fd6f326d51e468edc4b9cb1d6d4082be5",
                         "installed_by": [
                             "modules"
                         ]

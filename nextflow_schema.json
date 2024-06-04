@@ -151,12 +151,16 @@
         "compression": {
             "title": "Compression",
             "type": "object",
-            "description": "Define wether to run compression",
+            "description": "Define wether and how to run compression",
             "default": "",
             "properties": {
-                "no_compression": {
+                "skip_compression": {
                     "type": "boolean",
                     "description": "Produce uncompressed alignment files"
+                },
+                "compress_after_eval": {
+                    "type": "boolean",
+                    "description": "Defines that the compression should be done after the evaluation"
                 }
             }
         },

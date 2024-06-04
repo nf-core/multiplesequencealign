@@ -33,7 +33,7 @@ workflow EVALUATE {
     // ----------------------
     // Decompress if required
     // ----------------------
-    if( !params.no_compression ){
+    if( !params.skip_compression ){
         PIGZ_UNCOMPRESS(ch_msa)
         ch_msa = PIGZ_UNCOMPRESS.out.file
         ch_versions = ch_versions.mix(PIGZ_UNCOMPRESS.out.versions)

@@ -104,5 +104,5 @@ workflow STATS {
 
     emit:
     stats_summary
-    versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
+    versions         = ch_versions
 }

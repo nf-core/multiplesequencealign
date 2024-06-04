@@ -76,7 +76,7 @@ workflow PIPELINE_INITIALISATION {
     //
     // Custom validation for pipeline parameters
     //
-    validateInputParameters()
+    //validateInputParameters()
 
     //
     // Create channel from input file provided through params.input
@@ -164,10 +164,11 @@ workflow PIPELINE_COMPLETION {
 //
 // Check and validate pipeline parameters
 //
-def validateInputParameters() {
-    statsParamsWarning()
-    evalParamsWarning()
-}
+// def validateInputParameters() {
+//     statsParamsWarning()
+//     evalParamsWarning()
+//     compressionParams()
+// }
 
 //
 // Validate channels from input samplesheet
@@ -225,12 +226,24 @@ def evalParamsWarning() {
     }
     if (!params.skip_eval && !params.calc_sp && !params.calc_tc && !params.calc_irmsd ){
             params.skip_eval = true
+            print(params.skip_eval)
+            print("-----------------------------")
             def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
                     "  WARNING: The param skip_eval has been changed from false to true'.\n" +
                     "  None of the modules withing the stats subworkflow was activated.  \n" +
                     "  To activate them you can use param.calc_sp, params.calc_tc, params.calc_irmsd.  \n" +
                     "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
             println(warning_string)
+    }
+}
+
+def compressionParams(){
+    if(!params.skip_compression){
+        if(!params.skip_eval){
+            params.compress_after_eval = true
+            print("Hey")
+            print(params.compress_after_eval)
+        }
     }
 }
 

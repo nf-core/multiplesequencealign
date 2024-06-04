@@ -1,0 +1,4 @@
+tree,args_tree,aligner,args_aligner
+FAMSA,-gt upgma -parttree,FAMSA,
+,,TCOFFEE,-output fasta_aln
+,,MTMALIGN,,

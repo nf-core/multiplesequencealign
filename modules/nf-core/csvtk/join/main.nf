@@ -22,12 +22,17 @@ process CSVTK_JOIN {
     prefix = task.ext.prefix ?: "${meta.id}"
     out_extension = args.contains('--out-delimiter "\t"') || args.contains('-D "\t"') || args.contains("-D \$'\t'") ? "tsv" : "csv"
     """
+    
+    # if the input is horter than 2, add an emtpy file as the second input
+    touch empty.csv
+
     csvtk \\
         join \\
         $args \\
         --num-cpus $task.cpus \\
         --out-file ${prefix}.${out_extension} \\
-        $csv
+        $csv \\
+        empty.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

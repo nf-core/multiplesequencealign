@@ -1,7 +1,7 @@
 process MULTIQC {
     label 'process_medium'
 
-    conda 'bioconda::multiqc=1.22.1'
+    conda 'bioconda::multiqc=1.22.2'
     container "community.wave.seqera.io/library/multiqc:1.22.1--4886de6095538010"
 
     input:
