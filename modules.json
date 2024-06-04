@@ -111,6 +111,13 @@
                             "modules"
                         ]
                     },
+                    "pigz/compress": {
+                        "branch": "master",
+                        "git_sha": "0eab94fc1e48703c1b0a8704bd665f554905c39d",
+                        "installed_by": [
+                            "modules"
+                        ]
+                    },
                     "pigz/uncompress": {
                         "branch": "master",
                         "git_sha": "d7f0de8aae7bf84b080dfdcf4e294bf11a46a51c",

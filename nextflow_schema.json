@@ -157,10 +157,6 @@
                 "skip_compression": {
                     "type": "boolean",
                     "description": "Produce uncompressed alignment files"
-                },
-                "compress_after_eval": {
-                    "type": "boolean",
-                    "description": "Defines that the compression should be done after the evaluation"
                 }
             }
         },

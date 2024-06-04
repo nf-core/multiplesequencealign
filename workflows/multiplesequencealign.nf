@@ -61,6 +61,7 @@ include { PREPARE_SHINY   } from '../modules/local/prepare_shiny'
 
 include { UNTAR                          } from '../modules/nf-core/untar/main'
 include { CSVTK_JOIN as MERGE_STATS_EVAL } from '../modules/nf-core/csvtk/join/main.nf'
+include { PIGZ_COMPRESS                  } from '../modules/nf-core/pigz/compress/main'                                                                                                                                            
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -181,10 +182,15 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // Align
     //
-
-    compress_during_align = ! params.skip_compression && !params.compress_after_eval
+    
+    compress_during_align = !params.skip_compression && params.skip_eval
     ALIGN(ch_seqs, ch_tools, ch_structures_template, compress_during_align)
     ch_versions = ch_versions.mix(ALIGN.out.versions)
+
+    if( !params.skip_compression && !compress_during_align){
+        PIGZ_COMPRESS(ALIGN.out.msa)
+        ch_versions = ch_versions.mix(PIGZ_COMPRESS.out.versions)
+    }
 
     //
     // Evaluate the quality of the alignment
@@ -195,6 +201,7 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_versions        = ch_versions.mix(EVALUATE.out.versions)
         evaluation_summary = evaluation_summary.mix(EVALUATE.out.eval_summary)
     }
+
 
     //
     // Combine stats and evaluation reports into a single CSV
