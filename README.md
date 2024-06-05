@@ -93,6 +93,7 @@ The reference MSAs (see samplesheet) are be used to evaluate the quality of the 
 **STRUCTURE-BASED**:
 
 The provided structures (see samplesheet) are used to evaluate the quality of the alignment. 
+
 4. iRMSD. Calculates the iRMSD using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) implementation. Activate using `--calc_irmsd` (default: false).
 
 
