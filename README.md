@@ -60,7 +60,7 @@ Available GUIDE TREE methods (Optional):
 
 Available ALIGN methods:
 
-SEQUENCE-BASED (only require a fasta file as input):
+**SEQUENCE-BASED** (only require a fasta file as input):
 - [CLUSTALO](http://clustal.org/omega/#Documentation) (accepts guide tree)
 - [FAMSA](https://github.com/refresh-bio/FAMSA) (accepts guide tree)
 - [KALIGN](https://github.com/TimoLassmann/kalign)
@@ -70,26 +70,28 @@ SEQUENCE-BASED (only require a fasta file as input):
 - [MUSCLE5](https://drive5.com/muscle5/manual/)
 - [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) (accepts guide tree)
 
-SEQUENCE- and STUCTURE-BASED (require both fasta and structures as input):
+**SEQUENCE- and STRUCTURE-BASED** (require both fasta and structures as input):
 - [3DCOFFEE](https://tcoffee.org/Projects/expresso/index.html) (accepts guide tree)
 
-STRUCTURE-BASED (only require stuctures as input):
+**STRUCTURE-BASED** (only require stuctures as input):
 - [MTMALIGN](https://bio.tools/mtm-align) 
 
 ### 4. EVALUATE
 
 Optionally, the produced MSAs can be evaluated. Skip with `--skip_eval`.
 
-SEQUENCE-BASED (no extra input required): 
+**SEQUENCE-BASED** (no extra input required): 
 1. Calculate number of gaps and its average across sequences. Activate using `--calc_gaps` (default: true).
 
-REFERENCE-BASED: 
+**REFERENCE-BASED**: 
+
 The reference MSAs (see samplesheet) are be used to evaluate the quality of the produced MSA. 
 
 2. Sum Of Pairs. Calculates the SP score using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) implementation. Activate using `--calc_sp` (default: true).
 3. Total column. Calculates the TC score [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html). Activate using `--calc_tc` (default: true).
 
-STRUCTURE-BASED:
+**STRUCTURE-BASED**:
+
 The provided structures (see samplesheet) are used to evaluate the quality of the alignment. 
 4. iRMSD. Calculates the iRMSD using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) implementation. Activate using `--calc_irmsd` (default: false).
 
