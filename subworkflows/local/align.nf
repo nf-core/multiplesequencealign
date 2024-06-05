@@ -235,6 +235,6 @@ workflow ALIGN {
 
     emit:
     msa
-    versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
+    versions         = ch_versions       // channel: [ versions.yml ]
 }
 
