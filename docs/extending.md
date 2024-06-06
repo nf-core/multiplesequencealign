@@ -16,7 +16,6 @@ Useful resources are:
 The pipeline consists of four different subworkflows, one for computing the guidetrees of guidetree-based methods, one for performing the MSAs, one for evaluating the produced MSAs and one for computing statistics about the input dataset.
 The subworkflows are to a significant degree isolated from each other, and not all of them may run in any given execution of the pipeline.
 
-
 ## Adding an aligner
 
 1. Create a local or nf-core module and ensure the output is in FASTA format

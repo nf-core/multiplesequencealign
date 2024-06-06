@@ -28,7 +28,7 @@
                 "type": "string"
             }
         },
-        "required": ["id"], 
+        "required": ["id"],
         "anyOf": [{ "required": ["fasta"] }, { "required": ["structures"] }]
     }
 }

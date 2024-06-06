@@ -11,12 +11,12 @@ The directories listed below will be created in the results directory after the 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
 1. **Input files summary**: (Optional) computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc. Skip by `--skip_stats` as a parameter.
-2. **Guide Tree**: (Optional) Renders a guide tree. 
+2. **Guide Tree**: (Optional) Renders a guide tree.
 3. **Align**: aligns the sequences.
 4. **Evaluate**: (Optional) The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skip by passing `--skip_eval` as a parameter.
 5. **Report**: Reports about the collected information of the runs are reported in a shiny app and a summary table in multiqc. Skip by passing `--skip_shiny` and `--skip_multiqc`.
 
-## Summary statistics of input files
+## Input files summary
 
 The stats.nf subworkflow collects statistics about the input files and summarizes them into a final csv file.
 
@@ -31,7 +31,6 @@ The stats.nf subworkflow collects statistics about the input files and summarize
   - `structures/` - `plddt/*_full_plddt.csv`: file containing the plddt of the structures for each sequence in the input file. If `--extract_plddt` is specified.
   </details>
 
-
 ## Trees
 
 If you explicitly specifified (via the toolsheet) to compute guidetrees to be used by the MSA tool, those are stored here.
@@ -44,7 +43,6 @@ If you explicitly specifified (via the toolsheet) to compute guidetrees to be us
 
 </details>
 
-
 ## Alignment
 
 All MSA computed are stored here.
@@ -53,16 +51,15 @@ All MSA computed are stored here.
 <summary>Output files</summary>
 
 - `alignment/`
-  - `*/*.fa`: each subdirectory is called as the input file. It contains all the alignments computed on it. The filename contains all the informations of the input file used and the tool.
+  - `*/*.fa`: each subdirectory is named after the sample id. It contains all the alignments computed on it. The filename contains all the informations of the input file used and the tool.
     The file naming convention is:
     {Input*file}*{Tree}_args-{Tree_args}_{MSA}\_args-{MSA_args}.aln
 
 </details>
 
-
 ## Evaluation
 
-Stores the files with the summary of the computed evaluation statistics.
+Files with the summary of the computed evaluation statistics.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -73,7 +70,7 @@ Stores the files with the summary of the computed evaluation statistics.
   - `complete_summary_eval.csv`: csv file containing the summary of all evaluation metrics for each input file.
   </details>
 
-## shiny_app
+## Shiny App
 
 <details markdown="1">
 <summary>Output files</summary>

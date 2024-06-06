@@ -26,7 +26,7 @@ jobs:
         NXF_VER:
           - "24.04.1"
           - "latest-everything"
-        ANALYSIS: 
+        ANALYSIS:
           - "test"
           - "test_pdb"
           - "test_parameters"
@@ -60,7 +60,7 @@ jobs:
           - "--skip_eval"
           - "--skip_compression"
           - "--skip_shiny"
-          
+
     steps:
       - name: Check out pipeline code
         uses: actions/checkout@v4

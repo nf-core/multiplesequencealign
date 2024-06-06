@@ -1,6 +1,5 @@
 
 
-include { PIGZ_UNCOMPRESS                             } from '../../modules/nf-core/pigz/uncompress/main.nf'
 include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_SP } from '../../modules/nf-core/tcoffee/alncompare'
 include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_TC } from '../../modules/nf-core/tcoffee/alncompare'
 include { TCOFFEE_IRMSD                               } from '../../modules/nf-core/tcoffee/irmsd'

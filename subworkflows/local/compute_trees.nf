@@ -4,8 +4,6 @@
 
 include { FAMSA_GUIDETREE    } from '../../modules/nf-core/famsa/guidetree/main'
 include { CLUSTALO_GUIDETREE } from '../../modules/nf-core/clustalo/guidetree/main'
-include { MAGUS_GUIDETREE    } from '../../modules/nf-core/magus/guidetree/main'
-
 
 workflow COMPUTE_TREES {
 

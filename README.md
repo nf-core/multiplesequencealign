@@ -23,22 +23,23 @@
 
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 
-In a nutshell, the pipeline performs the following streos: 
-1. **Input files summary**: (Optional) computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc.
-2. **Guide Tree**: (Optional) Renders a guide tree. 
-3. **Align**: aligns the sequences.
-4. **Evaluate**: (Optional) The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.
-5. **Report**: Reports about the collected information of the runs are reported in a shiny app and a summary table in multiqc.
+In a nutshell, the pipeline performs the following steps:
+
+1. **Input files summary**: (Optional) computation of summary statistics on the input files, such as the average sequence similarity across the input sequences, their length, plddt extraction if available, etc.
+2. **Guide Tree**: (Optional) Renders a guide tree.
+3. **Align**: (Required) Aligns the sequences.
+4. **Evaluate**: (Optional) Evaluates the generated alignments with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.
+5. **Report**: Reports the collected information of the runs in a shiny app and a summary table in MultiQC.
 
 ## Usage
 
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-
 #### 1. SAMPLESHEET
-The sample sheet defines the input data that the pipeline will process. 
-It should look like this: 
+
+The sample sheet defines the input data that the pipeline will process.
+It should look like this:
 
 `samplesheet.csv`:
 
@@ -53,26 +54,26 @@ Each row represents a set of sequences (in this case the seatoxin and toxin prot
 > [!NOTE]
 > The only required input is the id column and either fasta or structures.
 
-
 #### 2. TOOLSHEET
 
-Each line of the toolsheet defines a combination of guide tree and multiple sequence aligner to run with the respective arguments to be used. 
+Each line of the toolsheet defines a combination of guide tree and multiple sequence aligner to run with the respective arguments to be used.
 
-It should look at foollows: 
+It should look at foollows:
 
 `toolsheet.csv`:
 
 ```csv
 tree,args_tree,aligner,args_aligner,
 FAMSA, -gt upgma -medoidtree, FAMSA,
-, ,TCOFFEE, 
+, ,TCOFFEE,
 FAMSA,,REGRESSIVE,
 ```
+
 > [!NOTE]
 > The only required input is aligner.
 
-
 #### 3. RUN THE PIPELINE
+
 Now, you can run the pipeline using:
 
 ```bash
@@ -89,15 +90,15 @@ nextflow run nf-core/multiplesequencealign \
 
 For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/multiplesequencealign/usage) and the [parameter documentation](https://nf-co.re/multiplesequencealign/parameters).
 
-## Extending the pipeline
-
-For details on how to add your favourite guide tree/MSA/evaluation step in nf-core/multiplesequencealign please refer to [extending documentation](https://github.com/luisas/multiplesequencealign/blob/luisa_patch/docs/extending.md).
-
 ## Pipeline output
 
 To see the results of an example test run with a full size dataset refer to the [results](https://nf-co.re/multiplesequencealign/results) tab on the nf-core website pipeline page.
 For more details about the output files and reports, please refer to the
 [output documentation](https://nf-co.re/multiplesequencealign/output).
+
+## Extending the pipeline
+
+For details on how to add your favourite guide tree/MSA/evaluation step in nf-core/multiplesequencealign please refer to [extending documentation](https://github.com/luisas/multiplesequencealign/blob/luisa_patch/docs/extending.md).
 
 ## Credits
 
