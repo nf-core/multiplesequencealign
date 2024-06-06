@@ -108,9 +108,8 @@
                     },
                     "tcoffee/seqreformat": {
                         "branch": "master",
-                        "git_sha": "b04c647f465bea2c5bb9871503182236cd65b246",
-                        "installed_by": ["modules"],
-                        "patch": "modules/nf-core/tcoffee/seqreformat/tcoffee-seqreformat.diff"
+                        "git_sha": "32ae618a60a25a870b5fa47ea2060ddcd911ab53",
+                        "installed_by": ["modules"]
                     },
                     "tcoffee/tcs": {
                         "branch": "master",
