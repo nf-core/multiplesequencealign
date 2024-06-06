@@ -34,7 +34,7 @@ process CALCULATE_SEQSTATS {
     """
 
     stub:
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
     touch ${prefix}_seqstats.csv
     touch ${prefix}_seqstats_summary.csv
