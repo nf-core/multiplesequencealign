@@ -61,7 +61,7 @@ include { PREPARE_SHINY   } from '../modules/local/prepare_shiny'
 
 include { UNTAR                          } from '../modules/nf-core/untar/main'
 include { CSVTK_JOIN as MERGE_STATS_EVAL } from '../modules/nf-core/csvtk/join/main.nf'
-include { PIGZ_COMPRESS                  } from '../modules/nf-core/pigz/compress/main'                                                                                                                                 
+include { PIGZ_COMPRESS                  } from '../modules/nf-core/pigz/compress/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

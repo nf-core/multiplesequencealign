@@ -10,7 +10,7 @@ process PARSE_SIM {
     tuple val(meta), path(infile)
 
     output:
-    tuple val (meta), path("${prefix}.sim_tot"), emit: sim_tot
+    tuple val (meta), path("*.sim_tot"), emit: sim_tot
     path "versions.yml", emit: versions
 
     when:
@@ -36,7 +36,7 @@ process PARSE_SIM {
     """
 
     stub:
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
     touch ${prefix}.sim_tot
 

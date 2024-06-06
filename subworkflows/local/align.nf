@@ -91,7 +91,7 @@ workflow ALIGN {
                 [ metastruct+metatree+metaalign, template, struct ]
         }
         .branch{
-            mtmalign:            it[0]["aligner"] == "MTMALIGN"        
+            mtmalign:            it[0]["aligner"] == "MTMALIGN"
         }
         .set { ch_structures_tools }
 
