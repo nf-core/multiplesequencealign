@@ -16,7 +16,7 @@ process TCOFFEE_ALIGN {
     output:
     tuple val(meta), path("*.aln{.gz,}"), emit: alignment
     // in the args there might be the request to generate a lib file, so the following is an optional output
-    tuple val(meta), path("*    lib")   , emit: lib, optional : true
+    tuple val(meta), path("*.*lib")     , emit: lib, optional : true
     path "versions.yml"                 , emit: versions
 
     when:
@@ -38,7 +38,7 @@ process TCOFFEE_ALIGN {
         -thread ${task.cpus} \
         -outfile $outfile \
         $write_output
-    
+
     # If stdout file exist and compress is true, then compress the file
     # This is a patch for the current behaviour of the regressive algorithm
     # that does not support the stdout redirection

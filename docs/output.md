@@ -10,16 +10,20 @@ The directories listed below will be created in the results directory after the 
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
-- [FastQC](#fastqc) - Raw read QC
-- [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
-- [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
+1. **Input files summary**: (Optional) computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc. Skip by `--skip_stats` as a parameter.
+2. **Guide Tree**: (Optional) Renders a guide tree. 
+3. **Align**: aligns the sequences.
+4. **Evaluate**: (Optional) The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skip by passing `--skip_eval` as a parameter.
+5. **Report**: Reports about the collected information of the runs are reported in a shiny app and a summary table in multiqc. Skip by passing `--skip_shiny` and `--skip_multiqc`.
 
 ## Summary statistics of input files
+
+The stats.nf subworkflow collects statistics about the input files and summarizes them into a final csv file.
 
 <details markdown="1">
 <summary>Output files</summary>
 
-- `stats/`
+- `summary/stats/`
   - `complete_summary_stats.csv`: csv file containing the summary for all the statistics computed on the input file.
   - `sequences/`
     - `seqstats/*_seqstats.csv`: file containing the sequence input length for each sequence in the family defined by the file name. If `--calc_seq_stats` is specified.
@@ -27,21 +31,23 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
   - `structures/` - `plddt/*_full_plddt.csv`: file containing the plddt of the structures for each sequence in the input file. If `--extract_plddt` is specified.
   </details>
 
-The stats.nf subworkflow collects statistics about the input files and summarizes them into a final csv file.
 
 ## Trees
+
+If you explicitly specifified (via the toolsheet) to compute guidetrees to be used by the MSA tool, those are stored here.
 
 <details markdown="1">
 <summary>Output files</summary>
 
 - `trees/`
-  - `*.dnd`: guide tree files.
+  - `*/*.dnd`: guide tree files.
 
 </details>
 
-If you explicitly specifified (via the toolsheet) to compute guidetrees to be used by the MSA tool, those are stored here.
 
 ## Alignment
+
+All MSA computed are stored here.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -53,9 +59,10 @@ If you explicitly specifified (via the toolsheet) to compute guidetrees to be us
 
 </details>
 
-All MSA computed are stored here.
 
 ## Evaluation
+
+Stores the files with the summary of the computed evaluation statistics.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -83,7 +90,7 @@ To run the shiny app:
 `cd shiny_app`
 `./run.sh`
 
-Be aware that you have to have shiny installed to access this feature.
+Be aware that you have to have [shiny](https://shiny.posit.co/py/) installed to access this feature.
 
 ### MultiQC
 

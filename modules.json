@@ -127,7 +127,7 @@
                     },
                     "tcoffee/align": {
                         "branch": "master",
-                        "git_sha": "5c82ca0a942f2793859bb2f25601eb69c50590dc",
+                        "git_sha": "1cacaceabae75b0c3bc393dee52cb6a5020fcb5c",
                         "installed_by": [
                             "modules"
                         ]
@@ -155,7 +155,7 @@
                     },
                     "tcoffee/tcs": {
                         "branch": "master",
-                        "git_sha": "2d5ea4959c36da8c21e74a0c5e8ecc6b101b999e",
+                        "git_sha": "1cacaceabae75b0c3bc393dee52cb6a5020fcb5c",
                         "installed_by": [
                             "modules"
                         ]
