@@ -389,7 +389,7 @@ class Utils {
         // 3DCOFFEE
         args = fix_args(tool,args,"3DCOFFEE", "-method", "TMalign_pair")
         args = fix_args(tool,args,"3DCOFFEE", "-output", "fasta_aln")
-        
+
         // REGRESSIVE
         args = fix_args(tool,args,"REGRESSIVE", "-reg", "")
         args = fix_args(tool,args,"REGRESSIVE", "-reg_method", "famsa_msa")

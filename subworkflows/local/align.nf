@@ -20,19 +20,13 @@ include {   MTMALIGN_ALIGN                    } from '../../modules/nf-core/mtma
 
 workflow ALIGN {
     take:
-    ch_fastas      //      channel: meta, /path/to/file.fasta
-    ch_tools       //      channel: meta_tree, meta_aligner
-                   //      [[tree:<tree>, args_tree:<args_tree>, args_tree_clean: <args_tree_clean>], [aligner:<aligner>, args_aligner:<args_aligner>, args_aligner_clean:<args_aligner_clean>]]
-                   //      e.g.[[tree:FAMSA, args_tree:-gt upgma -parttree, args_tree_clean:-gt_upgma_-parttree], [aligner:FAMSA, args_aligner:null, args_aligner_clean:null]]
-                   //      e.g.[[tree:null, args_tree:null, args_tree_clean:null], [aligner:TCOFFEE, args_aligner:-output fasta_aln, args_aligner_clean:-output_fasta_aln]]
-    ch_structures  //      channel: meta, [/path/to/file.pdb,/path/to/file.pdb,/path/to/file.pdb]
+    ch_fastas       //      channel: meta, /path/to/file.fasta
+    ch_tools        //      channel: meta_tree, meta_aligner
+                    //      [[tree:<tree>, args_tree:<args_tree>, args_tree_clean: <args_tree_clean>], [aligner:<aligner>, args_aligner:<args_aligner>, args_aligner_clean:<args_aligner_clean>]]
+                    //      e.g.[[tree:FAMSA, args_tree:-gt upgma -parttree, args_tree_clean:-gt_upgma_-parttree], [aligner:FAMSA, args_aligner:null, args_aligner_clean:null]]
+                    //      e.g.[[tree:null, args_tree:null, args_tree_clean:null], [aligner:TCOFFEE, args_aligner:-output fasta_aln, args_aligner_clean:-output_fasta_aln]]
+    ch_structures   //      channel: meta, [/path/to/file.pdb,/path/to/file.pdb,/path/to/file.pdb]
     compress
-    // tree
-    // args_tree
-    // args_tree_clean
-    // aligner
-    // args_aligner
-    // args_aligner_clean
 
     main:
 
