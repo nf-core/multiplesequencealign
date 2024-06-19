@@ -34,12 +34,13 @@ process CALCULATE_SEQSTATS {
     """
 
     stub:
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
     touch ${prefix}_seqstats.csv
     touch ${prefix}_seqstats_summary.csv
     touch ${prefix}_multiqc.tsv
 
+    cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         python: \$(python --version | sed 's/Python //g')
     END_VERSIONS

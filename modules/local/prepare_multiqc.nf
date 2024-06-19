@@ -30,7 +30,7 @@ process PREPARE_MULTIQC {
     """
 
     stub:
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
     touch ${prefix}_multiqc_table.csv
 

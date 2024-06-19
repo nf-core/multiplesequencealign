@@ -35,7 +35,7 @@ process CALC_GAPS {
     """
 
     stub:
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
     touch ${prefix}_gaps.csv
 

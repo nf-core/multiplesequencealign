@@ -26,6 +26,10 @@ jobs:
         NXF_VER:
           - "24.04.1"
           - "latest-everything"
+        ANALYSIS:
+          - "test"
+          - "test_pdb"
+          - "test_parameters"
     steps:
       - name: Check out pipeline code
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
@@ -40,9 +44,9 @@ jobs:
 
       - name: Run pipeline with test data
         run: |
-          nextflow run ${GITHUB_WORKSPACE} -profile test,docker --outdir ./results
+          nextflow run ${GITHUB_WORKSPACE} -profile ${{ matrix.ANALYSIS }},docker --outdir ./results
 
-  parameters:
+  parameters_stub:
     name: Test workflow parameters
     if: "${{ github.event_name != 'push' || (github.event_name == 'push' && github.repository == 'nf-core/multiplesequencealign') }}"
     runs-on: ubuntu-latest
@@ -51,6 +55,12 @@ jobs:
         NXF_VER:
           - "24.04.1"
           - "latest-everything"
+        PARAMS:
+          - "--skip_stats"
+          - "--skip_eval"
+          - "--skip_compression"
+          - "--skip_shiny"
+
     steps:
       - name: Check out pipeline code
         uses: actions/checkout@v4
@@ -62,4 +72,4 @@ jobs:
 
       - name: Test workflow parameters
         run: |
-          nextflow run ${GITHUB_WORKSPACE} -profile test_parameters,docker --outdir ./results
+          nextflow run -stub-run ${GITHUB_WORKSPACE} -profile test,docker ${{ matrix.PARAMS }} --outdir ./results

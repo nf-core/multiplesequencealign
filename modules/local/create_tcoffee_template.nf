@@ -30,7 +30,7 @@ process CREATE_TCOFFEETEMPLATE {
     """
 
     stub:
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
     touch ${prefix}_template.txt
 

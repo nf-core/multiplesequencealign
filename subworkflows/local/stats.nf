@@ -17,16 +17,16 @@ workflow STATS {
 
     main:
 
-    ch_versions = Channel.empty()
-    sim_csv = Channel.empty()
-    seqstats_csv = Channel.empty()
-    plddts_csv = Channel.empty()
+    ch_versions   = Channel.empty()
+    sim_csv       = Channel.empty()
+    seqstats_csv  = Channel.empty()
+    plddts_csv    = Channel.empty()
     stats_summary = Channel.empty()
 
     // // -------------------------------------------
     // //      SEQUENCE SIMILARITY
     // // -------------------------------------------
-    if( params.calc_sim == true){
+    if( params.calc_sim){
         TCOFFEE_SEQREFORMAT_SIM(ch_seqs)
         tcoffee_seqreformat_sim = TCOFFEE_SEQREFORMAT_SIM.out.formatted_file
         ch_versions = ch_versions.mix(TCOFFEE_SEQREFORMAT_SIM.out.versions.first())
@@ -48,7 +48,7 @@ workflow STATS {
     //      SEQUENCE GENERAL STATS
     //      Sequence length, # of sequences, etc
     // -------------------------------------------
-    if( params.calc_seq_stats == true){
+    if( params.calc_seq_stats){
         CALCULATE_SEQSTATS(ch_seqs)
         seqstats = CALCULATE_SEQSTATS.out.seqstats
         seqstats_summary = CALCULATE_SEQSTATS.out.seqstats_summary
@@ -69,7 +69,7 @@ workflow STATS {
     // -------------------------------------------
     //      EXTRACT PLDDT
     // -------------------------------------------
-    if (params.extract_plddt == true){
+    if (params.extract_plddt){
         EXTRACT_PLDDT(ch_structures)
         ch_versions = ch_versions.mix(EXTRACT_PLDDT.out.versions)
         plddt_summary = EXTRACT_PLDDT.out.plddt_summary
@@ -104,5 +104,5 @@ workflow STATS {
 
     emit:
     stats_summary
-    versions         = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
+    versions         = ch_versions
 }

@@ -2,3 +2,4 @@ repository_type: pipeline
 nf_core_version: "2.14.1"
 lint:
   multiqc_config: False
+  files_exist: conf/igenomes.config

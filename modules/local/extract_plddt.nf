@@ -40,9 +40,10 @@ process EXTRACT_PLDDT {
     """
 
     stub:
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    prefix = task.ext.prefix ?: "${meta.id}"
     """
-    touch ${prefix}_plddt.csv
+    touch ${prefix}_plddt_summary.csv
+    touch ${prefix}_full_plddt.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

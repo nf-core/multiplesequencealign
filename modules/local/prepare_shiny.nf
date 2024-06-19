@@ -39,6 +39,7 @@ process PREPARE_SHINY {
     """
     touch shiny_data.csv
     touch shiny_app.R
+    touch run.sh
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

@@ -73,10 +73,6 @@ workflow PIPELINE_INITIALISATION {
     UTILS_NFCORE_PIPELINE (
         nextflow_cli_args
     )
-    //
-    // Custom validation for pipeline parameters
-    //
-    validateInputParameters()
 
     //
     // Create channel from input file provided through params.input
@@ -98,7 +94,7 @@ workflow PIPELINE_INITIALISATION {
                         align_map["args_aligner_clean"] = Utils.cleanArgs(align_map["args_aligner"])
 
                         [ tree_map, align_map ]
-                }
+                }.unique()
 
     emit:
     samplesheet = ch_input
@@ -162,12 +158,6 @@ workflow PIPELINE_COMPLETION {
 ========================================================================================
 */
 //
-// Check and validate pipeline parameters
-//
-def validateInputParameters() {
-    statsParamsWarning()
-    evalParamsWarning()
-}
 
 //
 // Validate channels from input samplesheet
@@ -184,55 +174,6 @@ def validateInputSamplesheet(input) {
     return [ metas[0], fastqs ]
 }
 
-//
-// Warning if incorrect combination of stats parameters are used
-//
-def statsParamsWarning() {
-    if (params.skip_stats){
-        if(params.calc_sim || params.calc_seq_stats) {
-            def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-                "  WARNING: The param skip_stats is set to '${params.skip_stats}'.\n" +
-                "  The following params have values calc_sim: ${params.calc_sim} and calc_seq_stats: ${params.calc_seq_stats} \n" +
-                "  As skip_stats is set to true, the params.calc_sim and params.calc_seq_stats will be set by default to false. \n" +
-                "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-            println(warning_string)
-        }
-    }
-    if (!params.skip_stats && !params.calc_sim && !params.calc_seq_stats){
-        params.skip_stats = true
-        def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-                "  WARNING: The param skip_stats has been changed from false to true'.\n" +
-                "  None of the modules withing the stats subworkflow was activated.  \n" +
-                "  To activate them you can use param.calc_sim, params.calc_seq_stats.  \n" +
-                "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        println(warning_string)
-    }
-}
-
-//
-// Warning if incorrect combination of eval parameters are used
-//
-def evalParamsWarning() {
-    if (params.skip_eval){
-        if(params.calc_sp || params.calc_tc || params.calc_irmsd) {
-            def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-                "  WARNING: The param skip_eval is set to '${params.skip_eval}'.\n" +
-                "  The following params have values params.calc_sp: ${params.calc_sp}, params.calc_tc: ${params.calc_tc} and params.calc_irms: ${params.calc_irmsd} \n" +
-                "  As skip_eval is set to true, the params.calc_sp, params.calc_tc and params.calc_irmsd are set by default to false. \n" +
-                "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-            println(warning_string)
-        }
-    }
-    if (!params.skip_eval && !params.calc_sp && !params.calc_tc && !params.calc_irmsd ){
-            params.skip_eval = true
-            def warning_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-                    "  WARNING: The param skip_eval has been changed from false to true'.\n" +
-                    "  None of the modules withing the stats subworkflow was activated.  \n" +
-                    "  To activate them you can use param.calc_sp, params.calc_tc, params.calc_irmsd.  \n" +
-                    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-            println(warning_string)
-    }
-}
 
 //
 // Generate methods description for MultiQC
@@ -432,16 +373,23 @@ class Utils {
                 if(args == null || args == ""|| args == "null"){
                     args = ""
                 }
-                args = args + " " + required_flag + " " + default_value
+                def prefix = ""
+                if(args != ""){
+                    prefix = args + " "
+                }
+                args = prefix + required_flag + " " + default_value
             }
         }
         return args
     }
 
+
     public static check_required_args(tool,args){
 
         // 3DCOFFEE
         args = fix_args(tool,args,"3DCOFFEE", "-method", "TMalign_pair")
+        args = fix_args(tool,args,"3DCOFFEE", "-output", "fasta_aln")
+
         // REGRESSIVE
         args = fix_args(tool,args,"REGRESSIVE", "-reg", "")
         args = fix_args(tool,args,"REGRESSIVE", "-reg_method", "famsa_msa")

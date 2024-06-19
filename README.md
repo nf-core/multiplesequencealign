@@ -21,43 +21,25 @@
 
 **nf-core/multiplesequencealign** is a pipeline to deploy and systematically evaluate Multiple Sequence Alignment (MSA) methods.
 
-The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. Where possible, these processes have been submitted to and installed from [nf-core/modules](https://github.com/nf-core/modules) in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!
-
-On release, automated continuous integration tests run the pipeline on a full-sized dataset on the AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources.The results obtained from the full-sized test can be viewed on the [nf-core website](https://nf-co.re/proteinfold/results).
-
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 
-1. **Collect Input Information**: computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc. Skip by `--skip_stats` as a parameter.
-2. **Guide Tree**: (Optional, depends on alignment tools requirement) Renders a guide tree.
-3. **Align**: Runs one or multiple MSA tools in parallel.
-4. **Evaluate**: The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skip by passing `--skip_eval` as a parameter.
-5. **Compress**: As MSAs can be very large, by default all tools in the pipeline produce compressed output. For most of them, the compression happens through a pipe, such that uncompressed data never hits the disk. This compression can be turned off by passing `--no_compression` as a parameter.
+In a nutshell, the pipeline performs the following steps:
 
-Available GUIDE TREE methods:
-
-- CLUSTALO
-- FAMSA
-- MAGUS
-
-Available ALIGN methods:
-
-- CLUSTALO
-- FAMSA
-- KALIGN
-- LEARNMSA
-- MAFFT
-- MAGUS
-- MUSCLE5
-- MTMALIGN
-- T-COFFEE
-- 3DCOFFEE
+1. **Input files summary**: (Optional) computation of summary statistics on the input files, such as the average sequence similarity across the input sequences, their length, plddt extraction if available, etc.
+2. **Guide Tree**: (Optional) Renders a guide tree with a chosen tool (list available below). Some aligners use guide trees to define the order in which the sequences are aligned.
+3. **Align**: (Required) Aligns the sequences with a chosen tool (list available below).
+4. **Evaluate**: (Optional) Evaluates the generated alignments with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.
+5. **Report**: Reports the collected information of the runs in a shiny app and a summary table in MultiQC.
 
 ## Usage
 
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-First, prepare a samplesheet with your input data that looks as follows:
+#### 1. SAMPLESHEET
+
+The sample sheet defines the input data that the pipeline will process.
+It should look like this:
 
 `samplesheet.csv`:
 
@@ -67,33 +49,30 @@ seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures
 toxin,toxin.fa,toxin-ref.fa,toxin_structures
 ```
 
-Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be processed.
+Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be aligned and the associated (if available) reference alignments and protein structure files.
 
-`id` is the name of the set of sequences. It can correspond to the protein family name or to an internal id.
+> [!NOTE]
+> The only required input is the id column and either fasta or structures.
 
-The column `fasta` contains the path to the fasta file that contains the sequences.
+#### 2. TOOLSHEET
 
-The column `reference` is optional and contains the path to the reference alignment. It is used for certain evaluation steps. It can be left empty.
+Each line of the toolsheet defines a combination of guide tree and multiple sequence aligner to run with the respective arguments to be used.
 
-The column `structures` is also optional and contains the path to the folder that contains the protein structures for the sequences to be aligned. It is used for structural aligners and certain evaluation steps. It can be left empty.
-
-Then, you should prepare a toolsheet which defines which tools to run as follows:
+It should look at follows:
 
 `toolsheet.csv`:
 
 ```csv
 tree,args_tree,aligner,args_aligner,
-FAMSA, -gt upgma -partree, FAMSA,
-, ,TCOFFEE, -output fasta_aln
+FAMSA, -gt upgma -medoidtree, FAMSA,
+, ,TCOFFEE,
+FAMSA,,REGRESSIVE,
 ```
 
-`tree` is the tool used to build the tree.
+> [!NOTE]
+> The only required input is aligner.
 
-Arguments to the tree tool can be provided using `args_tree`.
-
-The `aligner` column contains the tool to run the alignment.
-
-Finally, the arguments to the aligner tool can be set by using the `args_alginer` column.
+#### 3. RUN THE PIPELINE
 
 Now, you can run the pipeline using:
 
@@ -116,6 +95,10 @@ For more details and further functionality, please refer to the [usage documenta
 To see the results of an example test run with a full size dataset refer to the [results](https://nf-co.re/multiplesequencealign/results) tab on the nf-core website pipeline page.
 For more details about the output files and reports, please refer to the
 [output documentation](https://nf-co.re/multiplesequencealign/output).
+
+## Extending the pipeline
+
+For details on how to add your favourite guide tree/MSA/evaluation step in nf-core/multiplesequencealign please refer to [extending documentation](https://github.com/luisas/multiplesequencealign/blob/luisa_patch/docs/extending.md).
 
 ## Credits
 

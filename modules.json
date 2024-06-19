@@ -17,13 +17,14 @@
                     },
                     "csvtk/concat": {
                         "branch": "master",
-                        "git_sha": "3f5420aa22e00bd030a2556dfdffc9e164ec0ec5",
+                        "git_sha": "cfe2a24902bfdfe8132f11461ffda92d257f9f09",
                         "installed_by": ["modules"]
                     },
                     "csvtk/join": {
                         "branch": "master",
-                        "git_sha": "3f5420aa22e00bd030a2556dfdffc9e164ec0ec5",
-                        "installed_by": ["modules"]
+                        "git_sha": "614abbf126f287a3068dc86997b2e1b6a93abe20",
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/csvtk/join/csvtk-join.diff"
                     },
                     "famsa/align": {
                         "branch": "master",
@@ -67,7 +68,7 @@
                     },
                     "mtmalign/align": {
                         "branch": "master",
-                        "git_sha": "faf557ba56156ac0e5de76a25c1e3df11c944f59",
+                        "git_sha": "7bfb142c3729c1c76198c237a614215d92fe935c",
                         "installed_by": ["modules"]
                     },
                     "multiqc": {
@@ -80,6 +81,11 @@
                         "git_sha": "faf557ba56156ac0e5de76a25c1e3df11c944f59",
                         "installed_by": ["modules"]
                     },
+                    "pigz/compress": {
+                        "branch": "master",
+                        "git_sha": "0eab94fc1e48703c1b0a8704bd665f554905c39d",
+                        "installed_by": ["modules"]
+                    },
                     "pigz/uncompress": {
                         "branch": "master",
                         "git_sha": "d7f0de8aae7bf84b080dfdcf4e294bf11a46a51c",
@@ -87,7 +93,7 @@
                     },
                     "tcoffee/align": {
                         "branch": "master",
-                        "git_sha": "c65917d37cdaa9d6c26fccf8f7c313aab1a51d8a",
+                        "git_sha": "1cacaceabae75b0c3bc393dee52cb6a5020fcb5c",
                         "installed_by": ["modules"]
                     },
                     "tcoffee/alncompare": {
@@ -102,12 +108,12 @@
                     },
                     "tcoffee/seqreformat": {
                         "branch": "master",
-                        "git_sha": "b04c647f465bea2c5bb9871503182236cd65b246",
+                        "git_sha": "32ae618a60a25a870b5fa47ea2060ddcd911ab53",
                         "installed_by": ["modules"]
                     },
                     "tcoffee/tcs": {
                         "branch": "master",
-                        "git_sha": "2d5ea4959c36da8c21e74a0c5e8ecc6b101b999e",
+                        "git_sha": "1cacaceabae75b0c3bc393dee52cb6a5020fcb5c",
                         "installed_by": ["modules"]
                     },
                     "untar": {

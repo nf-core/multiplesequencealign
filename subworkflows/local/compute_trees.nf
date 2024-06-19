@@ -4,8 +4,6 @@
 
 include { FAMSA_GUIDETREE    } from '../../modules/nf-core/famsa/guidetree/main'
 include { CLUSTALO_GUIDETREE } from '../../modules/nf-core/clustalo/guidetree/main'
-include { MAGUS_GUIDETREE    } from '../../modules/nf-core/magus/guidetree/main'
-
 
 workflow COMPUTE_TREES {
 
@@ -28,7 +26,6 @@ workflow COMPUTE_TREES {
         .branch {
             famsa:    it[0]["tree"] == "FAMSA"
             clustalo: it[0]["tree"] == "CLUSTALO"
-            magus:    it[0]["tree"] == "MAGUS"
         }
         .set { ch_fastas_fortrees }
 
@@ -40,11 +37,7 @@ workflow COMPUTE_TREES {
     ch_trees    = ch_trees.mix(CLUSTALO_GUIDETREE.out.tree)
     ch_versions = ch_versions.mix(CLUSTALO_GUIDETREE.out.versions.first())
 
-    MAGUS_GUIDETREE(ch_fastas_fortrees.clustalo)
-    ch_trees    = ch_trees.mix(MAGUS_GUIDETREE.out.tree)
-    ch_versions = ch_versions.mix(MAGUS_GUIDETREE.out.versions.first())
-
     emit:
     trees    = ch_trees                  // channel: [ val(meta), path(tree) ]
-    versions = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
+    versions = ch_versions               // channel: [ versions.yml ]
 }

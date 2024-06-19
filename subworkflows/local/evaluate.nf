@@ -1,6 +1,5 @@
 
 
-include { PIGZ_UNCOMPRESS                             } from '../../modules/nf-core/pigz/uncompress/main.nf'
 include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_SP } from '../../modules/nf-core/tcoffee/alncompare'
 include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_TC } from '../../modules/nf-core/tcoffee/alncompare'
 include { TCOFFEE_IRMSD                               } from '../../modules/nf-core/tcoffee/irmsd'
@@ -28,16 +27,8 @@ workflow EVALUATE {
     tc_csv       = Channel.empty()
     irmsd_csv    = Channel.empty()
     tcs_csv      = Channel.empty()
+    gaps_csv     = Channel.empty()
     eval_summary = Channel.empty()
-
-    // ----------------------
-    // Decompress if required
-    // ----------------------
-    if( !params.no_compression ){
-        PIGZ_UNCOMPRESS(ch_msa)
-        ch_msa = PIGZ_UNCOMPRESS.out.file
-        ch_versions = ch_versions.mix(PIGZ_UNCOMPRESS.out.versions)
-    }
 
 
     // --------------------------
@@ -49,7 +40,7 @@ workflow EVALUATE {
 
 
     // Sum of pairs
-    if( params.calc_sp == true){
+    if( params.calc_sp ){
         TCOFFEE_ALNCOMPARE_SP(alignment_and_ref)
         sp_scores = TCOFFEE_ALNCOMPARE_SP.out.scores
         ch_versions = ch_versions.mix(TCOFFEE_ALNCOMPARE_SP.out.versions.first())
@@ -65,7 +56,7 @@ workflow EVALUATE {
     }
 
     // Total column score
-    if( params.calc_tc == true){
+    if( params.calc_tc ){
         TCOFFEE_ALNCOMPARE_TC(alignment_and_ref)
         tc_scores = TCOFFEE_ALNCOMPARE_TC.out.scores
         ch_versions = ch_versions.mix(TCOFFEE_ALNCOMPARE_TC.out.versions.first())
@@ -81,7 +72,7 @@ workflow EVALUATE {
     }
 
     // number of gaps
-    if (params.calc_gaps == true){
+    if ( params.calc_gaps ){
         CALC_GAPS(ch_msa)
         gaps_scores = CALC_GAPS.out.gaps
         ch_versions = ch_versions.mix(CALC_GAPS.out.versions)
@@ -104,7 +95,7 @@ workflow EVALUATE {
     // -------------------------------------------
 
     // iRMSD
-    if (params.calc_irmsd == true){
+    if (params.calc_irmsd ){
         msa_str = ch_structures.map { meta, template, str -> [ meta.id, template, str ] }
                             .cross (ch_msa.map { meta, aln -> [ meta.id, meta, aln ] })
                             .multiMap { chstr, chaln ->
@@ -136,7 +127,7 @@ workflow EVALUATE {
     // -------------------------------------------
 
     // TCS
-    if( params.calc_tcs == true){
+    if( params.calc_tcs ){
         // the second argument is empty but a lib file can be fed to it
         TCOFFEE_TCS(ch_msa, [[:], []])
         tcs_scores = TCOFFEE_TCS.out.scores
@@ -179,6 +170,6 @@ workflow EVALUATE {
 
     emit:
     eval_summary
-    versions                    = ch_versions.ifEmpty(null) // channel: [ versions.yml ]
+    versions                    = ch_versions // channel: [ versions.yml ]
 
 }
