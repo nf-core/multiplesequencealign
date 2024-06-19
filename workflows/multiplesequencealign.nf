@@ -178,7 +178,6 @@ workflow MULTIPLESEQUENCEALIGN {
         stats_summary = stats_summary.mix(STATS.out.stats_summary)
     }
 
-
     //
     // Align
     //

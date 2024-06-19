@@ -14,11 +14,11 @@ The main steps of the pipeline are:
 2. **Guide Tree**: (Optional) Renders a guide tree.
 3. **Align**: aligns the sequences.
 4. **Evaluate**: (Optional) The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skip by passing `--skip_eval` as a parameter.
-5. **Report**: Reports about the collected information of the runs are reported in a shiny app and a summary table in multiqc. Skip by passing `--skip_shiny` and `--skip_multiqc`.
+5. **Report**: Reports about the collected information of the runs are reported in a Shiny app and a summary table in MultiQC. Skip by passing `--skip_shiny` and `--skip_multiqc`.
 
 ### 1. INPUT FILES SUMMARY
 
-Summary information about the input fasta files are calculated. Skip by `--skip_stats`.
+Summary information about the input fasta files is calculated. Skip by `--skip_stats`.
 
 1. Sequence similarity. Calculates pairwise and average sequence similarity is calculated using TCOFFEE. Activate with `--calc_sim` (default: false).
 2. General summary. Calculates the number and the average length of sequences. Activate with `--calc_seq_stats` (default: true).
@@ -69,10 +69,10 @@ Optionally, the produced MSAs can be evaluated. Skip with `--skip_eval`.
 
 **REFERENCE-BASED**:
 
-The reference MSAs (see samplesheet) are be used to evaluate the quality of the produced MSA.
+The reference MSAs (see samplesheet) are used to evaluate the quality of the produced MSA.
 
-2. Sum Of Pairs. Calculates the SP score using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) implementation. Activate using `--calc_sp` (default: true).
-3. Total column. Calculates the TC score [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html). Activate using `--calc_tc` (default: true).
+2. Sum Of Pairs (SP). Calculates the SP score using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) implementation. Activate using `--calc_sp` (default: true).
+3. Total column (TC). Calculates the TC score [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html). Activate using `--calc_tc` (default: true).
 
 **STRUCTURE-BASED**:
 
@@ -83,7 +83,7 @@ The provided structures (see samplesheet) are used to evaluate the quality of th
 ### 5. REPORT
 
 Finally, a summary table with all the computed statistics and evaluations is reported in MultiQC (Skip by `--skip_multiqc`).
-Moreover, a shiny app is prepared with interactive summary plots.
+Moreover, a Shiny app is generated with interactive summary plots.
 
 > [!WARNING]
 > You will need to have [shiny](https://shiny.posit.co/py/) installed to run it! See [output documentation](https://nf-co.re/multiplesequencealign/output) for more infos.
