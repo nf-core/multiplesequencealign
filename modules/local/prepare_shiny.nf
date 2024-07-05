@@ -24,7 +24,7 @@ process PREPARE_SHINY {
     prefix = task.ext.prefix ?: "${meta.id}"
     """
     cp $table shiny_data.csv
-    cp $app/* .
+    cp -r $app/* .
     rm $app
     echo "shiny run --reload shiny_app.py" > run.sh
     chmod +x run.sh
