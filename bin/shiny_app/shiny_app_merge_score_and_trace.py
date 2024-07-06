@@ -1,19 +1,25 @@
 import pandas as pd
+import re
 
-def convert_time(time):
-    if time is not None:
-        if "ms" in time:
-            time = time.replace('ms', '')
-            time = float(time)/60000
-        elif "s" in time:
-            time = time.replace('s', '')
-            time = float(time)/60
-        elif "m" in time:
-            time = time.replace('m', '')
-        elif "h" in time:
-            time = time.replace('h', '')
-            time = float(time)*60
-    return time
+def convert_time(time_str):
+    # Regular expression to match the time components
+    pattern = re.compile(r'((?P<hours>\d+)h)?\s*((?P<minutes>\d+)m)?\s*((?P<seconds>\d+)s)?\s*((?P<milliseconds>\d+)ms)?')
+    match = pattern.fullmatch(time_str.strip())
+
+    if not match:
+        raise ValueError("Time string is not in the correct format")
+
+    time_components = match.groupdict(default='0')
+
+    hours = int(time_components['hours'])
+    minutes = int(time_components['minutes'])
+    seconds = int(time_components['seconds'])
+    milliseconds = int(time_components['milliseconds'])
+
+    # Convert everything to minutes
+    total_minutes = (hours * 60) + minutes + (seconds / 60) + (milliseconds / 60000)
+
+    return total_minutes
 
 def convert_memory(memory):
     # from anything to GB
@@ -96,4 +102,3 @@ def merge_data_and_trace(data_file,trace_file,out_file_name):
 
     # write to file
     data_tree_align.to_csv(out_file_name, index=False)
-
