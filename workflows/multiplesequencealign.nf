@@ -10,7 +10,6 @@ include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pi
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_multiplesequencealign_pipeline'
 
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     CONFIG FILES
@@ -58,7 +57,6 @@ include { PREPARE_SHINY   } from '../modules/local/prepare_shiny'
 //
 // MODULE: Installed directly from nf-core/modules
 //
-
 include { UNTAR                          } from '../modules/nf-core/untar/main'
 include { CSVTK_JOIN as MERGE_STATS_EVAL } from '../modules/nf-core/csvtk/join/main.nf'
 include { PIGZ_COMPRESS                  } from '../modules/nf-core/pigz/compress/main'
@@ -151,15 +149,15 @@ workflow MULTIPLESEQUENCEALIGN {
     CREATE_TCOFFEETEMPLATE (
         ch_structures_branched.no_template
             .map {
-                meta,structures,template
-                    -> [ meta, structures ]
+                meta,structures,template ->
+                    [ meta, structures ]
             }
     )
     new_templates = CREATE_TCOFFEETEMPLATE.out.template
     ch_structures_branched.template
         .map{
-            meta,structures,template
-                -> [ meta, template ]
+            meta,structures,template -> 
+                [ meta, template ]
         }
         .set { forced_templates }
 
@@ -171,7 +169,6 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // Compute summary statistics about the input sequences
     //
-
     if( !params.skip_stats ){
         STATS(ch_seqs, ch_structures)
         ch_versions   = ch_versions.mix(STATS.out.versions)
@@ -181,7 +178,6 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // Align
     //
-
     compress_during_align = !params.skip_compression && params.skip_eval
     ALIGN(ch_seqs, ch_tools, ch_structures_template, compress_during_align)
     ch_versions = ch_versions.mix(ALIGN.out.versions)
@@ -194,18 +190,15 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // Evaluate the quality of the alignment
     //
-
     if( !params.skip_eval ){
         EVALUATE(ALIGN.out.msa, ch_refs, ch_structures_template)
         ch_versions        = ch_versions.mix(EVALUATE.out.versions)
         evaluation_summary = evaluation_summary.mix(EVALUATE.out.eval_summary)
     }
 
-
     //
     // Combine stats and evaluation reports into a single CSV
     //
-
     if( !params.skip_stats || !params.skip_eval ){
         stats_summary_csv = stats_summary.map{ meta, csv -> csv }
         eval_summary_csv  = evaluation_summary.map{ meta, csv -> csv }
@@ -268,8 +261,8 @@ workflow MULTIPLESEQUENCEALIGN {
     }
 
     emit:
-    versions         = ch_versions // channel: [ path(versions.yml) ]
-    multiqc          = multiqc_out
+    versions = ch_versions // channel: [ path(versions.yml) ]
+    multiqc  = multiqc_out // channel: [ path(multiqc_report.html) ]
 }
 
 
