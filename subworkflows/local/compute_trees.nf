@@ -8,8 +8,8 @@ include { CLUSTALO_GUIDETREE } from '../../modules/nf-core/clustalo/guidetree/ma
 workflow COMPUTE_TREES {
 
     take:
-    ch_fastas               //channel: [ meta, /path/to/file.fasta ]
-    tree_tools              //channel: [ meta ] ( tools to be run: meta.tree, meta.args_tree )
+    ch_fastas  //channel: [ meta, /path/to/file.fasta ]
+    tree_tools //channel: [ meta ] ( tools to be run: meta.tree, meta.args_tree )
 
     main:
     ch_versions = Channel.empty()

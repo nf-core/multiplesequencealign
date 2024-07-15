@@ -12,7 +12,7 @@ process PARSE_IRMSD {
 
     output:
     tuple val(meta), path("${prefix}.irmsd_tot"), emit: irmsd_tot
-    path "versions.yml", emit: versions
+    path "versions.yml"                         , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

@@ -11,7 +11,7 @@ process PARSE_SIM {
 
     output:
     tuple val (meta), path("*.sim_tot"), emit: sim_tot
-    path "versions.yml", emit: versions
+    path "versions.yml"                , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
