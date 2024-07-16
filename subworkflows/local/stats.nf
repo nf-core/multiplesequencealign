@@ -36,19 +36,19 @@ workflow STATS {
 
         tcoffee_seqreformat_simtot
             .map {
-                meta, csv -> 
+                meta, csv ->
                     csv
             }
             .collect()
             .map {
-                csv -> 
+                csv ->
                     [ [id:"summary_simstats"], csv ]
             }
             .set { ch_sim_summary }
 
         CONCAT_SIMSTATS (
-            ch_sim_summary, 
-            "csv", 
+            ch_sim_summary,
+            "csv",
             "csv"
         )
         sim_csv = sim_csv.mix(CONCAT_SIMSTATS.out.csv)
@@ -67,19 +67,19 @@ workflow STATS {
 
         seqstats_summary
             .map {
-                meta, csv -> 
+                meta, csv ->
                     csv
             }
             .collect()
             .map {
-                csv -> 
+                csv ->
                     [ [id:"summary_seqstats"], csv ]
             }
             .set { ch_seqstats_summary }
 
         CONCAT_SEQSTATS (
-            ch_seqstats_summary, 
-            "csv", 
+            ch_seqstats_summary,
+            "csv",
             "csv"
         )
         seqstats_csv = seqstats_csv.mix(CONCAT_SEQSTATS.out.csv)
@@ -93,21 +93,21 @@ workflow STATS {
         EXTRACT_PLDDT (ch_structures)
         ch_versions = ch_versions.mix(EXTRACT_PLDDT.out.versions)
         plddt_summary = EXTRACT_PLDDT.out.plddt_summary
- 
+
         plddt_summary
             .map {
                 meta, csv -> csv
             }
             .collect()
             .map {
-                csv -> 
+                csv ->
                     [ [id:"summary_plddts"], csv ]
             }
             .set { ch_plddts_summary }
 
         CONCAT_PLDDTS (
-            ch_plddts_summary, 
-            "csv", 
+            ch_plddts_summary,
+            "csv",
             "csv"
         )
         plddts_csv = plddts_csv.mix(CONCAT_PLDDTS.out.csv)
@@ -126,15 +126,15 @@ workflow STATS {
         .mix(seqstats)
         .mix(plddts)
         .collect()
-        .map { 
+        .map {
             csvs -> 
-                [ [id:"summary_stats"], csvs ] 
+                [ [id:"summary_stats"], csvs ]
         }
         .set { csvs_stats }
 
     def number_of_stats = [
-        params.calc_sim, 
-        params.calc_seq_stats, 
+        params.calc_sim,
+        params.calc_seq_stats,
         params.extract_plddt
     ].count{ it == true }
 

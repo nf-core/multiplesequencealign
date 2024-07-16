@@ -23,7 +23,7 @@ process CREATE_TCOFFEETEMPLATE {
     # Prepare templates
     for structure in \$(ls *.pdb); do
         id=`echo \$structure| awk  {'gsub(".pdb", "", \$0); print'}`
-        echo -e ">"\$id "_P_" "\${id}" >>${prefix}_template.txt 
+        echo -e ">"\$id "_P_" "\${id}" >>${prefix}_template.txt
     done
 
     cat <<-END_VERSIONS > versions.yml

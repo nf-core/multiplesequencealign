@@ -24,9 +24,9 @@ workflow ALIGN {
     take:
     ch_fastas     // channel: [ val(meta), [ path(fastas) ] ]
     ch_tools      // channel: [ val(meta_tree), val(meta_aligner) ]
-                  // [[tree:<tree>, args_tree:<args_tree>, args_tree_clean: <args_tree_clean>], [aligner:<aligner>, args_aligner:<args_aligner>, args_aligner_clean:<args_aligner_clean>]]
-                  // e.g.[[tree:FAMSA, args_tree:-gt upgma -parttree, args_tree_clean:-gt_upgma_-parttree], [aligner:FAMSA, args_aligner:null, args_aligner_clean:null]]
-                  // e.g.[[tree:null, args_tree:null, args_tree_clean:null], [aligner:TCOFFEE, args_aligner:-output fasta_aln, args_aligner_clean:-output_fasta_aln]]
+                    // [[tree:<tree>, args_tree:<args_tree>, args_tree_clean: <args_tree_clean>], [aligner:<aligner>, args_aligner:<args_aligner>, args_aligner_clean:<args_aligner_clean>]]
+                    // e.g.[[tree:FAMSA, args_tree:-gt upgma -parttree, args_tree_clean:-gt_upgma_-parttree], [aligner:FAMSA, args_aligner:null, args_aligner_clean:null]]
+                    // e.g.[[tree:null, args_tree:null, args_tree_clean:null], [aligner:TCOFFEE, args_aligner:-output fasta_aln, args_aligner_clean:-output_fasta_aln]]
     ch_structures // channel: meta, [/path/to/file.pdb,/path/to/file.pdb,/path/to/file.pdb]
     compress      // boolean: true or false
 
@@ -50,7 +50,7 @@ workflow ALIGN {
     // Compute the required trees
     // ------------------------------------------------
     COMPUTE_TREES (
-        ch_fastas, 
+        ch_fastas,
         ch_tools_split.tree.unique()
     )
     trees = COMPUTE_TREES.out.trees
@@ -107,7 +107,7 @@ workflow ALIGN {
 
     // 1. SEQUENCE BASED
 
-    // -----------------  CLUSTALO ------------------ 
+    // -----------------  CLUSTALO ------------------
     ch_fasta_trees.clustalo
         .multiMap {
             meta, fastafile, treefile ->
@@ -117,8 +117,8 @@ workflow ALIGN {
         .set { ch_fasta_trees_clustalo }
 
     CLUSTALO_ALIGN (
-        ch_fasta_trees_clustalo.fasta, 
-        ch_fasta_trees_clustalo.tree, 
+        ch_fasta_trees_clustalo.fasta,
+        ch_fasta_trees_clustalo.tree,
         compress
     )
     ch_msa = ch_msa.mix(CLUSTALO_ALIGN.out.alignment)
@@ -133,14 +133,14 @@ workflow ALIGN {
         }
         .set { ch_fasta_trees_famsa}
 
-    FAMSA_ALIGN (ch_fasta_trees_famsa.fasta, 
-        ch_fasta_trees_famsa.tree, 
+    FAMSA_ALIGN (ch_fasta_trees_famsa.fasta,
+        ch_fasta_trees_famsa.tree,
         compress
     )
     ch_msa = ch_msa.mix(FAMSA_ALIGN.out.alignment)
     ch_versions = ch_versions.mix(FAMSA_ALIGN.out.versions.first())
 
-    // ---------------- KALIGN  ----------------------- 
+    // ---------------- KALIGN  -----------------------
     ch_fasta_trees.kalign
         .multiMap {
             meta, fastafile, treefile ->
@@ -149,7 +149,7 @@ workflow ALIGN {
         .set { ch_fasta_kalign }
 
     KALIGN_ALIGN (
-        ch_fasta_kalign.fasta, 
+        ch_fasta_kalign.fasta,
         compress
     )
     ch_msa = ch_msa.mix(KALIGN_ALIGN.out.alignment)
@@ -164,7 +164,7 @@ workflow ALIGN {
         .set { ch_fasta_learnmsa }
 
     LEARNMSA_ALIGN (
-        ch_fasta_learnmsa.fasta, 
+        ch_fasta_learnmsa.fasta,
         compress
     )
     ch_msa = ch_msa.mix(LEARNMSA_ALIGN.out.alignment)
@@ -179,12 +179,12 @@ workflow ALIGN {
         .set { ch_fasta_mafft }
 
     MAFFT (
-        ch_fasta_mafft.fasta, 
-        [ [:], [] ], 
-        [ [:], [] ], 
-        [ [:], [] ], 
-        [ [:], [] ], 
-        [ [:], [] ], 
+        ch_fasta_mafft.fasta,
+        [ [:], [] ],
+        [ [:], [] ],
+        [ [:], [] ],
+        [ [:], [] ],
+        [ [:], [] ],
         compress
     )
     ch_msa = ch_msa.mix(MAFFT.out.fas) // the MAFFT module calls its output fas instead of alignment
@@ -200,8 +200,8 @@ workflow ALIGN {
         .set { ch_fasta_trees_magus }
 
     MAGUS_ALIGN (
-        ch_fasta_trees_magus.fasta, 
-        ch_fasta_trees_magus.tree, 
+        ch_fasta_trees_magus.fasta,
+        ch_fasta_trees_magus.tree,
         compress
     )
     ch_msa = ch_msa.mix(MAGUS_ALIGN.out.alignment)
@@ -216,7 +216,7 @@ workflow ALIGN {
         .set { ch_fasta_muscle5 }
 
     MUSCLE5_SUPER5 (
-        ch_fasta_muscle5.fasta, 
+        ch_fasta_muscle5.fasta,
         compress
     )
     ch_msa = ch_msa.mix(MUSCLE5_SUPER5.out.alignment.first())
@@ -232,15 +232,15 @@ workflow ALIGN {
         .set { ch_fasta_trees_tcoffee }
 
     TCOFFEE_ALIGN (
-        ch_fasta_trees_tcoffee.fasta, 
-        ch_fasta_trees_tcoffee.tree,  
-        [ [:], [], [] ], 
+        ch_fasta_trees_tcoffee.fasta,
+        ch_fasta_trees_tcoffee.tree,
+        [ [:], [], [] ],
         compress
     )
     ch_msa = ch_msa.mix(TCOFFEE_ALIGN.out.alignment)
     ch_versions = ch_versions.mix(TCOFFEE_ALIGN.out.versions.first())
 
-    // -----------------  REGRESSIVE  ------------------ 
+    // -----------------  REGRESSIVE  ------------------
     ch_fasta_trees.regressive
         .multiMap{
             meta, fastafile, treefile ->
@@ -250,9 +250,9 @@ workflow ALIGN {
         .set { ch_fasta_trees_regressive }
 
     REGRESSIVE_ALIGN (
-        ch_fasta_trees_regressive.fasta, 
-        ch_fasta_trees_regressive.tree, 
-        [ [:], [], [] ], 
+        ch_fasta_trees_regressive.fasta,
+        ch_fasta_trees_regressive.tree,
+        [ [:], [], [] ],
         compress
     )
     ch_msa = ch_msa.mix(REGRESSIVE_ALIGN.out.alignment)
@@ -273,14 +273,14 @@ workflow ALIGN {
         .set { ch_fasta_trees_3dcoffee }
 
     TCOFFEE3D_ALIGN (
-        ch_fasta_trees_3dcoffee.fasta, 
-        ch_fasta_trees_3dcoffee.tree, 
-        ch_fasta_trees_3dcoffee.structures, 
+        ch_fasta_trees_3dcoffee.fasta,
+        ch_fasta_trees_3dcoffee.tree,
+        ch_fasta_trees_3dcoffee.structures,
         compress
     )
     ch_msa = ch_msa.mix(TCOFFEE3D_ALIGN.out.alignment)
     ch_versions = ch_versions.mix(TCOFFEE3D_ALIGN.out.versions.first())
- 
+
     // 3. STRUCTURE BASED
 
     // -----------------  MTMALIGN  ------------------
@@ -292,7 +292,7 @@ workflow ALIGN {
         .set { ch_pdb_mtmalign }
 
     MTMALIGN_ALIGN (
-        ch_pdb_mtmalign.pdbs, 
+        ch_pdb_mtmalign.pdbs,
         compress
     )
     ch_msa = ch_msa.mix(MTMALIGN_ALIGN.out.alignment)

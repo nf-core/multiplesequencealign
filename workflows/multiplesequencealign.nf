@@ -69,7 +69,7 @@ workflow MULTIPLESEQUENCEALIGN {
     evaluation_summary           = Channel.empty()
     stats_summary                = Channel.empty()
     stats_and_evaluation_summary = Channel.empty()
-    ch_shiny_stats               = Channel.empty()   
+    ch_shiny_stats               = Channel.empty() 
 
     ch_input
         .map {
@@ -146,7 +146,7 @@ workflow MULTIPLESEQUENCEALIGN {
     new_templates = CREATE_TCOFFEETEMPLATE.out.template
     ch_structures_branched.template
         .map {
-            meta,structures,template -> 
+            meta,structures,template ->
                 [ meta, template ]
         }
         .set { forced_templates }
@@ -173,9 +173,9 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     compress_during_align = !params.skip_compression && params.skip_eval
     ALIGN (
-        ch_seqs, 
-        ch_tools, 
-        ch_structures_template, 
+        ch_seqs,
+        ch_tools,
+        ch_structures_template,
         compress_during_align
     )
     ch_versions = ch_versions.mix(ALIGN.out.versions)
@@ -217,7 +217,7 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     if (!params.skip_shiny) {
         shiny_app = Channel.fromPath(params.shiny_app)
-        PREPARE_SHINY (stats_and_evaluation_summary, shiny_app)        
+        PREPARE_SHINY (stats_and_evaluation_summary, shiny_app)      
         ch_shiny_stats = PREPARE_SHINY.out.data.toList()
         ch_versions = ch_versions.mix(PREPARE_SHINY.out.versions)
     }
@@ -235,7 +235,7 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     multiqc_out = Channel.empty()
     if (!params.skip_multiqc && (!params.skip_stats || !params.skip_eval)) {
-        
+
         ch_multiqc_config                     = Channel.fromPath("$projectDir/assets/multiqc_config.yml", checkIfExists: true)
         ch_multiqc_custom_config              = params.multiqc_config ? Channel.fromPath(params.multiqc_config, checkIfExists: true) : Channel.empty()
         ch_multiqc_logo                       = params.multiqc_logo ? Channel.fromPath(params.multiqc_logo, checkIfExists: true) : Channel.empty()

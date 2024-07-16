@@ -20,7 +20,7 @@ workflow EVALUATE {
 
     take:
     ch_msa        // channel: [ meta, /path/to/file.aln ]
-    ch_references // channel: [ meta, /path/to/file.aln ]   
+    ch_references // channel: [ meta, /path/to/file.aln ]
     ch_structures // channel: [ meta, /path/to/file.pdb ]
 
     main:
@@ -38,20 +38,20 @@ workflow EVALUATE {
     // Reference based evaluation
     // --------------------------
     ch_references
-        .map { 
-            meta, ref -> 
-                [ meta.id, ref ] 
+        .map {
+            meta, ref ->
+                [ meta.id, ref ]
         }
         .cross (
             ch_msa
-                .map { 
-                    meta, aln -> 
-                        [ meta.id, meta, aln ] 
+                .map {
+                    meta, aln ->
+                        [ meta.id, meta, aln ]
                 }
         )
-        .map { 
-            chref, chaln -> 
-                [ chaln[1], chaln[2], chref[1] ] 
+        .map {
+            chref, chaln ->
+                [ chaln[1], chaln[2], chref[1] ]
         }
         .set { alignment_and_ref }
 
@@ -67,7 +67,7 @@ workflow EVALUATE {
             }
             .collect()
             .map {
-                csv -> 
+                csv ->
                     [ [ id:"summary_sp" ], csv ]
             }
             .set { ch_sp_summary }
@@ -84,19 +84,19 @@ workflow EVALUATE {
 
         tc_scores
             .map {
-                meta, csv -> 
+                meta, csv ->
                     csv
             }
             .collect()
             .map {
-                csv -> 
+                csv ->
                     [ [ id:"summary_tc"], csv ]
             }
             .set { ch_tc_summary }
 
         CONCAT_TC (
-            ch_tc_summary, 
-            "csv", 
+            ch_tc_summary,
+            "csv",
             "csv"
         )
         tc_csv = CONCAT_TC.out.csv
@@ -111,16 +111,16 @@ workflow EVALUATE {
 
         gaps_scores
             .map {
-                meta, csv -> 
+                meta, csv ->
                     csv
             }
             .collect()
             .map {
-                csv -> 
+                csv ->
                     [ [id:"summary_gaps"], csv ]
             }
             .set { ch_gaps_summary }
-        
+
         CONCAT_GAPS (ch_gaps_summary, "csv", "csv")
         gaps_csv = CONCAT_GAPS.out.csv
         ch_versions = ch_versions.mix(CONCAT_GAPS.out.versions)
@@ -133,16 +133,16 @@ workflow EVALUATE {
     // iRMSD
     if ( params.calc_irmsd ) {
         ch_structures
-            .map { 
-                meta, template, str -> 
-                    [ meta.id, template, str ] 
+            .map {
+                meta, template, str ->
+                    [ meta.id, template, str ]
             }
-            .cross (ch_msa.map { 
-                meta, aln -> 
-                    [ meta.id, meta, aln ] 
+            .cross (ch_msa.map {
+                meta, aln ->
+                    [ meta.id, meta, aln ]
                 }
             )
-            .multiMap { 
+            .multiMap {
                 chstr, chaln ->
                     msa: [ chaln[1], chaln[2] ]
                     structures: [ chstr[0], chstr[1], chstr[2] ]
@@ -150,7 +150,7 @@ workflow EVALUATE {
             .set { msa_str }
 
         TCOFFEE_IRMSD (
-            msa_str.msa, 
+            msa_str.msa,
             msa_str.structures
         )
         tcoffee_irmsd_scores = TCOFFEE_IRMSD.out.irmsd
@@ -183,12 +183,12 @@ workflow EVALUATE {
 
         tcs_scores
             .map {
-                meta, csv -> 
+                meta, csv ->
                     csv
             }
             .collect()
             .map {
-                csv -> 
+                csv ->
                     [ [id:"summary_tcs"], csv ]
             }
             .set { ch_tcs_summary }
@@ -210,24 +210,24 @@ workflow EVALUATE {
     tcs     = tcs_csv.map   { meta, csv -> csv }
 
     def number_of_evals = [
-        params.calc_sp, 
-        params.calc_tc, 
-        params.calc_irmsd, 
-        params.calc_gaps, 
+        params.calc_sp,
+        params.calc_tc,
+        params.calc_irmsd,
+        params.calc_gaps,
         params.calc_tc
     ].count(true)
- 
+
     sp
         .mix(tc)
         .mix(irmsd)
         .mix(gaps)
         .mix(tcs)
         .collect()
-        .map { csvs -> 
-            [ [ id:"summary_eval" ], csvs ] 
+        .map { csvs ->
+            [ [ id:"summary_eval" ], csvs ]
         }
         .set { csvs_stats }
-    
+
     if (number_of_evals >= 2) {
         MERGE_EVAL (csvs_stats)
         ch_versions = ch_versions.mix(MERGE_EVAL.out.versions)
