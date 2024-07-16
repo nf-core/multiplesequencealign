@@ -59,7 +59,7 @@ include { PIGZ_COMPRESS                  } from '../modules/nf-core/pigz/compres
 workflow MULTIPLESEQUENCEALIGN {
 
     take:
-    ch_input    // channel: [ meta, path(sequence.fasta), path(reference.fasta), path(pdb_structures.tar.gz), path(templates) ]
+    ch_input    // channel: [ meta, path(sequence.fasta), path(reference.fasta), path(pdb_structures.tar.gz), path(templates.txt) ]
     ch_tools    // channel: [ val(guide_tree_tool), val(args_guide_tree_tool), val(alignment_tool), val(args_alignment_tool) ]
     ch_versions // channel: [ path(versions.yml) ]
 
