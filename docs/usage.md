@@ -101,17 +101,17 @@ toxin,toxin.fa,toxin-ref.fa,toxin_structures,toxin_template.txt
 
 Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be processed.
 
-| Column       | Description                                                                                                                                                                                                                                                    |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`         | Required. Name of the set of sequences. It can correspond to the protein family name or to an internal id. It should be unique. |
+| Column | Description                                                                                                                     |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| `id`   | Required. Name of the set of sequences. It can correspond to the protein family name or to an internal id. It should be unique. |
 
-| `fasta`      | Required (At least one of fasta and structures must be provided). Full path to the fasta file that contains the sequence to be aligned. |
+| `fasta` | Required (At least one of fasta and structures must be provided). Full path to the fasta file that contains the sequence to be aligned. |
 
-| `reference`  | Optional. Full path to the reference alignment. It is used for the reference-based evaluation steps. It can be left empty. |
+| `reference` | Optional. Full path to the reference alignment. It is used for the reference-based evaluation steps. It can be left empty. |
 
 | `structures` | Required (At least one of fasta and structures must be provided). Full path to the folder that contains the protein structures for the sequences to be aligned. It is used for structural aligners and structure-based evaluation steps. It can be left empty. |
 
-| `template`   | Optional. Pre-computed alignments or structural information that provide a framework for aligning sequences. |
+| `template` | Optional. Pre-computed alignments or structural information that provide a framework for aligning sequences. |
 
 > [!NOTE]
 > You can have some samples with structures and/or references and some without. The pipeline will run the modules requiring structures/references only on the samples for which you have provided the required information and the others will be just skipped.

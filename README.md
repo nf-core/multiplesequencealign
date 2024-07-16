@@ -26,7 +26,7 @@
 In a nutshell, the pipeline performs the following steps:
 
 1. **Input files summary**: (Optional) computation of summary statistics on the input files, such as the average sequence similarity across the input sequences, their length, plddt extraction if available, among others.
-2. **Guide Tree**: (Optional) Renders a guide tree with a chosen tool (list available in  [usage](usage.md#2-guide-trees)). Some aligners use guide trees to define the order in which the sequences are aligned.
+2. **Guide Tree**: (Optional) Renders a guide tree with a chosen tool (list available in [usage](usage.md#2-guide-trees)). Some aligners use guide trees to define the order in which the sequences are aligned.
 3. **Align**: (Required) Aligns the sequences with a chosen tool (list available in [usage](usage.md#3-align)).
 4. **Evaluate**: (Optional) Evaluates the generated alignments with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.
 5. **Report**: Reports the collected information of the runs in a Shiny app and a summary table in MultiQC.
