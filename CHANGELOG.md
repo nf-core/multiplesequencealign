@@ -12,7 +12,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#29](https://github.com/nf-core/multiplesequencealign/issues/29)] - Add FAMSA_ALIGN module
 - [[#38](https://github.com/nf-core/multiplesequencealign/issues/38)] - Add FAMSA_GUIDETREE module
 - [[#42](https://github.com/nf-core/multiplesequencealign/issues/42)] - Add MAFFT module
-- [[#51](https://github.com/nf-core/multiplesequencealign/issues/51)] - Add CLUSTALO module 
+- [[#51](https://github.com/nf-core/multiplesequencealign/issues/51)] - Add CLUSTALO module
 - [[#41](https://github.com/nf-core/multiplesequencealign/issues/41)] - Add KALIGN module
 - [[#48](https://github.com/nf-core/multiplesequencealign/issues/48)] - Integrate NF-VALIDATION PLUGIN
 - [[#45](https://github.com/nf-core/multiplesequencealign/issues/45)] - Add module LearnMSA
