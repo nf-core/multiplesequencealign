@@ -127,7 +127,7 @@ workflow STATS {
         .mix(plddts)
         .collect()
         .map {
-            csvs -> 
+            csvs ->
                 [ [id:"summary_stats"], csvs ]
         }
         .set { csvs_stats }
