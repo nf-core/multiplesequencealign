@@ -9,8 +9,7 @@ process MULTIQC {
     path multiqc_custom_config
     path software_versions
     path workflow_summary
-
-    path (seqstats_summary)
+    path seqstats_summary
 
     output:
     path "*multiqc_report.html", emit: report
@@ -30,6 +29,18 @@ process MULTIQC {
         $args \\
         $custom_config \\
         .
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        multiqc: \$( multiqc --version | sed -e "s/multiqc, version //g" )
+    END_VERSIONS
+    """
+
+    stub:
+    """
+    mkdir multiqc_data
+    touch multiqc_plots
+    touch multiqc_report.html
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

@@ -12,7 +12,7 @@ process PREPARE_MULTIQC {
 
     output:
     tuple val (meta), path("*_multiqc_table.csv"), emit: multiqc_table
-    path "versions.yml", emit: versions
+    path "versions.yml"                          , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

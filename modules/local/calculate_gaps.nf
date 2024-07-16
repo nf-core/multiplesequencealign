@@ -11,7 +11,7 @@ process CALC_GAPS {
 
     output:
     tuple val (meta), path("*_gaps.csv"), emit: gaps
-    path "versions.yml", emit: versions
+    path "versions.yml"                 , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

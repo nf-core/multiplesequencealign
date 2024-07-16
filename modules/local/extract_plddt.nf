@@ -11,7 +11,7 @@ process EXTRACT_PLDDT {
 
     output:
     tuple val (meta), path("*_plddt_summary.csv"), emit: plddt_summary
-    tuple val (meta), path("*full_plddt.csv"), emit: plddts
+    tuple val (meta), path("*full_plddt.csv")    , emit: plddts
     path "versions.yml", emit: versions
 
     when:

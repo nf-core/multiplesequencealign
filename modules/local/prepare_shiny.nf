@@ -12,9 +12,9 @@ process PREPARE_SHINY {
 
     output:
     tuple val(meta), path ("shiny_data.csv"), emit: data
-    path ("shiny_app*"), emit: app
-    path ("run.sh"), emit: run
-    path "versions.yml", emit: versions
+    path ("shiny_app*")                     , emit: app
+    path ("run.sh")                         , emit: run
+    path "versions.yml"                     , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
