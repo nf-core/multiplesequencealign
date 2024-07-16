@@ -217,7 +217,7 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     if (!params.skip_shiny) {
         shiny_app = Channel.fromPath(params.shiny_app)
-        PREPARE_SHINY (stats_and_evaluation_summary, shiny_app) 
+        PREPARE_SHINY (stats_and_evaluation_summary, shiny_app)
         ch_shiny_stats = PREPARE_SHINY.out.data.toList()
         ch_versions = ch_versions.mix(PREPARE_SHINY.out.versions)
     }
