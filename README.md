@@ -25,11 +25,11 @@
 
 In a nutshell, the pipeline performs the following steps:
 
-1. **Input files summary**: (Optional) computation of summary statistics on the input files, such as the average sequence similarity across the input sequences, their length, plddt extraction if available, etc.
-2. **Guide Tree**: (Optional) Renders a guide tree with a chosen tool (list available below). Some aligners use guide trees to define the order in which the sequences are aligned.
-3. **Align**: (Required) Aligns the sequences with a chosen tool (list available below).
+1. **Input files summary**: (Optional) computation of summary statistics on the input files, such as the average sequence similarity across the input sequences, their length, plddt extraction if available, among others.
+2. **Guide Tree**: (Optional) Renders a guide tree with a chosen tool (list available in  [usage](usage.md#2-guide-trees)). Some aligners use guide trees to define the order in which the sequences are aligned.
+3. **Align**: (Required) Aligns the sequences with a chosen tool (list available in [usage](usage.md#3-align)).
 4. **Evaluate**: (Optional) Evaluates the generated alignments with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.
-5. **Report**: Reports the collected information of the runs in a shiny app and a summary table in MultiQC.
+5. **Report**: Reports the collected information of the runs in a Shiny app and a summary table in MultiQC.
 
 ## Usage
 
@@ -44,9 +44,9 @@ It should look like this:
 `samplesheet.csv`:
 
 ```csv
-id,fasta,reference,structures
-seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures
-toxin,toxin.fa,toxin-ref.fa,toxin_structures
+id,fasta,reference,structures,template
+seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures,seatoxin_template.txt
+toxin,toxin.fa,toxin-ref.fa,toxin_structures,toxin_template.txt
 ```
 
 Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be aligned and the associated (if available) reference alignments and protein structure files.
@@ -98,7 +98,7 @@ For more details about the output files and reports, please refer to the
 
 ## Extending the pipeline
 
-For details on how to add your favourite guide tree/MSA/evaluation step in nf-core/multiplesequencealign please refer to [extending documentation](https://github.com/luisas/multiplesequencealign/blob/luisa_patch/docs/extending.md).
+For details on how to add your favourite guide tree, MSA or evaluation step in nf-core/multiplesequencealign please refer to the [extending documentation](https://github.com/luisas/multiplesequencealign/blob/luisa_patch/docs/extending.md).
 
 ## Credits
 
