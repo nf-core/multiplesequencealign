@@ -21,13 +21,15 @@ process PREPARE_SHINY {
     task.ext.when == null || task.ext.when
 
     script:
-    def args = task.ext.args ?: ''
-    prefix   = task.ext.prefix ?: "${meta.id}"
+    def args         = task.ext.args ?: ''
+    prefix           = task.ext.prefix ?: "${meta.id}"
+    def docker_url   = "wave.seqera.io/wt/fe232c94328d/wave/build:pandas-2.1.2_pathlib-1.0.1_plotly-5.22.0_shiny-0.9.0_pruned--d898d8ae48c605ea"
+    def bash_command = "bash -c 'cd /app && shiny run --reload shiny_app.py'"
     """
     cp $table shiny_data.csv
     cp -r $app/* .
     rm $app
-    echo "shiny run --reload shiny_app.py" > run.sh
+    echo "docker run -v .:/app --network=host $docker_url $bash_command" > run.sh
     chmod +x run.sh
 
     cat <<-END_VERSIONS > versions.yml
@@ -41,6 +43,7 @@ process PREPARE_SHINY {
     touch shiny_data.csv
     touch shiny_app.R
     touch run.sh
+    mkdir static
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
