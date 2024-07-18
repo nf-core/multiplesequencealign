@@ -17,7 +17,7 @@ nextflow.enable.dsl = 2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { MULTIPLESEQUENCEALIGN  } from './workflows/multiplesequencealign'
+include { MULTIPLESEQUENCEALIGN   } from './workflows/multiplesequencealign'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_multiplesequencealign_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_multiplesequencealign_pipeline'
 
@@ -37,13 +37,15 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
     tools       // channel: toolsheet read in from --tools
 
     main:
+    ch_versions = Channel.empty()
 
     //
     // WORKFLOW: Run pipeline
     //
     MULTIPLESEQUENCEALIGN (
         samplesheet,
-        tools
+        tools,
+        ch_versions
     )
 
     emit:

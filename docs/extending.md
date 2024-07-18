@@ -1,33 +1,37 @@
 # Extending nf-core/multiplesequencealign
 
 This pipeline is designed to be extensible, both by adding new methods for assembling MSAs or guidetrees, and for evaluating MSAs.
-Before any component is added, a nextflow module has to be created for it.
-It usually makes sense to directly create an nf-core module, but for some usecases or for testing it may make sense to create a local module instead.
-Even when creating a local module, it is still advisable to follow the nf-core conventions in creating the module.
+Before any component is added, a Nextflow module has to be created for it.
+It generally makes sense to directly create an nf-core module, but for certain use cases or testing purposes it maybe more appropriate to create a local module instead.
+Even when creating a local module, it is still advisable to adhere to nf-core conventions.
 Useful resources are:
 
 - The [nf-core documentation](https://nf-co.re/docs/usage/tutorials/nf_core_usage_tutorial)
-- The [nextflow documentation](https://www.nextflow.io/docs/latest/module.html) for modules
+- The [Nextflow documentation](https://www.nextflow.io/docs/latest/module.html) for modules
 - The [nf-core DSL2 module tutorial](https://nf-co.re/docs/contributing/tutorials/dsl2_modules_tutorial)
 - The [nf-core module documentation](https://nf-co.re/docs/contributing/modules)
 - The [nf-test documentation](https://code.askimed.com/nf-test/docs/getting-started/)
 - The [nf-core slack](https://nf-co.re/join), particularly the [multiplesequencealign channel](https://nfcore.slack.com/archives/C05LZ7EAYGK). Feel free to reach out!
 
-The pipeline consists of four different subworkflows, one for computing the guidetrees of guidetree-based methods, one for performing the MSAs, one for evaluating the produced MSAs and one for computing statistics about the input dataset.
+The pipeline consists of four different subworkflows:
+
+1. Compute the guide trees for guide tree-based methods.
+2. Perform the MSAs.
+3. Evaluate the produced MSAs.
+4. Compute statistics about the input dataset.
+
 The subworkflows are to a significant degree isolated from each other, and not all of them may run in any given execution of the pipeline.
 
 ## Adding an aligner
 
 1. Create a local or nf-core module and ensure the output is in FASTA format
-2. Add the aligner to the README.md
-3. Add the aligner to the aligner config in `conf/modules.config`
-   - if required, also add other config options
-   - This will make sure the filenames match
-4. Include it in the alignment subworkflow (`subworkflows/local/align.nf`)
-   - Import the module in the top
-   - Add a branch to the alignment steps
-   - Call the aligner with the respective branch; you can either pass or discard a guidetree or structures using the multimap before the call step
-   - Feed the output alignment and versions channels back into the `msa` and `ch_versions` channels. Make sure to `mix()` them so they do not get overwritten!
+2. Add the aligner to the usage.md
+3. Add the aligner to the aligner config in `conf/modules.config`, see an example [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/conf/modules.config#L113). If required, also add other config options
+4. Include the module in the alignment subworkflow (`subworkflows/local/align.nf`)
+   - Import the module in the top, view an example [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/align.nf#L9)
+   - Add a branch to the alignment steps [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/align.nf#L73-L85)
+   - Call the aligner with the respective branch; you can either pass or discard a guidetree or structures using the multimap before the call step, see the CLUSTALO example [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/align.nf#L104-L113)
+   - Feed the output alignment and versions channels back into the `msa` the CLUSTALO example) and `ch_versions` channels (see the respective CLUSTALO example [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/align.nf#L113) and [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/align.nf#L112)). Make sure to `mix()` them so they do not get overwritten!
 
 Congratulations, your aligner is now in nf-core/multiplesequencalignment!
 
@@ -35,13 +39,11 @@ Congratulations, your aligner is now in nf-core/multiplesequencalignment!
 
 1. Create a local or nf-core module and ensure the output is in Newick format
 2. Add the estimator to the README.md
-3. Add a config to `conf/modules.config`
-   - You should be able to copy most of what is there from another guidetree estimator
-   - This will make sure the filenames match
-4. Include it in the guidetree subworkflow (`subworkflows/local/compute_guidetrees.nf`)
-   - Import the module
-   - Add a branch for the estimator to the beginning of call block
-   - Call the estimator, and add the output to `ch_trees` and `ch_versions`
+3. Add a config to `conf/modules.config`, see the example of CLUSTALO [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/conf/modules.config#L82-L91)
+4. Include it in the guidetree subworkflow (`subworkflows/local/compute_trees.nf`)
+   - Import the module (see [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/compute_trees.nf#L6) an example)
+   - Add a branch for the estimator to the beginning of call block [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/compute_trees.nf#L26-L28)
+   - Call the estimator e.g. of [CLUSTALO](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/compute_trees.nf#L36), and add the output to `ch_trees` and `ch_versions`, respectively [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/compute_trees.nf#L37) and [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/compute_trees.nf#L38)
 
 Congratulations, your guide tree estimator is now in nf-core/multiplesequencalignment!
 
@@ -55,8 +57,8 @@ In general, the process of adding another evaluation module to the pipeline can 
 1. Create a local or nf-core module.
 
    - Make sure the evaluation output is returned from the module in CSV format!
-   - For merging the correct evaluation files in reporting the final output, the pipeline uses the `meta` field containing the tools to use. This information has to be included in the CSV returned by the module so as to merge it later.
-   - Have a look at how `TCOFFEE_ALNCOMPARE` handles this.
+   - To merge the correct evaluation files and report the final output, the pipeline utilizes the `meta` field, which specifies the tools to be used. This information has to be included in the CSV returned by the module so as to merge it later
+   - Have a look at how `TCOFFEE_ALNCOMPARE` handles this
 
 2. Include the evaluation module in the evaluation subworkflow
 
