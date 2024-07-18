@@ -11,17 +11,18 @@ process PREPARE_SHINY {
     path (app)
 
     output:
-    tuple val(meta), path ("shiny_data.csv"), emit: data
-    path ("shiny_app*"), emit: app
-    path ("run.sh"), emit: run
-    path "versions.yml", emit: versions
+    tuple val(meta), path("shiny_data.csv"), emit: data
+    path "shiny_app*"                      , emit: app
+    path "static*"                         , emit: static_dir
+    path "run.sh"                          , emit: run
+    path "versions.yml"                    , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
     def args = task.ext.args ?: ''
-    prefix = task.ext.prefix ?: "${meta.id}"
+    prefix   = task.ext.prefix ?: "${meta.id}"
     """
     cp $table shiny_data.csv
     cp -r $app/* .
