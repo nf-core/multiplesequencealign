@@ -1,22 +1,13 @@
 # This app is translated from Mastering Shinywidgets
 # https://mastering-shiny.org/basic-reactivity.html#reactive-expressions-1
-from shiny import App, render, ui
+from shiny import App, ui
 from shinywidgets import output_widget, render_widget
-from numpy import random
-import numpy as np
-import seaborn as sns
 import pandas as pd
-import matplotlib.pyplot as plt
 import plotly.express as px
-import plotly.graph_objects as go
 from pathlib import Path
 import sys
 import os
 import shiny_app_merge_score_and_trace as ms
-from mythemes import theme_light, theme_dark, theme_contrast
-
-# Style
-sns.set_theme(context="talk", style="dark", font_scale=0.8)
 
 
 # Load file
