@@ -4,15 +4,12 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-//
-// MODULE: Loaded from modules/local/
-//
-include { MULTIQC                } from '../modules/local/multiqc'
 
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { paramsSummaryMap       } from 'plugin/nf-validation'
+include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_multiplesequencealign_pipeline'
@@ -248,14 +245,15 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_multiqc_files                      = ch_multiqc_files.mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml', sort: false))
 
         PREPARE_MULTIQC (stats_and_evaluation_summary)
-        ch_multiqc_table = ch_multiqc_table.mix(PREPARE_MULTIQC.out.multiqc_table.collect{it[1]}.ifEmpty([]))
+        ch_multiqc_files                      = ch_multiqc_files.mix(PREPARE_MULTIQC.out.multiqc_table.collect{it[1]}.ifEmpty([]))
 
         MULTIQC (
             ch_multiqc_files.collect(),
             ch_multiqc_config.toList(),
             ch_multiqc_custom_config.toList(),
             ch_multiqc_logo.toList(),
-            ch_multiqc_table
+            [],
+            []
         )
         multiqc_out = MULTIQC.out.report.toList()
     }
