@@ -43,7 +43,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#81](https://github.com/nf-core/multiplesequencealign/pull/81)] - Update Eval workflow with nf-core modules for merging.
 - [[#111](https://github.com/nf-core/multiplesequencealign/pull/111)] - Fix linting warnings (mostly versions)
 - [[#134](https://github.com/nf-core/multiplesequencealign/pull/134)] - Code revision for release preparation
-- [[#133](https://github.com/nf-core/multiplesequencealign/issues/133)] - MultiQC as nf-core module and fix visualization.
+- [[#138](https://github.com/nf-core/multiplesequencealign/pull/138)] - MultiQC as nf-core module and fix visualization.
 
 ### `Dependencies`
 
