@@ -13,13 +13,12 @@ report_section_order:
 report_header_info:
   - Application Type: "Muliple Sequence Alignment deplyoment and benchmarking."
 
-sp:
-  summary_stats:
-    fn: "summary_stats_eval_multiqc_table.csv"
-
 export_plots: true
 
 disable_version_detection: true
+
+run_modules:
+  - custom_content
 
 custom_data:
   summary_stats:
@@ -42,7 +41,7 @@ custom_table_header_config:
       suffix: "%"
     fasta:
       description: "Input fasta file."
-      hidden: True
+      hidden: False
       group: "Fasta"
     n_sequences:
       description: "Number of sequences in the input fasta file."
@@ -161,3 +160,7 @@ table_columns_placement:
     TCS: 590
     total_gaps: 620
     avg_gaps: 650
+
+sp:
+  summary_stats:
+    fn: "summary_stats_eval_multiqc_table.csv"
