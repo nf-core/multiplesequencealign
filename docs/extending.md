@@ -26,19 +26,18 @@ The subworkflows are to a significant degree isolated from each other, and not a
 
 -[] Create a module for your tool (ideally nf-core). Ensure the output is in FASTA format. Use other modules in the pipeline as template.
 -[] Include the module in the alignment subworkflow (`subworkflows/local/align.nf`)
-   - Import the module
-   - Add a branch to the correct channel, depending on your tool input (see other examples)
-   - Call the aligner with the respective branch (see other examples)
-   - Feed the output alignment and versions channels back into the `msa`. Make sure to `mix()` them so they do not get overwritten!
--[] Add the aligner to the aligner config in `conf/modules.config`.
--[] Update docs/usage.md
--[] Update CITATIONS.md
--[] Update CHANGELOG.md
+
+- Import the module
+- Add a branch to the correct channel, depending on your tool input (see other examples)
+- Call the aligner with the respective branch (see other examples)
+- Feed the output alignment and versions channels back into the `msa`. Make sure to `mix()` them so they do not get overwritten!
+  -[] Add the aligner to the aligner config in `conf/modules.config`.
+  -[] Update docs/usage.md
+  -[] Update CITATIONS.md
+  -[] Update CHANGELOG.md
 
 You can look at an example of a new tool integration [here](https://github.com/nf-core/multiplesequencealign/pull/139).
 Congratulations, your aligner is now in nf-core/multiplesequencalignment!
-
-
 
 ## Adding a guide tree estimator
 

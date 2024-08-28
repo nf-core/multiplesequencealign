@@ -13,7 +13,6 @@ report_section_order:
 report_header_info:
   - Application Type: "Muliple Sequence Alignment deplyoment and benchmarking."
 
-
 sp:
   summary_stats:
     fn: "summary_stats_eval_multiqc_table.csv"
@@ -162,5 +161,3 @@ table_columns_placement:
     TCS: 590
     total_gaps: 620
     avg_gaps: 650
-
-
