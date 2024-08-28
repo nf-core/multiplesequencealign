@@ -24,16 +24,21 @@ The subworkflows are to a significant degree isolated from each other, and not a
 
 ## Adding an aligner
 
-1. Create a local or nf-core module and ensure the output is in FASTA format
-2. Add the aligner to the usage.md
-3. Add the aligner to the aligner config in `conf/modules.config`, see an example [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/conf/modules.config#L113). If required, also add other config options
-4. Include the module in the alignment subworkflow (`subworkflows/local/align.nf`)
-   - Import the module in the top, view an example [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/align.nf#L9)
-   - Add a branch to the alignment steps [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/align.nf#L73-L85)
-   - Call the aligner with the respective branch; you can either pass or discard a guidetree or structures using the multimap before the call step, see the CLUSTALO example [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/align.nf#L104-L113)
-   - Feed the output alignment and versions channels back into the `msa` the CLUSTALO example) and `ch_versions` channels (see the respective CLUSTALO example [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/align.nf#L113) and [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/align.nf#L112)). Make sure to `mix()` them so they do not get overwritten!
+-[] Create a module for your tool (ideally nf-core). Ensure the output is in FASTA format. Use other modules in the pipeline as template.
+-[] Include the module in the alignment subworkflow (`subworkflows/local/align.nf`)
+   - Import the module
+   - Add a branch to the correct channel, depending on your tool input (see other examples)
+   - Call the aligner with the respective branch (see other examples)
+   - Feed the output alignment and versions channels back into the `msa`. Make sure to `mix()` them so they do not get overwritten!
+-[] Add the aligner to the aligner config in `conf/modules.config`.
+-[] Update docs/usage.md
+-[] Update CITATIONS.md
+-[] Update CHANGELOG.md
 
+You can look at an example of a new tool integration [here](https://github.com/nf-core/multiplesequencealign/pull/139).
 Congratulations, your aligner is now in nf-core/multiplesequencalignment!
+
+
 
 ## Adding a guide tree estimator
 
