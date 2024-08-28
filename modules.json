@@ -48,6 +48,13 @@
                             "modules"
                         ]
                     },
+                    "foldmason/easymsa": {
+                        "branch": "master",
+                        "git_sha": "5a38b711f9639e96c91a84f42ef700fba7e01e5f",
+                        "installed_by": [
+                            "modules"
+                        ]
+                    },
                     "kalign/align": {
                         "branch": "master",
                         "git_sha": "e61e5a13ef49c5595986bd31efb85c3f0709a282",
