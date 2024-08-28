@@ -1,15 +1,15 @@
 nextflow_process {
 
-    name "Test Process CLUSTALO_GUIDETREE"
+    name "Test Process FAMSA_GUIDETREE"
     script "../main.nf"
-    process "CLUSTALO_GUIDETREE"
+    process "FAMSA_GUIDETREE"
 
     tag "modules"
     tag "modules_nfcore"
-    tag "clustalo"
-    tag "clustalo/guidetree"
+    tag "famsa"
+    tag "famsa/guidetree"
 
-    test("sarscov2 - contigs-fasta") {
+    test("sarscov2 - fasta") {
 
         when {
             process {
@@ -29,5 +29,4 @@ nextflow_process {
             )
         }
     }
-
 }
