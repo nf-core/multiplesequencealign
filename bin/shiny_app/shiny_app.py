@@ -64,7 +64,7 @@ options_eval = {
     "n_sequences": "Number of Sequences",
     "tc": "Total Column Score (TC)",
     "perc_sim": "Average Sequence Similarity (%)",
-    "seq_length_mean": "Mean Sequence Length",
+    "seqlength_mean": "Mean Sequence Length",
     "time_tree": "Tree Building Time (min)",
     "time_align": "Alignment Time (min)",
     "memory_tree": "Tree Building Memory (GB)",
