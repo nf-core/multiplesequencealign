@@ -36,6 +36,11 @@
                         "git_sha": "e21abdefe46e27b71e0ced2cadc0f2463298aba6",
                         "installed_by": ["modules"]
                     },
+                    "foldmason/easymsa": {
+                        "branch": "master",
+                        "git_sha": "bea7a09bc85c756b8f2befd63311eb1651067073",
+                        "installed_by": ["modules"]
+                    },
                     "kalign/align": {
                         "branch": "master",
                         "git_sha": "e61e5a13ef49c5595986bd31efb85c3f0709a282",
@@ -68,7 +73,7 @@
                     },
                     "multiqc": {
                         "branch": "master",
-                        "git_sha": "fe9614c5d1d9820dae56a5e30a07ba336db45835",
+                        "git_sha": "19ca321db5d8bd48923262c2eca6422359633491",
                         "installed_by": ["modules"]
                     },
                     "muscle5/super5": {
