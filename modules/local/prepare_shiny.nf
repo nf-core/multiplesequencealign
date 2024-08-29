@@ -23,7 +23,7 @@ process PREPARE_SHINY {
     script:
     def args         = task.ext.args ?: ''
     prefix           = task.ext.prefix ?: "${meta.id}"
-    def docker_url   = "wave.seqera.io/wt/fe232c94328d/wave/build:pandas-2.1.2_pathlib-1.0.1_plotly-5.22.0_shiny-0.9.0_pruned--d898d8ae48c605ea"
+    def docker_url   = "community.wave.seqera.io/library/pip_numpy_pandas_plotly_pruned:34965f6b7bb7597d"
     def bash_command = "bash -c 'cd /app && shiny run --reload shiny_app.py'"
     """
     cp $table shiny_data.csv
