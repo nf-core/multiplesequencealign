@@ -58,6 +58,7 @@ The available ALIGN methods are listed below (those that accept guide trees are 
 **STRUCTURE-BASED** (only require stuctures as input):
 
 - [MTMALIGN](https://bio.tools/mtm-align)
+- [FOLDMASON](https://github.com/steineggerlab/foldmason)
 
 ### 4. EVALUATE
 
