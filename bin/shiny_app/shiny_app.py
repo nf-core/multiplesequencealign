@@ -221,13 +221,13 @@ def server(input, output, session):
     def heatmap():
         x = input.x()
         y = input.y()
-        
+
         xtab = pd.crosstab(inputfile[x], inputfile[y])
         fig = px.imshow(xtab,
                         x = xtab.columns,
                         y = xtab.index,
                         text_auto = True)
-        
+
         fig.update_layout(
             template = input.theme(),
             xaxis_title = options_eval.get(y, y),
@@ -332,11 +332,11 @@ def server(input, output, session):
         ylabs = [options_eval.get(y, y) for y in corr.index]
 
         fig = px.imshow(corr,
-                        x = xlabs, 
+                        x = xlabs,
                         y = ylabs,
                         text_auto = ".2f",
                         labels = options_eval)
-        
+
         fig.update_layout(
             template = input.theme(),
             autosize = True
