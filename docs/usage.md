@@ -58,6 +58,7 @@ The available ALIGN methods are listed below (those that accept guide trees are 
 **STRUCTURE-BASED** (only require stuctures as input):
 
 - [MTMALIGN](https://bio.tools/mtm-align)
+- [FOLDMASON](https://github.com/steineggerlab/foldmason)
 
 ### 4. EVALUATE
 
@@ -111,7 +112,7 @@ Each row represents a set of sequences (in this case the seatoxin and toxin prot
 
 | `structures` | Required (At least one of fasta and structures must be provided). Full path to the folder that contains the protein structures for the sequences to be aligned. It is used for structural aligners and structure-based evaluation steps. It can be left empty. |
 
-| `template` | Optional. Pre-computed alignments or structural information that provide a framework for aligning sequences. |
+| `template` | Optional. Files that define the mapping between the input sequence and the protein structure to be used. Used by 3D-Coffee. If not specified, they will be automatically generated assuming that the sequence name provided in the fasta is the same as the file name of the corresponding PDB file. E.g. ">MyProteinName" in the fasta file and "MyProteinName.pdb" for the corresponding protein structure. For more information on how to generate a template file manually, please look at the T-Coffee [documentation](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html) |
 
 > [!NOTE]
 > You can have some samples with structures and/or references and some without. The pipeline will run the modules requiring structures/references only on the samples for which you have provided the required information and the others will be just skipped.

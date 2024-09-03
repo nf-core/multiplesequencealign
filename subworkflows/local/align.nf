@@ -10,6 +10,7 @@ include { COMPUTE_TREES                     } from '../../subworkflows/local/com
 // Include the nf-core modules
 include { CLUSTALO_ALIGN                    } from '../../modules/nf-core/clustalo/align/main'
 include { FAMSA_ALIGN                       } from '../../modules/nf-core/famsa/align/main'
+include { FOLDMASON_EASYMSA                 } from '../../modules/nf-core/foldmason/easymsa/main'
 include { KALIGN_ALIGN                      } from '../../modules/nf-core/kalign/align/main'
 include { LEARNMSA_ALIGN                    } from '../../modules/nf-core/learnmsa/align/main'
 include { MAFFT                             } from '../../modules/nf-core/mafft/main'
@@ -98,6 +99,7 @@ workflow ALIGN {
         }
         .branch {
             mtmalign: it[0]["aligner"] == "MTMALIGN"
+            foldmason: it[0]["aligner"] == "FOLDMASON"
         }
         .set { ch_structures_tools }
 
@@ -297,6 +299,20 @@ workflow ALIGN {
     )
     ch_msa = ch_msa.mix(MTMALIGN_ALIGN.out.alignment)
     ch_versions = ch_versions.mix(MTMALIGN_ALIGN.out.versions.first())
+
+    ch_structures_tools.foldmason
+        .multiMap {
+            meta, template, struct ->
+                pdbs: [ meta, struct ]
+        }
+        .set { ch_pdb_foldmason }
+
+    FOLDMASON_EASYMSA (
+        ch_pdb_foldmason.pdbs,
+        compress
+    )
+    ch_msa = ch_msa.mix(FOLDMASON_EASYMSA.out.msa_aa)
+    ch_versions = ch_versions.mix(FOLDMASON_EASYMSA.out.versions.first())
 
     emit:
     msa      = ch_msa      // channel: [ val(meta), path(msa) ]

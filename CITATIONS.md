@@ -22,6 +22,10 @@
 
 - [FAMSA](https://pubmed.ncbi.nlm.nih.gov/27670777/)
 
+  > Cameron Laurence Mathison Gilchrist, Milot Mirdita, Martin Steinegger: Multiple Protein Structure Alignment at Scale with FoldMason. bioRxiv 2024.08.01.606130; doi: https://doi.org/10.1101/2024.08.01.606130
+
+- [FoldMason](https://www.biorxiv.org/content/10.1101/2024.08.01.606130v3)
+
   > Deorowicz S, Debudaj-Grabysz A, Gudyś A. FAMSA: Fast and accurate multiple sequence alignment of huge protein families. Sci Rep. 2016 Sep 27;6:33964. doi: 10.1038/srep33964. PMID: 27670777; PMCID: PMC5037421.
 
 - [Kalign3](https://pubmed.ncbi.nlm.nih.gov/31665271/)

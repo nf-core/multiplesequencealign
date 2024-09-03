@@ -31,6 +31,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#89](https://github.com/nf-core/multiplesequencealign/issues/89)] - Add collection of plddt metrics in stats subworkflow.
 - [[#96](https://github.com/nf-core/multiplesequencealign/issues/96)] - Add collection of number of gaps in eval subworkflow.
 - [[#84](https://github.com/nf-core/multiplesequencealign/issues/84)] - Update Metromap
+- [[#139](https://github.com/nf-core/multiplesequencealign/pull/139)] - Add Foldmason
 
 ### `Fixed`
 
@@ -43,6 +44,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#81](https://github.com/nf-core/multiplesequencealign/pull/81)] - Update Eval workflow with nf-core modules for merging.
 - [[#111](https://github.com/nf-core/multiplesequencealign/pull/111)] - Fix linting warnings (mostly versions)
 - [[#134](https://github.com/nf-core/multiplesequencealign/pull/134)] - Code revision for release preparation
+- [[#138](https://github.com/nf-core/multiplesequencealign/pull/138)] - MultiQC as nf-core module and fix visualization.
 
 ### `Dependencies`
 
