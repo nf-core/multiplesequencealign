@@ -59,7 +59,7 @@ options_color = {"aligner": "Assembly",
                 "tree": "Tree",
                 "tree_args": "Tree with args"}
 
-options_eval = {
+options_eval_all = {
     "sp": "Sum of Pairs (SP)",
     "n_sequences": "Number of Sequences",
     "tc": "Total Column Score (TC)",
@@ -69,14 +69,22 @@ options_eval = {
     "time_align": "Alignment Time (min)",
     "memory_tree": "Tree Building Memory (GB)",
     "memory_align": "Alignment Memory (GB)",
-    "avg_plddt": "Average pLDDT",
+    "plddt": "Average pLDDT",
+    "EVALUATED": "Evaluated iRMSD",
+    "APDB": "APDB",
+    "iRMSD": "iRMSD",
+    "NiRMSD": "NiRMSD",
     "aligner": "Assembly",
     "aligner_args": "Assembly with args",
     "tree": "Tree",
     "tree_args": "Tree with args"
 }
 
+options_eval = {k: v for k,v in options_eval_all.items() if k in inputfile.columns}
+
 vars_cat = ["aligner", "tree", "tree_args", "aligner_args"]
+
+vars_long = ["tree_args", "aligner_args"]
 
 options_theme = {
     "plotly": "Default",
@@ -135,7 +143,7 @@ app_ui = ui.page_fluid(
                 {
                         "X axis": options_eval,
                 },
-                    selected="n_sequences",
+                selected="n_sequences",
             ),
             # Y axis input
             ui.input_select(
@@ -179,17 +187,17 @@ app_ui = ui.page_fluid(
             ui.nav_panel(
                 "Scatter plot",
                 ui.column(
-                    5,
-                    {"class": "col-md-40 col-lg-25 py-10 mx-auto text-lg-center text-left"},
-                    output_widget("autoplot", width = "clamp(400px, 50vw, 800px)", height = "clamp(300px, 40vh, 600px)")
+                    12,
+                    {"class": "py-10 mx-0 text-lg-center text-left"},
+                    output_widget("autoplot", width = "clamp(400px, 50vw, 800px)", height = "clamp(400px, 50vh, 600px)")
                 )
             ),
             ui.nav_panel(
                 "Correlation",
                 ui.column(
-                    5,
-                    {"class": "col-md-40 col-lg-25 py-10 mx-auto text-lg-center text-left"},
-                    output_widget("corr", width = "clamp(400px, 50vw, 800px)", height = "clamp(400px, 50vh, 800px)")
+                    12,
+                    {"class": "py-10 mx-auto text-lg-center text-left"},
+                    output_widget("corr", width = "clamp(400px, 50vw, 800px)", height = "clamp(300px, 50vh, 600px)")
                 )
             )
         )
@@ -213,26 +221,49 @@ def server(input, output, session):
     def heatmap():
         x = input.x()
         y = input.y()
+        
         xtab = pd.crosstab(inputfile[x], inputfile[y])
-        fig = px.imshow(xtab, x=xtab.columns, y=xtab.index, text_auto=True)
+        fig = px.imshow(xtab,
+                        x = xtab.columns,
+                        y = xtab.index,
+                        text_auto = True)
+        
         fig.update_layout(
             template = input.theme(),
-            xaxis_title=options_eval.get(y, y),
-            yaxis_title=options_eval.get(x, x)
+            xaxis_title = options_eval.get(y, y),
+            yaxis_title = options_eval.get(x, x),
+            autosize = True
         )
+
+        fig.update_xaxes(automargin = True)
+        fig.update_yaxes(automargin = True)
+
+        if x in vars_long or y in vars_long:
+            fig.update_layout(showlegend = False)
+
         return fig
 
     def boxplot_horizontal():
         x = input.x()
         y = input.y()
-        fig = px.box(inputfile.fillna(''), x=x, y=y, color=y)
+        fig = px.box(inputfile.fillna(''),
+                     x = x,
+                     y = y,
+                     color = y)
 
         fig.update_layout(
             template = input.theme(),
-            xaxis_title=options_eval.get(x, x),
-            yaxis_title=options_eval.get(y, y),
-            legend_title_text=options_eval.get(y, y)
+            xaxis_title = options_eval.get(x, x),
+            yaxis_title = options_eval.get(y, y),
+            legend_title_text = options_eval.get(y, y),
+            autosize = True
         )
+
+        fig.update_xaxes(automargin = True)
+        fig.update_yaxes(automargin = True)
+
+        if x in vars_long or y in vars_long:
+            fig.update_layout(showlegend = False)
 
         return fig
 
@@ -240,14 +271,25 @@ def server(input, output, session):
         x = input.x()
         y = input.y()
 
-        fig = px.box(inputfile.fillna(""), x=x, y=y, color=x)
+        fig = px.box(inputfile.fillna(""),
+                     x = x,
+                     y = y,
+                     color = x
+        )
 
         fig.update_layout(
             template = input.theme(),
             xaxis_title=options_eval.get(x, x),
             yaxis_title=options_eval.get(y, y),
-            legend_title_text=options_eval.get(x, x)
+            legend_title_text=options_eval.get(x, x),
+            autosize = True
         )
+
+        fig.update_xaxes(automargin = True)
+        fig.update_yaxes(automargin = True)
+
+        if x in vars_long or y in vars_long:
+            fig.update_layout(showlegend = False)
 
         return fig
 
@@ -257,17 +299,26 @@ def server(input, output, session):
         color = input.color()
         size = input.size()
 
-        fig = px.scatter(inputfile, x=x, y=y, color=color, trendline="ols" if input.lm() else None, trendline_scope="overall")
+        fig = px.scatter(inputfile,
+                         x = x,
+                         y = y,
+                         color = color,
+                         trendline = "ols" if input.lm() else None,
+                         trendline_scope = "overall")
 
         fig.update_traces(marker=dict(size=size/5))
 
         fig.update_layout(
             template = input.theme(),
-            xaxis_title=options_eval.get(x, x),
-            yaxis_title=options_eval.get(y, y),
+            xaxis_title = options_eval.get(x, x),
+            yaxis_title = options_eval.get(y, y),
             xaxis = dict(range = xlims.get(x, [0, None])),
-            yaxis = dict(range = xlims.get(y, [0, None]))
+            yaxis = dict(range = xlims.get(y, [0, None])),
+            autosize = True
         )
+
+        fig.update_xaxes(automargin = True)
+        fig.update_yaxes(automargin = True)
 
         return fig
 
@@ -276,11 +327,25 @@ def server(input, output, session):
     @render_widget
     def corr():
         data = inputfile[list(set(options_eval.keys()) & set(inputfile.columns) - set(vars_cat))]
-        corr = data.corr()
+        corr = data.corr().fillna(0)
         xlabs = [options_eval.get(x, x) for x in corr.columns]
         ylabs = [options_eval.get(y, y) for y in corr.index]
 
-        fig = px.imshow(corr, x=xlabs, y=ylabs, text_auto=".2f", labels = options_eval)
+        fig = px.imshow(corr,
+                        x = xlabs, 
+                        y = ylabs,
+                        text_auto = ".2f",
+                        labels = options_eval)
+        
+        fig.update_layout(
+            template = input.theme(),
+            autosize = True
+        )
+
+        fig.update_xaxes(automargin = True,
+                         showticklabels = False)
+        fig.update_yaxes(automargin = True)
+
         return fig
 
 
