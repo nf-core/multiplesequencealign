@@ -21,7 +21,7 @@
             "reference": {
                 "type": "string"
             },
-            "structures": {
+            "dependencies": {
                 "type": "string"
             },
             "template": {
@@ -29,6 +29,6 @@
             }
         },
         "required": ["id"],
-        "anyOf": [{ "required": ["fasta"] }, { "required": ["structures"] }]
+        "anyOf": [{ "required": ["fasta"] }, { "required": ["dependencies"] }]
     }
 }

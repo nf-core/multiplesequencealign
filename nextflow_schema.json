@@ -34,6 +34,12 @@
                     "help_text": "You will need to create a design file with information about the tools to be used before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/msa/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
                 },
+                "templates_suffix": {
+                    "type": "string",
+                    "description": "Suffix of the dependencies templates.",
+                    "help_text": "Suffix of the files in the accessory files directory (e.g. pdb for pdb files).",
+                    "fa_icon": "fas fa-file-signature"
+                },
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",

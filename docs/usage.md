@@ -95,7 +95,7 @@ The sample sheet defines the input data that the pipeline will process.
 It should look like this:
 
 ```csv title="samplesheet.csv"
-id,fasta,reference,structures,template
+id,fasta,reference,dependencies,template
 seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures,seatoxin_template.txt
 toxin,toxin.fa,toxin-ref.fa,toxin_structures,toxin_template.txt
 ```
@@ -110,12 +110,12 @@ Each row represents a set of sequences (in this case the seatoxin and toxin prot
 
 | `reference` | Optional. Full path to the reference alignment. It is used for the reference-based evaluation steps. It can be left empty. |
 
-| `structures` | Required (At least one of fasta and structures must be provided). Full path to the folder that contains the protein structures for the sequences to be aligned. It is used for structural aligners and structure-based evaluation steps. It can be left empty. |
+| `dependencies` | Required (At least one of fasta and dependencies must be provided). Full path to the folder that contains the dependency files (e.g. protein structures) for the sequences to be aligned. Currently, it is used for structural aligners and structure-based evaluation steps. It can be left empty. |
 
-| `template` | Optional. Files that define the mapping between the input sequence and the protein structure to be used. Used by 3D-Coffee. If not specified, they will be automatically generated assuming that the sequence name provided in the fasta is the same as the file name of the corresponding PDB file. E.g. ">MyProteinName" in the fasta file and "MyProteinName.pdb" for the corresponding protein structure. For more information on how to generate a template file manually, please look at the T-Coffee [documentation](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html) |
+| `template` | Optional. Files that define the mapping between the input sequence and the dependency files (e.g. protein structures) to be used. Used by 3D-Coffee. If not specified, they will be automatically generated assuming that the sequence name provided in the fasta is the same as the file name of the corresponding PDB file. E.g. if you set (default) the parameter templates_suffix to .pdb, then: ">MyProteinName" in the fasta file and "MyProteinName.pdb" for the corresponding protein structure. For more information on how to generate a template file manually, please look at the T-Coffee [documentation](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html) |
 
 > [!NOTE]
-> You can have some samples with structures and/or references and some without. The pipeline will run the modules requiring structures/references only on the samples for which you have provided the required information and the others will be just skipped.
+> You can have some samples with dependencies and/or references and some without. The pipeline will run the modules requiring dependencies/references only on the samples for which you have provided the required information and the others will be just skipped.
 
 ## Toolsheet input
 

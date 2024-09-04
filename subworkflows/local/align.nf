@@ -28,7 +28,7 @@ workflow ALIGN {
                     // [[tree:<tree>, args_tree:<args_tree>, args_tree_clean: <args_tree_clean>], [aligner:<aligner>, args_aligner:<args_aligner>, args_aligner_clean:<args_aligner_clean>]]
                     // e.g.[[tree:FAMSA, args_tree:-gt upgma -parttree, args_tree_clean:-gt_upgma_-parttree], [aligner:FAMSA, args_aligner:null, args_aligner_clean:null]]
                     // e.g.[[tree:null, args_tree:null, args_tree_clean:null], [aligner:TCOFFEE, args_aligner:-output fasta_aln, args_aligner_clean:-output_fasta_aln]]
-    ch_structures // channel: meta, [/path/to/file.pdb,/path/to/file.pdb,/path/to/file.pdb]
+    ch_dependencies // channel: meta, [e.g. /path/to/file.pdb,/path/to/file.pdb,/path/to/file.pdb]
     compress      // boolean: true or false
 
     main:
@@ -92,16 +92,16 @@ workflow ALIGN {
         }
         .set { ch_fasta_trees }
 
-    ch_structures.combine(ch_tools)
+    ch_dependencies.combine(ch_tools)
         .map {
-            metastruct, template, struct, metatree, metaalign ->
-                [ metastruct+metatree+metaalign, template, struct ]
+            metadependency, template, dependency, metatree, metaalign ->
+                [ metadependency+metatree+metaalign, template, dependency ]
         }
         .branch {
             mtmalign: it[0]["aligner"] == "MTMALIGN"
             foldmason: it[0]["aligner"] == "FOLDMASON"
         }
-        .set { ch_structures_tools }
+        .set { ch_dependencies_tools }
 
     // ------------------------------------------------
     // Compute the alignments
@@ -262,57 +262,60 @@ workflow ALIGN {
 
     // 2. SEQUENCE + STRUCTURE BASED
 
-    // -----------------  3DCOFFEE  ------------------
-    ch_fasta_trees.tcoffee3d
-        .map{ meta, fasta, tree -> [ meta["id"], meta, fasta, tree ] }
-        .combine(ch_structures.map{ meta, template, structures -> [ meta["id"], template, structures ] }, by: 0)
-        .multiMap{
-            merging_id, meta, fastafile, treefile, templatefile, structuresfiles ->
-            fasta:      [ meta, fastafile ]
-            tree:       [ meta, treefile  ]
-            structures: [ meta, templatefile, structuresfiles ]
-        }
-        .set { ch_fasta_trees_3dcoffee }
+    if(params.templates_suffix == ".pdb"){
+        // -----------------  3DCOFFEE  ------------------
+        ch_fasta_trees.tcoffee3d
+            .map{ meta, fasta, tree -> [ meta["id"], meta, fasta, tree ] }
+            .combine(ch_dependencies.map{ meta, template, dependencies -> [ meta["id"], template, dependencies ] }, by: 0)
+            .multiMap{
+                merging_id, meta, fastafile, treefile, templatefile, depencencyfiles ->
+                fasta:      [ meta, fastafile ]
+                tree:       [ meta, treefile  ]
+                dependencies: [ meta, templatefile, depencencyfiles ]
+            }
+            .set { ch_fasta_trees_3dcoffee }
 
-    TCOFFEE3D_ALIGN (
-        ch_fasta_trees_3dcoffee.fasta,
-        ch_fasta_trees_3dcoffee.tree,
-        ch_fasta_trees_3dcoffee.structures,
-        compress
-    )
-    ch_msa = ch_msa.mix(TCOFFEE3D_ALIGN.out.alignment)
-    ch_versions = ch_versions.mix(TCOFFEE3D_ALIGN.out.versions.first())
+        TCOFFEE3D_ALIGN (
+            ch_fasta_trees_3dcoffee.fasta,
+            ch_fasta_trees_3dcoffee.tree,
+            ch_fasta_trees_3dcoffee.dependencies,
+            compress
+        )
+        ch_msa = ch_msa.mix(TCOFFEE3D_ALIGN.out.alignment)
+        ch_versions = ch_versions.mix(TCOFFEE3D_ALIGN.out.versions.first())
 
-    // 3. STRUCTURE BASED
+        // 3. STRUCTURE BASED
 
-    // -----------------  MTMALIGN  ------------------
-    ch_structures_tools.mtmalign
-        .multiMap {
-            meta, template, struct ->
-                pdbs: [ meta, struct ]
-        }
-        .set { ch_pdb_mtmalign }
+        // -----------------  MTMALIGN  ------------------
+        ch_dependencies_tools.mtmalign
+            .multiMap {
+                meta, template, dependency ->
+                    pdbs: [ meta, dependency ]
+            }
+            .set { ch_pdb_mtmalign }
 
-    MTMALIGN_ALIGN (
-        ch_pdb_mtmalign.pdbs,
-        compress
-    )
-    ch_msa = ch_msa.mix(MTMALIGN_ALIGN.out.alignment)
-    ch_versions = ch_versions.mix(MTMALIGN_ALIGN.out.versions.first())
+        MTMALIGN_ALIGN (
+            ch_pdb_mtmalign.pdbs,
+            compress
+        )
+        ch_msa = ch_msa.mix(MTMALIGN_ALIGN.out.alignment)
+        ch_versions = ch_versions.mix(MTMALIGN_ALIGN.out.versions.first())
 
-    ch_structures_tools.foldmason
-        .multiMap {
-            meta, template, struct ->
-                pdbs: [ meta, struct ]
-        }
-        .set { ch_pdb_foldmason }
+        ch_dependencies_tools.foldmason
+            .multiMap {
+                meta, template, dependency ->
+                    pdbs: [ meta, dependency ]
+            }
+            .set { ch_pdb_foldmason }
 
-    FOLDMASON_EASYMSA (
-        ch_pdb_foldmason.pdbs,
-        compress
-    )
-    ch_msa = ch_msa.mix(FOLDMASON_EASYMSA.out.msa_aa)
-    ch_versions = ch_versions.mix(FOLDMASON_EASYMSA.out.versions.first())
+        FOLDMASON_EASYMSA (
+            ch_pdb_foldmason.pdbs,
+            compress
+        )
+        ch_msa = ch_msa.mix(FOLDMASON_EASYMSA.out.msa_aa)
+        ch_versions = ch_versions.mix(FOLDMASON_EASYMSA.out.versions.first())
+    }
+
 
     emit:
     msa      = ch_msa      // channel: [ val(meta), path(msa) ]

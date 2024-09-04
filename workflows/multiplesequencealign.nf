@@ -26,7 +26,7 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_mult
 include { STATS                  } from '../subworkflows/local/stats'
 include { ALIGN                  } from '../subworkflows/local/align'
 include { EVALUATE               } from '../subworkflows/local/evaluate'
-include { CREATE_TCOFFEETEMPLATE } from '../modules/local/create_tcoffee_template'
+include { TEMPLATES              } from '../subworkflows/local/templates'
 
 //
 // MODULE: local modules
@@ -56,7 +56,7 @@ include { PIGZ_COMPRESS                  } from '../modules/nf-core/pigz/compres
 workflow MULTIPLESEQUENCEALIGN {
 
     take:
-    ch_input    // channel: [ meta, path(sequence.fasta), path(reference.fasta), path(pdb_structures.tar.gz), path(templates.txt) ]
+    ch_input    // channel: [ meta, path(sequence.fasta), path(reference.fasta), path(dependency_files.tar.gz), path(templates.txt) ]
     ch_tools    // channel: [ val(guide_tree_tool), val(args_guide_tree_tool), val(alignment_tool), val(args_alignment_tool) ]
     ch_versions // channel: [ path(versions.yml) ]
 
@@ -97,61 +97,35 @@ workflow MULTIPLESEQUENCEALIGN {
                 [ meta, str ]
         }
         .filter { it[1].size() > 0 }
-        .set { ch_structures }
+        .set { ch_dependencies }
 
     // ----------------
-    // STRUCTURES
+    // DEPENDENCY FILES
     // ----------------
-    // Structures are taken from a directory of PDB files.
+    // Dependency files are taken from a directory.
     // If the directory is compressed, it is uncompressed first.
-    ch_structures
+    ch_dependencies
         .branch {
             compressed:   it[1].endsWith('.tar.gz')
             uncompressed: true
         }
-        .set { ch_structures }
+        .set { ch_dependencies }
 
-    UNTAR (ch_structures.compressed)
+    UNTAR (ch_dependencies.compressed)
         .untar
-        .mix(ch_structures.uncompressed)
+        .mix(ch_dependencies.uncompressed)
         .map {
             meta,dir ->
                 [ meta,file(dir).listFiles().collect() ]
         }
-        .set { ch_structures }
+        .set { ch_dependencies }
 
-    // ----------------
-    // TEMPLATES
-    // ----------------
-    // If a family does not present a template but structures are provided, create one.
-    ch_structures_template = ch_structures.join(ch_templates, by:0, remainder:true)
-    ch_structures_template
-        .branch {
-            template: it[2] != null
-            no_template: true
-        }
-        .set { ch_structures_branched }
-
-    // Create the new templates and merge them with the existing templates
-    CREATE_TCOFFEETEMPLATE (
-        ch_structures_branched.no_template
-            .map {
-                meta,structures,template ->
-                    [ meta, structures ]
-            }
+    TEMPLATES (
+        ch_dependencies,
+        ch_templates,
+        "${params.templates_suffix}"
     )
-    new_templates = CREATE_TCOFFEETEMPLATE.out.template
-    ch_structures_branched.template
-        .map {
-            meta,structures,template ->
-                [ meta, template ]
-        }
-        .set { forced_templates }
-
-    ch_templates_merged = forced_templates.mix(new_templates)
-
-    // Merge the structures and templates channels, ready for the alignment
-    ch_structures_template = ch_templates_merged.combine(ch_structures, by:0)
+    ch_dependencies_template = TEMPLATES.out.dependencies_template
 
     //
     // Compute summary statistics about the input sequences
@@ -159,7 +133,7 @@ workflow MULTIPLESEQUENCEALIGN {
     if (!params.skip_stats) {
         STATS (
             ch_seqs,
-            ch_structures
+            ch_dependencies
         )
         ch_versions   = ch_versions.mix(STATS.out.versions)
         stats_summary = stats_summary.mix(STATS.out.stats_summary)
@@ -172,7 +146,7 @@ workflow MULTIPLESEQUENCEALIGN {
     ALIGN (
         ch_seqs,
         ch_tools,
-        ch_structures_template,
+        ch_dependencies_template,
         compress_during_align
     )
     ch_versions = ch_versions.mix(ALIGN.out.versions)
@@ -186,7 +160,7 @@ workflow MULTIPLESEQUENCEALIGN {
     // Evaluate the quality of the alignment
     //
     if (!params.skip_eval) {
-        EVALUATE (ALIGN.out.msa, ch_refs, ch_structures_template)
+        EVALUATE (ALIGN.out.msa, ch_refs, ch_dependencies_template)
         ch_versions        = ch_versions.mix(EVALUATE.out.versions)
         evaluation_summary = evaluation_summary.mix(EVALUATE.out.eval_summary)
     }
