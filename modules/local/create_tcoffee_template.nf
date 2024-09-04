@@ -7,7 +7,7 @@ process CREATE_TCOFFEETEMPLATE {
     'nf-core/ubuntu:20.04' }"
 
     input:
-    tuple val(meta), path(accessory_informations)
+    tuple val(meta), val(suffix), path(accessory_informations)
 
     output:
     tuple val (meta), path("*_template.txt"), emit: template
@@ -21,8 +21,8 @@ process CREATE_TCOFFEETEMPLATE {
     prefix = task.ext.prefix ?: "${meta.id}"
     """
     # Prepare templates
-    for structure in \$(ls *.pdb); do
-        id=`echo \$structure| awk  {'gsub(".pdb", "", \$0); print'}`
+    for structure in \$(ls *${suffix}); do
+        id=`echo \$structure| awk  {'gsub("${suffix}", "", \$0); print'}`
         echo -e ">"\$id "_P_" "\${id}" >>${prefix}_template.txt
     done
 
