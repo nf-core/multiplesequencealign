@@ -60,6 +60,19 @@
                 }
             }
         },
+        "align_options": {
+            "title": "Stats options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define wether to run stats.",
+            "properties": {
+                "build_consensus": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Build consensus alignment with M-COFFEE."
+                }
+            }
+        },
         "stats_options": {
             "title": "Stats options",
             "type": "object",
@@ -371,6 +384,9 @@
     "allOf": [
         {
             "$ref": "#/definitions/input_output_options"
+        },
+        {
+            "$ref": "#/definitions/align_options"
         },
         {
             "$ref": "#/definitions/stats_options"

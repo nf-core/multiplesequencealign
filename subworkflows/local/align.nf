@@ -19,6 +19,7 @@ include { MUSCLE5_SUPER5                    } from '../../modules/nf-core/muscle
 include { TCOFFEE_ALIGN                     } from '../../modules/nf-core/tcoffee/align/main'
 include { TCOFFEE_ALIGN as TCOFFEE3D_ALIGN  } from '../../modules/nf-core/tcoffee/align/main'
 include { TCOFFEE_ALIGN as REGRESSIVE_ALIGN } from '../../modules/nf-core/tcoffee/align/main'
+include { TCOFFEE_CONSENSUS as CONSENSUS    } from '../../modules/nf-core/tcoffee/consensus/main'
 include { MTMALIGN_ALIGN                    } from '../../modules/nf-core/mtmalign/align/main'
 
 workflow ALIGN {
@@ -314,6 +315,18 @@ workflow ALIGN {
         )
         ch_msa = ch_msa.mix(FOLDMASON_EASYMSA.out.msa_aa)
         ch_versions = ch_versions.mix(FOLDMASON_EASYMSA.out.versions.first())
+    }
+
+    // -----------------  CONSENSUS  ------------------
+    if(params.build_consensus){
+        ch_msa.map{ meta, msa -> [ meta["id"], msa]}
+              .groupTuple()
+              .map{ id_meta, msas -> [ ["id": id_meta, "tree":"", "args_tree":"", "args_tree_clean":null, "aligner":"CONSENSUS", "args_aligner":"", "args_aligner_clean":null ], msas ]}
+              .set{ ch_msa_consensus }
+        
+        CONSENSUS(ch_msa_consensus, [[:],[]], compress)
+        ch_msa = ch_msa.mix(CONSENSUS.out.alignment)
+        ch_versions = ch_versions.mix(CONSENSUS.out.versions.first())
     }
 
 
