@@ -42,7 +42,7 @@ workflow TEMPLATES {
     // Merge the dependencies and templates channels, ready for the alignment
     ch_dependencies_template = ch_templates_merged.combine(ch_dependencies, by:0)
 
-    emit: 
+    emit:
     dependencies_template =  ch_dependencies_template
     versions = ch_versions
 
