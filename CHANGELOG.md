@@ -31,7 +31,8 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#89](https://github.com/nf-core/multiplesequencealign/issues/89)] - Add collection of plddt metrics in stats subworkflow.
 - [[#96](https://github.com/nf-core/multiplesequencealign/issues/96)] - Add collection of number of gaps in eval subworkflow.
 - [[#84](https://github.com/nf-core/multiplesequencealign/issues/84)] - Update Metromap
-- [[#139](https://github.com/nf-core/multiplesequencealign/pull/139)] - Add Foldmason
+- [[#139](https://github.com/nf-core/multiplesequencealign/pull/139)] - Add Foldmason.
+- [[#146](https://github.com/nf-core/multiplesequencealign/pull/146)] - Only show additional process tags when they exists and use the same ubuntu version in all modules.
 
 ### `Fixed`
 
