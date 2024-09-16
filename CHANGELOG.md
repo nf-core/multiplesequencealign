@@ -9,18 +9,18 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 
 ### `Added`
 
-- [[#29](https://github.com/nf-core/multiplesequencealign/issues/29)] - Add FAMSA_ALIGN module
-- [[#38](https://github.com/nf-core/multiplesequencealign/issues/38)] - Add FAMSA_GUIDETREE module
-- [[#42](https://github.com/nf-core/multiplesequencealign/issues/42)] - Add MAFFT module
-- [[#51](https://github.com/nf-core/multiplesequencealign/issues/51)] - Add CLUSTALO module
-- [[#41](https://github.com/nf-core/multiplesequencealign/issues/41)] - Add KALIGN module
-- [[#48](https://github.com/nf-core/multiplesequencealign/issues/48)] - Integrate NF-VALIDATION PLUGIN
+- [[#29](https://github.com/nf-core/multiplesequencealign/issues/29)] - Add FAMSA_ALIGN module.
+- [[#38](https://github.com/nf-core/multiplesequencealign/issues/38)] - Add FAMSA_GUIDETREE module.
+- [[#42](https://github.com/nf-core/multiplesequencealign/issues/42)] - Add MAFFT module.
+- [[#51](https://github.com/nf-core/multiplesequencealign/issues/51)] - Add CLUSTALO module.
+- [[#41](https://github.com/nf-core/multiplesequencealign/issues/41)] - Add KALIGN module.
+- [[#48](https://github.com/nf-core/multiplesequencealign/issues/48)] - Integrate NF-VALIDATION PLUGIN.
 - [[#45](https://github.com/nf-core/multiplesequencealign/issues/45)] - Add module LearnMSA
-- [[#35](https://github.com/nf-core/multiplesequencealign/issues/35)] - Add module Tcoffee_align
-- [[#60](https://github.com/nf-core/multiplesequencealign/issues/60)] - Add module Tcoffee3D_align and handle structures input
-- [[#35](https://github.com/nf-core/multiplesequencealign/issues/35)] - Add module MUSCLE5_SUPER5
+- [[#35](https://github.com/nf-core/multiplesequencealign/issues/35)] - Add module Tcoffee_align.
+- [[#60](https://github.com/nf-core/multiplesequencealign/issues/60)] - Add module Tcoffee3D_align and handle structures input.
+- [[#35](https://github.com/nf-core/multiplesequencealign/issues/35)] - Add module MUSCLE5_SUPER5.
 - [[#59](https://github.com/nf-core/multiplesequencealign/issues/59)] - Add support for passing structure template in samplesheet.
-- [[#77](https://github.com/nf-core/multiplesequencealign/issues/77)] - Add module zip
+- [[#77](https://github.com/nf-core/multiplesequencealign/issues/77)] - Add module zip.
 - [[#93](https://github.com/nf-core/multiplesequencealign/pull/93)] - Add multiqc basic support. Add custom params validation. Add basic shiny app.
 - [[#100](https://github.com/nf-core/multiplesequencealign/pull/100)] - Add support for optional stats and evals. Clean tests.
 - [[#110](https://github.com/nf-core/multiplesequencealign/issues/110)] - Add Readme documentation. Add nf-test for the pipeline.
@@ -30,8 +30,9 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#90](https://github.com/nf-core/multiplesequencealign/issues/90)] - Add TCS evaluation metric.
 - [[#89](https://github.com/nf-core/multiplesequencealign/issues/89)] - Add collection of plddt metrics in stats subworkflow.
 - [[#96](https://github.com/nf-core/multiplesequencealign/issues/96)] - Add collection of number of gaps in eval subworkflow.
-- [[#84](https://github.com/nf-core/multiplesequencealign/issues/84)] - Update Metromap
-- [[#139](https://github.com/nf-core/multiplesequencealign/pull/139)] - Add Foldmason
+- [[#84](https://github.com/nf-core/multiplesequencealign/issues/84)] - Update Metromap.
+- [[#139](https://github.com/nf-core/multiplesequencealign/pull/139)] - Add Foldmason.
+- [[#146](https://github.com/nf-core/multiplesequencealign/pull/146)] - Only show additional process tags when they exists and use the same ubuntu version in all modules.
 
 ### `Fixed`
 
@@ -42,8 +43,8 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#80](https://github.com/nf-core/multiplesequencealign/pull/80)] - Update modules versions from nf-core tools with nf-test.
 - [[#32](https://github.com/nf-core/multiplesequencealign/issues/32)] - Update Stats workflow with nf-core modules for merging.
 - [[#81](https://github.com/nf-core/multiplesequencealign/pull/81)] - Update Eval workflow with nf-core modules for merging.
-- [[#111](https://github.com/nf-core/multiplesequencealign/pull/111)] - Fix linting warnings (mostly versions)
-- [[#134](https://github.com/nf-core/multiplesequencealign/pull/134)] - Code revision for release preparation
+- [[#111](https://github.com/nf-core/multiplesequencealign/pull/111)] - Fix linting warnings (mostly versions).
+- [[#134](https://github.com/nf-core/multiplesequencealign/pull/134)] - Code revision for release preparation.
 - [[#138](https://github.com/nf-core/multiplesequencealign/pull/138)] - MultiQC as nf-core module and fix visualization.
 
 ### `Dependencies`
