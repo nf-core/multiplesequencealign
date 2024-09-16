@@ -64,7 +64,7 @@
             "title": "Stats options",
             "type": "object",
             "fa_icon": "fas fa-terminal",
-            "description": "Define wether to run stats.",
+            "description": "Define extra alignment options.",
             "properties": {
                 "build_consensus": {
                     "type": "boolean",
