@@ -91,14 +91,17 @@ def merge_data_and_trace(data_file,trace_file,out_file_name):
         # read in shiny_data.csv
     data = pd.read_csv(data_file)
     # read in trace
-    trace = pd.read_csv(trace_file, sep='\t')
-    clean_trace = cleanTrace(trace)
-    trace_trees = prep_tree_trace(clean_trace)
-    trace_align = prep_align_trace(clean_trace)
-
-    #merge data and trace_trees
-    data_tree = pd.merge(data, trace_trees, on=["id", "tree", "args_tree"], how="left")
-    data_tree_align = pd.merge(data_tree, trace_align, on=["id", "aligner", "args_aligner"], how="left")
-
-    # write to file
-    data_tree_align.to_csv(out_file_name, index=False)
+    # check if trace file has more than 1 row
+    if len(pd.read_csv(trace_file, sep='\t')) > 1:
+        trace = pd.read_csv(trace_file, sep='\t')
+        clean_trace = cleanTrace(trace)
+        trace_trees = prep_tree_trace(clean_trace)
+        trace_align = prep_align_trace(clean_trace)
+        #merge data and trace_trees
+        data_tree = pd.merge(data, trace_trees, on=["id", "tree", "args_tree"], how="left")
+        data_tree_align = pd.merge(data_tree, trace_align, on=["id", "aligner", "args_aligner"], how="left")
+        # write to file
+        data_tree_align.to_csv(out_file_name, index=False)
+    else:
+        # write to file
+        data.to_csv(out_file_name, index=False)
