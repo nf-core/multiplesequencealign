@@ -60,6 +60,8 @@ The available ALIGN methods are listed below (those that accept guide trees are 
 - [MTMALIGN](https://bio.tools/mtm-align)
 - [FOLDMASON](https://github.com/steineggerlab/foldmason)
 
+Optionally, [M-COFFEE](https://tcoffee.org/Projects/mcoffee/index.html) will combine the output of all alignments into a consensus MSA (--build_consensus).
+
 ### 4. EVALUATE
 
 Optionally, the produced MSAs can be evaluated. This step can be skipped using the `--skip_eval` parameter. The evaluations implemented are listed below.

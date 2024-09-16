@@ -101,6 +101,11 @@
                         "git_sha": "faf557ba56156ac0e5de76a25c1e3df11c944f59",
                         "installed_by": ["modules"]
                     },
+                    "tcoffee/consensus": {
+                        "branch": "master",
+                        "git_sha": "8b8d8daa4b7d75ccfb290fcb721a00cc98e23567",
+                        "installed_by": ["modules"]
+                    },
                     "tcoffee/irmsd": {
                         "branch": "master",
                         "git_sha": "faf557ba56156ac0e5de76a25c1e3df11c944f59",

@@ -142,7 +142,7 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // Align
     //
-    compress_during_align = !params.skip_compression && params.skip_eval
+    compress_during_align = !params.skip_compression && params.skip_eval && !params.build_consensus
     ALIGN (
         ch_seqs,
         ch_tools,
