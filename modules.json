@@ -125,6 +125,11 @@
                         "branch": "master",
                         "git_sha": "06c8865e36741e05ad32ef70ab3fac127486af48",
                         "installed_by": ["modules"]
+                    },
+                    "upp/align": {
+                        "branch": "master",
+                        "git_sha": "3be751e610b332efd94c2e82ddab5b5c65cfe852",
+                        "installed_by": ["modules"]
                     }
                 }
             },

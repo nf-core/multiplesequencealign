@@ -52,6 +52,8 @@ The available assembly methods are listed below (those that accept guide trees i
 - [MUSCLE5](https://drive5.com/muscle5/manual/)
 - [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) (accepts guide tree)
 - [REGRESSIVE](https://tcoffee.readthedocs.io/en/latest/tcoffee_quickstart_regressive.html) (accepts guide tree)
+- [UPP](https://github.com/smirarab/sepp) (accepts guide tree)
+
 
 **sequence- and structure-based** (require both fasta and structures as input):
 
