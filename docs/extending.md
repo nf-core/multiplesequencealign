@@ -35,7 +35,7 @@ These steps will guide you to include a new MSA tool into the pipeline. Once don
   - [ ] Update citations in utils subworkflow, [here](https://github.com/nf-core/multiplesequencealign/blob/dev/subworkflows/local/utils_nfcore_multiplesequencealign_pipeline/main.nf)
 
 - [ ] **5.** Add your tool in the **toolsheet** in the test dataset repository. [Example](https://github.com/nf-core/test-datasets/pull/1324).
-- [ ] **6.** Open a **PR** :)
+- [ ] **6.** Open a **PR** against the `dev` branch of the nf-core repository :)
 
 Congratulations, your aligner is now in nf-core/multiplesequencalign!
 
