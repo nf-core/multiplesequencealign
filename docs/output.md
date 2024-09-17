@@ -76,7 +76,7 @@ Files with the summary of the computed evaluation statistics are stored in the *
 A Shiny app is created to explore interactively your results. It can be found in the **shiny_app** folder.
 
 If the `--skip_shiny=false` parameter is specified, a shiny app is prepared to visualize the summary statistics and evaluation of the produced alignments.
-To run the shiny app:
+To run the Shiny app use the following commands from the results directory:
 `cd shiny_app`
 `./run.sh`
 
