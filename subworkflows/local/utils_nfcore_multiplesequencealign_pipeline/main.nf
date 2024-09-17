@@ -195,7 +195,7 @@ def toolCitationText() {
             "MultiQC (Ewels et al., 2016)",
             "Muscle5 (Edgar, 2022)",
             "T-Coffee (Notredame et al., 2000)",
-            "UPP (Park et al., 2023)"    
+            "UPP (Park et al., 2023)"
         ].join(' ').trim()
 
     return citation_text
@@ -211,6 +211,7 @@ def toolBibliographyText() {
         "<li>Dong R, Peng Z, Zhang Y, Yang J. mTM-align: an algorithm for fast and accurate multiple protein structure alignment. Bioinformatics. 2018 May 15;34(10):1719-1725. doi: 10.1093/bioinformatics/btx828. PMID: 29281009; PMCID: PMC5946935.</li>",
         "<li>Edgar RC. Muscle5: High-accuracy alignment ensembles enable unbiased assessments of sequence homology and phylogeny. Nat Commun. 2022 Nov 15;13(1):6968. doi: 10.1038/s41467-022-34630-w. PMID: 36379955; PMCID: PMC9664440.</li>",
         "<li>Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354. Epub 2016 Jun 16. PubMed PMID: 27312411; PubMed Central PMCID: PMC5039924.</li>",
+        "<li>Cameron L.M. Gilchrist, Milot Mirdita, Martin Steinegger. bioRxiv 2024.08.01.606130; doi: https://doi.org/10.1101/2024.08.01.606130.</li>",
         "<li>Katoh K, Misawa K, Kuma K, Miyata T. MAFFT: a novel method for rapid multiple sequence alignment based on fast Fourier transform. Nucleic Acids Res. 2002 Jul 15;30(14):3059-66. doi: 10.1093/nar/gkf436. PMID: 12136088; PMCID: PMC135756.</li>",
         "<li>Lassmann T. Kalign 3: multiple sequence alignment of large data sets. Bioinformatics. 2019 Oct 26;36(6):1928–9. doi: 10.1093/bioinformatics/btz795. Epub ahead of print. PMID: 31665271; PMCID: PMC7703769.</li>",
         "<li>Notredame C, Higgins DG, Heringa J. T-Coffee: A novel method for fast and accurate multiple sequence alignment. J Mol Biol. 2000 Sep 8;302(1):205-17. doi: 10.1006/jmbi.2000.4042. PMID: 10964570.</li>",
