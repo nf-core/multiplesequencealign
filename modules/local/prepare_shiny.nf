@@ -29,7 +29,8 @@ process PREPARE_SHINY {
     cp $table shiny_data.csv
     cp -r $app/* .
     rm $app
-    echo "docker run -v .:/app --network=host $docker_url $bash_command" > run.sh
+    echo -n 'docker run -v \$PWD:/app --network=host ' > run.sh
+    echo -n "$docker_url $bash_command" >> run.sh
     chmod +x run.sh
 
     cat <<-END_VERSIONS > versions.yml
