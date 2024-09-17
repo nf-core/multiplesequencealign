@@ -31,23 +31,16 @@ This steps will guide you to include a new MSA tool into the pipeline. Once done
   - [ ] Update docs/usage.md
   - [ ] Update CITATIONS.md
   - [ ] Update CHANGELOG.md
+  - [ ] Update citations in utils subworkflow, [here](https://github.com/nf-core/multiplesequencealign/blob/dev/subworkflows/local/utils_nfcore_multiplesequencealign_pipeline/main.nf)
 
 - [ ] **5.** Add your tool in the **toolsheet** in the test dataset repository. [Example](https://github.com/nf-core/test-datasets/pull/1324).
 - [ ] **6.** Open a **PR** :)
       
-Congratulations, your aligner is now in nf-core/multiplesequencalignment!
+Congratulations, your aligner is now in nf-core/multiplesequencalign!
 
 ## Adding a guide tree estimator
 
-1. Create a local or nf-core module and ensure the output is in Newick format
-2. Add the estimator to the README.md
-3. Add a config to `conf/modules.config`, see the example of CLUSTALO [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/conf/modules.config#L82-L91)
-4. Include it in the guidetree subworkflow (`subworkflows/local/compute_trees.nf`)
-   - Import the module (see [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/compute_trees.nf#L6) an example)
-   - Add a branch for the estimator to the beginning of call block [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/compute_trees.nf#L26-L28)
-   - Call the estimator e.g. of [CLUSTALO](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/compute_trees.nf#L36), and add the output to `ch_trees` and `ch_versions`, respectively [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/compute_trees.nf#L37) and [here](https://github.com/nf-core/multiplesequencealign/blob/000ef2a535ed246ff89c7cd93afaca53879af3ef/subworkflows/local/compute_trees.nf#L38)
-
-Congratulations, your guide tree estimator is now in nf-core/multiplesequencalignment!
+To add a tool to estimate a guide tree, please follow exactly the steps of "Adding an aligner" with the only difference being that the subworkflow to be updated is [subworkflows/local/compute_trees.nf](https://github.com/nf-core/multiplesequencealign/blob/dev/subworkflows/local/compute_trees.nf).
 
 ## Adding an evaluation module
 
