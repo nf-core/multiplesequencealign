@@ -4,7 +4,7 @@
 
 > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
 
-## Introduction
+## Overview
 
 **nf-core/multiplesequencealign** is a pipeline to deploy and systematically evaluate Multiple Sequence Alignment (MSA) methods.
 
@@ -17,7 +17,7 @@ The main steps of the pipeline are:
 5. **Evaluate**: (Optional) The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skipped by passing `--skip_eval` as a parameter.
 6. **Report**: Reports about the collected information of the runs are reported in a Shiny app and a summary table in MultiQC. These processes can be skipped by passing `--skip_shiny` and `--skip_multiqc`, respectively.
 
-### 1. INPUT FILES SUMMARY
+## 1. Input files summary statistics
 
 This step generates the summary information about the input files and can be skipped using the `--skip_stats` parameter. The optional computed metrics are:
 
@@ -25,7 +25,7 @@ This step generates the summary information about the input files and can be ski
 2. **General summary**: Calculates the number and the average length of sequences. Activate with `--calc_seq_stats` (default: `true`).
 3. **Extract plddt**: If the structures were generated using AF2, plddt is extracted and reported. Activate with `--extract_plddt` (default: `false`).
 
-### 2. GUIDE TREES
+## 2. Guide trees
 
 Guide trees define the order in which sequences and profiles are aligned and play a crucial role in determining the final MSA accuracy. Tree rendering techniques most commonly rely on pairwise distances between sequences.
 
@@ -37,11 +37,11 @@ Currently available GUIDE TREE methods are: (Optional):
 - [CLUSTALO](http://clustal.org/omega/#Documentation)
 - [FAMSA](https://github.com/refresh-bio/FAMSA)
 
-### 3. ALIGN
+### 3. Align
 
 The available assembly methods are listed below (those that accept guide trees indicate it in parentheses):
 
-**SEQUENCE-BASED** (only require a fasta file as input):
+**sequence-based** (only require a fasta file as input):
 
 - [CLUSTALO](http://clustal.org/omega/#Documentation) (accepts guide tree)
 - [FAMSA](https://github.com/refresh-bio/FAMSA) (accepts guide tree)
@@ -53,39 +53,39 @@ The available assembly methods are listed below (those that accept guide trees i
 - [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) (accepts guide tree)
 - [REGRESSIVE](https://tcoffee.readthedocs.io/en/latest/tcoffee_quickstart_regressive.html) (accepts guide tree)
 
-**SEQUENCE- and STRUCTURE-BASED** (require both fasta and structures as input):
+**sequence- and structure-based** (require both fasta and structures as input):
 
 - [3DCOFFEE](https://tcoffee.org/Projects/expresso/index.html) (accepts guide tree)
 
-**STRUCTURE-BASED** (only require stuctures as input):
+**structure-based** (only require stuctures as input):
 
 - [MTMALIGN](https://bio.tools/mtm-align)
 - [FOLDMASON](https://github.com/steineggerlab/foldmason)
 
-Optionally, [M-COFFEE](https://tcoffee.org/Projects/mcoffee/index.html) will combine the output of all alignments into a consensus MSA (--build_consensus).
+Optionally, [M-COFFEE](https://tcoffee.org/Projects/mcoffee/index.html) will combine the output of all alignments into a consensus MSA (`--build_consensus`).
 
-### 4. EVALUATE
+### 4. Evaluate
 
 Optionally, the produced MSAs will be evaluated. This step can be skipped using the `--skip_eval` parameter. The evaluations implemented are listed below.
 
-**SEQUENCE-BASED** (no extra input required):
+**sequence-based** (no extra input required):
 
-1. Number of gaps. Calculates the number of gaps and its average across sequences. Activate using `--calc_gaps` (default: `true`).
+1. **Number of gaps**. Calculates the number of gaps and its average across sequences. Activate using `--calc_gaps` (default: `true`).
 
-**REFERENCE-BASED**:
+**reference-based**:
 
 The reference MSAs (see samplesheet) are used to evaluate the quality of the produced MSA.
 
-2. Sum Of Pairs (SP). Calculates the SP score using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#comparing-alternative-alignments) implementation. Activated using `--calc_sp` (default: `true`).
-3. Total column (TC). Calculates the TC score [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#comparing-alternative-alignments). Activate using `--calc_tc` (default: `true`).
+2. **Sum Of Pairs (SP)**. Calculates the SP score using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#comparing-alternative-alignments) implementation. Activated using `--calc_sp` (default: `true`).
+3. **Total column (TC)**. Calculates the TC score [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#comparing-alternative-alignments). Activate using `--calc_tc` (default: `true`).
 
-**STRUCTURE-BASED**:
+**structure-based**:
 
 The provided structures (see samplesheet) are used to evaluate the quality of the alignment.
 
-4. iRMSD. Calculates the iRMSD using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#apdb-irmsd) implementation. Activate using `--calc_irmsd` (default: false).
+4. **iRMSD**. Calculates the iRMSD using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#apdb-irmsd) implementation. Activate using `--calc_irmsd` (default: false).
 
-### 5. REPORT
+### 5. Report
 
 Finally, a summary table with all the computed statistics and evaluations is reported in MultiQC (skip by using `--skip_multiqc`).
 Moreover, a Shiny app is generated with interactive summary plots (skip with `--skip_shiny`).
@@ -95,7 +95,7 @@ Moreover, a Shiny app is generated with interactive summary plots (skip with `--
 
 ## Samplesheet input
 
-The sample sheet defines the input data that the pipeline will process.
+The sample sheet defines the **input data** that the pipeline will process.
 It should look like this:
 
 ```csv title="samplesheet.csv"
@@ -108,14 +108,10 @@ Each row represents a set of sequences (in this case the seatoxin and toxin prot
 
 | Column | Description                                                                                                                     |
 | ------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| `id`   | Required. Name of the set of sequences. It can correspond to the protein family name or to an internal id. It should be unique. |
-
+| `id`   | Required. Name of the set of sequences. It can correspond to the protein family name or to an internal id. It must be unique. |
 | `fasta` | Required (At least one of fasta and structures must be provided). Full path to the fasta file that contains the sequence to be aligned. |
-
 | `reference` | Optional. Full path to the reference alignment. It is used for the reference-based evaluation steps. It can be left empty. |
-
 | `dependencies` | Required (At least one of fasta and dependencies must be provided). Full path to the folder that contains the dependency files (e.g. protein structures) for the sequences to be aligned. Currently, it is used for structural aligners and structure-based evaluation steps. It can be left empty. |
-
 | `template` | Optional. Files that define the mapping between the input sequence and the dependency files (e.g. protein structures) to be used. Used by 3D-Coffee. If not specified, they will be automatically generated assuming that the sequence name provided in the fasta is the same as the file name of the corresponding PDB file. E.g. if you set (default) the parameter templates_suffix to .pdb, then: ">MyProteinName" in the fasta file and "MyProteinName.pdb" for the corresponding protein structure. For more information on how to generate a template file manually, please look at the T-Coffee [documentation](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html) |
 
 > [!NOTE]
@@ -180,9 +176,8 @@ If you wish to repeatedly use the same parameters for multiple runs, rather than
 
 Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <file>`.
 
-:::warning
-Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources), other infrastructural tweaks (such as output directories), or module arguments (args).
-:::
+> [!WARNING]
+>Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process >resource specifications](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources), other infrastructural tweaks (such as output directories), or >module arguments (args).
 
 The above pipeline run specified with a params file in yaml format:
 
@@ -219,15 +214,14 @@ This version number will be logged in reports when you run the pipeline, so that
 
 To further assist in reproducbility, you can use share and re-use [parameter files](#running-the-pipeline) to repeat pipeline runs with the same settings without having to write out a command with every single parameter.
 
-:::tip
-If you wish to share such profile (such as upload as supplementary material for academic publications), make sure to NOT include cluster specific paths to files, nor institutional specific profiles.
-:::
+> [!TIP]
+>If you wish to share such profile (such as upload as supplementary material for academic publications), make sure to NOT include cluster specific paths to files, >nor institutional specific profiles.
 
 ## Core Nextflow arguments
 
-:::note
-These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
-:::
+> [!NOTE]
+> These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
+
 
 ### `-profile`
 
@@ -235,9 +229,8 @@ Use this parameter to choose a configuration profile. Profiles can give configur
 
 Several generic profiles are bundled with the pipeline which instruct the pipeline to use software packaged using different methods (Docker, Singularity, Podman, Shifter, Charliecloud, Apptainer, Conda) - see below.
 
-:::info
-We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
-:::
+> [!INFO]
+> We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
 
 The pipeline also dynamically loads configurations from [https://github.com/nf-core/configs](https://github.com/nf-core/configs) when it runs, making multiple config profiles for various institutional clusters available at run time. For more information and to see if your system is available in these configs please see the [nf-core/configs documentation](https://github.com/nf-core/configs#documentation).
 
