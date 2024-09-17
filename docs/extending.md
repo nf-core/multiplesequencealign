@@ -11,7 +11,7 @@ This pipeline is extensible, allowing the incorporation of new methods for assem
 
 ## Adding an aligner
 
-This steps will guide you to include a new MSA tool into the pipeline. Once done, this will allow to systematically deploy and benchmark your tool against all others included in the pipeline.
+These steps will guide you to include a new MSA tool into the pipeline. Once done, this will allow you to systematically deploy and benchmark your tool against all others included in the pipeline. You are also welcome to contribute back to the pipeline if you wish.
 
 - [ ] **0. Create an nf-core module** for your tool. Instructions on how to contribute new modules [here](https://nf-co.re/docs/tutorials/nf-core_components/components). Use other modules (e.g. [famsa](https://github.com/nf-core/modules/tree/master/modules/nf-core/famsa/align)) as template. Ensure the output is in FASTA format.
 
