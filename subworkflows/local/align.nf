@@ -271,7 +271,7 @@ workflow ALIGN {
                 tree:  [ meta, treefile  ]
         }
         .set { ch_fasta_trees_upp }
-    
+
     UPP_ALIGN (
         ch_fasta_trees_upp.fasta,
         ch_fasta_trees_upp.tree,
