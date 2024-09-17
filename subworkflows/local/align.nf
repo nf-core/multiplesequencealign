@@ -263,7 +263,7 @@ workflow ALIGN {
     ch_msa = ch_msa.mix(REGRESSIVE_ALIGN.out.alignment)
     ch_versions = ch_versions.mix(REGRESSIVE_ALIGN.out.versions.first())
 
-    // -----------------  UPP  ------------------
+    // -----------------  UPP  -------------------
     ch_fasta_trees.upp
         .multiMap{
             meta, fastafile, treefile ->
