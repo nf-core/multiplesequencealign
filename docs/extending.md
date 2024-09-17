@@ -1,10 +1,6 @@
 # Extending nf-core/multiplesequencealign
 
-This pipeline is designed to be extensible, both by adding new methods for assembling MSAs or guidetrees, and for evaluating MSAs.
-Before any component is added, a Nextflow module has to be created for it.
-It generally makes sense to directly create an nf-core module, but for certain use cases or testing purposes it maybe more appropriate to create a local module instead.
-Even when creating a local module, it is still advisable to adhere to nf-core conventions.
-Useful resources are:
+This pipeline is extensible, allowing new methods for assembling MSAs, guide trees, and evaluating MSAs. Before adding a component, a Nextflow module must be created. Typically, it's best to create an nf-core module, but for specific cases or testing, a local module may be more suitable. Even for local modules, following nf-core conventions is recommended. Useful resources:
 
 - The [nf-core documentation](https://nf-co.re/docs/usage/tutorials/nf_core_usage_tutorial)
 - The [Nextflow documentation](https://www.nextflow.io/docs/latest/module.html) for modules
@@ -13,30 +9,29 @@ Useful resources are:
 - The [nf-test documentation](https://code.askimed.com/nf-test/docs/getting-started/)
 - The [nf-core slack](https://nf-co.re/join), particularly the [multiplesequencealign channel](https://nfcore.slack.com/archives/C05LZ7EAYGK). Feel free to reach out!
 
-The pipeline consists of four different subworkflows:
-
-1. Compute the guide trees for guide tree-based methods.
-2. Perform the MSAs.
-3. Evaluate the produced MSAs.
-4. Compute statistics about the input dataset.
-
-The subworkflows are to a significant degree isolated from each other, and not all of them may run in any given execution of the pipeline.
 
 ## Adding an aligner
 
--[] Create a module for your tool (ideally nf-core). Ensure the output is in FASTA format. Use other modules in the pipeline as template.
--[] Include the module in the alignment subworkflow (`subworkflows/local/align.nf`)
+This steps will guide you to include a new MSA tool into the pipeline. Once done, this will allow to systematically deploy and benchmark your tool against all others included in the pipeline. 
 
-- Import the module
-- Add a branch to the correct channel, depending on your tool input (see other examples)
-- Call the aligner with the respective branch (see other examples)
-- Feed the output alignment and versions channels back into the `msa`. Make sure to `mix()` them so they do not get overwritten!
-  -[] Add the aligner to the aligner config in `conf/modules.config`.
-  -[] Update docs/usage.md
-  -[] Update CITATIONS.md
-  -[] Update CHANGELOG.md
+- [ ] **0. Create an nf-core module** for your tool. Instructions on how to contribute new modules [here](https://nf-co.re/docs/tutorials/nf-core_components/components). Use other modules (e.g. [famsa](https://github.com/nf-core/modules/tree/master/modules/nf-core/famsa/align)) as template. Ensure the output is in FASTA format. 
 
-You can look at an example of a new tool integration [here](https://github.com/nf-core/multiplesequencealign/pull/139).
+> You can look at an example of a new tool integration [here](https://github.com/nf-core/multiplesequencealign/pull/139).
+
+- [ ] **1.** **Fork** this repository and create a **new branch** (e.g. add-famsa)
+- [ ] **2. Include the module in the alignment subworkflow** (`subworkflows/local/align.nf`)
+  - [ ] Install the module. E.g. with the command `nf-core modules install famsa/align`.
+  - [ ] Include the module in `subworkflows/local/align.nf`, example [here](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/subworkflows/local/align.nf#L12).
+  - [ ] Add a branch to the correct channel, depending on your tool input. Example for sequence-based tools [here](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/subworkflows/local/align.nf#L83) and structure-based [here](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/subworkflows/local/align.nf#L101).
+  - [ ] Add the code to correctly execute the tool, as done [here](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/subworkflows/local/align.nf#L131-L144).
+  - [ ] Feed the output alignment and versions channels back into the `msa`. Make sure to `mix()` them so they do not get overwritten! [example](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/subworkflows/local/align.nf#L143-L144).
+
+- [ ] **3.** Add the aligner to the **aligner config** in [conf/modules.config](https://github.com/nf-core/multiplesequencealign/blob/dev/conf/modules.config). [Example](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/conf/modules.config#L125-L143).
+- [ ] **4. Update Docs**
+  - [ ] Update docs/usage.md
+  - [ ] Update CITATIONS.md
+  - [ ] Update CHANGELOG.md
+
 Congratulations, your aligner is now in nf-core/multiplesequencalignment!
 
 ## Adding a guide tree estimator
