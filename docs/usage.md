@@ -11,18 +11,19 @@
 The main steps of the pipeline are:
 
 1. **Input files summary**: (Optional) computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc. Skipped by the `--skip_stats` parameter.
+   
 2. **Guide Tree**: (Optional) Renders a guide tree. Only run if provided in the toolsheet input.
-3. **Align**: aligns the sequences.
-4. **Evaluate**: (Optional) The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skipped by passing `--skip_eval` as a parameter.
-5. **Report**: Reports about the collected information of the runs are reported in a Shiny app and a summary table in MultiQC. These processes can be skipped by passing `--skip_shiny` and `--skip_multiqc`, respectively.
+4. **Align**: aligns the sequences.
+5. **Evaluate**: (Optional) The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skipped by passing `--skip_eval` as a parameter.
+6. **Report**: Reports about the collected information of the runs are reported in a Shiny app and a summary table in MultiQC. These processes can be skipped by passing `--skip_shiny` and `--skip_multiqc`, respectively.
 
 ### 1. INPUT FILES SUMMARY
 
-This step generates the summary information about the input fasta files and can be skipped using the `--skip_stats` parameter. The analyses performed are:
+This step generates the summary information about the input files and can be skipped using the `--skip_stats` parameter. The optional computed metrics are:
 
-1. Sequence similarity: This step calculates pairwise and average sequence similarity using TCOFFEE. Activate with `--calc_sim` (default: `false`).
-2. General summary: Calculates the number and the average length of sequences. Activate with `--calc_seq_stats` (default: `true`).
-3. Extract plddt: If the structures were generated using AF2, plddt is extracted and reported. Activate with `--extract_plddt` (default: `false`).
+1. **Sequence similarity**: This step calculates pairwise and average sequence similarity using TCOFFEE. Activate with `--calc_sim` (default: `false`).
+2. **General summary**: Calculates the number and the average length of sequences. Activate with `--calc_seq_stats` (default: `true`).
+3. **Extract plddt**: If the structures were generated using AF2, plddt is extracted and reported. Activate with `--extract_plddt` (default: `false`).
 
 ### 2. GUIDE TREES
 
@@ -38,7 +39,7 @@ Currently available GUIDE TREE methods are: (Optional):
 
 ### 3. ALIGN
 
-The available ALIGN methods are listed below (those that accept guide trees are indicated in parentheses):
+The available assembly methods are listed below (those that accept guide trees indicate it in parentheses):
 
 **SEQUENCE-BASED** (only require a fasta file as input):
 
@@ -50,6 +51,7 @@ The available ALIGN methods are listed below (those that accept guide trees are 
 - [MAGUS](https://github.com/vlasmirnov/MAGUS) (accepts guide tree)
 - [MUSCLE5](https://drive5.com/muscle5/manual/)
 - [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) (accepts guide tree)
+- [REGRESSIVE](https://tcoffee.readthedocs.io/en/latest/tcoffee_quickstart_regressive.html) (accepts guide tree)
 
 **SEQUENCE- and STRUCTURE-BASED** (require both fasta and structures as input):
 
@@ -64,7 +66,7 @@ Optionally, [M-COFFEE](https://tcoffee.org/Projects/mcoffee/index.html) will com
 
 ### 4. EVALUATE
 
-Optionally, the produced MSAs can be evaluated. This step can be skipped using the `--skip_eval` parameter. The evaluations implemented are listed below.
+Optionally, the produced MSAs will be evaluated. This step can be skipped using the `--skip_eval` parameter. The evaluations implemented are listed below.
 
 **SEQUENCE-BASED** (no extra input required):
 
