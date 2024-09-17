@@ -56,6 +56,10 @@
 
   > Notredame C, Higgins DG, Heringa J. T-Coffee: A novel method for fast and accurate multiple sequence alignment. J Mol Biol. 2000 Sep 8;302(1):205-17. doi: 10.1006/jmbi.2000.4042. PMID: 10964570.
 
+- [UPP](https://academic.oup.com/bioinformatics/article/39/1/btad007/6982552)
+
+  > Park M, Ivanovic S, Chu G, Shen C, Warnow T. UPP2: fast and accurate alignment of datasets with fragmentary sequences. Bioinformatics. 2023 Jan 1;39(1):btad007. doi: 10.1093/bioinformatics/btad007. PMID: 36625535; PMCID: PMC9846425.
+
 ## Python packages
 
 - [Biopython](https://pubmed.ncbi.nlm.nih.gov/19304878/)

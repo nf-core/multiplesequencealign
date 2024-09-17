@@ -50,6 +50,7 @@ The available ALIGN methods are listed below (those that accept guide trees are 
 - [MAGUS](https://github.com/vlasmirnov/MAGUS) (accepts guide tree)
 - [MUSCLE5](https://drive5.com/muscle5/manual/)
 - [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) (accepts guide tree)
+- [UPP](https://github.com/smirarab/sepp) (accepts guide tree)
 
 **SEQUENCE- and STRUCTURE-BASED** (require both fasta and structures as input):
 

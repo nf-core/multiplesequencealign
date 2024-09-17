@@ -15,12 +15,13 @@ include { KALIGN_ALIGN                      } from '../../modules/nf-core/kalign
 include { LEARNMSA_ALIGN                    } from '../../modules/nf-core/learnmsa/align/main'
 include { MAFFT                             } from '../../modules/nf-core/mafft/main'
 include { MAGUS_ALIGN                       } from '../../modules/nf-core/magus/align/main'
+include { MTMALIGN_ALIGN                    } from '../../modules/nf-core/mtmalign/align/main'
 include { MUSCLE5_SUPER5                    } from '../../modules/nf-core/muscle5/super5/main'
 include { TCOFFEE_ALIGN                     } from '../../modules/nf-core/tcoffee/align/main'
 include { TCOFFEE_ALIGN as TCOFFEE3D_ALIGN  } from '../../modules/nf-core/tcoffee/align/main'
 include { TCOFFEE_ALIGN as REGRESSIVE_ALIGN } from '../../modules/nf-core/tcoffee/align/main'
 include { TCOFFEE_CONSENSUS as CONSENSUS    } from '../../modules/nf-core/tcoffee/consensus/main'
-include { MTMALIGN_ALIGN                    } from '../../modules/nf-core/mtmalign/align/main'
+include { UPP_ALIGN                         } from '../../modules/nf-core/upp/align/main'
 
 workflow ALIGN {
     take:
@@ -90,6 +91,7 @@ workflow ALIGN {
             regressive: it[0]["aligner"] == "REGRESSIVE"
             tcoffee:    it[0]["aligner"] == "TCOFFEE"
             tcoffee3d:  it[0]["aligner"] == "3DCOFFEE"
+            upp:        it[0]["aligner"] == "UPP"
         }
         .set { ch_fasta_trees }
 
@@ -260,6 +262,23 @@ workflow ALIGN {
     )
     ch_msa = ch_msa.mix(REGRESSIVE_ALIGN.out.alignment)
     ch_versions = ch_versions.mix(REGRESSIVE_ALIGN.out.versions.first())
+
+    // -----------------  UPP  ------------------
+    ch_fasta_trees.upp
+        .multiMap{
+            meta, fastafile, treefile ->
+                fasta: [ meta, fastafile ]
+                tree:  [ meta, treefile  ]
+        }
+        .set { ch_fasta_trees_upp }
+    
+    UPP_ALIGN (
+        ch_fasta_trees_upp.fasta,
+        ch_fasta_trees_upp.tree,
+        compress
+    )
+    ch_msa = ch_msa.mix(UPP_ALIGN.out.alignment)
+    ch_versions = ch_versions.mix(UPP_ALIGN.out.versions.first())
 
     // 2. SEQUENCE + STRUCTURE BASED
 

@@ -34,6 +34,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#139](https://github.com/nf-core/multiplesequencealign/pull/139)] - Add Foldmason.
 - [[#146](https://github.com/nf-core/multiplesequencealign/pull/146)] - Only show additional process tags when they exists and use the same ubuntu version in all modules.
 - [[#145](https://github.com/nf-core/multiplesequencealign/pull/145)] - Add consensus MSA.
+- [[#150](https://github.com/nf-core/multiplesequencealign/pull/150)] - Add UPP module.
 
 ### `Fixed`
 
