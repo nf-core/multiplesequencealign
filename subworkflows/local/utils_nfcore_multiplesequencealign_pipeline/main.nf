@@ -395,8 +395,12 @@ class Utils {
         args = fix_args(tool,args,"REGRESSIVE", "-reg_method", "famsa_msa")
         args = fix_args(tool,args,"REGRESSIVE", "-reg_nseq", "1000")
         args = fix_args(tool,args,"REGRESSIVE", "-output", "fasta_aln")
+
         // TCOFFEE
         args = fix_args(tool,args,"TCOFFEE", "-output", "fasta_aln")
+
+        // UPP
+        args = fix_args(tool,args,"UPP", "-m", "amino")
 
         return args
 
