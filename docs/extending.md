@@ -59,6 +59,14 @@ Adding a new evaluation mainly requires changes in the [evaluate.nf](https://git
  After computing the scores of the different evaluation tools, the pipeline merges them into different summary CSVs (per metric, total and in combination with the dataset statistics). For this to happen, the output of the individual evaluation runs needs to be concatenated using the `CSVTK_CONCAT` module twice, first in the evaluation call to merge all calls of a single evaluation tool and then in the merging step.
    - [ ] For the first step, **import another copy of `CSVTK_CONCAT` as `CONCAT_<YOUR SCORE>`** and call it on the output channel of your module. [Example](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/subworkflows/local/evaluate.nf#L12).
    - [ ] Add the output channel of the newly added `CONCAT_` module to the list of inputs for `MERGE_EVAL` at the end block of `evaluate.nf`.[Example](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/subworkflows/local/evaluate.nf#L74-L76).
+    
+- [ ] **4. Update Docs**
+  - [ ] Update docs/usage.md
+  - [ ] Update CITATIONS.md
+  - [ ] Update CHANGELOG.md
+  - [ ] Update citations in utils subworkflow, [here](https://github.com/nf-core/multiplesequencealign/blob/dev/subworkflows/local/utils_nfcore_multiplesequencealign_pipeline/main.nf)
+    
+- [ ] **5.** Open a **PR** :)
 
 Now your evaluation metric is incorporated into nf-core/multiplesequencealign!
 Congratulations!
