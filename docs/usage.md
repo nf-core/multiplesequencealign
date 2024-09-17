@@ -11,11 +11,10 @@
 The main steps of the pipeline are:
 
 1. **Input files summary**: (Optional) computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc. Skipped by the `--skip_stats` parameter.
-   
 2. **Guide Tree**: (Optional) Renders a guide tree. Only run if provided in the toolsheet input.
-4. **Align**: aligns the sequences.
-5. **Evaluate**: (Optional) The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skipped by passing `--skip_eval` as a parameter.
-6. **Report**: Reports about the collected information of the runs are reported in a Shiny app and a summary table in MultiQC. These processes can be skipped by passing `--skip_shiny` and `--skip_multiqc`, respectively.
+3. **Align**: aligns the sequences.
+4. **Evaluate**: (Optional) The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skipped by passing `--skip_eval` as a parameter.
+5. **Report**: Reports about the collected information of the runs are reported in a Shiny app and a summary table in MultiQC. These processes can be skipped by passing `--skip_shiny` and `--skip_multiqc`, respectively.
 
 ## 1. Input files summary statistics
 
@@ -53,7 +52,6 @@ The available assembly methods are listed below (those that accept guide trees i
 - [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) (accepts guide tree)
 - [REGRESSIVE](https://tcoffee.readthedocs.io/en/latest/tcoffee_quickstart_regressive.html) (accepts guide tree)
 - [UPP](https://github.com/smirarab/sepp) (accepts guide tree)
-
 
 **sequence- and structure-based** (require both fasta and structures as input):
 
@@ -108,13 +106,13 @@ toxin,toxin.fa,toxin-ref.fa,toxin_structures,toxin_template.txt
 
 Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be processed.
 
-| Column | Description                                                                                                                     |
-| ------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| `id`   | Required. Name of the set of sequences. It can correspond to the protein family name or to an internal id. It must be unique. |
-| `fasta` | Required (At least one of fasta and structures must be provided). Full path to the fasta file that contains the sequence to be aligned. |
-| `reference` | Optional. Full path to the reference alignment. It is used for the reference-based evaluation steps. It can be left empty. |
-| `dependencies` | Required (At least one of fasta and dependencies must be provided). Full path to the folder that contains the dependency files (e.g. protein structures) for the sequences to be aligned. Currently, it is used for structural aligners and structure-based evaluation steps. It can be left empty. |
-| `template` | Optional. Files that define the mapping between the input sequence and the dependency files (e.g. protein structures) to be used. Used by 3D-Coffee. If not specified, they will be automatically generated assuming that the sequence name provided in the fasta is the same as the file name of the corresponding PDB file. E.g. if you set (default) the parameter templates_suffix to .pdb, then: ">MyProteinName" in the fasta file and "MyProteinName.pdb" for the corresponding protein structure. For more information on how to generate a template file manually, please look at the T-Coffee [documentation](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html) |
+| Column         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`           | Required. Name of the set of sequences. It can correspond to the protein family name or to an internal id. It must be unique.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `fasta`        | Required (At least one of fasta and structures must be provided). Full path to the fasta file that contains the sequence to be aligned.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `reference`    | Optional. Full path to the reference alignment. It is used for the reference-based evaluation steps. It can be left empty.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `dependencies` | Required (At least one of fasta and dependencies must be provided). Full path to the folder that contains the dependency files (e.g. protein structures) for the sequences to be aligned. Currently, it is used for structural aligners and structure-based evaluation steps. It can be left empty.                                                                                                                                                                                                                                                                                                                                                                                               |
+| `template`     | Optional. Files that define the mapping between the input sequence and the dependency files (e.g. protein structures) to be used. Used by 3D-Coffee. If not specified, they will be automatically generated assuming that the sequence name provided in the fasta is the same as the file name of the corresponding PDB file. E.g. if you set (default) the parameter templates_suffix to .pdb, then: ">MyProteinName" in the fasta file and "MyProteinName.pdb" for the corresponding protein structure. For more information on how to generate a template file manually, please look at the T-Coffee [documentation](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html) |
 
 > [!NOTE]
 > You can have some samples with dependencies and/or references and some without. The pipeline will run the modules requiring dependencies/references only on the samples for which you have provided the required information and the others will be just skipped.
@@ -179,7 +177,7 @@ If you wish to repeatedly use the same parameters for multiple runs, rather than
 Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <file>`.
 
 > [!WARNING]
->Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process >resource specifications](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources), other infrastructural tweaks (such as output directories), or >module arguments (args).
+> Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process >resource specifications](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources), other infrastructural tweaks (such as output directories), or >module arguments (args).
 
 The above pipeline run specified with a params file in yaml format:
 
@@ -217,13 +215,12 @@ This version number will be logged in reports when you run the pipeline, so that
 To further assist in reproducbility, you can use share and re-use [parameter files](#running-the-pipeline) to repeat pipeline runs with the same settings without having to write out a command with every single parameter.
 
 > [!TIP]
->If you wish to share such profile (such as upload as supplementary material for academic publications), make sure to NOT include cluster specific paths to files, >nor institutional specific profiles.
+> If you wish to share such profile (such as upload as supplementary material for academic publications), make sure to NOT include cluster specific paths to files, >nor institutional specific profiles.
 
 ## Core Nextflow arguments
 
 > [!NOTE]
 > These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
-
 
 ### `-profile`
 

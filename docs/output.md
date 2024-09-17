@@ -11,11 +11,11 @@ The directories listed below will be created in the results directory after the 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
 1. **Input files summary**: (Optional) computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc. Skip by `--skip_stats` as a parameter.
-  
+
 2. **Guide Tree**: (Optional) Renders a guide tree. This is meant to try different combinations of guide trees and assembly tools, if you are interested in a standard alignment procedure you can ignore this step.
-4. **Align**: aligns the sequences.
-5. **Evaluate**: (Optional) The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skip by passing `--skip_eval` as a parameter.
-6. **Report**: Reports about the collected information of the runs are reported in a shiny app and a summary table in multiqc. Skip by passing `--skip_shiny` and `--skip_multiqc`.
+3. **Align**: aligns the sequences.
+4. **Evaluate**: (Optional) The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skip by passing `--skip_eval` as a parameter.
+5. **Report**: Reports about the collected information of the runs are reported in a shiny app and a summary table in multiqc. Skip by passing `--skip_shiny` and `--skip_multiqc`.
 
 ## Input files summary
 
@@ -94,7 +94,7 @@ Be aware that you have to have [shiny](https://shiny.posit.co/py/) installed to 
 
 ### MultiQC
 
-You can find the MultiQC report in the multiqc folder. 
+You can find the MultiQC report in the multiqc folder.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -106,11 +106,11 @@ You can find the MultiQC report in the multiqc folder.
 
 </details>
 
-[MultiQC](http://multiqc.info) is a visualization tool that generates a single HTML report summarising all samples in your project. A table with all the collected statistics and evaluted metrics is reported as well as all the versions used for the computation. 
+[MultiQC](http://multiqc.info) is a visualization tool that generates a single HTML report summarising all samples in your project. A table with all the collected statistics and evaluted metrics is reported as well as all the versions used for the computation.
 
 ### Pipeline information
 
-Extra information about the pipeline execution are stored in the **pipeline_info** folder. 
+Extra information about the pipeline execution are stored in the **pipeline_info** folder.
 
 <details markdown="1">
 <summary>Output files</summary>
