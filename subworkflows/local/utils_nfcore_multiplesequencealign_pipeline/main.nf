@@ -187,7 +187,7 @@ def toolCitationText() {
             "Clustal Omega (Sievers et al., 2011)",
             "FAMSA (Deorowicz et al., 2016)",
             "FastQC (Andrews 2010),",
-            "Foldmason (Gilchrist et al., 2024)"
+            "Foldmason (Gilchrist et al., 2024)",
             "Kalign 3 (Lassmann, 2019)",
             "learnMSA (Becker & Stanke, 2022)",
             "MAFFT (Katoh et al., 2002)",
