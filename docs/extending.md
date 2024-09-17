@@ -16,7 +16,7 @@ This steps will guide you to include a new MSA tool into the pipeline. Once done
 
 - [ ] **0. Create an nf-core module** for your tool. Instructions on how to contribute new modules [here](https://nf-co.re/docs/tutorials/nf-core_components/components). Use other modules (e.g. [famsa](https://github.com/nf-core/modules/tree/master/modules/nf-core/famsa/align)) as template. Ensure the output is in FASTA format. 
 
-> You can look at an example of a new tool integration [here](https://github.com/nf-core/multiplesequencealign/pull/139).
+> **!!** You can look at an example of a new tool integration [here](https://github.com/nf-core/multiplesequencealign/pull/139).
 
 - [ ] **1.** **Fork** this repository and create a **new branch** (e.g. add-famsa)
 - [ ] **2. Include the module in the alignment subworkflow** (`subworkflows/local/align.nf`)
@@ -32,6 +32,9 @@ This steps will guide you to include a new MSA tool into the pipeline. Once done
   - [ ] Update CITATIONS.md
   - [ ] Update CHANGELOG.md
 
+- [ ] **5.** Add your tool in the **toolsheet** in the test dataset repository. [Example](https://github.com/nf-core/test-datasets/pull/1324).
+- [ ] **6.** Open a **PR** :)
+      
 Congratulations, your aligner is now in nf-core/multiplesequencalignment!
 
 ## Adding a guide tree estimator
