@@ -187,13 +187,15 @@ def toolCitationText() {
             "Clustal Omega (Sievers et al., 2011)",
             "FAMSA (Deorowicz et al., 2016)",
             "FastQC (Andrews 2010),",
+            "Foldmason (Gilchrist et al., 2024)"
             "Kalign 3 (Lassmann, 2019)",
+            "learnMSA (Becker & Stanke, 2022)",
             "MAFFT (Katoh et al., 2002)",
+            "mTM-align (Dong et al., 2018)",
             "MultiQC (Ewels et al., 2016)",
             "Muscle5 (Edgar, 2022)",
             "T-Coffee (Notredame et al., 2000)",
-            "learnMSA (Becker & Stanke, 2022)",
-            "mTM-align (Dong et al., 2018)"
+            "UPP (Park et al., 2023)"    
         ].join(' ').trim()
 
     return citation_text
@@ -213,6 +215,7 @@ def toolBibliographyText() {
         "<li>Lassmann T. Kalign 3: multiple sequence alignment of large data sets. Bioinformatics. 2019 Oct 26;36(6):1928–9. doi: 10.1093/bioinformatics/btz795. Epub ahead of print. PMID: 31665271; PMCID: PMC7703769.</li>",
         "<li>Notredame C, Higgins DG, Heringa J. T-Coffee: A novel method for fast and accurate multiple sequence alignment. J Mol Biol. 2000 Sep 8;302(1):205-17. doi: 10.1006/jmbi.2000.4042. PMID: 10964570.</li>",
         "<li>O'Sullivan O, Suhre K, Abergel C, Higgins DG, Notredame C. 3DCoffee: combining protein sequences and structures within multiple sequence alignments. J Mol Biol. 2004 Jul 2;340(2):385-95. doi: 10.1016/j.jmb.2004.04.058. PMID: 15201059.</li>",
+        "<li>Park M, Ivanovic S, Chu G, Shen C, Warnow T. UPP2: fast and accurate alignment of datasets with fragmentary sequences. Bioinformatics. 2023 Jan 1;39(1):btad007. doi: 10.1093/bioinformatics/btad007. PMID: 36625535; PMCID: PMC9846425.</li>",
         "<li>Sievers F, Wilm A, Dineen D, Gibson TJ, Karplus K, Li W, Lopez R, McWilliam H, Remmert M, Söding J, Thompson JD, Higgins DG. Fast, scalable generation of high-quality protein multiple sequence alignments using Clustal Omega. Mol Syst Biol. 2011 Oct 11;7:539. doi: 10.1038/msb.2011.75. PMID: 21988835; PMCID: PMC3261699.</li>"
     ].join(' ').trim()
 
