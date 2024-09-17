@@ -106,7 +106,7 @@ You can find the MultiQC report in the `multiqc` folder.
 
 </details>
 
-[MultiQC](http://multiqc.info) is a visualization tool that generates a single HTML report summarising all samples in your project. A table with all the collected statistics and evaluted metrics is reported as well as all the versions used for the computation.
+[MultiQC](http://multiqc.info) is a visualization tool that generates a single HTML report summarising all samples in your project. A table with all the collected statistics and evaluted metrics is reported as well as all the versions of the tools used for the computation.
 
 ### Pipeline information
 
