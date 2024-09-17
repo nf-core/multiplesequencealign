@@ -94,7 +94,7 @@ Be aware that you have to have [shiny](https://shiny.posit.co/py/) installed to 
 
 ### MultiQC
 
-You can find the MultiQC report in the multiqc folder.
+You can find the MultiQC report in the `multiqc` folder.
 
 <details markdown="1">
 <summary>Output files</summary>
