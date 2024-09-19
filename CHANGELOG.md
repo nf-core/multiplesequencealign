@@ -51,6 +51,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#134](https://github.com/nf-core/multiplesequencealign/pull/134)] - Code revision for release preparation.
 - [[#138](https://github.com/nf-core/multiplesequencealign/pull/138)] - MultiQC as nf-core module and fix visualization.
 - [[#152](https://github.com/nf-core/multiplesequencealign/pull/152)] - Ignore kalign error 132 and print a warning (incompatibility with some CPU types).
+- [[#153](https://github.com/nf-core/multiplesequencealign/pull/153)] - Fix time parser in shiny app.
 
 ### `Dependencies`
 
