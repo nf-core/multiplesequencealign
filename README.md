@@ -101,7 +101,7 @@ For more details about the output files and reports, please refer to the
 
 ## Extending the pipeline
 
-For details on how to add your favourite guide tree, MSA or evaluation step in nf-core/multiplesequencealign please refer to the [extending documentation](https://github.com/luisas/multiplesequencealign/blob/luisa_patch/docs/extending.md).
+For details on how to add your favourite guide tree, MSA or evaluation step in nf-core/multiplesequencealign please refer to the [extending documentation](docs/extending.md).
 
 ## Credits
 
