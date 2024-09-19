@@ -1,7 +1,4 @@
 Changes in module 'nf-core/kalign/align'
-'modules/nf-core/kalign/align/environment.yml' is unchanged
-'modules/nf-core/kalign/align/meta.yml' is unchanged
-Changes in 'kalign/align/main.nf':
 --- modules/nf-core/kalign/align/main.nf
 +++ modules/nf-core/kalign/align/main.nf
 @@ -6,6 +6,13 @@
@@ -19,7 +16,4 @@ Changes in 'kalign/align/main.nf':
      input:
      tuple val(meta), path(fasta)
 
-'modules/nf-core/kalign/align/tests/main.nf.test.snap' is unchanged
-'modules/nf-core/kalign/align/tests/tags.yml' is unchanged
-'modules/nf-core/kalign/align/tests/main.nf.test' is unchanged
 ************************************************************
