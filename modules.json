@@ -57,7 +57,7 @@
                     },
                     "kalign/align": {
                         "branch": "master",
-                        "git_sha": "06c8865e36741e05ad32ef70ab3fac127486af48",
+                        "git_sha": "a5c02a8c0f6db792c5420aec5a66f75024da4b17",
                         "installed_by": [
                             "modules"
                         ]
