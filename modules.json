@@ -43,7 +43,7 @@
                     },
                     "kalign/align": {
                         "branch": "master",
-                        "git_sha": "06c8865e36741e05ad32ef70ab3fac127486af48",
+                        "git_sha": "a5c02a8c0f6db792c5420aec5a66f75024da4b17",
                         "installed_by": ["modules"],
                         "patch": "modules/nf-core/kalign/align/kalign-align.diff"
                     },
@@ -94,32 +94,32 @@
                     },
                     "tcoffee/align": {
                         "branch": "master",
-                        "git_sha": "06c8865e36741e05ad32ef70ab3fac127486af48",
+                        "git_sha": "6453bce4cf3c43f455e7528bd4e12c4a10268904",
                         "installed_by": ["modules"]
                     },
                     "tcoffee/alncompare": {
                         "branch": "master",
-                        "git_sha": "06c8865e36741e05ad32ef70ab3fac127486af48",
+                        "git_sha": "6453bce4cf3c43f455e7528bd4e12c4a10268904",
                         "installed_by": ["modules"]
                     },
                     "tcoffee/consensus": {
                         "branch": "master",
-                        "git_sha": "06c8865e36741e05ad32ef70ab3fac127486af48",
+                        "git_sha": "6453bce4cf3c43f455e7528bd4e12c4a10268904",
                         "installed_by": ["modules"]
                     },
                     "tcoffee/irmsd": {
                         "branch": "master",
-                        "git_sha": "06c8865e36741e05ad32ef70ab3fac127486af48",
+                        "git_sha": "6453bce4cf3c43f455e7528bd4e12c4a10268904",
                         "installed_by": ["modules"]
                     },
                     "tcoffee/seqreformat": {
                         "branch": "master",
-                        "git_sha": "06c8865e36741e05ad32ef70ab3fac127486af48",
+                        "git_sha": "6453bce4cf3c43f455e7528bd4e12c4a10268904",
                         "installed_by": ["modules"]
                     },
                     "tcoffee/tcs": {
                         "branch": "master",
-                        "git_sha": "06c8865e36741e05ad32ef70ab3fac127486af48",
+                        "git_sha": "6453bce4cf3c43f455e7528bd4e12c4a10268904",
                         "installed_by": ["modules"]
                     },
                     "untar": {

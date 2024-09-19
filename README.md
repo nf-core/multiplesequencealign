@@ -107,7 +107,7 @@ For details on how to add your favourite guide tree, MSA or evaluation step in n
 
 nf-core/multiplesequencealign was originally written by Luisa Santus ([@luisas](https://github.com/luisas)) and Jose Espinosa-Carrasco ([@JoseEspinosa](https://github.com/JoseEspinosa)) from The Comparative Bioinformatics Group at The Centre for Genomic Regulation, Spain.
 
-The following people have significantly contributed to the development of the pipeline and its modules: Leon Rauschning ([@lrauschning](https://github.com/lrauschning)), Alessio Vignoli ([@alessiovignoli](https://github.com/alessiovignoli)) and Leila Mansouri ([@l-mansouri](https://github.com/l-mansouri)).
+The following people have significantly contributed to the development of the pipeline and its modules: Leon Rauschning ([@lrauschning](https://github.com/lrauschning)), Alessio Vignoli ([@alessiovignoli](https://github.com/alessiovignoli)), Igor Trujnara ([@itrujnara](https://github.com/itrujnara)) and Leila Mansouri ([@l-mansouri](https://github.com/l-mansouri)).
 
 ## Contributions and Support
 
