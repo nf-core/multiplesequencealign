@@ -3,18 +3,19 @@ import re
 
 def convert_time(time_str):
     # Regular expression to match the time components
-    pattern = re.compile(r'((?P<hours>\d+)h)?\s*((?P<minutes>\d+)m)?\s*((?P<seconds>\d+)s)?\s*((?P<milliseconds>\d+)ms)?')
+    pattern = re.compile(r'((?P<hours>\d+(\.\d+)?)h)?\s*((?P<minutes>\d+(\.\d+)?)m)?\s*((?P<seconds>\d+(\.\d+)?)s)?\s*((?P<milliseconds>\d+(\.\d+)?)ms)?')
     match = pattern.fullmatch(time_str.strip())
 
     if not match:
+        print(time_str)
         raise ValueError("Time string is not in the correct format")
 
     time_components = match.groupdict(default='0')
 
-    hours = int(time_components['hours'])
-    minutes = int(time_components['minutes'])
-    seconds = int(time_components['seconds'])
-    milliseconds = int(time_components['milliseconds'])
+    hours = float(time_components['hours'])
+    minutes = float(time_components['minutes'])
+    seconds = float(time_components['seconds'])
+    milliseconds = float(time_components['milliseconds'])
 
     # Convert everything to minutes
     total_minutes = (hours * 60) + minutes + (seconds / 60) + (milliseconds / 60000)
