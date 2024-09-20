@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This document describes the output produced by the pipeline. See [`main README.md`](../README.md) for a condensed overview of the steps in the pipeline, and the bioinformatics tools used at each step.
+This document describes the output produced by the pipeline.
 
 The directories listed below will be created in the results directory after the pipeline has finished. All paths are relative to the top-level results directory.
 
@@ -19,7 +19,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 ## Input files summary
 
-The [stats.nf](https://github.com/nf-core/multiplesequencealign/blob/dev/subworkflows/local/stats.nf) subworkflow collects statistics about the input files and summarizes them into a final csv file.
+Statistics about the input files are collected and summarized into a final csv file.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -54,7 +54,7 @@ All MSA computed are stored in the **alignment** directory.
 - `alignment/`
   - `*/*.fa`: each subdirectory is named after the sample id. It contains all the alignments computed on it. The filename contains all the informations of the input file used and the tool.
     The file naming convention is:
-    {Input*file}*{Tree}_args-{Tree_args}_{MSA}\_args-{MSA_args}.aln
+    {Input*file}*{Tree}\_args-{Tree_args}\_{MSA}\_args-{MSA_args}.aln
 
 </details>
 
@@ -75,7 +75,7 @@ Files with the summary of the computed evaluation statistics are stored in the *
 
 A Shiny app is created to explore interactively your results. It can be found in the **shiny_app** folder.
 
-If the `--skip_shiny=false` parameter is specified, a shiny app is prepared to visualize the summary statistics and evaluation of the produced alignments.
+A shiny app is prepared to visualize the summary statistics and evaluation of the produced alignments (skip with `--skip_shiny`).
 To run the Shiny app use the following commands from the results directory:
 `cd shiny_app`
 `./run.sh`
