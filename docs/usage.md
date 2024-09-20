@@ -83,7 +83,7 @@ The reference MSAs (see samplesheet) are used to evaluate the quality of the pro
 
 The provided structures (see samplesheet) are used to evaluate the quality of the alignment.
 
-4. **iRMSD**. Calculates the iRMSD using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#apdb-irmsd) implementation. Activate using `--calc_irmsd` (default: false).
+4. **iRMSD**: Calculates the iRMSD using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#apdb-irmsd) implementation. Activate using `--calc_irmsd` (default: false).
 
 ### 5. Report
 
