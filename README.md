@@ -25,10 +25,10 @@
 
 In a nutshell, the pipeline performs the following steps:
 
-1. **Input files summary**: (Optional) computation of summary statistics on the input files, such as the average sequence similarity across the input sequences, their length, plddt extraction if available, among others.
+1. **Input files summary**: (Optional) computation of summary statistics on the input files, such as the average sequence similarity across the input sequences, their length, plddt extraction if available.
 
-2. **Guide Tree**: (Optional) Renders a guide tree with a chosen tool (list available in [usage](usage.md#2-guide-trees)). Some aligners use guide trees to define the order in which the sequences are aligned.
-3. **Align**: (Required) Aligns the sequences with a chosen tool (list available in [usage](usage.md#3-align)).
+2. **Guide Tree**: (Optional) Renders a guide tree with a chosen tool (list available in [usage](docs/usage.md#2-guide-trees)). Some aligners use guide trees to define the order in which the sequences are aligned.
+3. **Align**: (Required) Aligns the sequences with a chosen tool (list available in [usage](docs/usage.md#3-align)).
 4. **Evaluate**: (Optional) Evaluates the generated alignments with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.
 5. **Report**: Reports the collected information of the runs in a Shiny app and a summary table in MultiQC.
 
@@ -50,7 +50,7 @@ seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures,seatoxin_template.txt
 toxin,toxin.fa,toxin-ref.fa,toxin_structures,toxin_template.txt
 ```
 
-Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be aligned and the associated (if available) reference alignments and dependencies files (this can be anything from protein structure or any other information you would want to use in your favourite MSA tool).
+Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be aligned and the associated (if available) reference alignments and dependency files (this can be anything from protein structure or any other information you would want to use in your favourite MSA tool).
 
 > [!NOTE]
 > The only required input is the id column and either fasta or dependencies.
@@ -81,7 +81,7 @@ Now, you can run the pipeline using:
 
 ```bash
 nextflow run nf-core/multiplesequencealign \
-   -profile test \
+   -profile test,docker \
    --input samplesheet.csv \
    --tools toolsheet.csv \
    --outdir outdir
@@ -95,7 +95,7 @@ For more details and further functionality, please refer to the [usage documenta
 
 ## Pipeline output
 
-To see the results of an example test run with a full size dataset refer to the [results](https://nf-co.re/multiplesequencealign/results) tab on the nf-core website pipeline page.
+To see the results of an example test run with a full-size dataset refer to the [results](https://nf-co.re/multiplesequencealign/results) tab on the nf-core website pipeline page.
 For more details about the output files and reports, please refer to the
 [output documentation](https://nf-co.re/multiplesequencealign/output).
 
