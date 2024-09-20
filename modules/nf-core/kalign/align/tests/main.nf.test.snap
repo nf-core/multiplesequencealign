@@ -11,7 +11,7 @@
                     ]
                 ],
                 "1": [
-                    "versions.yml:md5,b5ef6a09110c24f552fcddb1af13ff94"
+                    "versions.yml:md5,0764ff5c30fd8befd86baa9026493ffe"
                 ],
                 "alignment": [
                     [
@@ -22,15 +22,11 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,b5ef6a09110c24f552fcddb1af13ff94"
+                    "versions.yml:md5,0764ff5c30fd8befd86baa9026493ffe"
                 ]
             }
         ],
-        "meta": {
-            "nf-test": "0.8.4",
-            "nextflow": "24.04.3"
-        },
-        "timestamp": "2024-09-20T12:44:18.067352"
+        "timestamp": "2024-03-22T16:42:01.934768"
     },
     "SARS-CoV-2 scaffolds fasta - compressed": {
         "content": [
@@ -44,7 +40,7 @@
                     ]
                 ],
                 "1": [
-                    "versions.yml:md5,b5ef6a09110c24f552fcddb1af13ff94"
+                    "versions.yml:md5,0764ff5c30fd8befd86baa9026493ffe"
                 ],
                 "alignment": [
                     [
@@ -55,14 +51,10 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,b5ef6a09110c24f552fcddb1af13ff94"
+                    "versions.yml:md5,0764ff5c30fd8befd86baa9026493ffe"
                 ]
             }
         ],
-        "meta": {
-            "nf-test": "0.8.4",
-            "nextflow": "24.04.3"
-        },
-        "timestamp": "2024-09-20T12:44:31.031883"
+        "timestamp": "2024-03-22T16:42:07.734293"
     }
 }

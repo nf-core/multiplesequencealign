@@ -43,7 +43,7 @@
                     },
                     "kalign/align": {
                         "branch": "master",
-                        "git_sha": "49057d33fa714bcc7c6c420ad4452d5c660fae8a",
+                        "git_sha": "a5c02a8c0f6db792c5420aec5a66f75024da4b17",
                         "installed_by": ["modules"],
                         "patch": "modules/nf-core/kalign/align/kalign-align.diff"
                     },
