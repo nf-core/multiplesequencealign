@@ -5,7 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.0.0 - Somorrostro
 
-Somorrostro is a beach in Barcelona. 
+Somorrostro is a beach in Barcelona.
 
 Initial release of nf-core/multiplesequencealign, created with the [nf-core](https://nf-co.re/) template.
 
