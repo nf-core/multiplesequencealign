@@ -42,102 +42,102 @@ custom_table_header_config:
     fasta:
       description: "Input fasta file."
       hidden: False
-      group: "Fasta"
+      namespace: "Fasta"
     n_sequences:
       description: "Number of sequences in the input fasta file."
       hidden: False
-      group: "Fasta"
+      namespace: "Fasta"
       scale: "Set2"
     seqlength_mean:
       description: "Average sequence length in the input fasta file."
       hidden: False
-      group: "Fasta"
+      namespace: "Fasta"
       format: "{:,.1f}"
     seqlength_max:
       description: "Maximum sequence length in the input fasta file."
       hidden: True
-      group: "Fasta"
+      namespace: "Fasta"
       format: "{:,.1f}"
     seqlength_median:
       description: "Median sequence length in the input fasta file."
       hidden: True
-      group: "Fasta"
+      namespace: "Fasta"
       format: "{:,.1f}"
     sp:
       description: "Sum of Pairs metric."
       hidden: False
-      group: "Alignment"
+      namespace: "Alignment"
       format: "{:,.1f}"
       max: 100
     tc:
       description: "Total Column metric."
       hidden: False
-      group: "Alignment"
+      namespace: "Alignment"
       format: "{:,.1f}"
       max: 100
     EVALUATED:
       description: "EVALUATED metric."
       hidden: True
-      group: "Alignment"
+      namespace: "Alignment"
       format: "{:,.1f}"
       max: 100
     APDB:
       description: "APDB metric."
       hidden: True
-      group: "Alignment"
+      namespace: "Alignment"
       format: "{:,.1f}"
     iRMSD:
       description: "iRMSD metric."
       hidden: True
-      group: "Alignment"
+      namespace: "Alignment"
       format: "{:,.1f}"
     TCS:
       description: "TCS metric."
       hidden: True
-      group: "Alignment"
+      namespace: "Alignment"
       format: "{:,.1f}"
     total_gaps:
       description: "Total amount of gaps."
       hidden: True
-      group: "Alignment"
+      namespace: "Alignment"
       format: "{:,.1f}"
     avg_gaps:
       description: "Average amount of gaps per sequence."
       hidden: True
-      group: "Alignment"
+      namespace: "Alignment"
       format: "{:,.1f}"
     NiRMSD:
       description: "NiRMSD metric."
       hidden: False
-      group: "Alignment"
+      namespace: "Alignment"
       format: "{:,.1f}"
       min: 0
     tree:
       description: "Tree used in the alignment."
       hidden: False
-      group: "Alignment"
+      namespace: "Alignment"
       scale: "Paired"
     args_tree:
       description: "Arguments used to build the tree."
       hidden: True
-      group: "Alignment"
+      namespace: "Alignment"
     args_tree_clean:
       description: "Arguments used to build the tree."
       hidden: True
-      group: "Alignment"
+      namespace: "Alignment"
     aligner:
       description: "Aligner used."
       hidden: False
-      group: "Alignment"
+      namespace: "Alignment"
       scale: "Paired"
     args_aligner:
       description: "Arguments used to run the aligner."
       hidden: True
-      group: "Alignment"
+      namespace: "Alignment"
     args_aligner_clean:
       description: "Arguments used to run the aligner."
       hidden: True
-      group: "Alignment"
+      namespace: "Alignment"
 
 table_columns_placement:
   summary_stats:
