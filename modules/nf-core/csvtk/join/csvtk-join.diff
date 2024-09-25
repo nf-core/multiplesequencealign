@@ -6,7 +6,7 @@ Changes in module 'nf-core/csvtk/join'
      out_extension = args.contains('--out-delimiter "\t"') || args.contains('-D "\t"') || args.contains("-D \$'\t'") ? "tsv" : "csv"
      """
 +    
-+    # if the input is horter than 2, add an emtpy file as the second input
++    # create an empty file to avoid crushing when there is less than two files to be merged
 +    touch empty.csv
 +
      csvtk \\
