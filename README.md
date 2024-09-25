@@ -23,7 +23,7 @@
 
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 
-In a nutshell, the pipeline performs the following steps:
+The pipeline performs the following steps:
 
 1. **Input files summary**: (Optional) computation of summary statistics on the input files, such as the average sequence similarity across the input sequences, their length, plddt extraction if available.
 

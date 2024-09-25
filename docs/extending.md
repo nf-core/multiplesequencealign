@@ -9,6 +9,8 @@ This pipeline is extensible, allowing the incorporation of new methods for assem
 - The [nf-test documentation](https://code.askimed.com/nf-test/docs/getting-started/)
 - The [nf-core slack](https://nf-co.re/join), particularly the [multiplesequencealign channel](https://nfcore.slack.com/archives/C05LZ7EAYGK). Feel free to reach out!
 
+Please also check the [contribution guidelines](../.github/CONTRIBUTING.md).
+
 ## Adding an aligner
 
 These steps will guide you to include a new MSA tool into the pipeline. Once done, this will allow you to systematically deploy and benchmark your tool against all others included in the pipeline. You are also welcome to contribute back to the pipeline if you wish.
