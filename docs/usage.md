@@ -90,8 +90,9 @@ The provided structures (see samplesheet) are used to evaluate the quality of th
 Finally, a summary table with all the computed statistics and evaluations is reported in MultiQC (skip by using `--skip_multiqc`).
 Moreover, a Shiny app is generated with interactive summary plots (skip with `--skip_shiny`).
 
-> [!WARNING]
-> You will need to have [Shiny](https://shiny.posit.co/py/) installed to run it! See [output documentation](https://nf-co.re/multiplesequencealign/output) for more info.
+:::warning
+You will need to have [Shiny](https://shiny.posit.co/py/) installed to run it! See [output documentation](https://nf-co.re/multiplesequencealign/output) for more info.
+:::
 
 ## Samplesheet input
 
@@ -114,8 +115,9 @@ Each row represents a set of sequences (in this case the seatoxin and toxin prot
 | `dependencies` | Required (At least one of fasta or dependencies must be provided). Full path to the folder that contains the dependency files (e.g. protein structures) for the sequences to be aligned. Currently, it is used for structural aligners and structure-based evaluation steps. It can be left empty.                                                                                                                                                                                                                                                                                                                                                                                                 |
 | `template`     | Optional. Files that define the mapping between the input sequence and the dependency files (e.g. protein structures) to be used. Used by 3D-Coffee. If not specified, they will be automatically generated assuming that the sequence name provided in the fasta is the same as the file name of the corresponding PDB file. E.g. if you set (default) the parameter templates_suffix to .pdb, then: ">MyProteinName" in the fasta file and "MyProteinName.pdb" for the corresponding protein structure. For more information on how to generate a template file manually, please look at the T-Coffee [documentation](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html). |
 
-> [!NOTE]
-> You can have some samples with dependencies and/or references and some without. The pipeline will run the modules requiring dependencies/references only on the samples for which you have provided the required information and the others will be just skipped.
+:::note
+You can have some samples with dependencies and/or references and some without. The pipeline will run the modules requiring dependencies/references only on the samples for which you have provided the required information and the others will be just skipped.
+:::
 
 ## Toolsheet input
 
@@ -132,11 +134,13 @@ FAMSA, -gt upgma -medoidtree, FAMSA,
 FAMSA,,REGRESSIVE,
 ```
 
-> [!NOTE]
-> Each of the trees and aligners are available as standalones. You can leave `args_tree` and `args_aligner` empty if you are cool with the default settings of each method. Alternatively, you can leave `args_tree` empty to use the default guide tree with each aligner.
+:::note
+Each of the trees and aligners are available as standalones. You can leave `args_tree` and `args_aligner` empty if you are cool with the default settings of each method. Alternatively, you can leave `args_tree` empty to use the default guide tree with each aligner.
+:::
 
-> [!NOTE]
-> use the exact spelling as listed above in [align](#3-align) and [guide trees](#2-guide-trees)!
+:::note
+use the exact spelling as listed above in [align](#3-align) and [guide trees](#2-guide-trees)!
+:::
 
 `tree` is the tool used to build the tree (optional).
 
@@ -176,8 +180,9 @@ If you wish to repeatedly use the same parameters for multiple runs, rather than
 
 Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <file>`.
 
-> [!WARNING]
-> Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process >resource specifications](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources), other infrastructural tweaks (such as output directories), or >module arguments (args).
+:::warning
+Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources), other infrastructural tweaks (such as output directories), or module arguments (args).
+:::
 
 The above pipeline run specified with a params file in yaml format:
 
@@ -214,13 +219,15 @@ This version number will be logged in reports when you run the pipeline, so that
 
 To further assist in reproducbility, you can use share and re-use [parameter files](#running-the-pipeline) to repeat pipeline runs with the same settings without having to write out a command with every single parameter.
 
-> [!TIP]
-> If you wish to share such profile (such as upload as supplementary material for academic publications), make sure to NOT include cluster specific paths to files, >nor institutional specific profiles.
+:::tip
+If you wish to share such profile (such as upload as supplementary material for academic publications), make sure to NOT include cluster specific paths to files, >nor institutional specific profiles.
+:::
 
 ## Core Nextflow arguments
 
-> [!NOTE]
-> These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
+:::tip
+These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
+:::
 
 ### `-profile`
 
@@ -228,8 +235,9 @@ Use this parameter to choose a configuration profile. Profiles can give configur
 
 Several generic profiles are bundled with the pipeline which instruct the pipeline to use software packaged using different methods (Docker, Singularity, Podman, Shifter, Charliecloud, Apptainer, Conda) - see below.
 
-> [!INFO]
-> We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
+:::info
+We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
+:::
 
 The pipeline also dynamically loads configurations from [https://github.com/nf-core/configs](https://github.com/nf-core/configs) when it runs, making multiple config profiles for various institutional clusters available at run time. For more information and to see if your system is available in these configs please see the [nf-core/configs documentation](https://github.com/nf-core/configs#documentation).
 

@@ -119,6 +119,7 @@ workflow MULTIPLESEQUENCEALIGN {
                 [ meta,file(dir).listFiles().collect() ]
         }
         .set { ch_dependencies }
+    ch_versions   = ch_versions.mix(UNTAR.out.versions)
 
     TEMPLATES (
         ch_dependencies,
