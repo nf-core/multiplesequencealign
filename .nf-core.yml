@@ -5,4 +5,4 @@ lint:
   files_exist:
     - conf/igenomes.config
   files_unchanged:
-    - docs/CONTRIBUTING.md
+    - .github/CONTRIBUTING.md
