@@ -1,63 +1,168 @@
-# nf-core/msa: Usage
+# nf-core/multiplesequencealign: Usage
 
-## :warning: Please read this documentation on the nf-core website: [https://nf-co.re/msa/usage](https://nf-co.re/msa/usage)
+## :warning: Please read this documentation on the nf-core website: [https://nf-co.re/multiplesequencealign/usage](https://nf-co.re/multiplesequencealign/usage)
 
 > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
 
-## Introduction
+## Overview
 
-<!-- TODO nf-core: Add documentation about anything specific to running your pipeline. For general topics, please point to (and add to) the main nf-core website. -->
+**nf-core/multiplesequencealign** is a pipeline to deploy and systematically evaluate Multiple Sequence Alignment (MSA) methods.
+
+The main steps of the pipeline are:
+
+1. **Input files summary**: (Optional) computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc. Skipped by the `--skip_stats` parameter.
+2. **Guide Tree**: (Optional) Renders a guide tree. Only run if provided in the toolsheet input.
+3. **Align**: aligns the sequences.
+4. **Evaluate**: (Optional) The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skipped by passing `--skip_eval` as a parameter.
+5. **Report**: Reports about the collected information of the runs are reported in a Shiny app and a summary table in MultiQC. These processes can be skipped by passing `--skip_shiny` and `--skip_multiqc`, respectively.
+
+## 1. Input files summary statistics
+
+This step generates the summary information about the input files and can be skipped using the `--skip_stats` parameter. The optional computed metrics are:
+
+1. **Sequence similarity**: This step calculates pairwise and average sequence similarity using TCOFFEE. Activate with `--calc_sim` (default: `false`).
+2. **General summary**: Calculates the number and the average length of sequences. Activate with `--calc_seq_stats` (default: `true`).
+3. **Extract plddt**: If the structures were generated using AF2, plddt is extracted and reported. Activate with `--extract_plddt` (default: `false`).
+
+## 2. Guide trees
+
+Guide trees define the order in which sequences and profiles are aligned and play a crucial role in determining the final MSA accuracy. Tree rendering techniques most commonly rely on pairwise distances between sequences.
+
+> **Note**
+> None of the aligners listed below need an explicit definition of a guide tree: if they require one, they compute their own default guide tree. However, an explicit definition of a guide tree is available in case you want to test non-default combination of guide trees and aligner methods.
+
+Currently available GUIDE TREE methods are: (Optional):
+
+- [CLUSTALO](http://clustal.org/omega/#Documentation)
+- [FAMSA](https://github.com/refresh-bio/FAMSA)
+
+### 3. Align
+
+The available assembly methods are listed below (those that accept guide trees indicate it in parentheses):
+
+**sequence-based** (only require a fasta file as input):
+
+- [CLUSTALO](http://clustal.org/omega/#Documentation) (accepts guide tree)
+- [FAMSA](https://github.com/refresh-bio/FAMSA) (accepts guide tree)
+- [KALIGN](https://github.com/TimoLassmann/kalign)
+- [LEARNMSA](https://github.com/Gaius-Augustus/learnMSA)
+- [MAFFT](https://mafft.cbrc.jp/alignment/server/index.html)
+- [MAGUS](https://github.com/vlasmirnov/MAGUS) (accepts guide tree)
+- [MUSCLE5](https://drive5.com/muscle5/manual/)
+- [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) (accepts guide tree)
+- [REGRESSIVE](https://tcoffee.readthedocs.io/en/latest/tcoffee_quickstart_regressive.html) (accepts guide tree)
+- [UPP](https://github.com/smirarab/sepp) (accepts guide tree)
+
+**sequence- and structure-based** (require both fasta and structures as input):
+
+- [3DCOFFEE](https://tcoffee.org/Projects/expresso/index.html) (accepts guide tree)
+
+**structure-based** (only require stuctures as input):
+
+- [MTMALIGN](https://bio.tools/mtm-align)
+- [FOLDMASON](https://github.com/steineggerlab/foldmason)
+
+Optionally, [M-COFFEE](https://tcoffee.org/Projects/mcoffee/index.html) will combine the output of all alignments into a consensus MSA (`--build_consensus`).
+
+### 4. Evaluate
+
+Optionally, the produced MSAs will be evaluated. This step can be skipped using the `--skip_eval` parameter. The evaluations implemented are listed below.
+
+**sequence-based** (no extra input required):
+
+1. **Number of gaps**. Calculates the number of gaps and its average across sequences. Activate using `--calc_gaps` (default: `true`).
+
+**reference-based**:
+
+The reference MSAs (see samplesheet) are used to evaluate the quality of the produced MSA.
+
+2. **Sum Of Pairs (SP)**. Calculates the SP score using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#comparing-alternative-alignments) implementation. Activated using `--calc_sp` (default: `true`).
+3. **Total column (TC)**. Calculates the TC score [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#comparing-alternative-alignments). Activate using `--calc_tc` (default: `true`).
+
+**structure-based**:
+
+The provided structures (see samplesheet) are used to evaluate the quality of the alignment.
+
+4. **iRMSD**: Calculates the iRMSD using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#apdb-irmsd) implementation. Activate using `--calc_irmsd` (default: false).
+
+### 5. Report
+
+Finally, a summary table with all the computed statistics and evaluations is reported in MultiQC (skip by using `--skip_multiqc`).
+Moreover, a Shiny app is generated with interactive summary plots (skip with `--skip_shiny`).
+
+:::warning
+You will need to have [Shiny](https://shiny.posit.co/py/) installed to run it! See [output documentation](https://nf-co.re/multiplesequencealign/output) for more info.
+:::
 
 ## Samplesheet input
 
-You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row as shown in the examples below.
+The sample sheet defines the **input data** that the pipeline will process.
+It should look like this:
 
-```bash
---input '[path to samplesheet file]'
+```csv title="samplesheet.csv"
+id,fasta,reference,dependencies,template
+seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures,seatoxin_template.txt
+toxin,toxin.fa,toxin-ref.fa,toxin_structures,toxin_template.txt
 ```
 
-### Multiple runs of the same sample
+Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be processed.
 
-The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 lanes:
+| Column         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`           | Required. Name of the set of sequences. It can correspond to the protein family name or to an internal id. It must be unique.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `fasta`        | Required (At least one of fasta or dependencies must be provided). Full path to the fasta file that contains the sequence to be aligned.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `reference`    | Optional. Full path to the reference alignment. It is used for the reference-based evaluation steps. It can be left empty.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `dependencies` | Required (At least one of fasta or dependencies must be provided). Full path to the folder that contains the dependency files (e.g. protein structures) for the sequences to be aligned. Currently, it is used for structural aligners and structure-based evaluation steps. It can be left empty.                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `template`     | Optional. Files that define the mapping between the input sequence and the dependency files (e.g. protein structures) to be used. Used by 3D-Coffee. If not specified, they will be automatically generated assuming that the sequence name provided in the fasta is the same as the file name of the corresponding PDB file. E.g. if you set (default) the parameter templates_suffix to .pdb, then: ">MyProteinName" in the fasta file and "MyProteinName.pdb" for the corresponding protein structure. For more information on how to generate a template file manually, please look at the T-Coffee [documentation](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html). |
 
-```console
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-CONTROL_REP1,AEG588A1_S1_L003_R1_001.fastq.gz,AEG588A1_S1_L003_R2_001.fastq.gz
-CONTROL_REP1,AEG588A1_S1_L004_R1_001.fastq.gz,AEG588A1_S1_L004_R2_001.fastq.gz
+:::note
+You can have some samples with dependencies and/or references and some without. The pipeline will run the modules requiring dependencies/references only on the samples for which you have provided the required information and the others will be just skipped.
+:::
+
+## Toolsheet input
+
+We provide a toolsheet as input to facilitate testing multiple arguments per tool when using the pipeline as a benchmarking framework. This, enables having multiple entries in the toolsheet, each corresponding to different arguments to be tested for the same tool.
+
+Each line of the toolsheet defines a combination of guide tree and multiple sequence aligner to run with the respective arguments to be used.
+
+A typical toolsheet should look at follows:
+
+```csv title="toolsheet.csv"
+tree,args_tree,aligner,args_aligner,
+FAMSA, -gt upgma -medoidtree, FAMSA,
+, ,TCOFFEE,
+FAMSA,,REGRESSIVE,
 ```
 
-### Full samplesheet
+:::note
+Each of the trees and aligners are available as standalones. You can leave `args_tree` and `args_aligner` empty if you are cool with the default settings of each method. Alternatively, you can leave `args_tree` empty to use the default guide tree with each aligner.
+:::
 
-The pipeline will auto-detect whether a sample is single- or paired-end using the information provided in the samplesheet. The samplesheet can have as many columns as you desire, however, there is a strict requirement for the first 3 columns to match those defined in the table below.
+:::note
+use the exact spelling as listed above in [align](#3-align) and [guide trees](#2-guide-trees)!
+:::
 
-A final samplesheet file consisting of both single- and paired-end data may look something like the one below. This is for 6 samples, where `TREATMENT_REP3` has been sequenced twice.
+`tree` is the tool used to build the tree (optional).
 
-```console
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-CONTROL_REP2,AEG588A2_S2_L002_R1_001.fastq.gz,AEG588A2_S2_L002_R2_001.fastq.gz
-CONTROL_REP3,AEG588A3_S3_L002_R1_001.fastq.gz,AEG588A3_S3_L002_R2_001.fastq.gz
-TREATMENT_REP1,AEG588A4_S4_L003_R1_001.fastq.gz,
-TREATMENT_REP2,AEG588A5_S5_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,
-```
+Arguments to the tree tool can be provided using `args_tree`. Please refer to each tool's documentation (optional).
 
-| Column    | Description                                                                                                                                                                            |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`  | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
-| `fastq_1` | Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
-| `fastq_2` | Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
+The `aligner` column contains the tool to run the alignment (optional).
 
-An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
+Finally, the arguments to the aligner tool can be set by using the `args_aligner` column (optional).
+
+| Column         | Description                                                                      |
+| -------------- | -------------------------------------------------------------------------------- |
+| `tree`         | Optional. Tool used to build the tree.                                           |
+| `args_tree`    | Optional. Arguments to the tree tool. Please refer to each tool's documentation. |
+| `aligner`      | Required. Tool to run the alignment. Available options listed above.             |
+| `args_aligner` | Optional. Arguments to the alignment tool.                                       |
 
 ## Running the pipeline
 
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run nf-core/msa --input ./samplesheet.csv --outdir ./results --genome GRCh37 -profile docker
+nextflow run nf-core/multiplesequencealign --input ./samplesheet.csv --tools ./toolsheet.csv --outdir ./results -profile docker
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -75,20 +180,22 @@ If you wish to repeatedly use the same parameters for multiple runs, rather than
 
 Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <file>`.
 
-> ⚠️ Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources), other infrastructural tweaks (such as output directories), or module arguments (args).
+:::warning
+Do not use `-c <file>` to specify parameters as this will result in errors. Custom config files specified with `-c` must only be used for [tuning process resource specifications](https://nf-co.re/docs/usage/configuration#tuning-workflow-resources), other infrastructural tweaks (such as output directories), or module arguments (args).
+:::
 
 The above pipeline run specified with a params file in yaml format:
 
 ```bash
-nextflow run nf-core/msa -profile docker -params-file params.yaml
+nextflow run nf-core/multiplesequencealign -profile docker -params-file params.yaml
 ```
 
 with `params.yaml` containing:
 
 ```yaml
 input: './samplesheet.csv'
+tools: "./toolsheet.csv"
 outdir: './results/'
-genome: 'GRCh37'
 <...>
 ```
 
@@ -99,24 +206,28 @@ You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-c
 When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you're running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:
 
 ```bash
-nextflow pull nf-core/msa
+nextflow pull nf-core/multiplesequencealign
 ```
 
 ### Reproducibility
 
 It is a good idea to specify a pipeline version when running the pipeline on your data. This ensures that a specific version of the pipeline code and software are used when you run your pipeline. If you keep using the same tag, you'll be running the same version of the pipeline, even if there have been changes to the code since.
 
-First, go to the [nf-core/msa releases page](https://github.com/nf-core/msa/releases) and find the latest pipeline version - numeric only (eg. `1.3.1`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 1.3.1`. Of course, you can switch to another version by changing the number after the `-r` flag.
+First, go to the [nf-core/multiplesequencealign releases page](https://github.com/nf-core/multiplesequencealign/releases) and find the latest pipeline version - numeric only (eg. `1.3.1`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 1.3.1`. Of course, you can switch to another version by changing the number after the `-r` flag.
 
 This version number will be logged in reports when you run the pipeline, so that you'll know what you used when you look back in the future. For example, at the bottom of the MultiQC reports.
 
 To further assist in reproducbility, you can use share and re-use [parameter files](#running-the-pipeline) to repeat pipeline runs with the same settings without having to write out a command with every single parameter.
 
-> 💡 If you wish to share such profile (such as upload as supplementary material for academic publications), make sure to NOT include cluster specific paths to files, nor institutional specific profiles.
+:::tip
+If you wish to share such profile (such as upload as supplementary material for academic publications), make sure to NOT include cluster specific paths to files, >nor institutional specific profiles.
+:::
 
 ## Core Nextflow arguments
 
-> **NB:** These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
+:::tip
+These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
+:::
 
 ### `-profile`
 
@@ -124,7 +235,9 @@ Use this parameter to choose a configuration profile. Profiles can give configur
 
 Several generic profiles are bundled with the pipeline which instruct the pipeline to use software packaged using different methods (Docker, Singularity, Podman, Shifter, Charliecloud, Apptainer, Conda) - see below.
 
-> We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
+:::info
+We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
+:::
 
 The pipeline also dynamically loads configurations from [https://github.com/nf-core/configs](https://github.com/nf-core/configs) when it runs, making multiple config profiles for various institutional clusters available at run time. For more information and to see if your system is available in these configs please see the [nf-core/configs documentation](https://github.com/nf-core/configs#documentation).
 
@@ -148,6 +261,8 @@ If `-profile` is not specified, the pipeline will run locally and expect all sof
   - A generic configuration profile to be used with [Charliecloud](https://hpc.github.io/charliecloud/)
 - `apptainer`
   - A generic configuration profile to be used with [Apptainer](https://apptainer.org/)
+- `wave`
+  - A generic configuration profile to enable [Wave](https://seqera.io/wave/) containers. Use together with one of the above (requires Nextflow ` 24.03.0-edge` or later).
 - `conda`
   - A generic configuration profile to be used with [Conda](https://conda.io/docs/). Please only use Conda as a last resort i.e. when it's not possible to run the pipeline with Docker, Singularity, Podman, Shifter, Charliecloud, or Apptainer.
 

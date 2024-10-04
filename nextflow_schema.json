@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "https://raw.githubusercontent.com/nf-core/msa/master/nextflow_schema.json",
-    "title": "nf-core/msa pipeline parameters",
+    "$id": "https://raw.githubusercontent.com/nf-core/multiplesequencealign/master/nextflow_schema.json",
+    "title": "nf-core/multiplesequencealign pipeline parameters",
     "description": "Pipeline to run and benchmark multiple sequence alignment tools.",
     "type": "object",
     "definitions": {
@@ -16,11 +16,29 @@
                     "type": "string",
                     "format": "file-path",
                     "exists": true,
+                    "schema": "assets/schema_input.json",
                     "mimetype": "text/csv",
                     "pattern": "^\\S+\\.csv$",
                     "description": "Path to comma-separated file containing information about the samples in the experiment.",
-                    "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/msa/usage#samplesheet-input).",
+                    "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/multiplesequencealign/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
+                },
+                "tools": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "mimetype": "text/csv",
+                    "schema": "assets/schema_tools.json",
+                    "pattern": "^\\S+\\.csv$",
+                    "description": "Path to comma-separated file containing information about the tools to be used in the experiment.",
+                    "help_text": "You will need to create a design file with information about the tools to be used before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/msa/usage#samplesheet-input).",
+                    "fa_icon": "fas fa-file-csv"
+                },
+                "templates_suffix": {
+                    "type": "string",
+                    "description": "Suffix of the dependencies templates.",
+                    "help_text": "Suffix of the files in the accessory files directory (e.g. pdb for pdb files).",
+                    "fa_icon": "fas fa-file-signature"
                 },
                 "outdir": {
                     "type": "string",
@@ -42,42 +60,122 @@
                 }
             }
         },
-        "reference_genome_options": {
-            "title": "Reference genome options",
+        "align_options": {
+            "title": "Stats options",
             "type": "object",
-            "fa_icon": "fas fa-dna",
-            "description": "Reference genome related files and options required for the workflow.",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define extra alignment options.",
             "properties": {
-                "genome": {
-                    "type": "string",
-                    "description": "Name of iGenomes reference.",
-                    "fa_icon": "fas fa-book",
-                    "help_text": "If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. \n\nSee the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details."
+                "build_consensus": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Build consensus alignment with M-COFFEE."
+                }
+            }
+        },
+        "stats_options": {
+            "title": "Stats options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define wether to run stats.",
+            "properties": {
+                "skip_stats": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Skip all of the statistics computation on the fasta file."
                 },
-                "fasta": {
-                    "type": "string",
-                    "format": "file-path",
-                    "exists": true,
-                    "mimetype": "text/plain",
-                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
-                    "description": "Path to FASTA genome file.",
-                    "help_text": "This parameter is *mandatory* if `--genome` is not specified. If you don't have a BWA index available this will be generated for you automatically. Combine with `--save_reference` to save BWA index for future runs.",
-                    "fa_icon": "far fa-file-code"
+                "calc_sim": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate the percentage similarity across the sequences in the input files."
                 },
-                "igenomes_base": {
+                "calc_seq_stats": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate general statistics on input files."
+                },
+                "extract_plddt": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Extract plddt from structure files. Only works if the files have been generated by AF2."
+                },
+                "calc_gaps": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Extract total number of gaps and average number of gaps of the alignment."
+                }
+            }
+        },
+        "eval_options": {
+            "title": "Eval options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define wether to run stats.",
+            "properties": {
+                "skip_eval": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Skip all of the evaluations computation on the msa."
+                },
+                "calc_sp": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate the Sum of Pairs of alignment."
+                },
+                "calc_tc": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate the Total Column Score of alignment."
+                },
+                "calc_irmsd": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate the iRMSD of alignment."
+                },
+                "calc_tcs": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Calculate the Transitive Consistency Score (TCS) of alignment."
+                }
+            }
+        },
+        "reports_options": {
+            "title": "Reports options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define wether to run stats.",
+            "properties": {
+                "skip_multiqc": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Skip the multiqc report generation."
+                },
+                "skip_shiny": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Skip the shiny report generation."
+                },
+                "shiny_app": {
                     "type": "string",
                     "format": "directory-path",
-                    "description": "Directory / URL base for iGenomes references.",
-                    "default": "s3://ngi-igenomes/igenomes",
-                    "fa_icon": "fas fa-cloud-download-alt",
-                    "hidden": true
+                    "fa_icon": "fas fa-folder-open",
+                    "description": "File containing the main shiny app."
                 },
-                "igenomes_ignore": {
+                "shiny_trace_mode": {
+                    "type": "string",
+                    "description": "variable containing the shiny_trace mode to be used."
+                }
+            }
+        },
+        "compression": {
+            "title": "Compression",
+            "type": "object",
+            "description": "Define wether and how to run compression",
+            "default": "",
+            "properties": {
+                "skip_compression": {
                     "type": "boolean",
-                    "description": "Do not load the iGenomes reference config.",
-                    "fa_icon": "fas fa-ban",
-                    "hidden": true,
-                    "help_text": "Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`."
+                    "description": "Produce uncompressed alignment files"
                 }
             }
         },
@@ -175,14 +273,12 @@
                     "type": "boolean",
                     "description": "Display help text.",
                     "fa_icon": "fas fa-question-circle",
-                    "default": false,
                     "hidden": true
                 },
                 "version": {
                     "type": "boolean",
                     "description": "Display version and exit.",
                     "fa_icon": "fas fa-question-circle",
-                    "default": false,
                     "hidden": true
                 },
                 "publish_dir_mode": {
@@ -206,7 +302,6 @@
                     "type": "boolean",
                     "description": "Send plain-text email instead of HTML.",
                     "fa_icon": "fas fa-remove-format",
-                    "default": false,
                     "hidden": true
                 },
                 "max_multiqc_email_size": {
@@ -221,7 +316,6 @@
                     "type": "boolean",
                     "description": "Do not use coloured log outputs.",
                     "fa_icon": "fas fa-palette",
-                    "default": false,
                     "hidden": true
                 },
                 "hook_url": {
@@ -260,7 +354,6 @@
                     "type": "boolean",
                     "fa_icon": "far fa-eye-slash",
                     "description": "Show all params when using `--help`",
-                    "default": false,
                     "hidden": true,
                     "help_text": "By default, parameters set as _hidden_ in the schema are not shown on the command line when a user runs with `--help`. Specifying this option will tell the pipeline to show all parameters."
                 },
@@ -268,7 +361,6 @@
                     "type": "boolean",
                     "fa_icon": "far fa-check-circle",
                     "description": "Validation of parameters fails when an unrecognised parameter is found.",
-                    "default": false,
                     "hidden": true,
                     "help_text": "By default, when an unrecognised parameter is found, it returns a warinig."
                 },
@@ -276,9 +368,15 @@
                     "type": "boolean",
                     "fa_icon": "far fa-check-circle",
                     "description": "Validation of parameters in lenient more.",
-                    "default": false,
                     "hidden": true,
                     "help_text": "Allows string values that are parseable as numbers or booleans. For further information see [JSONSchema docs](https://github.com/everit-org/json-schema#lenient-mode)."
+                },
+                "pipelines_testdata_base_path": {
+                    "type": "string",
+                    "fa_icon": "far fa-check-circle",
+                    "description": "Base URL or local path to location of pipeline test dataset files",
+                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/",
+                    "hidden": true
                 }
             }
         }
@@ -288,7 +386,19 @@
             "$ref": "#/definitions/input_output_options"
         },
         {
-            "$ref": "#/definitions/reference_genome_options"
+            "$ref": "#/definitions/align_options"
+        },
+        {
+            "$ref": "#/definitions/stats_options"
+        },
+        {
+            "$ref": "#/definitions/eval_options"
+        },
+        {
+            "$ref": "#/definitions/reports_options"
+        },
+        {
+            "$ref": "#/definitions/compression"
         },
         {
             "$ref": "#/definitions/institutional_config_options"
