@@ -3,9 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+<<<<<<< HEAD
 ## [1.0.0 - Somorrostro](https://github.com/nf-core/multiplesequencealign/releases/tag/1.0.0)
 
 Somorrostro is a beach in Barcelona.
+=======
+## v1.0.0 - [date]
+>>>>>>> 3d6f5bdf09c25859bf30d7a9ba23b2a43da26f2a
 
 Initial release of nf-core/multiplesequencealign, created with the [nf-core](https://nf-co.re/) template.
 

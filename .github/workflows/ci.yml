@@ -7,6 +7,7 @@ on:
   pull_request:
   release:
     types: [published]
+  workflow_dispatch:
 
 env:
   NXF_ANSI_LOG: false
@@ -24,7 +25,7 @@ jobs:
     strategy:
       matrix:
         NXF_VER:
-          - "24.04.1"
+          - "24.04.2"
           - "latest-everything"
         ANALYSIS:
           - "test"
@@ -42,10 +43,17 @@ jobs:
       - name: Disk space cleanup
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.1
 
-      - name: Run pipeline with test data
+      - name: Run pipeline with test data (docker)
         run: |
           nextflow run ${GITHUB_WORKSPACE} -profile ${{ matrix.ANALYSIS }},docker --outdir ./results
 
+      - name: Run pipeline with test data (singularity)
+        run: |
+          nextflow run ${GITHUB_WORKSPACE} -profile ${{ matrix.ANALYSIS }},singularity --outdir ./results
+      
+      - name: Run pipeline with test data (conda)
+        run: |
+          nextflow run ${GITHUB_WORKSPACE} -profile ${{ matrix.ANALYSIS }},conda --outdir ./results     
   parameters_stub:
     name: Test workflow parameters
     if: "${{ github.event_name != 'push' || (github.event_name == 'push' && github.repository == 'nf-core/multiplesequencealign') }}"
