@@ -50,10 +50,10 @@ jobs:
       - name: Run pipeline with test data (singularity)
         run: |
           nextflow run ${GITHUB_WORKSPACE} -profile ${{ matrix.ANALYSIS }},singularity --outdir ./results
-      
+
       - name: Run pipeline with test data (conda)
         run: |
-          nextflow run ${GITHUB_WORKSPACE} -profile ${{ matrix.ANALYSIS }},conda --outdir ./results     
+          nextflow run ${GITHUB_WORKSPACE} -profile ${{ matrix.ANALYSIS }},conda --outdir ./results
   parameters_stub:
     name: Test workflow parameters
     if: "${{ github.event_name != 'push' || (github.event_name == 'push' && github.repository == 'nf-core/multiplesequencealign') }}"

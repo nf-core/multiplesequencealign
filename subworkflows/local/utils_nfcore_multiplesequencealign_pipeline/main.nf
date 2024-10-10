@@ -69,9 +69,10 @@ workflow PIPELINE_INITIALISATION {
     //
     // Create channel from input file provided through params.input
     //
-<<<<<<< HEAD
-    ch_input = Channel.fromSamplesheet('input')
-    ch_tools = Channel.fromSamplesheet('tools')
+    ch_input = Channel.fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json")).map { samplesheet ->
+            validateInputSamplesheet(samplesheet)
+        }
+    ch_tools = Channel .fromList(samplesheetToList(params.TOOLS, "${projectDir}/assets/schema_tools.json"))
                 .map {
                     meta ->
                         def meta_clone = meta[0].clone()
@@ -88,28 +89,6 @@ workflow PIPELINE_INITIALISATION {
 
                         [ tree_map, align_map ]
                 }.unique()
-=======
-
-    Channel
-        .fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
-        .map {
-            meta, fastq_1, fastq_2 ->
-                if (!fastq_2) {
-                    return [ meta.id, meta + [ single_end:true ], [ fastq_1 ] ]
-                } else {
-                    return [ meta.id, meta + [ single_end:false ], [ fastq_1, fastq_2 ] ]
-                }
-        }
-        .groupTuple()
-        .map { samplesheet ->
-            validateInputSamplesheet(samplesheet)
-        }
-        .map {
-            meta, fastqs ->
-                return [ meta, fastqs.flatten() ]
-        }
-        .set { ch_samplesheet }
->>>>>>> 3d6f5bdf09c25859bf30d7a9ba23b2a43da26f2a
 
     emit:
     samplesheet = ch_input
@@ -126,7 +105,6 @@ workflow PIPELINE_INITIALISATION {
 workflow PIPELINE_COMPLETION {
 
     take:
-<<<<<<< HEAD
     email            //  string: email address
     email_on_fail    //  string: email address sent on pipeline failure
     plaintext_email  // boolean: Send plain-text email instead of HTML
@@ -137,16 +115,6 @@ workflow PIPELINE_COMPLETION {
     shiny_dir_path   //  string: Path to shiny stats file
     trace_dir_path   //  string: Path to trace file
     shiny_trace_mode // string: Mode to use for shiny trace file (default: "latest", options: "latest", "all")
-=======
-    email           //  string: email address
-    email_on_fail   //  string: email address sent on pipeline failure
-    plaintext_email // boolean: Send plain-text email instead of HTML
-    
-    outdir          //    path: Path to output directory where results will be published
-    monochrome_logs // boolean: Disable ANSI colour codes in log output
-    hook_url        //  string: hook URL for notifications
-    multiqc_report  //  string: Path to MultiQC report
->>>>>>> 3d6f5bdf09c25859bf30d7a9ba23b2a43da26f2a
 
     main:
     summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
@@ -206,9 +174,6 @@ def validateInputSamplesheet(input) {
     return [ metas[0], fastqs ]
 }
 
-<<<<<<< HEAD
-
-=======
 //
 // Exit pipeline if incorrect --genome key provided
 //
@@ -222,7 +187,6 @@ def genomeExistsError() {
         error(error_string)
     }
 }
->>>>>>> 3d6f5bdf09c25859bf30d7a9ba23b2a43da26f2a
 //
 // Generate methods description for MultiQC
 //
@@ -309,7 +273,6 @@ def methodsDescriptionText(mqc_methods_yaml) {
     return description_html.toString()
 }
 
-<<<<<<< HEAD
 def getHeader(trace_file){
     // Get the header of the trace file
     def trace_lines = trace_file.readLines()
@@ -468,5 +431,3 @@ class Utils {
 
 
 }
-=======
->>>>>>> 3d6f5bdf09c25859bf30d7a9ba23b2a43da26f2a

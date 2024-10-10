@@ -3,13 +3,8 @@ process MULTIQC {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-<<<<<<< HEAD
-        'https://depot.galaxyproject.org/singularity/multiqc:1.25--pyhdfd78af_0' :
-        'biocontainers/multiqc:1.25--pyhdfd78af_0' }"
-=======
         'https://depot.galaxyproject.org/singularity/multiqc:1.25.1--pyhdfd78af_0' :
         'biocontainers/multiqc:1.25.1--pyhdfd78af_0' }"
->>>>>>> 3d6f5bdf09c25859bf30d7a9ba23b2a43da26f2a
 
     input:
     path  multiqc_files, stageAs: "?/*"

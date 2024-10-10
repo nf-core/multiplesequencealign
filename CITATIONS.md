@@ -43,7 +43,7 @@
 - [MAGUS](https://pubmed.ncbi.nlm.nih.gov/33252662/)
 
   > Smirnov V, Warnow T. MAGUS: Multiple sequence Alignment using Graph clUStering. Bioinformatics. 2021 Jul 19;37(12):1666-1672. doi: 10.1093/bioinformatics/btaa992. PMID: 33252662; PMCID: PMC8289385.
-> Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data [Online].
+  > Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data [Online].
 
 - [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)
 

@@ -2,8 +2,4 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-<<<<<<< HEAD
-  - bioconda::multiqc=1.24.1
-=======
   - bioconda::multiqc=1.25.1
->>>>>>> 3d6f5bdf09c25859bf30d7a9ba23b2a43da26f2a

@@ -18,21 +18,6 @@
 include { MULTIPLESEQUENCEALIGN   } from './workflows/multiplesequencealign'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_multiplesequencealign_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_multiplesequencealign_pipeline'
-<<<<<<< HEAD
-=======
-include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_multiplesequencealign_pipeline'
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    GENOME PARAMETER VALUES
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-// TODO nf-core: Remove this line if you don't need a FASTA file
-//   This is an example of how to use getGenomeAttribute() to fetch parameters
-//   from igenomes.config using `--genome`
-params.fasta = getGenomeAttribute('fasta')
->>>>>>> 3d6f5bdf09c25859bf30d7a9ba23b2a43da26f2a
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,12 +46,7 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
         ch_versions
     )
     emit:
-<<<<<<< HEAD
-    multiqc_report =  MULTIPLESEQUENCEALIGN.out.multiqc
-
-=======
     multiqc_report = MULTIPLESEQUENCEALIGN.out.multiqc_report // channel: /path/to/multiqc_report.html
->>>>>>> 3d6f5bdf09c25859bf30d7a9ba23b2a43da26f2a
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
