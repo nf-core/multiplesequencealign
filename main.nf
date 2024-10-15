@@ -35,15 +35,12 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
     tools       // channel: toolsheet read in from --tools
 
     main:
-    ch_versions = Channel.empty()
-
     //
     // WORKFLOW: Run pipeline
     //
     MULTIPLESEQUENCEALIGN (
         samplesheet,
-        tools,
-        ch_versions
+        tools
     )
     emit:
     multiqc_report = MULTIPLESEQUENCEALIGN.out.multiqc_report // channel: /path/to/multiqc_report.html

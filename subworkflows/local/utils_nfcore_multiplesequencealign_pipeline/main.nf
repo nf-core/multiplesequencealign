@@ -69,10 +69,8 @@ workflow PIPELINE_INITIALISATION {
     //
     // Create channel from input file provided through params.input
     //
-    ch_input = Channel.fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json")).map { samplesheet ->
-            validateInputSamplesheet(samplesheet)
-        }
-    ch_tools = Channel .fromList(samplesheetToList(params.TOOLS, "${projectDir}/assets/schema_tools.json"))
+    ch_input = Channel.fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
+    ch_tools = Channel .fromList(samplesheetToList(params.tools, "${projectDir}/assets/schema_tools.json"))
                 .map {
                     meta ->
                         def meta_clone = meta[0].clone()
@@ -157,22 +155,6 @@ workflow PIPELINE_COMPLETION {
     FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-//
-
-//
-// Validate channels from input samplesheet
-//
-def validateInputSamplesheet(input) {
-    def (metas, fastqs) = input[1..2]
-
-    // Check that multiple runs of the same sample are of the same datatype i.e. single-end / paired-end
-    def endedness_ok = metas.collect{ meta -> meta.single_end }.unique().size == 1
-    if (!endedness_ok) {
-        error("Please check input samplesheet -> Multiple runs of a sample must be of the same datatype i.e. single-end or paired-end: ${metas[0].id}")
-    }
-
-    return [ metas[0], fastqs ]
-}
 
 //
 // Exit pipeline if incorrect --genome key provided

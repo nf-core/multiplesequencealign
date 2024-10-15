@@ -15,7 +15,8 @@
             },
             "args_tree": {
                 "type": "string",
-                "meta": ["args_tree"]
+                "meta": ["args_tree"],
+                "default": ""
             },
             "aligner": {
                 "type": "string",
@@ -25,7 +26,8 @@
             },
             "args_aligner": {
                 "type": "string",
-                "meta": ["args_aligner"]
+                "meta": ["args_aligner"],
+                "default": ""
             }
         },
         "required": ["aligner"]

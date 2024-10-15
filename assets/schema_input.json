@@ -16,16 +16,20 @@
             "fasta": {
                 "type": "string",
                 "pattern": "^\\S+\\.f(ast)?a$",
-                "errorMessage": "fasta file. Must end with .fa or .fasta"
+                "errorMessage": "fasta file. Must end with .fa or .fasta",
+                "default": ""
             },
             "reference": {
-                "type": "string"
+                "type": "string",
+                "default": ""
             },
             "dependencies": {
-                "type": "string"
+                "type": "string",
+                "default": ""
             },
             "template": {
-                "type": "string"
+                "type": "string",
+                "default": ""
             }
         },
         "required": ["id"],

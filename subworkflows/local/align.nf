@@ -111,7 +111,6 @@ workflow ALIGN {
     // ------------------------------------------------
 
     // 1. SEQUENCE BASED
-
     // -----------------  CLUSTALO ------------------
     ch_fasta_trees.clustalo
         .multiMap {
@@ -121,6 +120,7 @@ workflow ALIGN {
         }
         .set { ch_fasta_trees_clustalo }
 
+    ch_fasta_trees_clustalo.tree.view()
     CLUSTALO_ALIGN (
         ch_fasta_trees_clustalo.fasta,
         ch_fasta_trees_clustalo.tree,
