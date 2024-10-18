@@ -11,7 +11,8 @@
                 "type": "string",
                 "pattern": "^\\S+$",
                 "errorMessage": "tree name cannot contain spaces",
-                "meta": ["tree"]
+                "meta": ["tree"],
+                "default": ""
             },
             "args_tree": {
                 "type": "string",
@@ -22,7 +23,8 @@
                 "type": "string",
                 "meta": ["aligner"],
                 "pattern": "^\\S+$",
-                "errorMessage": "align name must be provided and cannot contain spaces"
+                "errorMessage": "align name must be provided and cannot contain spaces",
+                "default": ""
             },
             "args_aligner": {
                 "type": "string",
