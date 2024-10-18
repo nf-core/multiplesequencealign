@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://raw.githubusercontent.com/nf-core/msa/master/assets/schema_tools.json",
     "title": "nf-core/msa pipeline - params.tools schema",
     "description": "Schema for the file provided with params.tools",
@@ -11,21 +11,25 @@
                 "type": "string",
                 "pattern": "^\\S+$",
                 "errorMessage": "tree name cannot contain spaces",
-                "meta": ["tree"]
+                "meta": ["tree"],
+                "default": ""
             },
             "args_tree": {
                 "type": "string",
-                "meta": ["args_tree"]
+                "meta": ["args_tree"],
+                "default": ""
             },
             "aligner": {
                 "type": "string",
                 "meta": ["aligner"],
                 "pattern": "^\\S+$",
-                "errorMessage": "align name must be provided and cannot contain spaces"
+                "errorMessage": "align name must be provided and cannot contain spaces",
+                "default": ""
             },
             "args_aligner": {
                 "type": "string",
-                "meta": ["args_aligner"]
+                "meta": ["args_aligner"],
+                "default": ""
             }
         },
         "required": ["aligner"]
