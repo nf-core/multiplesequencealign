@@ -133,7 +133,7 @@
                     },
                     "tcoffee/align": {
                         "branch": "master",
-                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "git_sha": "66b22564bc1bc0db7292f2073cdef954ead773e7",
                         "installed_by": [
                             "modules"
                         ]
@@ -147,7 +147,7 @@
                     },
                     "tcoffee/consensus": {
                         "branch": "master",
-                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "git_sha": "66b22564bc1bc0db7292f2073cdef954ead773e7",
                         "installed_by": [
                             "modules"
                         ]
@@ -155,6 +155,13 @@
                     "tcoffee/irmsd": {
                         "branch": "master",
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": [
+                            "modules"
+                        ]
+                    },
+                    "tcoffee/regressive": {
+                        "branch": "master",
+                        "git_sha": "66b22564bc1bc0db7292f2073cdef954ead773e7",
                         "installed_by": [
                             "modules"
                         ]

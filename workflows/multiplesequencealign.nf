@@ -140,12 +140,7 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // Align
     //
-    compress_during_align = !params.skip_compression && (params.skip_eval || params.build_consensus)
-    print(compress_during_align)
-    print(params.skip_compression)
-    print(params.skip_eval)
-    print(params.build_consensus)
-    print("--------------------------------")
+    compress_during_align = !(params.skip_compression || (!params.skip_eval || params.build_consensus))
     ALIGN (
         ch_seqs,
         ch_tools,
