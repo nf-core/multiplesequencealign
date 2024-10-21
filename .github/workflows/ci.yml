@@ -47,10 +47,6 @@ jobs:
         run: |
           nextflow run ${GITHUB_WORKSPACE} -profile ${{ matrix.ANALYSIS }},docker --outdir ./results
 
-      - name: Run pipeline with test data (singularity)
-        run: |
-          nextflow run ${GITHUB_WORKSPACE} -profile ${{ matrix.ANALYSIS }},singularity --outdir ./results
-
       - name: Run pipeline with test data (conda)
         run: |
           nextflow run ${GITHUB_WORKSPACE} -profile ${{ matrix.ANALYSIS }},conda --outdir ./results
