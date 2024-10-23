@@ -48,7 +48,6 @@ workflow PIPELINE_INITIALISATION {
         workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() >= 1
     )
 
-
     //
     // Validate parameters and generate parameter summary to stdout
     //
@@ -58,13 +57,17 @@ workflow PIPELINE_INITIALISATION {
         null
     )
 
-
     //
     // Check config provided to the pipeline
     //
     UTILS_NFCORE_PIPELINE (
         nextflow_cli_args
     )
+
+    //
+    // Custom validation for pipeline parameters
+    //
+    validateInputParameters()
 
     //
     // Create channel from input file provided through params.input

@@ -68,7 +68,6 @@ workflow {
         params.tools
     )
 
-
     //
     // WORKFLOW: Run main workflow
     //
