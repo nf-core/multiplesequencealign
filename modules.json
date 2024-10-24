@@ -23,7 +23,8 @@
                     "csvtk/join": {
                         "branch": "master",
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/csvtk/join/csvtk-join.diff"
                     },
                     "famsa/align": {
                         "branch": "master",
@@ -43,7 +44,8 @@
                     "kalign/align": {
                         "branch": "master",
                         "git_sha": "cadb9bbfe56001ac421e0ee87808b0ccc754593a",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/kalign/align/kalign-align.diff"
                     },
                     "learnmsa/align": {
                         "branch": "master",
