@@ -19,7 +19,7 @@ include { MTMALIGN_ALIGN                    } from '../../modules/nf-core/mtmali
 include { MUSCLE5_SUPER5                    } from '../../modules/nf-core/muscle5/super5/main'
 include { TCOFFEE_ALIGN                     } from '../../modules/nf-core/tcoffee/align/main'
 include { TCOFFEE_ALIGN as TCOFFEE3D_ALIGN  } from '../../modules/nf-core/tcoffee/align/main'
-include { TCOFFEE_ALIGN as REGRESSIVE_ALIGN } from '../../modules/nf-core/tcoffee/align/main'
+include { TCOFFEE_REGRESSIVE                } from '../../modules/nf-core/tcoffee/regressive/main'
 include { TCOFFEE_CONSENSUS as CONSENSUS    } from '../../modules/nf-core/tcoffee/consensus/main'
 include { UPP_ALIGN                         } from '../../modules/nf-core/upp/align/main'
 
@@ -111,7 +111,6 @@ workflow ALIGN {
     // ------------------------------------------------
 
     // 1. SEQUENCE BASED
-
     // -----------------  CLUSTALO ------------------
     ch_fasta_trees.clustalo
         .multiMap {
@@ -254,14 +253,14 @@ workflow ALIGN {
         }
         .set { ch_fasta_trees_regressive }
 
-    REGRESSIVE_ALIGN (
+    TCOFFEE_REGRESSIVE (
         ch_fasta_trees_regressive.fasta,
         ch_fasta_trees_regressive.tree,
         [ [:], [], [] ],
         compress
     )
-    ch_msa = ch_msa.mix(REGRESSIVE_ALIGN.out.alignment)
-    ch_versions = ch_versions.mix(REGRESSIVE_ALIGN.out.versions.first())
+    ch_msa = ch_msa.mix(TCOFFEE_REGRESSIVE.out.alignment)
+    ch_versions = ch_versions.mix(TCOFFEE_REGRESSIVE.out.versions.first())
 
     // -----------------  UPP  -------------------
     ch_fasta_trees.upp
