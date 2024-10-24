@@ -48,6 +48,7 @@ workflow PIPELINE_INITIALISATION {
         workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() >= 1
     )
 
+
     //
     // Validate parameters and generate parameter summary to stdout
     //
@@ -56,6 +57,7 @@ workflow PIPELINE_INITIALISATION {
         validate_params,
         null
     )
+
 
     //
     // Check config provided to the pipeline

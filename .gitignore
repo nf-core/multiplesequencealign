@@ -7,3 +7,8 @@ testing/
 testing*
 *.pyc
 null/
+outdir/
+.ipynb_checkpoints/
+test.ipynb
+*reports.tsv
+.nf-test*
