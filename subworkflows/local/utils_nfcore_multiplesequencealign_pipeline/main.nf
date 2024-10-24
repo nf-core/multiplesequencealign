@@ -68,7 +68,7 @@ workflow PIPELINE_INITIALISATION {
     // Create channel from input file provided through params.input
     //
     ch_input = Channel.fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
-    ch_tools = Channel .fromList(samplesheetToList(params.tools, "${projectDir}/assets/schema_tools.json"))
+    ch_tools = Channel.fromList(samplesheetToList(params.tools, "${projectDir}/assets/schema_tools.json"))
                 .map {
                     meta ->
                         def meta_clone = meta[0].clone()
