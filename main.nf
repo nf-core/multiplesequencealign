@@ -73,7 +73,8 @@ workflow {
         args,
         params.outdir,
         params.input,
-        params.tools
+        params.tools,
+        params.dependencies_folder
     )
 
     //

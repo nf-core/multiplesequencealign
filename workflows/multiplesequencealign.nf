@@ -95,6 +95,11 @@ workflow MULTIPLESEQUENCEALIGN {
         }
         .set { ch_templates }
 
+    // ----------------
+    // DEPENDENCY FILES
+    // ----------------
+
+    // If the dependencies folder is provided, use it to identify the dependencies
     if(params.dependencies_folder){
 
         // Identify the sequence IDs from the input fasta file(s)
@@ -113,6 +118,7 @@ workflow MULTIPLESEQUENCEALIGN {
         
     }else{
 
+        // otherwise, use the dependency files provided in the input samplesheet
         ch_input
             .map {
                 meta, fasta, ref, str, template ->
@@ -121,9 +127,6 @@ workflow MULTIPLESEQUENCEALIGN {
             .filter { it[1].size() > 0 }
             .set { ch_dependencies }
 
-        // ----------------
-        // DEPENDENCY FILES
-        // ----------------
         // Dependency files are taken from a directory.
         // If the directory is compressed, it is uncompressed first.
         ch_dependencies
@@ -144,6 +147,10 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_versions   = ch_versions.mix(UNTAR.out.versions)
     }
 
+
+    //
+    // TEMPLATES
+    //
     TEMPLATES (
         ch_dependencies,
         ch_templates,
