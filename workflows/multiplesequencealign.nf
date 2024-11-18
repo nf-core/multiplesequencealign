@@ -109,9 +109,22 @@ workflow MULTIPLESEQUENCEALIGN {
 
         // Create a channel of dependencies by mapping the dependcies from the dependencies folder
         // to the sequence IDs
-        Channel.fromPath(params.dependencies_folder+"/**")
+
+        // if compressed, uncompress the dependencies folder
+        if(params.dependencies_folder.endsWith('.tar.gz')){
+            UNTAR (params.dependencies_folder)
+                .untar
+                .map { meta, dir -> [ meta, file(dir).listFiles().collect() ] }
+                .set{ dependencies_to_be_mapped }
+            ch_versions = ch_versions.mix(UNTAR.out.versions)
+        }else{
+            Channel.fromPath(params.dependencies_folder+"/**")
                .map { it -> [[id: it.baseName], it] }
-               .combine(ch_seqs_split, by: 0).view()
+               .set{ dependencies_to_be_mapped }
+        }
+
+        dependencies_to_be_mapped
+               .combine(ch_seqs_split, by: 0)
                .map { dep_id, dep, fasta_id -> [fasta_id, dep] }
                .groupTuple(by: 0)
                .set{ ch_dependencies }
