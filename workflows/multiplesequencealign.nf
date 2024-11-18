@@ -67,6 +67,10 @@ workflow MULTIPLESEQUENCEALIGN {
     stats_summary                = Channel.empty()
     stats_and_evaluation_summary = Channel.empty()
     ch_shiny_stats               = Channel.empty()
+    ch_refs                      = Channel.empty()
+    ch_templates                 = Channel.empty()
+    ch_dependencies              = Channel.empty()
+
 
     ch_input
         .map {
@@ -91,35 +95,54 @@ workflow MULTIPLESEQUENCEALIGN {
         }
         .set { ch_templates }
 
-    ch_input
-        .map {
-            meta, fasta, ref, str, template ->
-                [ meta, str ]
-        }
-        .filter { it[1].size() > 0 }
-        .set { ch_dependencies }
+    if(params.dependencies_folder){
 
-    // ----------------
-    // DEPENDENCY FILES
-    // ----------------
-    // Dependency files are taken from a directory.
-    // If the directory is compressed, it is uncompressed first.
-    ch_dependencies
-        .branch {
-            compressed:   it[1].endsWith('.tar.gz')
-            uncompressed: true
-        }
-        .set { ch_dependencies }
+        // Identify the sequence IDs from the input fasta file(s)
+        ch_seqs.splitFasta(record: [id: true] )
+               .map{ id, pdb -> [pdb, id] }
+               .set{ ch_seqs_split }
 
-    UNTAR (ch_dependencies.compressed)
-        .untar
-        .mix(ch_dependencies.uncompressed)
-        .map {
-            meta,dir ->
-                [ meta,file(dir).listFiles().collect() ]
-        }
-        .set { ch_dependencies }
-    ch_versions   = ch_versions.mix(UNTAR.out.versions)
+        // Create a channel of dependencies by mapping the dependcies from the dependencies folder
+        // to the sequence IDs
+        Channel.fromPath(params.dependencies_folder+"/**")
+               .map { it -> [[id: it.baseName], it] }
+               .combine(ch_seqs_split, by: 0).view()
+               .map { dep_id, dep, fasta_id -> [fasta_id, dep] }
+               .groupTuple(by: 0)
+               .set{ ch_dependencies }
+        
+    }else{
+
+        ch_input
+            .map {
+                meta, fasta, ref, str, template ->
+                    [ meta, str ]
+            }
+            .filter { it[1].size() > 0 }
+            .set { ch_dependencies }
+
+        // ----------------
+        // DEPENDENCY FILES
+        // ----------------
+        // Dependency files are taken from a directory.
+        // If the directory is compressed, it is uncompressed first.
+        ch_dependencies
+            .branch {
+                compressed:   it[1].endsWith('.tar.gz')
+                uncompressed: true
+            }
+            .set { ch_dependencies }
+
+        UNTAR (ch_dependencies.compressed)
+            .untar
+            .mix(ch_dependencies.uncompressed)
+            .map {
+                meta,dir ->
+                    [ meta,file(dir).listFiles().collect() ]
+            }
+            .set { ch_dependencies }
+        ch_versions   = ch_versions.mix(UNTAR.out.versions)
+    }
 
     TEMPLATES (
         ch_dependencies,
