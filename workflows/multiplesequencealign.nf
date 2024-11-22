@@ -99,31 +99,44 @@ workflow MULTIPLESEQUENCEALIGN {
     // DEPENDENCY FILES
     // ----------------
 
-    // If the dependencies folder is provided, use it to identify the dependencies
+    /*
+    * We currently support 2 ways of reading in the dependencies:
+    * 1. Provide a folder containing the dependencies via the `dependencies_folder` parameter
+    * 2. Provide the dependency files directly in the input samplesheet 
+    */ 
+
+    // If the dependencies folder is provided, use it to identify the dependencies based on sequence IDs
     if(params.dependencies_folder){
 
         // Identify the sequence IDs from the input fasta file(s)
         ch_seqs.splitFasta(record: [id: true] )
-               .map{ id, pdb -> [pdb, id] }
+               .map{ id, seq_id -> [seq_id, id] }
                .set{ ch_seqs_split }
-
-        // Create a channel of dependencies by mapping the dependcies from the dependencies folder
-        // to the sequence IDs
 
         // if compressed, uncompress the dependencies folder
         if(params.dependencies_folder.endsWith('.tar.gz')){
-            UNTAR (params.dependencies_folder)
+
+            dependencies_folder = Channel.fromPath(params.dependencies_folder)
+                                         .map { it -> [[id: it.baseName],it] }
+            
+            UNTAR (dependencies_folder)
                 .untar
-                .map { meta, dir -> [ meta, file(dir).listFiles().collect() ] }
+                .map { meta, dir -> [ file(dir).listFiles() ] }
+                .flatten()
                 .set{ dependencies_to_be_mapped }
             ch_versions = ch_versions.mix(UNTAR.out.versions)
-        }else{
-            Channel.fromPath(params.dependencies_folder+"/**")
-               .map { it -> [[id: it.baseName], it] }
-               .set{ dependencies_to_be_mapped }
+
+        }
+        // otherwise, directly use the dependencies within the folder
+        else{
+
+            dependencies_to_be_mapped = Channel.fromPath(params.dependencies_folder+"/**")               
+        
         }
 
+        // Map the dependencies to the sequence IDs
         dependencies_to_be_mapped
+               .map{ it -> [[id: it.baseName], it] }
                .combine(ch_seqs_split, by: 0)
                .map { dep_id, dep, fasta_id -> [fasta_id, dep] }
                .groupTuple(by: 0)
@@ -139,7 +152,7 @@ workflow MULTIPLESEQUENCEALIGN {
             }
             .filter { it[1].size() > 0 }
             .set { ch_dependencies }
-
+            
         // Dependency files are taken from a directory.
         // If the directory is compressed, it is uncompressed first.
         ch_dependencies
@@ -149,9 +162,9 @@ workflow MULTIPLESEQUENCEALIGN {
             }
             .set { ch_dependencies }
 
-        UNTAR (ch_dependencies.compressed)
+        UNTAR (dependencies_compressed)
             .untar
-            .mix(ch_dependencies.uncompressed)
+            .mix(dependencies_uncompressed)
             .map {
                 meta,dir ->
                     [ meta,file(dir).listFiles().collect() ]
@@ -159,7 +172,6 @@ workflow MULTIPLESEQUENCEALIGN {
             .set { ch_dependencies }
         ch_versions   = ch_versions.mix(UNTAR.out.versions)
     }
-
 
     //
     // TEMPLATES
