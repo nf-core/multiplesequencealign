@@ -38,9 +38,9 @@ The pipeline performs the following steps:
 
 ## Usage
 
-:::note
-If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
-:::
+> [!NOTE]
+> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
+
 
 #### 1. SAMPLESHEET
 
@@ -57,9 +57,9 @@ toxin,toxin.fa,toxin-ref.fa,toxin_structures,toxin_template.txt
 
 Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be aligned and the associated (if available) reference alignments and dependency files (this can be anything from protein structure or any other information you would want to use in your favourite MSA tool).
 
-:::note
-The only required input is the id column and either fasta or dependencies.
-:::
+> [!NOTE]
+> The only required input is the id column and either fasta or dependencies.
+
 
 #### 2. TOOLSHEET
 
@@ -78,9 +78,8 @@ FAMSA, -gt upgma -medoidtree, FAMSA,
 FAMSA,,REGRESSIVE,
 ```
 
-:::note
-The only required input is aligner.
-:::
+> [!NOTE]
+> The only required input is aligner.
 
 #### 3. RUN THE PIPELINE
 
@@ -94,10 +93,9 @@ nextflow run nf-core/multiplesequencealign \
    --outdir outdir
 ```
 
-:::warning
-Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_;
+> [!WARNING]
+> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_;
 see [docs](https://nf-co.re/usage/configuration#custom-configuration-files).
-:::
 
 For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/multiplesequencealign/usage) and the [parameter documentation](https://nf-co.re/multiplesequencealign/parameters).
 
