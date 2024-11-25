@@ -40,7 +40,7 @@
                     "help_text": "Suffix of the files in the accessory files directory (e.g. pdb for pdb files).",
                     "fa_icon": "fas fa-file-signature"
                 },
-                "dependencies_folder": {
+                "dependencies_dir": {
                     "type": "string",
                     "exists": true,
                     "description": "Path to a folder containing all the dependencies files to be used (e.g. structures).",
