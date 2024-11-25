@@ -98,7 +98,7 @@ workflow MULTIPLESEQUENCEALIGN {
 
     /*
     * We currently support 2 ways of reading in the dependencies:
-    * 1. Provide a folder containing the dependencies via the `dependencies_folder` parameter
+    * 1. Provide a folder containing the dependencies via the `dependencies_dir` parameter
     * 2. Provide the dependency files directly in the input samplesheet 
     */ 
 
