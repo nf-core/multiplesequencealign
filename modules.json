@@ -101,9 +101,7 @@
                     "multiqc": {
                         "branch": "master",
                         "git_sha": "cf17ca47590cc578dfb47db1c2a44ef86f89976d",
-                        "installed_by": [
-                            "modules"
-                        ]
+                        "installed_by": ["modules"]
                     },
                     "muscle5/super5": {
                         "branch": "master",
@@ -129,9 +127,7 @@
                     "tcoffee/align": {
                         "branch": "master",
                         "git_sha": "66b22564bc1bc0db7292f2073cdef954ead773e7",
-                        "installed_by": [
-                            "modules"
-                        ]
+                        "installed_by": ["modules"]
                     },
                     "tcoffee/alncompare": {
                         "branch": "master",
@@ -143,9 +139,7 @@
                     "tcoffee/consensus": {
                         "branch": "master",
                         "git_sha": "66b22564bc1bc0db7292f2073cdef954ead773e7",
-                        "installed_by": [
-                            "modules"
-                        ]
+                        "installed_by": ["modules"]
                     },
                     "tcoffee/irmsd": {
                         "branch": "master",
@@ -153,6 +147,11 @@
                         "installed_by": [
                             "modules"
                         ]
+                    },
+                    "tcoffee/regressive": {
+                        "branch": "master",
+                        "git_sha": "66b22564bc1bc0db7292f2073cdef954ead773e7",
+                        "installed_by": ["modules"]
                     },
                     "tcoffee/seqreformat": {
                         "branch": "master",
@@ -200,7 +199,7 @@
                             "subworkflows"
                         ]
                     },
-                    "utils_nfvalidation_plugin": {
+                    "utils_nfschema_plugin": {
                         "branch": "master",
                         "git_sha": "f533459a222ac53eb4c6bb7a5f574e4069197cdb",
                         "installed_by": [

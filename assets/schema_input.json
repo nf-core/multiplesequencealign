@@ -1,5 +1,5 @@
 {
-    "$schema": "https://json-schema.org/draft-07/schema",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://raw.githubusercontent.com/nf-core/multiplesequencealign/master/assets/schema_input.json",
     "title": "nf-core/multiplesequencealign pipeline - params.input schema",
     "description": "Schema for the file provided with params.input",
@@ -16,16 +16,20 @@
             "fasta": {
                 "type": "string",
                 "pattern": "^\\S+\\.f(ast)?a$",
-                "errorMessage": "fasta file. Must end with .fa or .fasta"
+                "errorMessage": "fasta file. Must end with .fa or .fasta",
+                "default": ""
             },
             "reference": {
-                "type": "string"
+                "type": "string",
+                "default": ""
             },
             "dependencies": {
-                "type": "string"
+                "type": "string",
+                "default": ""
             },
             "template": {
-                "type": "string"
+                "type": "string",
+                "default": ""
             }
         },
         "required": ["id"],
