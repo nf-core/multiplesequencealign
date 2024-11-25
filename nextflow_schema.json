@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema",
+    "$schema": "https://json-schema.org/draft-07/schema",
     "$id": "https://raw.githubusercontent.com/nf-core/multiplesequencealign/master/nextflow_schema.json",
     "title": "nf-core/multiplesequencealign pipeline parameters",
     "description": "Pipeline to run and benchmark multiple sequence alignment tools.",
@@ -42,6 +42,7 @@
                 },
                 "dependencies_dir": {
                     "type": "string",
+                    "format": "directory-path",
                     "exists": true,
                     "description": "Path to a folder containing all the dependencies files to be used (e.g. structures).",
                     "help_text": "This is a folder with all the dependencies files to be used in the pipeline.",
