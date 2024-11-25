@@ -26,13 +26,13 @@ include { UTILS_NEXTFLOW_PIPELINE   } from '../../nf-core/utils_nextflow_pipelin
 workflow PIPELINE_INITIALISATION {
 
     take:
-    version             // boolean: Display version and exit
-    validate_params     // boolean: Boolean whether to validate parameters against the schema at runtime
-    monochrome_logs     // boolean: Do not use coloured log outputs
-    nextflow_cli_args   //  array: List of positional nextflow CLI args
-    outdir              //  string: The output directory where the results will be saved
-    input               //  string: Path to input samplesheet
-    tools               //  string: Path to input tools samplesheet
+    version           // boolean: Display version and exit
+    validate_params   // boolean: Boolean whether to validate parameters against the schema at runtime
+    monochrome_logs   // boolean: Do not use coloured log outputs
+    nextflow_cli_args //  array: List of positional nextflow CLI args
+    outdir            //  string: The output directory where the results will be saved
+    input             //  string: Path to input samplesheet
+    tools             //  string: Path to input tools samplesheet
 
     main:
 
@@ -87,9 +87,9 @@ workflow PIPELINE_INITIALISATION {
                 }.unique()
 
     emit:
-    samplesheet  = ch_input
-    tools        = ch_tools
-    versions     = ch_versions
+    samplesheet = ch_input
+    tools       = ch_tools
+    versions    = ch_versions
 }
 
 /*
