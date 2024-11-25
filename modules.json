@@ -100,7 +100,7 @@
                     },
                     "multiqc": {
                         "branch": "master",
-                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "git_sha": "cf17ca47590cc578dfb47db1c2a44ef86f89976d",
                         "installed_by": [
                             "modules"
                         ]
@@ -128,7 +128,7 @@
                     },
                     "tcoffee/align": {
                         "branch": "master",
-                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "git_sha": "66b22564bc1bc0db7292f2073cdef954ead773e7",
                         "installed_by": [
                             "modules"
                         ]
@@ -142,7 +142,7 @@
                     },
                     "tcoffee/consensus": {
                         "branch": "master",
-                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "git_sha": "66b22564bc1bc0db7292f2073cdef954ead773e7",
                         "installed_by": [
                             "modules"
                         ]
@@ -188,21 +188,21 @@
                 "nf-core": {
                     "utils_nextflow_pipeline": {
                         "branch": "master",
-                        "git_sha": "d20fb2a9cc3e2835e9d067d1046a63252eb17352",
+                        "git_sha": "c2b22d85f30a706a3073387f30380704fcae013b",
                         "installed_by": [
                             "subworkflows"
                         ]
                     },
                     "utils_nfcore_pipeline": {
                         "branch": "master",
-                        "git_sha": "2fdce49d30c0254f76bc0f13c55c17455c1251ab",
+                        "git_sha": "1b89f75f1aa2021ec3360d0deccd0f6e97240551",
                         "installed_by": [
                             "subworkflows"
                         ]
                     },
                     "utils_nfvalidation_plugin": {
                         "branch": "master",
-                        "git_sha": "5caf7640a9ef1d18d765d55339be751bb0969dfa",
+                        "git_sha": "f533459a222ac53eb4c6bb7a5f574e4069197cdb",
                         "installed_by": [
                             "subworkflows"
                         ]
