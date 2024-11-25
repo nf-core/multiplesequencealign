@@ -41,7 +41,6 @@ The pipeline performs the following steps:
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-
 #### 1. SAMPLESHEET
 
 The sample sheet defines the **input data** that the pipeline will process.
@@ -59,7 +58,6 @@ Each row represents a set of sequences (in this case the seatoxin and toxin prot
 
 > [!NOTE]
 > The only required input is the id column and either fasta or dependencies.
-
 
 #### 2. TOOLSHEET
 

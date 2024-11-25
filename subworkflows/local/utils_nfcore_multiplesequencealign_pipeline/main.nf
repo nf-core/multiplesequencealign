@@ -26,7 +26,6 @@ include { UTILS_NEXTFLOW_PIPELINE   } from '../../nf-core/utils_nextflow_pipelin
 workflow PIPELINE_INITIALISATION {
 
     take:
-<<<<<<< HEAD
     version             // boolean: Display version and exit
     help                // boolean: Display help text
     validate_params     // boolean: Boolean whether to validate parameters against the schema at runtime
@@ -35,16 +34,6 @@ workflow PIPELINE_INITIALISATION {
     outdir              //  string: The output directory where the results will be saved
     input               //  string: Path to input samplesheet
     tools               //  string: Path to input tools samplesheet
-    dependencies_folder // string: Path to the dependencies folder
-=======
-    version           // boolean: Display version and exit
-    validate_params   // boolean: Boolean whether to validate parameters against the schema at runtime
-    monochrome_logs   // boolean: Do not use coloured log outputs
-    nextflow_cli_args //  array: List of positional nextflow CLI args
-    outdir            //  string: The output directory where the results will be saved
-    input             //  string: Path to input samplesheet
-    tools             //  string: Path to input tools samplesheet
->>>>>>> dev
 
     main:
 
