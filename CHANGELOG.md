@@ -39,6 +39,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#147](https://github.com/nf-core/multiplesequencealign/pull/147)] - Add small testing profile + some fixes of the shiny app.
 - [[#148](https://github.com/nf-core/multiplesequencealign/pull/148)] - Add UPP module.
 - [[#150](https://github.com/nf-core/multiplesequencealign/pull/150)] - Update modules and readme for pre-release.
+- [[#168](https://github.com/nf-core/multiplesequencealign/issues/168)] - Add GPU support. 
 
 ### `Fixed`
 
