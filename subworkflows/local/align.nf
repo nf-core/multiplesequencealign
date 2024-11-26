@@ -123,7 +123,7 @@ workflow ALIGN {
     CLUSTALO_ALIGN (
         ch_fasta_trees_clustalo.fasta,
         ch_fasta_trees_clustalo.tree,
-        [], 
+        [],
         [],
         [],
         [],
