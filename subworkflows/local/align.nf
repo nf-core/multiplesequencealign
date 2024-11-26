@@ -123,6 +123,10 @@ workflow ALIGN {
     CLUSTALO_ALIGN (
         ch_fasta_trees_clustalo.fasta,
         ch_fasta_trees_clustalo.tree,
+        [], 
+        [],
+        [],
+        []
         compress
     )
     ch_msa = ch_msa.mix(CLUSTALO_ALIGN.out.alignment)
