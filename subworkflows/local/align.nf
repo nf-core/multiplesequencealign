@@ -126,7 +126,7 @@ workflow ALIGN {
         [], 
         [],
         [],
-        []
+        [],
         compress
     )
     ch_msa = ch_msa.mix(CLUSTALO_ALIGN.out.alignment)
