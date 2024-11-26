@@ -10,7 +10,7 @@ To do so, you only need to build one samplesheet file, in the exact format requi
 This is made compatible with nf-core/proteinfold and will predict and output the structures in the format required by the nf-core/multiplesquencealign pipeline.
 
 Now, to run you simply can use the following code.
-Please refer to the [proteinfold documentation](https://nf-co.re/proteinfold/1.0.0/) for picking your favourite params. 
+Please refer to the [proteinfold documentation](https://nf-co.re/proteinfold/1.0.0/) for picking your favourite params.
 
 Here we showcase how to run proteinfold in its colabfold local flavour - but it works for all the proteinfold modes.
 
@@ -26,9 +26,9 @@ nextflow run nf-core/proteinfold --input ./samplesheet.csv \
                                 --use_amber <true/false> \
                                 --colabfold_model_preset "AlphaFold2-ptm" \
                                 --use_gpu <true/false> \
-                                --db_load_mode 0                                
+                                --db_load_mode 0
                                 -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
-                                 
+
 
 nextflow run nf-core/multiplesequencealign --input ./samplesheet.csv \
                                         --tools ./toolsheet.csv \
@@ -39,5 +39,4 @@ nextflow run nf-core/multiplesequencealign --input ./samplesheet.csv \
 ```
 
 > [!NOTE]
-> The one imporant parameter NOT to forget in proteinfold for the chaining is `--split_fasta`. This will allow to use a multifasta file as input for monomer predictions, needed by the MSA pipeline. Also, currently the changes needed for the chaining are only present in the dev branch of proteinfold, so also do not forget `-r dev`. The rest of the proteinfold parameters can and should be tuned according to your preferences for your proteinfold run. Please refer to the proteinfold documentation for this. 
- 
+> The one imporant parameter NOT to forget in proteinfold for the chaining is `--split_fasta`. This will allow to use a multifasta file as input for monomer predictions, needed by the MSA pipeline. Also, currently the changes needed for the chaining are only present in the dev branch of proteinfold, so also do not forget `-r dev`. The rest of the proteinfold parameters can and should be tuned according to your preferences for your proteinfold run. Please refer to the proteinfold documentation for this.
