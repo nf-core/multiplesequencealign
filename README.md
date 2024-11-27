@@ -38,9 +38,8 @@ The pipeline performs the following steps:
 
 ## Usage
 
-:::note
-If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
-:::
+> [!NOTE]
+> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
 #### 1. SAMPLESHEET
 
@@ -50,16 +49,15 @@ It should look like this:
 `samplesheet.csv`:
 
 ```csv
-id,fasta,reference,dependencies,template
+id,fasta,reference,optional_data,template
 seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures,seatoxin_template.txt
 toxin,toxin.fa,toxin-ref.fa,toxin_structures,toxin_template.txt
 ```
 
 Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be aligned and the associated (if available) reference alignments and dependency files (this can be anything from protein structure or any other information you would want to use in your favourite MSA tool).
 
-:::note
-The only required input is the id column and either fasta or dependencies.
-:::
+> [!NOTE]
+> The only required input is the id column and either fasta or optional_data.
 
 #### 2. TOOLSHEET
 
@@ -78,9 +76,8 @@ FAMSA, -gt upgma -medoidtree, FAMSA,
 FAMSA,,REGRESSIVE,
 ```
 
-:::note
-The only required input is aligner.
-:::
+> [!NOTE]
+> The only required input is `aligner`.
 
 #### 3. RUN THE PIPELINE
 
