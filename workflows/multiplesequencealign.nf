@@ -131,11 +131,11 @@ workflow MULTIPLESEQUENCEALIGN {
 
         // Map the dependencies to the sequence IDs
         dependencies_to_be_mapped
-            .map{ it -> [[id: it.baseName], it] }
+            .map { it -> [ [ id: it.baseName ], it ] }
             .combine(ch_seqs_split, by: 0)
-            .map { dep_id, dep, fasta_id -> [fasta_id, dep] }
+            .map { dep_id, dep, fasta_id -> [ fasta_id, dep ] }
             .groupTuple(by: 0)
-            .set{ ch_dependencies }
+            .set { ch_dependencies }
     } else {
 
         // otherwise, use the dependency files provided in the input samplesheet
