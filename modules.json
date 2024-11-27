@@ -57,6 +57,11 @@
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
                         "installed_by": ["modules"]
                     },
+                    "mafft/align": {
+                        "branch": "master",
+                        "git_sha": "868cb0d7fc4862991fb7c2b4cd7289806cd53f81",
+                        "installed_by": ["modules"]
+                    },
                     "mafft/guidetree": {
                         "branch": "master",
                         "git_sha": "18ce03bdafbff2bff9f366d36c4345d029bb4dcd",
