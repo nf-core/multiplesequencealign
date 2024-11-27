@@ -125,7 +125,7 @@ workflow MULTIPLESEQUENCEALIGN {
 
         }
         // otherwise, directly use the dependencies within the folder
-        else{
+        else {
             dependencies_to_be_mapped = Channel.fromPath(params.dependencies_dir+"/**")
         }
 
