@@ -17,19 +17,20 @@ Now, to run you simply can use the following code.
 Here we showcase how to run proteinfold in its colabfold local flavour - but it works for all the proteinfold modes.
 
 ```bash
-nextflow run nf-core/proteinfold --input ./samplesheet.csv \
-                                --outdir ./proteinfold_results \
-                                --split_fasta \
-                                -r dev \
-                                --mode colabfold \
-                                --colabfold_server local \
-                                --colabfold_db <null (default) | PATH> \
-                                --num_recycle 3 \
-                                --use_amber <true/false> \
-                                --colabfold_model_preset "AlphaFold2-ptm" \
-                                --use_gpu <true/false> \
-                                --db_load_mode 0
-                                -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
+nextflow run nf-core/proteinfold \
+   --input ./samplesheet.csv \
+   --outdir ./proteinfold_results \
+   --split_fasta \
+   -r dev \
+   --mode colabfold \
+   --colabfold_server local \
+   --colabfold_db <null (default) | PATH> \
+   --num_recycle 3 \
+   --use_amber <true/false> \
+   --colabfold_model_preset "AlphaFold2-ptm" \
+   --use_gpu <true/false> \
+   --db_load_mode 0
+   -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
 
 
 nextflow run nf-core/multiplesequencealign --input ./samplesheet.csv \
