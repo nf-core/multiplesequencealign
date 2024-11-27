@@ -77,7 +77,7 @@ FAMSA,,REGRESSIVE,
 ```
 
 > [!NOTE]
-> The only required input is aligner.
+> The only required input is `aligner`.
 
 #### 3. RUN THE PIPELINE
 
