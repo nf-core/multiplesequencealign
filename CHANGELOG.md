@@ -42,7 +42,6 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#174](https://github.com/nf-core/multiplesequencealign/issues/174)] - Add the chaining of proteinfold output to MSA input.
 - [[#177](https://github.com/nf-core/multiplesequencealign/pull/177)] - Add MAFFT guidetree.
 
-
 ### `Fixed`
 
 - [[#61](https://github.com/nf-core/multiplesequencealign/issues/61)] - Fix filtering of unique guidetree compuation instructions: no double GT computation.
