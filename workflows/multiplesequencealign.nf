@@ -65,7 +65,6 @@ workflow MULTIPLESEQUENCEALIGN {
     ch_templates                 = Channel.empty()
     ch_dependencies              = Channel.empty()
 
-
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
 
