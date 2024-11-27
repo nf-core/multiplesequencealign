@@ -35,6 +35,7 @@ Currently available GUIDE TREE methods are: (Optional):
 
 - [CLUSTALO](http://clustal.org/omega/#Documentation)
 - [FAMSA](https://github.com/refresh-bio/FAMSA)
+- [MAFFT](https://mafft.cbrc.jp/alignment/server/index.html)
 
 ### 3. Align
 
