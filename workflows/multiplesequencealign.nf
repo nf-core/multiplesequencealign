@@ -106,9 +106,9 @@ workflow MULTIPLESEQUENCEALIGN {
     if(params.dependencies_dir){
 
         // Identify the sequence IDs from the input fasta file(s)
-        ch_seqs.splitFasta(record: [id: true] )
-                .map{ id, seq_id -> [seq_id, id] }
-                .set{ ch_seqs_split }
+        ch_seqs.splitFasta(record: [ id: true ] )
+               .map { id, seq_id -> [ seq_id, id ] }
+               .set { ch_seqs_split }
 
         // if compressed, uncompress the dependencies folder
         if(params.dependencies_dir.endsWith('.tar.gz')){
