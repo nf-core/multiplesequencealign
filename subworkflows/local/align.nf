@@ -195,8 +195,8 @@ workflow ALIGN {
         [ [:], [] ],
         compress
     )
-    ch_msa = ch_msa.mix(MAFFT.out.fas) // the MAFFT module calls its output fas instead of alignment
-    ch_versions = ch_versions.mix(MAFFT.out.versions.first())
+    ch_msa = ch_msa.mix(MAFFT_ALIGN.out.fas) // the MAFFT module calls its output fas instead of alignment
+    ch_versions = ch_versions.mix(MAFFT_ALIGN.out.versions.first())
 
     // ----------------- MAGUS ------------------
     ch_fasta_trees.magus
