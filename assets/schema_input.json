@@ -23,7 +23,7 @@
                 "type": "string",
                 "default": ""
             },
-            "dependencies": {
+            "optional_data": {
                 "type": "string",
                 "default": ""
             },
@@ -33,6 +33,6 @@
             }
         },
         "required": ["id"],
-        "anyOf": [{ "required": ["fasta"] }, { "required": ["dependencies"] }]
+        "anyOf": [{ "required": ["fasta"] }, { "required": ["optional_data"] }]
     }
 }

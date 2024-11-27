@@ -13,7 +13,7 @@ include {   EXTRACT_PLDDT                                  } from '../../modules
 workflow STATS {
     take:
     ch_seqs       // channel: [ val(meta), path(/path/to/file.fasta) ]
-    ch_dependencies // channel: [ val(meta), path(/path/to/dependencies_dir) ]
+    ch_optional_data // channel: [ val(meta), path(/path/to/optional_data_dir) ]
 
     main:
 
@@ -90,7 +90,7 @@ workflow STATS {
     //      EXTRACT PLDDT
     // -------------------------------------------
     if (params.extract_plddt) {
-        EXTRACT_PLDDT (ch_dependencies)
+        EXTRACT_PLDDT (ch_optional_data)
         ch_versions = ch_versions.mix(EXTRACT_PLDDT.out.versions)
         plddt_summary = EXTRACT_PLDDT.out.plddt_summary
 

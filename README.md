@@ -49,7 +49,7 @@ It should look like this:
 `samplesheet.csv`:
 
 ```csv
-id,fasta,reference,dependencies,template
+id,fasta,reference,optional_data,template
 seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures,seatoxin_template.txt
 toxin,toxin.fa,toxin-ref.fa,toxin_structures,toxin_template.txt
 ```
@@ -57,7 +57,7 @@ toxin,toxin.fa,toxin-ref.fa,toxin_structures,toxin_template.txt
 Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be aligned and the associated (if available) reference alignments and dependency files (this can be anything from protein structure or any other information you would want to use in your favourite MSA tool).
 
 > [!NOTE]
-> The only required input is the id column and either fasta or dependencies.
+> The only required input is the id column and either fasta or optional_data.
 
 #### 2. TOOLSHEET
 

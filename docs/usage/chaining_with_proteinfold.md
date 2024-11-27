@@ -36,7 +36,7 @@ nextflow run nf-core/proteinfold \
 nextflow run nf-core/multiplesequencealign \
    --input ./samplesheet.csv \
    --tools ./toolsheet.csv \
-   --dependencies_dir ./proteinfold_results/*/*/top_ranked_structures \
+   --optional_data_dir ./proteinfold_results/*/*/top_ranked_structures \
    --outdir ./results \
    -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
 
