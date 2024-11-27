@@ -61,6 +61,9 @@ workflow MULTIPLESEQUENCEALIGN {
     stats_summary                = Channel.empty()
     stats_and_evaluation_summary = Channel.empty()
     ch_shiny_stats               = Channel.empty()
+    ch_refs                      = Channel.empty()
+    ch_templates                 = Channel.empty()
+    ch_optional_data              = Channel.empty()
 
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
@@ -88,42 +91,90 @@ workflow MULTIPLESEQUENCEALIGN {
         }
         .set { ch_templates }
 
-    ch_input
-        .map {
-            meta, fasta, ref, str, template ->
-                [ meta, str ]
-        }
-        .filter { it[1].size() > 0 }
-        .set { ch_dependencies }
-
     // ----------------
     // DEPENDENCY FILES
     // ----------------
-    // Dependency files are taken from a directory.
-    // If the directory is compressed, it is uncompressed first.
-    ch_dependencies
-        .branch {
-            compressed:   it[1].endsWith('.tar.gz')
-            uncompressed: true
-        }
-        .set { ch_dependencies }
 
-    UNTAR (ch_dependencies.compressed)
-        .untar
-        .mix(ch_dependencies.uncompressed)
-        .map {
-            meta,dir ->
-                [ meta,file(dir).listFiles().collect() ]
-        }
-        .set { ch_dependencies }
-    ch_versions   = ch_versions.mix(UNTAR.out.versions)
+    /*
+    * We currently support 2 ways of reading in the optional_data:
+    * 1. Provide a folder containing the optional_data via the `optional_data_dir` parameter
+    * 2. Provide the dependency files directly in the input samplesheet
+    */
 
+    // If the optional_data folder is provided, use it to identify the optional_data based on sequence IDs
+    if(params.optional_data_dir){
+
+        // Identify the sequence IDs from the input fasta file(s)
+        ch_seqs.splitFasta(record: [ id: true ] )
+            .map { id, seq_id -> [ seq_id, id ] }
+            .set { ch_seqs_split }
+
+        // if compressed, uncompress the optional_data folder
+        if(params.optional_data_dir.endsWith('.tar.gz')){
+
+            optional_data_dir = Channel.fromPath(params.optional_data_dir)
+                                        .map { it -> [[id: it.baseName],it] }
+
+            UNTAR (optional_data_dir)
+                .untar
+                .map { meta, dir -> [ file(dir).listFiles() ] }
+                .flatten()
+                .set{ optional_data_to_be_mapped }
+            ch_versions = ch_versions.mix(UNTAR.out.versions)
+
+        }
+        // otherwise, directly use the optional_data within the folder
+        else {
+            optional_data_to_be_mapped = Channel.fromPath(params.optional_data_dir+"/**")
+        }
+
+        // Map the optional_data to the sequence IDs
+        optional_data_to_be_mapped
+            .map { it -> [ [ id: it.baseName ], it ] }
+            .combine(ch_seqs_split, by: 0)
+            .map { dep_id, dep, fasta_id -> [ fasta_id, dep ] }
+            .groupTuple(by: 0)
+            .set { ch_optional_data }
+    } else {
+
+        // otherwise, use the dependency files provided in the input samplesheet
+        ch_input
+            .map {
+                meta, fasta, ref, str, template ->
+                    [ meta, str ]
+            }
+            .filter { it[1].size() > 0 }
+            .set { ch_optional_data }
+
+        // Dependency files are taken from a directory.
+        // If the directory is compressed, it is uncompressed first.
+        ch_optional_data
+            .branch {
+                compressed:   it[1].endsWith('.tar.gz')
+                uncompressed: true
+            }
+            .set { ch_optional_data }
+
+        UNTAR (ch_optional_data.compressed)
+            .untar
+            .mix(ch_optional_data.uncompressed)
+            .map {
+                meta,dir ->
+                    [ meta,file(dir).listFiles().collect() ]
+            }
+            .set { ch_optional_data }
+        ch_versions   = ch_versions.mix(UNTAR.out.versions)
+    }
+
+    //
+    // TEMPLATES
+    //
     TEMPLATES (
-        ch_dependencies,
+        ch_optional_data,
         ch_templates,
         "${params.templates_suffix}"
     )
-    ch_dependencies_template = TEMPLATES.out.dependencies_template
+    ch_optional_data_template = TEMPLATES.out.optional_data_template
 
     //
     // Compute summary statistics about the input sequences
@@ -131,7 +182,7 @@ workflow MULTIPLESEQUENCEALIGN {
     if (!params.skip_stats) {
         STATS (
             ch_seqs,
-            ch_dependencies
+            ch_optional_data
         )
         ch_versions   = ch_versions.mix(STATS.out.versions)
         stats_summary = stats_summary.mix(STATS.out.stats_summary)
@@ -144,7 +195,7 @@ workflow MULTIPLESEQUENCEALIGN {
     ALIGN (
         ch_seqs,
         ch_tools,
-        ch_dependencies_template,
+        ch_optional_data_template,
         compress_during_align
     )
     ch_versions = ch_versions.mix(ALIGN.out.versions)
@@ -158,7 +209,7 @@ workflow MULTIPLESEQUENCEALIGN {
     // Evaluate the quality of the alignment
     //
     if (!params.skip_eval) {
-        EVALUATE (ALIGN.out.msa, ch_refs, ch_dependencies_template)
+        EVALUATE (ALIGN.out.msa, ch_refs, ch_optional_data_template)
         ch_versions        = ch_versions.mix(EVALUATE.out.versions)
         evaluation_summary = evaluation_summary.mix(EVALUATE.out.eval_summary)
     }
