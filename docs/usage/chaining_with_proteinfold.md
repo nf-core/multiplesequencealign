@@ -10,7 +10,9 @@ To do so, you only need to build one samplesheet file, in the exact format requi
 This is made compatible with nf-core/proteinfold and will predict and output the structures in the format required by the nf-core/multiplesquencealign pipeline.
 
 Now, to run you simply can use the following code.
-Please refer to the [proteinfold documentation](https://nf-co.re/proteinfold/1.0.0/) for picking your favourite params.
+
+> [!NOTE]
+> Please refer to the [proteinfold documentation](https://nf-co.re/proteinfold/1.0.0/) for picking your favourite params.
 
 Here we showcase how to run proteinfold in its colabfold local flavour - but it works for all the proteinfold modes.
 
