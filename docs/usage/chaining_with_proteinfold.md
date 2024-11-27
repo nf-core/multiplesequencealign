@@ -12,7 +12,7 @@ This is made compatible with nf-core/proteinfold and will predict and output the
 Now, to run you simply can use the following code.
 
 > [!NOTE]
-> Please refer to the [proteinfold documentation](https://nf-co.re/proteinfold/1.0.0/) for picking your favourite params.
+> Please refer to the [proteinfold documentation](https://nf-co.re/proteinfold/1.1.1/) for picking your favourite params.
 
 Here we showcase how to run proteinfold in its colabfold local flavour - but it works for all the proteinfold modes.
 
