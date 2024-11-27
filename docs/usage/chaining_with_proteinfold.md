@@ -43,4 +43,7 @@ nextflow run nf-core/multiplesequencealign \
 ```
 
 > [!NOTE]
-> The one imporant parameter NOT to forget in proteinfold for the chaining is `--split_fasta`. This will allow to use a multifasta file as input for monomer predictions, needed by the MSA pipeline. Also, currently the changes needed for the chaining are only present in the dev branch of proteinfold, so also do not forget `-r dev`. The rest of the proteinfold parameters can and should be tuned according to your preferences for your proteinfold run. Please refer to the proteinfold documentation for this.
+> The one imporant parameter NOT to forget in proteinfold for the chaining is `--split_fasta`. This will allow to use a multifasta file as input for monomer predictions, needed by the MSA pipeline.The rest of the proteinfold parameters can and should be tuned according to your preferences for your proteinfold run. Please refer to the proteinfold documentation for this.
+
+> [!WARNING]
+> This is currently an experimetal feature and only available in the dev branch of proteinfold, so also do not forget `-r dev`. This feature will be soon available with the next release of nf-core/proteinfold.
