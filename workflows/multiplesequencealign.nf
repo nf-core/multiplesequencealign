@@ -136,7 +136,7 @@ workflow MULTIPLESEQUENCEALIGN {
             .map { dep_id, dep, fasta_id -> [fasta_id, dep] }
             .groupTuple(by: 0)
             .set{ ch_dependencies }
-    }else{
+    } else {
 
         // otherwise, use the dependency files provided in the input samplesheet
         ch_input
