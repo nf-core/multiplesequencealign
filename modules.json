@@ -72,11 +72,6 @@
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
                         "installed_by": ["modules"]
                     },
-                    "magus/guidetree": {
-                        "branch": "master",
-                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
-                        "installed_by": ["modules"]
-                    },
                     "mtmalign/align": {
                         "branch": "master",
                         "git_sha": "4eecd9a0c06fa508ae314c06ac952c161c019679",
