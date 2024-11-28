@@ -64,7 +64,7 @@
                     },
                     "mafft/guidetree": {
                         "branch": "master",
-                        "git_sha": "18ce03bdafbff2bff9f366d36c4345d029bb4dcd",
+                        "git_sha": "968b494e20f439a9ed3d23c89274e6a4a625eb92",
                         "installed_by": ["modules"]
                     },
                     "magus/align": {
