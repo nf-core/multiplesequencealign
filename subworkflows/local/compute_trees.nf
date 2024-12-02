@@ -4,6 +4,7 @@
 
 include { FAMSA_GUIDETREE    } from '../../modules/nf-core/famsa/guidetree/main'
 include { CLUSTALO_GUIDETREE } from '../../modules/nf-core/clustalo/guidetree/main'
+include { MAFFT_GUIDETREE    } from '../../modules/nf-core/mafft/guidetree/main'
 
 workflow COMPUTE_TREES {
 
@@ -26,6 +27,7 @@ workflow COMPUTE_TREES {
         .branch {
             famsa:    it[0]["tree"] == "FAMSA"
             clustalo: it[0]["tree"] == "CLUSTALO"
+            mafft:    it[0]["tree"] == "MAFFT"
         }
         .set { ch_fastas_fortrees }
 
@@ -36,6 +38,10 @@ workflow COMPUTE_TREES {
     CLUSTALO_GUIDETREE (ch_fastas_fortrees.clustalo)
     ch_trees    = ch_trees.mix(CLUSTALO_GUIDETREE.out.tree)
     ch_versions = ch_versions.mix(CLUSTALO_GUIDETREE.out.versions.first())
+
+    MAFFT_GUIDETREE (ch_fastas_fortrees.mafft)
+    ch_trees    = ch_trees.mix(MAFFT_GUIDETREE.out.tree)
+    ch_versions = ch_versions.mix(MAFFT_GUIDETREE.out.versions.first())
 
     emit:
     trees    = ch_trees    // channel: [ val(meta), path(tree) ]

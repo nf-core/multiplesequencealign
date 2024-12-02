@@ -13,7 +13,7 @@ include { FAMSA_ALIGN                       } from '../../modules/nf-core/famsa/
 include { FOLDMASON_EASYMSA                 } from '../../modules/nf-core/foldmason/easymsa/main'
 include { KALIGN_ALIGN                      } from '../../modules/nf-core/kalign/align/main'
 include { LEARNMSA_ALIGN                    } from '../../modules/nf-core/learnmsa/align/main'
-include { MAFFT                             } from '../../modules/nf-core/mafft/main'
+include { MAFFT_ALIGN                       } from '../../modules/nf-core/mafft/align/main'
 include { MAGUS_ALIGN                       } from '../../modules/nf-core/magus/align/main'
 include { MTMALIGN_ALIGN                    } from '../../modules/nf-core/mtmalign/align/main'
 include { MUSCLE5_SUPER5                    } from '../../modules/nf-core/muscle5/super5/main'
@@ -186,7 +186,7 @@ workflow ALIGN {
         }
         .set { ch_fasta_mafft }
 
-    MAFFT (
+    MAFFT_ALIGN (
         ch_fasta_mafft.fasta,
         [ [:], [] ],
         [ [:], [] ],
@@ -195,8 +195,8 @@ workflow ALIGN {
         [ [:], [] ],
         compress
     )
-    ch_msa = ch_msa.mix(MAFFT.out.fas) // the MAFFT module calls its output fas instead of alignment
-    ch_versions = ch_versions.mix(MAFFT.out.versions.first())
+    ch_msa = ch_msa.mix(MAFFT_ALIGN.out.fas) // the MAFFT module calls its output fas instead of alignment
+    ch_versions = ch_versions.mix(MAFFT_ALIGN.out.versions.first())
 
     // ----------------- MAGUS ------------------
     ch_fasta_trees.magus
