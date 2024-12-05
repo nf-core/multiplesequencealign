@@ -48,6 +48,12 @@
                     "help_text": "This is a folder with all the optional data files to be used in the pipeline.",
                     "fa_icon": "fas fa-folder-open"
                 },
+                "skip_preprocessing": {
+                    "type": "boolean",
+                    "description": "Skip the preprocessing step for the input files.",
+                    "fa_icon": "fas fa-fast-forward",
+                    "help_text": "Skip the preprocessing step and use the files directly."
+                },
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",

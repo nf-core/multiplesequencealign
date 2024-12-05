@@ -22,6 +22,7 @@ include { STATS                  } from '../subworkflows/local/stats'
 include { ALIGN                  } from '../subworkflows/local/align'
 include { EVALUATE               } from '../subworkflows/local/evaluate'
 include { TEMPLATES              } from '../subworkflows/local/templates'
+include { PREPROCESS_OPTIONALDATA} from '../subworkflows/local/preprocess_optionaldata'
 
 //
 // MODULE: local modules
@@ -41,6 +42,7 @@ include { PREPARE_SHINY   } from '../modules/local/prepare_shiny'
 include { UNTAR                          } from '../modules/nf-core/untar/main'
 include { CSVTK_JOIN as MERGE_STATS_EVAL } from '../modules/nf-core/csvtk/join/main.nf'
 include { PIGZ_COMPRESS                  } from '../modules/nf-core/pigz/compress/main'
+include { FASTAVALIDATOR                 } from '../modules/nf-core/fastavalidator/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -63,15 +65,16 @@ workflow MULTIPLESEQUENCEALIGN {
     ch_shiny_stats               = Channel.empty()
     ch_refs                      = Channel.empty()
     ch_templates                 = Channel.empty()
-    ch_optional_data              = Channel.empty()
+    ch_optional_data             = Channel.empty()
 
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
 
     ch_input
+        .filter { it[1].size() > 0}
         .map {
             meta, fasta, ref, str, template ->
-                [ meta, file(fasta) ]
+                [ meta, file(fasta) ]   
         }
         .set { ch_seqs }
 
@@ -165,6 +168,20 @@ workflow MULTIPLESEQUENCEALIGN {
             .set { ch_optional_data }
         ch_versions   = ch_versions.mix(UNTAR.out.versions)
     }
+
+    //
+    // PREPROCESS INPUT FILES 
+    //
+
+    if(!params.skip_preprocessing){
+        FASTAVALIDATOR(ch_seqs)
+        ch_versions = ch_versions.mix(FASTAVALIDATOR.out.versions)
+
+        PREPROCESS_OPTIONALDATA(ch_optional_data)
+        ch_optional_data = PREPROCESS_OPTIONALDATA.out.preprocessed_optionaldata
+        ch_versions = ch_versions.mix(PREPROCESS_OPTIONALDATA.out.versions)
+    }
+
 
     //
     // TEMPLATES
