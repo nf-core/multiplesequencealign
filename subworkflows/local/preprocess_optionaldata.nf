@@ -1,6 +1,5 @@
 
-include { ADD_PDBHEADER } from '../../modules/local/add_pdbheader.nf'
-
+include { TCOFFEE_EXTRACTFROMPDB } from '../../modules/nf-core/tcoffee/extractfrompdb/main'
 workflow PREPROCESS_OPTIONALDATA {
     take:
     ch_optional_data          //channel: [ meta, [file1, ] ]
@@ -13,8 +12,8 @@ workflow PREPROCESS_OPTIONALDATA {
     if(params.templates_suffix == ".pdb"){
         // If the optional data is a pdb file, we can preprocess them to make
         // them compatible with all the alignment tools
-        ADD_PDBHEADER(ch_optional_data.transpose())
-        ADD_PDBHEADER.out.pdb
+        TCOFFEE_EXTRACTFROMPDB(ch_optional_data.transpose())
+        TCOFFEE_EXTRACTFROMPDB.out.formatted_pdb
             .groupTuple()
             .set { ch_preprocessed_data }
     }

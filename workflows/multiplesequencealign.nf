@@ -170,13 +170,13 @@ workflow MULTIPLESEQUENCEALIGN {
     }
 
     //
-    // PREPROCESS INPUT FILES 
+    // VALIDATE AND PREPROCESS INPUT FILES 
     //
 
-    if(!params.skip_preprocessing){
-        FASTAVALIDATOR(ch_seqs)
-        ch_versions = ch_versions.mix(FASTAVALIDATOR.out.versions)
+    FASTAVALIDATOR(ch_seqs)
+    ch_versions = ch_versions.mix(FASTAVALIDATOR.out.versions)
 
+    if(!params.skip_preprocessing){
         PREPROCESS_OPTIONALDATA(ch_optional_data)
         ch_optional_data = PREPROCESS_OPTIONALDATA.out.preprocessed_optionaldata
         ch_versions = ch_versions.mix(PREPROCESS_OPTIONALDATA.out.versions)

@@ -161,6 +161,13 @@
                             "modules"
                         ]
                     },
+                    "tcoffee/extractfrompdb": {
+                        "branch": "master",
+                        "git_sha": "1f94c91de2b9e9c6b42fca53e823cada9a8b8465",
+                        "installed_by": [
+                            "modules"
+                        ]
+                    },
                     "tcoffee/irmsd": {
                         "branch": "master",
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
