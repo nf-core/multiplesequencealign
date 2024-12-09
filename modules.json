@@ -166,7 +166,8 @@
                         "git_sha": "1f94c91de2b9e9c6b42fca53e823cada9a8b8465",
                         "installed_by": [
                             "modules"
-                        ]
+                        ],
+                        "patch": "modules/nf-core/tcoffee/extractfrompdb/tcoffee-extractfrompdb.diff"
                     },
                     "tcoffee/irmsd": {
                         "branch": "master",

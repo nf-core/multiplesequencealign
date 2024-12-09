@@ -22,7 +22,9 @@ include { STATS                  } from '../subworkflows/local/stats'
 include { ALIGN                  } from '../subworkflows/local/align'
 include { EVALUATE               } from '../subworkflows/local/evaluate'
 include { TEMPLATES              } from '../subworkflows/local/templates'
-include { PREPROCESS_OPTIONALDATA} from '../subworkflows/local/preprocess_optionaldata'
+include { PREPROCESS             } from '../subworkflows/local/preprocess'
+include { VISUALIZATION          } from '../subworkflows/local/visualization'
+
 
 //
 // MODULE: local modules
@@ -177,9 +179,9 @@ workflow MULTIPLESEQUENCEALIGN {
     ch_versions = ch_versions.mix(FASTAVALIDATOR.out.versions)
 
     if(!params.skip_preprocessing){
-        PREPROCESS_OPTIONALDATA(ch_optional_data)
-        ch_optional_data = PREPROCESS_OPTIONALDATA.out.preprocessed_optionaldata
-        ch_versions = ch_versions.mix(PREPROCESS_OPTIONALDATA.out.versions)
+        PREPROCESS(ch_optional_data)
+        ch_optional_data = PREPROCESS.out.preprocessed_optionaldata
+        ch_versions = ch_versions.mix(PREPROCESS.out.versions)
     }
 
 
@@ -257,6 +259,15 @@ workflow MULTIPLESEQUENCEALIGN {
         PREPARE_SHINY (stats_and_evaluation_summary, shiny_app)
         ch_shiny_stats = PREPARE_SHINY.out.data.toList()
         ch_versions = ch_versions.mix(PREPARE_SHINY.out.versions)
+    }
+
+
+    if (!params.skip_visualisation) {
+        VISUALIZATION (
+            ALIGN.out.msa,
+            ALIGN.out.trees,
+            ch_optional_data
+        )
     }
 
     softwareVersionsToYAML(ch_versions)

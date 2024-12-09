@@ -209,6 +209,11 @@
                 "shiny_trace_mode": {
                     "type": "string",
                     "description": "variable containing the shiny_trace mode to be used."
+                },
+                "skip_visualisation": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Skip the visualization generation."
                 }
             }
         },

@@ -384,5 +384,6 @@ workflow ALIGN {
 
     emit:
     msa      = ch_msa      // channel: [ val(meta), path(msa) ]
+    trees    = trees       // channel: [ val(meta), path(tree) ]
     versions = ch_versions // channel: [ versions.yml ]
 }

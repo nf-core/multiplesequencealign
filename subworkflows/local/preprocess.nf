@@ -1,6 +1,7 @@
 
 include { TCOFFEE_EXTRACTFROMPDB } from '../../modules/nf-core/tcoffee/extractfrompdb/main'
-workflow PREPROCESS_OPTIONALDATA {
+
+workflow PREPROCESS {
     take:
     ch_optional_data          //channel: [ meta, [file1, ] ]
 
