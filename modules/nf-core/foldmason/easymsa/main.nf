@@ -12,7 +12,7 @@ process FOLDMASON_EASYMSA {
 
     output:
     tuple val(meta), path("${prefix}_3di.fa${compress ? '.gz' : ''}"), emit: msa_3di
-    tuple val(meta), path("${prefix}_aa.fa${compress ? '.gz' : ''}") , emit: msa_aa
+    tuple val(meta), path("${prefix}.fa${compress ? '.gz' : ''}")    , emit: msa_aa
     path "versions.yml"                                              , emit: versions
 
     when:
@@ -33,7 +33,7 @@ process FOLDMASON_EASYMSA {
 
     if ${compress}; then
         pigz -p ${task.cpus} ${prefix}_3di.fa
-        pigz -p ${task.cpus} ${prefix}_aa.fa
+        pigz -p ${task.cpus} ${prefix}.fa
     fi
 
     cat <<-END_VERSIONS > versions.yml
@@ -48,7 +48,7 @@ process FOLDMASON_EASYMSA {
     prefix = task.ext.prefix ?: "${meta.id}"
     """
     echo ""  ${compress ? '| gzip' : ''} > ${prefix}_3di.fa${compress ? '.gz' : ''}
-    echo ""  ${compress ? '| gzip' : ''} > ${prefix}_aa.fa${compress ? '.gz' : ''}
+    echo ""  ${compress ? '| gzip' : ''} > ${prefix}.fa${compress ? '.gz' : ''}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

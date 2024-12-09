@@ -58,7 +58,7 @@ output:
           description: |
             Groovy Map containing sample information
             e.g. `[ id:'sample1', single_end:false ]`
-      - "${prefix}_aa.fa${compress ? '.gz' : ''}":
+      - "${prefix}.fa${compress ? '.gz' : ''}":
           type: file
           description: Fasta file containing the multiple sequence alignment with Amino
             Acid alphabet

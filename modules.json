@@ -60,7 +60,8 @@
                         "git_sha": "8541ec46706d6610b032748fa51acf4b3094ced8",
                         "installed_by": [
                             "modules"
-                        ]
+                        ],
+                        "patch": "modules/nf-core/foldmason/easymsa/foldmason-easymsa.diff"
                     },
                     "kalign/align": {
                         "branch": "master",

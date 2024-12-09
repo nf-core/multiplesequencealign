@@ -121,7 +121,7 @@ workflow ALIGN {
             metadependency, template, dependency, metatree, metaalign ->
                 [ metadependency+metatree , metaalign, template, dependency ]
         }
-        .combine(trees, by: 0)
+        .join(trees, by: 0)
         .map {
             metratreeanddep, metaalign, template, dependency, tree ->
                 [ metratreeanddep+metaalign, tree, template, dependency ]
@@ -130,6 +130,8 @@ workflow ALIGN {
             foldmason: it[0]["aligner"] == "FOLDMASON"
         }
         .set { ch_optional_data_tools_tree }
+    
+    
 
     // ------------------------------------------------
     // Compute the alignments
@@ -369,12 +371,17 @@ workflow ALIGN {
         ch_versions = ch_versions.mix(FOLDMASON_EASYMSA.out.versions.first())
     }
 
+
+    ch_msa.view()
+
     // -----------------  CONSENSUS  ------------------
     if(params.build_consensus){
         ch_msa.map{ meta, msa -> [ meta["id"], msa]}
             .groupTuple()
             .map{ id_meta, msas -> [ ["id": id_meta, "tree":"", "args_tree":"", "args_tree_clean":null, "aligner":"CONSENSUS", "args_aligner":"", "args_aligner_clean":null ], msas ]}
             .set{ ch_msa_consensus }
+        
+        ch_msa_consensus.view()
 
         CONSENSUS(ch_msa_consensus, [[:],[]], compress)
         ch_msa = ch_msa.mix(CONSENSUS.out.alignment)

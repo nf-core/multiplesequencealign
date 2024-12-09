@@ -13,7 +13,6 @@ workflow VISUALIZATION {
     ch_versions     = Channel.empty()
     ch_html         = Channel.empty()
 
-    
     // Merge the msa and tree 
     // split the msa meta to be able to merge with the tree meta
     ch_msa
@@ -29,7 +28,6 @@ workflow VISUALIZATION {
         .set { ch_msa_tree_data }
 
     
-    ch_optional_data.view()
     // 
     // FOLDMASON VISUALISATION
     //
@@ -37,7 +35,6 @@ workflow VISUALIZATION {
     FOLDMASON_CREATEDB(
         ch_optional_data
     )
-
 
     ch_msa_tree_data
         .combine(FOLDMASON_CREATEDB.out.db, by:0)
@@ -51,13 +48,12 @@ workflow VISUALIZATION {
             ch_msa_db_tree
         }
     
-    ch_msa_db_tree.tree.view()
-    
+    ch_msa_db_tree.msa.view()
     FOLDMASON_MSA2LDDTREPORT(
         ch_msa_db_tree.msa,
         ch_msa_db_tree.db,
         ch_msa_db_tree.pdbs,
-        ch_msa_db_tree.tree
+        [[:],[]]
     )
 
     ch_html = FOLDMASON_MSA2LDDTREPORT.out.html
