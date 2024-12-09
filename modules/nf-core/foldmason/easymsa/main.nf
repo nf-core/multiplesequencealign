@@ -31,6 +31,8 @@ process FOLDMASON_EASYMSA {
         $args \\
         --threads $task.cpus
 
+    mv ${prefix}_aa.fa ${prefix}.fa 
+
     if ${compress}; then
         pigz -p ${task.cpus} ${prefix}_3di.fa
         pigz -p ${task.cpus} ${prefix}.fa

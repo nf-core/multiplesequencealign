@@ -81,7 +81,7 @@ workflow PIPELINE_INITIALISATION {
 
                         align_map["aligner"] = meta_clone["aligner"]
                         align_map["args_aligner"] = Utils.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
-                        align_map["args_aligner_clean"] = Utils.cleanArgs(align_map["args_aligner"])
+                        align_map["args_aligner_clean"] = Utils.cleanArgs(meta_clone.args_aligner)
 
                         [ tree_map, align_map ]
                 }.unique()

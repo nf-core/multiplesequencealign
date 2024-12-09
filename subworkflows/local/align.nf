@@ -372,17 +372,15 @@ workflow ALIGN {
     }
 
 
-    ch_msa.view()
 
     // -----------------  CONSENSUS  ------------------
     if(params.build_consensus){
         ch_msa.map{ meta, msa -> [ meta["id"], msa]}
             .groupTuple()
+            .filter{ it[1].size() > 1 }
             .map{ id_meta, msas -> [ ["id": id_meta, "tree":"", "args_tree":"", "args_tree_clean":null, "aligner":"CONSENSUS", "args_aligner":"", "args_aligner_clean":null ], msas ]}
             .set{ ch_msa_consensus }
         
-        ch_msa_consensus.view()
-
         CONSENSUS(ch_msa_consensus, [[:],[]], compress)
         ch_msa = ch_msa.mix(CONSENSUS.out.alignment)
         ch_versions = ch_versions.mix(CONSENSUS.out.versions.first())
