@@ -55,6 +55,13 @@
                             "modules"
                         ]
                     },
+                    "foldmason/createdb": {
+                        "branch": "master",
+                        "git_sha": "0270c0fbbbb09456d7823605e4285c4a2c5bbf40",
+                        "installed_by": [
+                            "modules"
+                        ]
+                    },
                     "foldmason/easymsa": {
                         "branch": "master",
                         "git_sha": "8541ec46706d6610b032748fa51acf4b3094ced8",
@@ -62,6 +69,13 @@
                             "modules"
                         ],
                         "patch": "modules/nf-core/foldmason/easymsa/foldmason-easymsa.diff"
+                    },
+                    "foldmason/msa2lddtreport": {
+                        "branch": "master",
+                        "git_sha": "d3555a4a33ae94269b65f79f7066ac2fcb836005",
+                        "installed_by": [
+                            "modules"
+                        ]
                     },
                     "kalign/align": {
                         "branch": "master",

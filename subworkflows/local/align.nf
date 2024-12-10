@@ -121,10 +121,13 @@ workflow ALIGN {
             metadependency, template, dependency, metatree, metaalign ->
                 [ metadependency+metatree , metaalign, template, dependency ]
         }
-        .join(trees, by: 0)
+        .join(trees, by: 0, remainder: true)
+        .filter{
+            it.size() == 5
+        }
         .map {
             metratreeanddep, metaalign, template, dependency, tree ->
-                [ metratreeanddep+metaalign, tree, template, dependency ]
+             tree ? [ metratreeanddep+metaalign, tree, template, dependency ]:[ metratreeanddep+metaalign, [], template, dependency ]
         }
         .branch {
             foldmason: it[0]["aligner"] == "FOLDMASON"

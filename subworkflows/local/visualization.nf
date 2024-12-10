@@ -1,5 +1,5 @@
-include {FOLDMASON_CREATEDB         } from '../../modules/local/foldmason_createdb.nf'
-include {FOLDMASON_MSA2LDDTREPORT   } from '../../modules/local/foldmason_msa2lddtreport.nf'
+include {FOLDMASON_CREATEDB         } from '../../modules/nf-core/foldmason/createdb/main'
+include {FOLDMASON_MSA2LDDTREPORT   } from '../../modules/nf-core/foldmason/msa2lddtreport/main'
 
 workflow VISUALIZATION {
 
@@ -13,21 +13,20 @@ workflow VISUALIZATION {
     ch_versions     = Channel.empty()
     ch_html         = Channel.empty()
 
+
     // Merge the msa and tree 
     // split the msa meta to be able to merge with the tree meta
     ch_msa
         .map{
             meta, file -> [meta.subMap(["id", "tree", "args_tree", "args_tree_clean"]), meta, file]
         }
-        .join( ch_trees, by:0, remainder: true)
-        .filter { it.size() == 4 }
+        .join(ch_trees, by: [0], remainder:true ).view()
         .map{
             tree_meta, meta, msa, tree -> [meta.subMap(["id"]), meta, msa, tree]
         }
-        .join( ch_optional_data, by:0)
+        .cross( ch_optional_data)
         .set { ch_msa_tree_data }
 
-    
     // 
     // FOLDMASON VISUALISATION
     //
@@ -37,7 +36,7 @@ workflow VISUALIZATION {
     )
 
     ch_msa_tree_data
-        .combine(FOLDMASON_CREATEDB.out.db, by:0)
+        .combine(FOLDMASON_CREATEDB.out.db.collect(), by:0)
         .multiMap{
             id, meta, msafile, treefile, pdb, dbfiles -> 
             msa:  [meta, msafile]
@@ -48,7 +47,6 @@ workflow VISUALIZATION {
             ch_msa_db_tree
         }
     
-    ch_msa_db_tree.msa.view()
     FOLDMASON_MSA2LDDTREPORT(
         ch_msa_db_tree.msa,
         ch_msa_db_tree.db,
