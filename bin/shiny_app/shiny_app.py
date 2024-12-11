@@ -30,9 +30,9 @@ except:
     sys.exit(1)
 
 def merge_tree_args(row):
-    if str(row["tree"]) == "nan":
+    if str(row["tree"]) == "DEFAULT":
         return "None"
-    elif str(row["args_tree"]) == "nan":
+    elif str(row["args_tree"]) == "default":
         return str(row["tree"]) + " ()"
     else:
         return str(row["tree"]) + " (" + str(row["args_tree"]) + ")"
@@ -42,7 +42,7 @@ inputfile["tree_args"] = inputfile.apply(merge_tree_args, axis=1)
 def merge_aligner_args(row):
     if str(row["aligner"]) == "nan":
         return "None"
-    elif str(row["args_aligner"]) == "nan":
+    elif str(row["args_aligner"]) == "default":
         return str(row["aligner"]) + " ()"
     else:
         return str(row["aligner"]) + " (" + str(row["args_aligner"]) + ")"

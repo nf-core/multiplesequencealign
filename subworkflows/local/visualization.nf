@@ -13,6 +13,8 @@ workflow VISUALIZATION {
     ch_versions     = Channel.empty()
     ch_html         = Channel.empty()
 
+
+    ch_msa.view()
     // Merge the msa and tree 
     // split the msa meta to be able to merge with the tree meta
     ch_msa

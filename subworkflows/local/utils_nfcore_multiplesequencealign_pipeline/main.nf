@@ -357,10 +357,19 @@ class Utils {
         // if clearnArgs is empty, return ""
 
         if (cleanArgs == null || cleanArgs == "") {
-            return ""
+            return "default"
         }else{
             return cleanArgs
         }
+    }
+
+    public static clean_tree(argsTree){
+
+        def tree = argsTree.toString()
+        if(tree == null || tree == "" || tree == "null"){
+            return "DEFAULT"
+        }
+        return tree
     }
 
     public static fix_args(tool,args,tool_to_be_checked, required_flag, default_value) {
