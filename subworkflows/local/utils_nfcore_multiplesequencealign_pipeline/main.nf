@@ -75,7 +75,7 @@ workflow PIPELINE_INITIALISATION {
                         def tree_map = [:]
                         def align_map = [:]
 
-                        tree_map["tree"] = meta_clone["tree"]
+                        tree_map["tree"] = Utils.clean_tree(meta_clone["tree"])
                         tree_map["args_tree"] = meta_clone["args_tree"]
                         tree_map["args_tree_clean"] = Utils.cleanArgs(meta_clone.args_tree)
 
