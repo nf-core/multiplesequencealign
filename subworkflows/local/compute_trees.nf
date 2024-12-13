@@ -33,7 +33,8 @@ workflow COMPUTE_TREES {
             it -> [it[0], it[2]]
         }.set { ch_optional_data_no_fasta }
 
-    CUSTOM_PDBSTOFASTA(ch_optional_data_no_fasta)    
+    CUSTOM_PDBSTOFASTA(ch_optional_data_no_fasta)
+    ch_versions = ch_versions.mix(CUSTOM_PDBSTOFASTA.out.versions)    
 
     if(!params.skip_preprocessing){
         FASTAVALIDATOR(CUSTOM_PDBSTOFASTA.out.fasta)
