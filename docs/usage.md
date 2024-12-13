@@ -236,7 +236,6 @@ To further assist in reproducibility, you can use share and reuse [parameter fil
 These options are part of Nextflow and use a _single_ hyphen (pipeline parameters use a double-hyphen).
 :::
 
-> > > > > > > origin/dev
 
 ### `-profile`
 
