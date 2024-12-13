@@ -382,7 +382,7 @@ workflow ALIGN {
             .filter{ it[1].size() > 1 }
             .map{ id_meta, msas -> [ ["id": id_meta, "tree":"DEFAULT", "args_tree":"", "args_tree_clean":"default", "aligner":"CONSENSUS", "args_aligner":"", "args_aligner_clean":"default" ], msas ]}
             .set{ ch_msa_consensus }
-        
+
         CONSENSUS(ch_msa_consensus, [[:],[]], compress)
         ch_msa = ch_msa.mix(CONSENSUS.out.alignment)
         ch_versions = ch_versions.mix(CONSENSUS.out.versions.first())
