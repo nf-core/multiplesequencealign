@@ -2,7 +2,7 @@ Changes in module 'nf-core/foldmason/easymsa'
 Changes in 'foldmason/easymsa/main.nf':
 --- modules/nf-core/foldmason/easymsa/main.nf
 +++ modules/nf-core/foldmason/easymsa/main.nf
-@@ -12,7 +12,7 @@
+@@ -15,7 +15,7 @@
  
      output:
      tuple val(meta), path("${prefix}_3di.fa${compress ? '.gz' : ''}"), emit: msa_3di
@@ -11,7 +11,7 @@ Changes in 'foldmason/easymsa/main.nf':
      path "versions.yml"                                              , emit: versions
  
      when:
-@@ -33,7 +33,7 @@
+@@ -36,7 +36,7 @@
  
      if ${compress}; then
          pigz -p ${task.cpus} ${prefix}_3di.fa
@@ -20,7 +20,7 @@ Changes in 'foldmason/easymsa/main.nf':
      fi
  
      cat <<-END_VERSIONS > versions.yml
-@@ -48,7 +48,7 @@
+@@ -51,7 +51,7 @@
      prefix = task.ext.prefix ?: "${meta.id}"
      """
      echo ""  ${compress ? '| gzip' : ''} > ${prefix}_3di.fa${compress ? '.gz' : ''}

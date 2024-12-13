@@ -17,6 +17,7 @@ workflow PREPROCESS {
         TCOFFEE_EXTRACTFROMPDB.out.formatted_pdb
             .groupTuple()
             .set { ch_preprocessed_data }
+        ch_versions = ch_versions.mix(TCOFFEE_EXTRACTFROMPDB.out.versions)
     }
 
     emit: 
