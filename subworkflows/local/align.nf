@@ -128,14 +128,12 @@ workflow ALIGN {
         }
         .map {
             metratreeanddep, metaalign, template, dependency, tree ->
-             tree ? [ metratreeanddep+metaalign, tree, template, dependency ]:[ metratreeanddep+metaalign, [], template, dependency ]
+                tree ? [ metratreeanddep+metaalign, tree, template, dependency ]:[ metratreeanddep+metaalign, [], template, dependency ]
         }
         .branch {
             foldmason: it[0]["aligner"] == "FOLDMASON"
         }
         .set { ch_optional_data_tools_tree }
-    
-    
 
     // ------------------------------------------------
     // Compute the alignments

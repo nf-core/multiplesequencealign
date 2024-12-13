@@ -23,18 +23,19 @@ workflow COMPUTE_TREES {
     //
     // For the inputs that only have optional data but not a fasta
     // we need to generate the fasta file
-    // 
+    //
+
     ch_optional_data
         .join(ch_fastas, remainder:true)
         .filter{
-            it[-1] == null 
+            it[-1] == null
         }
         .map{
             it -> [it[0], it[2]]
         }.set { ch_optional_data_no_fasta }
 
     CUSTOM_PDBSTOFASTA(ch_optional_data_no_fasta)
-    ch_versions = ch_versions.mix(CUSTOM_PDBSTOFASTA.out.versions)    
+    ch_versions = ch_versions.mix(CUSTOM_PDBSTOFASTA.out.versions)
 
     if(!params.skip_preprocessing){
         FASTAVALIDATOR(CUSTOM_PDBSTOFASTA.out.fasta)
@@ -59,7 +60,7 @@ workflow COMPUTE_TREES {
             mafft:    it[0]["tree"] == "MAFFT"
         }
         .set { ch_fastas_fortrees }
-        
+
 
     FAMSA_GUIDETREE (ch_fastas_fortrees.famsa)
     ch_trees    = FAMSA_GUIDETREE.out.tree
