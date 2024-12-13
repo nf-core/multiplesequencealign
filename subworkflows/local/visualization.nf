@@ -14,7 +14,6 @@ workflow VISUALIZATION {
     ch_html         = Channel.empty()
 
 
-    ch_msa.view()
     // Merge the msa and tree
     // split the msa meta to be able to merge with the tree meta
     ch_msa
@@ -22,6 +21,9 @@ workflow VISUALIZATION {
             meta, file -> [meta.subMap(["id", "tree", "args_tree", "args_tree_clean"]), meta, file]
         }
         .join(ch_trees, by: [0], remainder:true )
+        .filter{
+            it.size() == 4
+        }
         .map{
             tree_meta, meta, msa, tree -> [meta.subMap(["id"]), meta, msa, tree]
         }

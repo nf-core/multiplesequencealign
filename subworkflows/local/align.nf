@@ -49,7 +49,6 @@ workflow ALIGN {
         }
         .set { ch_tools_split }
 
-    ch_tools.view()
     // ------------------------------------------------
     // Compute the required trees
     // ------------------------------------------------
