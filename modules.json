@@ -12,7 +12,7 @@
                     },
                     "clustalo/guidetree": {
                         "branch": "master",
-                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "git_sha": "dc94b6ee04a05ddb9f7ae050712ff30a13149164",
                         "installed_by": ["modules"]
                     },
                     "csvtk/concat": {
@@ -153,7 +153,7 @@
                     },
                     "utils_nfcore_pipeline": {
                         "branch": "master",
-                        "git_sha": "1b89f75f1aa2021ec3360d0deccd0f6e97240551",
+                        "git_sha": "51ae5406a030d4da1e49e4dab49756844fdd6c7a",
                         "installed_by": ["subworkflows"]
                     },
                     "utils_nfschema_plugin": {
