@@ -76,7 +76,7 @@ workflow MULTIPLESEQUENCEALIGN {
         .filter { it[1].size() > 0}
         .map {
             meta, fasta, ref, str, template ->
-                [ meta, file(fasta) ]   
+                [ meta, file(fasta) ]
         }
         .set { ch_seqs }
 
@@ -172,7 +172,7 @@ workflow MULTIPLESEQUENCEALIGN {
     }
 
     //
-    // VALIDATE AND PREPROCESS INPUT FILES 
+    // VALIDATE AND PREPROCESS INPUT FILES
     //
 
     FASTAVALIDATOR(ch_seqs)

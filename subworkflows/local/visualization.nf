@@ -15,7 +15,7 @@ workflow VISUALIZATION {
 
 
     ch_msa.view()
-    // Merge the msa and tree 
+    // Merge the msa and tree
     // split the msa meta to be able to merge with the tree meta
     ch_msa
         .map{
@@ -28,7 +28,7 @@ workflow VISUALIZATION {
         .combine( ch_optional_data, by: [0])
         .set{ ch_msa_tree_data }
 
-    // 
+    //
     // FOLDMASON VISUALISATION
     //
 
@@ -40,7 +40,7 @@ workflow VISUALIZATION {
     ch_msa_tree_data
         .combine(FOLDMASON_CREATEDB.out.db.collect(), by:0)
         .multiMap{
-            id, meta, msafile, treefile, pdb, dbfiles -> 
+            id, meta, msafile, treefile, pdb, dbfiles ->
             msa:  [meta, msafile]
             db:   [id  , dbfiles]
             pdbs: [id  , pdb]
@@ -48,7 +48,7 @@ workflow VISUALIZATION {
         }.set{
             ch_msa_db_tree
         }
-    
+
     FOLDMASON_MSA2LDDTREPORT(
         ch_msa_db_tree.msa,
         ch_msa_db_tree.db,

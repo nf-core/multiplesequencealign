@@ -14,7 +14,7 @@ def pdb_to_fasta(pdb_file):
     structure = parser.get_structure(pdb_file, pdb_file)
     fasta_sequences = []
     file_id = pdb_file.rsplit(".", 1)[0]  # Use the file name without extension as ID
-    
+
     for model in structure:
         for chain in model:
             sequence = []

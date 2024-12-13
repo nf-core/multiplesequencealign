@@ -6,7 +6,7 @@ workflow PREPROCESS {
     ch_optional_data          //channel: [ meta, [file1, ] ]
 
     main:
-    
+
     ch_versions = Channel.empty()
     ch_preprocessed_data = Channel.empty()
 
@@ -20,8 +20,8 @@ workflow PREPROCESS {
         ch_versions = ch_versions.mix(TCOFFEE_EXTRACTFROMPDB.out.versions)
     }
 
-    emit: 
-    preprocessed_optionaldata = ch_preprocessed_data 
+    emit:
+    preprocessed_optionaldata = ch_preprocessed_data
     versions = ch_versions
 
 }
