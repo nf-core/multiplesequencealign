@@ -27,7 +27,7 @@ process PREPARE_SHINY {
     """
     cp -r $app/* .
     rm $app
-    echo -n 'docker run -v \$PWD:/app --network=host ' > run.sh
+    echo -n 'docker run -v \$PWD:/app ' > run.sh
     echo -n "$docker_url $bash_command" >> run.sh
     chmod +x run.sh
 
