@@ -141,7 +141,7 @@ workflow PIPELINE_COMPLETION {
         def summary_file             = "${outdir}/summary/complete_summary_stats_eval.csv"
         def summary_file_with_traces = "${outdir}/summary/complete_summary_stats_eval_times.csv"
         def trace_dir_path           = "${outdir}/pipeline_info/"
-        
+
         if (shiny_trace_mode) {
             merge_summary_and_traces(summary_file, trace_dir_path, summary_file_with_traces, "${shiny_dir_path}/complete_summary_stats_eval_times.csv")
         }else{
