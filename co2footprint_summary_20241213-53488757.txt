@@ -1,6 +1,0 @@
-Total CO2e footprint measures of this workflow run
-CO2e emissions: 2.4  g
-Energy consumption: 5.06  Wh
-
-The calculation of these values is based on the carbon footprint computation method developed in the Green Algorithms project.
-Lannelongue, L., Grealey, J., Inouye, M., Green Algorithms: Quantifying the Carbon Footprint of Computation. Adv. Sci. 2021, 2100707. https://doi.org/10.1002/advs.202100707
