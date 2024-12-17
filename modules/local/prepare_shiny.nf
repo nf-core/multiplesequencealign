@@ -11,7 +11,7 @@ process PREPARE_SHINY {
     path (app)
 
     output:
-    path "shiny_app*"                      , emit: app
+    tuple val(meta), path("shiny_app*")    , emit: app
     path "static*"                         , emit: static_dir
     path "run.sh"                          , emit: run
     path "versions.yml"                    , emit: versions

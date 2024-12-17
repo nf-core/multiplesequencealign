@@ -11,8 +11,12 @@ Changes in 'foldmason/easymsa/main.nf':
      path "versions.yml"                                              , emit: versions
  
      when:
-@@ -36,7 +36,7 @@
+@@ -34,9 +34,11 @@
+         $args \\
+         --threads $task.cpus
  
++    mv ${prefix}_aa.fa ${prefix}.fa
++
      if ${compress}; then
          pigz -p ${task.cpus} ${prefix}_3di.fa
 -        pigz -p ${task.cpus} ${prefix}_aa.fa
@@ -20,7 +24,7 @@ Changes in 'foldmason/easymsa/main.nf':
      fi
  
      cat <<-END_VERSIONS > versions.yml
-@@ -51,7 +51,7 @@
+@@ -51,7 +53,7 @@
      prefix = task.ext.prefix ?: "${meta.id}"
      """
      echo ""  ${compress ? '| gzip' : ''} > ${prefix}_3di.fa${compress ? '.gz' : ''}
