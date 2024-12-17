@@ -7,21 +7,11 @@ import plotly.express as px
 from pathlib import Path
 import sys
 import os
-import shiny_app_merge_score_and_trace as ms
 
 
 # Load file
 # ----------------------------------------------------------------------------
-summary_report = "./shiny_data_with_trace.csv"
-trace = "./trace.txt"
-
-if not os.path.exists(summary_report):
-    summary_report_no_trace = "./shiny_data.csv"
-    # run merge script here
-    if os.path.exists(trace):
-        ms.merge_data_and_trace(summary_report_no_trace, trace, summary_report)
-    else:
-        summary_report = summary_report_no_trace
+summary_report = "./complete_summary_stats_eval_times.csv"
 
 try:
     inputfile = pd.read_csv(summary_report)

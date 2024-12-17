@@ -64,7 +64,6 @@ workflow MULTIPLESEQUENCEALIGN {
     evaluation_summary           = Channel.empty()
     stats_summary                = Channel.empty()
     stats_and_evaluation_summary = Channel.empty()
-    ch_shiny_stats               = Channel.empty()
     ch_refs                      = Channel.empty()
     ch_templates                 = Channel.empty()
     ch_optional_data             = Channel.empty()
@@ -257,7 +256,6 @@ workflow MULTIPLESEQUENCEALIGN {
     if (!params.skip_shiny) {
         shiny_app = Channel.fromPath(params.shiny_app)
         PREPARE_SHINY (stats_and_evaluation_summary, shiny_app)
-        ch_shiny_stats = PREPARE_SHINY.out.data.toList()
         ch_versions = ch_versions.mix(PREPARE_SHINY.out.versions)
     }
 
