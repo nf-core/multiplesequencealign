@@ -380,7 +380,6 @@ def keepKeysFromArrayList(arrayList, keysToKeep) {
  */
  def convertMemory(String memory) {
     if (!memory) return null
-
     if (memory.contains("GB")) {
         return memory.replace("GB", "").toDouble()
     } else if (memory.contains("MB")) {
@@ -418,7 +417,6 @@ def latesTraceFileToCSV(String traceDirPath, String filePattern) {
     return traceCsv
 }
 
-
 /**
  * Merges two lists of maps based on a common ID key.
  *
@@ -450,7 +448,7 @@ def mergeListsById(list1, list2, idKey) {
  * The following transformations are performed:
  * - Extract the tag from the 'name' column using a regex pattern
  * - Extract 'id' and 'args' from the tag
- * - Process the 'full_name' to extract workflow and process details 
+ * - Process the 'full_name' to extract workflow and process details
  *
  * @param trace The trace data to be cleaned.
  * @return The cleaned trace data.
@@ -508,10 +506,9 @@ def processLatestTraceFile(String traceDirPath) {
     
     trace_co2_csv = mergeListsById(traceCsv.collect { it as Map }, co2Csv, "name")
     keys = ["id","name", "args", "tree", "aligner", "realtime", "%cpu", "rss", "peak_rss", "vmem", "peak_mem", "rchar", "wchar", "cpus", "energy_consumption", "CO2e", "powerdraw_cpu", "cpu_model", "requested_memory"]
-    
+ 
     // Retain only the necessary columns and parse arguments from tree and aligner 
-    def cleanTraceData = cleanTrace(trace_co2_csv)    
-
+    def cleanTraceData = cleanTrace(trace_co2_csv)
     // Extract the tree and align traces separately
     def traceTrees = prepTrace(cleanTraceData, suffix_to_replace = "_GUIDETREE", subworkflow = "COMPUTE_TREES", keys)
     def traceAlign = prepTrace(cleanTraceData, suffix_to_replace = "_ALIGN", subworkflow = "ALIGN", keys)
