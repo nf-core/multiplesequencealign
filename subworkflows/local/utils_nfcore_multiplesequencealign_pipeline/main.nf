@@ -139,7 +139,7 @@ workflow PIPELINE_COMPLETION {
         def summary_file = "${outdir}/summary/complete_summary_stats_eval.csv"
         def summary_file_with_traces = "${outdir}/summary/complete_summary_stats_eval_times.csv"
         def trace_dir_path = "${outdir}/pipeline_info/"
-
+        
         if (shiny_trace_mode) {
             merge_summary_and_traces(summary_file, trace_dir_path, summary_file_with_traces, "${shiny_dir_path}/complete_summary_stats_eval_times.csv")
         }else{
@@ -274,7 +274,7 @@ def parseCsv(csvContent) {
     def data = []
 
     lines.drop(1).each { line ->
-        def values = line.split(',')
+        def values = line.split(',', -1)
         def row = [:]
         headers.eachWithIndex { header, index ->
             row[header] = values[index]
@@ -608,7 +608,7 @@ def merge_summary_and_traces(summary_file, trace_dir_path, outFileName, shinyOut
     }
 
 
-    // check if the trace file is empty
+    // // check if the trace file is empty
     if(trace_file.traceTrees.size() == 0 ){
         log.warn "Skipping merging of summary and trace files. Are you using -resume? \n \tIf so, you will not be able to access the running times of the modules and the final merging step will be skipped.\n\tPlease refer to the documentation.\n"
         // save the summary file to the output file

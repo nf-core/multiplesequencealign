@@ -11,23 +11,14 @@ import os
 
 # Load file
 # ----------------------------------------------------------------------------
-# summary_report = "./complete_summary_stats_eval_times.csv"
+summary_report = "./complete_summary_stats_eval_times.csv"
 
-# try:
-#     inputfile = pd.read_csv(summary_report)
-# except:
-#     print("ERROR: file not found: ", summary_report)
-#     sys.exit(1)
+try:
+    inputfile = pd.read_csv(summary_report)
+except:
+    print("ERROR: file not found: ", summary_report)
+    sys.exit(1)
 
-data = {
-    "aligner": ["Aligner1", "Aligner2"],
-    "args_aligner": ["default", "custom"],
-    "tree": ["Tree1", "Tree2"],
-    "args_tree": ["default", "custom"],
-    "n_sequences": [10, 20],
-    "sp": [50, 60],
-}
-inputfile = pd.DataFrame(data)
 
 
 def merge_tree_args(row):

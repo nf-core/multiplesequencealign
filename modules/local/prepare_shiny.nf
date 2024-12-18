@@ -23,11 +23,11 @@ process PREPARE_SHINY {
     def args         = task.ext.args ?: ''
     prefix           = task.ext.prefix ?: "${meta.id}"
     def docker_url   = "community.wave.seqera.io/library/pip_numpy_pandas_plotly_pruned:e8ce557dd7db3767"
-    def bash_command = "bash -c 'cd /app && shiny run --reload shiny_app.py'"
+    def bash_command = "bash -c 'cd /app && shiny run --reload --host=0.0.0.0 --port=8000 shiny_app.py'"
     """
     cp -r $app/* .
     rm $app
-    echo -n 'docker run -v \$PWD:/app ' > run.sh
+    echo -n 'docker run -v \$PWD:/app -p 8000:8000 ' > run.sh
     echo -n "$docker_url $bash_command" >> run.sh
     chmod +x run.sh
 
