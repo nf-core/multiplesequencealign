@@ -136,8 +136,6 @@ workflow PIPELINE_COMPLETION {
             imNotification(summary_params, hook_url)
         }
 
-
-        
         def summary_file = "${outdir}/summary/complete_summary_stats_eval.csv"
         def summary_file_with_traces = "${outdir}/summary/complete_summary_stats_eval_times.csv"
         def trace_dir_path = "${outdir}/pipeline_info/"
@@ -145,7 +143,7 @@ workflow PIPELINE_COMPLETION {
         if (shiny_trace_mode) {
             merge_summary_and_traces(summary_file, trace_dir_path, summary_file_with_traces, "${shiny_dir_path}/complete_summary_stats_eval_times.csv")
         }else{
-            merge_summary_and_traces(summary_file, trace_dir_path, summary_file_with_traces, null)
+            merge_summary_and_traces(summary_file, trace_dir_path, summary_file_with_traces, "")
         }
     }
 
@@ -300,7 +298,7 @@ def saveMapToCsv(List<Map> data, String fileName) {
 
     // Extract headers from the keys of the first map
     def headers = data[0].keySet().join(',')
-    
+
     // Generate CSV content by joining the values of each map with commas
     def csvContent = data.collect { row ->
         row.values().join(',')
@@ -308,7 +306,7 @@ def saveMapToCsv(List<Map> data, String fileName) {
 
     // Write headers and CSV content to the specified file
     new File(fileName).withWriter { writer ->
-        writer.write(headers + '\n' + csvContent + '\n') 
+        writer.write(headers + '\n' + csvContent + '\n')
     }
 }
 
@@ -377,7 +375,10 @@ def keepKeysFromArrayList(arrayList, keysToKeep) {
  * @return The memory in gigabytes as a double, or null if the input is invalid.
  */
  def convertMemory(String memory) {
-    if (!memory) return null
+    if (!memory){
+        return null
+    }
+
     if (memory.contains("GB")) {
         return memory.replace("GB", "").toDouble()
     } else if (memory.contains("MB")) {
@@ -411,7 +412,7 @@ def latesTraceFileToCSV(String traceDirPath, String filePattern) {
 
     // Parse the trace data into CSV format
     def traceCsv = parseCsv(trace)
-    
+
     return traceCsv
 }
 
@@ -442,7 +443,7 @@ def mergeListsById(list1, list2, idKey) {
 /**
  * Cleans the trace data by converting each row into a mutable map
  * and performing necessary transformations.
- * 
+ *
  * The following transformations are performed:
  * - Extract the tag from the 'name' column using a regex pattern
  * - Extract 'id' and 'args' from the tag
@@ -501,11 +502,11 @@ def processLatestTraceFile(String traceDirPath) {
     // Merge the trace and co2 files
     // we need to do this because the co2 file has the energy consumption and CO2e but misses other columns of interest from the main file
     co2Csv = keepKeysFromArrayList(co2Csv, ["name", "energy_consumption", "CO2e", "powerdraw_cpu", "cpu_model", "requested_memory"])
-    
+
     trace_co2_csv = mergeListsById(traceCsv.collect { it as Map }, co2Csv, "name")
     keys = ["id","name", "args", "tree", "aligner", "realtime", "%cpu", "rss", "peak_rss", "vmem", "peak_mem", "rchar", "wchar", "cpus", "energy_consumption", "CO2e", "powerdraw_cpu", "cpu_model", "requested_memory"]
- 
-    // Retain only the necessary columns and parse arguments from tree and aligner 
+
+    // Retain only the necessary columns and parse arguments from tree and aligner
     def cleanTraceData = cleanTrace(trace_co2_csv)
     // Extract the tree and align traces separately
     def traceTrees = prepTrace(cleanTraceData, suffix_to_replace = "_GUIDETREE", subworkflow = "COMPUTE_TREES", keys)
@@ -518,8 +519,8 @@ def processLatestTraceFile(String traceDirPath) {
 
 /**
  * Prepares and modifies trace data by retaining and transforming specified keys.
- * We need to do this because the trace data needs to have a suffix assigned 
- * depending on the subworkflow type (ALIGN or COMPUTE_TREES), so that we can identify 
+ * We need to do this because the trace data needs to have a suffix assigned
+ * depending on the subworkflow type (ALIGN or COMPUTE_TREES), so that we can identify
  * which resource usage data corresponds to which process.
  *
  * @param trace The list of trace data maps.
@@ -536,7 +537,7 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
     // For each row, create a new row with the necessary keys and values
     trace_subworkflow.each { row ->
         def newRow = [:]
-        
+
         // Clean the names (remove the unnecessary suffix)
         newRow.tree = row.process.replace(suffix_to_replace, "")
 
@@ -587,19 +588,19 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
 def merge_summary_and_traces(summary_file, trace_dir_path, outFileName, shinyOutFileName) {
 
     // -------------------
-    // TRACE FILE 
+    // TRACE FILE
     // -------------------
 
     // 1. Identify and parse the latest trace file
     // 2. Clean the trace (only completed tasks, keep only needed columns)
     // 3. Extract tree and align traces separately
     def trace_file = processLatestTraceFile(trace_dir_path)
-    
+
     // -------------------
     // SUMMARY FILE
-    // -------------------  
+    // -------------------
 
-    // Parse the summary data (scientific accuracy file: SP, TC etc.)  
+    // Parse the summary data (scientific accuracy file: SP, TC etc.)
     def data = parseCsv(new File(summary_file).readLines().collect { it.replaceAll("\t", ",") }.join("\n"))
     data = data.collect { row ->
         def mutableRow = row as Map
@@ -617,7 +618,7 @@ def merge_summary_and_traces(summary_file, trace_dir_path, outFileName, shinyOut
 
     // -------------------
     // MERGE
-    // ------------------- 
+    // -------------------
     def mergedData = []
     data.each { row ->
         def treeMatch = trace_file.traceTrees.find { it.id == row.id && it.tree == row.tree && it.args_tree_clean == row.args_tree_clean}
