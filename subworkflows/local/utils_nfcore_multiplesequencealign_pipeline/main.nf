@@ -344,7 +344,7 @@ def keepKeysFromArrayList(arrayList, keysToKeep) {
  * @return The total time in minutes as a double.
  * @throws IllegalArgumentException if the time string is not in the correct format.
  */
- def convertTime(String timeStr) {
+def convertTime(String timeStr) {
     def pattern = /((?<hours>\d+(\.\d+)?)h)?\s*((?<minutes>\d+(\.\d+)?)m)?\s*((?<seconds>\d+(\.\d+)?)s)?\s*((?<milliseconds>\d+(\.\d+)?)ms)?/
     def matcher = timeStr.trim() =~ pattern
 
@@ -374,8 +374,8 @@ def keepKeysFromArrayList(arrayList, keysToKeep) {
  * @param memory The memory string to be converted.
  * @return The memory in gigabytes as a double, or null if the input is invalid.
  */
- def convertMemory(String memory) {
-    if (!memory){
+def convertMemory(String memory) {
+    if (!memory) {
         return null
     }
 
