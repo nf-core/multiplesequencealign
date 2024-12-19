@@ -21,7 +21,7 @@ workflow VISUALIZATION {
             meta, file -> [ meta.subMap([ "id", "tree", "args_tree", "args_tree_clean" ]), meta, file ]
         }
         .join(ch_trees, by: [0], remainder:true )
-        .filter{
+        .filter {
             it.size() == 4
         }
         .map{
