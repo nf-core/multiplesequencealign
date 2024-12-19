@@ -119,7 +119,7 @@ workflow ALIGN {
     ch_optional_data.combine(ch_tools)
         .map {
             metadependency, template, dependency, metatree, metaalign ->
-                [ metadependency+metatree , metaalign, template, dependency ]
+                [ metadependency + metatree , metaalign, template, dependency ]
         }
         .join(trees, by: 0, remainder: true)
         .filter{
