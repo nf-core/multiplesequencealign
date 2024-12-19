@@ -18,7 +18,7 @@ workflow COMPUTE_TREES {
 
     main:
     ch_versions = Channel.empty()
-    ch_trees = Channel.empty()
+    ch_trees    = Channel.empty()
 
     //
     // For the inputs that only have optional data but not a fasta
