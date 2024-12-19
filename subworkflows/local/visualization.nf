@@ -1,5 +1,5 @@
-include {FOLDMASON_CREATEDB         } from '../../modules/nf-core/foldmason/createdb/main'
-include {FOLDMASON_MSA2LDDTREPORT   } from '../../modules/nf-core/foldmason/msa2lddtreport/main'
+include { FOLDMASON_CREATEDB       } from '../../modules/nf-core/foldmason/createdb/main'
+include { FOLDMASON_MSA2LDDTREPORT } from '../../modules/nf-core/foldmason/msa2lddtreport/main'
 
 workflow VISUALIZATION {
 
