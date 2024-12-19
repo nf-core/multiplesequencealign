@@ -30,7 +30,7 @@ workflow COMPUTE_TREES {
         .filter {
             it[-1] == null
         }
-        .map{
+        .map {
             it -> [it[0], it[2]]
         }.set { ch_optional_data_no_fasta }
 
