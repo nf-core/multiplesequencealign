@@ -69,7 +69,7 @@ workflow ALIGN {
 
     // ------------------------------------------------
     // Add back trees to the fasta channel
-    // And prepare the inout channels for the aligners
+    // And prepare the input channels for the aligners
     // ------------------------------------------------
 
     // Tools that accept sequence and tree
