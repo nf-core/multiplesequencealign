@@ -27,7 +27,7 @@ workflow COMPUTE_TREES {
 
     ch_optional_data
         .join(ch_fastas, remainder:true)
-        .filter{
+        .filter {
             it[-1] == null
         }
         .map{
