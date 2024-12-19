@@ -415,7 +415,7 @@ def latesTraceFileToCSV(String traceDirPath, String filePattern) {
     return traceCsv
 }
 
-/**
+/*
  * Merges two lists of maps based on a common ID key.
  *
  * @param list1 The first list of maps.
