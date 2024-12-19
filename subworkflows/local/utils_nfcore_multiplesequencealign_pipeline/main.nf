@@ -439,7 +439,7 @@ def mergeListsById(list1, list2, idKey) {
 }
 
 
-/**
+/*
  * Cleans the trace data by converting each row into a mutable map
  * and performing necessary transformations.
  *
