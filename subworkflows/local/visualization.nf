@@ -27,8 +27,8 @@ workflow VISUALIZATION {
         .map {
             tree_meta, meta, msa, tree -> [meta.subMap(["id"]), meta, msa, tree]
         }
-        .combine( ch_optional_data, by: [0])
-        .set{ ch_msa_tree_data }
+        .combine(ch_optional_data, by: [0])
+        .set { ch_msa_tree_data }
 
     //
     // FOLDMASON VISUALISATION
