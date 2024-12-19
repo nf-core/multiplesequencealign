@@ -177,10 +177,10 @@ workflow MULTIPLESEQUENCEALIGN {
     FASTAVALIDATOR(ch_seqs)
     ch_versions = ch_versions.mix(FASTAVALIDATOR.out.versions)
 
-    if(!params.skip_preprocessing){
+    if (!params.skip_preprocessing) {
         PREPROCESS(ch_optional_data)
         ch_optional_data = PREPROCESS.out.preprocessed_optionaldata
-        ch_versions = ch_versions.mix(PREPROCESS.out.versions)
+        ch_versions      = ch_versions.mix(PREPROCESS.out.versions)
     }
 
 

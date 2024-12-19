@@ -25,7 +25,7 @@ workflow VISUALIZATION {
             it.size() == 4
         }
         .map {
-            tree_meta, meta, msa, tree -> [meta.subMap(["id"]), meta, msa, tree]
+            tree_meta, meta, msa, tree -> [ meta.subMap(["id"]), meta, msa, tree ]
         }
         .combine(ch_optional_data, by: [0])
         .set { ch_msa_tree_data }
@@ -43,11 +43,11 @@ workflow VISUALIZATION {
         .combine(FOLDMASON_CREATEDB.out.db.collect(), by:0)
         .multiMap{
             id, meta, msafile, treefile, pdb, dbfiles ->
-            msa:  [meta, msafile]
-            db:   [id  , dbfiles]
-            pdbs: [id  , pdb]
-            tree: [meta, treefile == null ? [] : treefile]
-        }.set{
+            msa:  [ meta, msafile ]
+            db:   [ id  , dbfiles ]
+            pdbs: [ id  , pdb ]
+            tree: [ meta, treefile == null ? [ ] : treefile ]
+        }.set {
             ch_msa_db_tree
         }
 
@@ -55,14 +55,14 @@ workflow VISUALIZATION {
         ch_msa_db_tree.msa,
         ch_msa_db_tree.db,
         ch_msa_db_tree.pdbs,
-        [[:],[]]
+        [ [:], [] ]
     )
 
     ch_versions = ch_versions.mix(FOLDMASON_MSA2LDDTREPORT.out.versions)
-    ch_html = FOLDMASON_MSA2LDDTREPORT.out.html
+    ch_html     = FOLDMASON_MSA2LDDTREPORT.out.html
 
     emit:
-    html =  ch_html
+    html     =  ch_html
     versions = ch_versions
 
 }
