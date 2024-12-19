@@ -17,7 +17,7 @@ workflow VISUALIZATION {
     // Merge the msa and tree
     // split the msa meta to be able to merge with the tree meta
     ch_msa
-        .map{
+        .map {
             meta, file -> [meta.subMap(["id", "tree", "args_tree", "args_tree_clean"]), meta, file]
         }
         .join(ch_trees, by: [0], remainder:true )
