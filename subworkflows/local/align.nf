@@ -311,7 +311,7 @@ workflow ALIGN {
     ch_msa = ch_msa.mix(UPP_ALIGN.out.alignment)
     ch_versions = ch_versions.mix(UPP_ALIGN.out.versions.first())
 
-    // // 2. SEQUENCE + STRUCTURE BASED
+    // 2. SEQUENCE + STRUCTURE BASED
 
     if(params.templates_suffix == ".pdb"){
         // -----------------  3DCOFFEE  ------------------
