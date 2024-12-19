@@ -312,7 +312,7 @@ def saveMapToCsv(List<Map> data, String fileName) {
 /**
  * Filters each row in the given ArrayList to retain only the specified keys.
  *
- * @param iterator The ArrayList containing rows of data.
+ * @param arrayList The ArrayList iterator containing rows of data.
  * @param keysToKeep A list of keys to retain in each row.
  * @return A new ArrayList with rows containing only the specified keys.
  */
