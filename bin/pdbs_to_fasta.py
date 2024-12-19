@@ -5,7 +5,7 @@ import sys
 from Bio import PDB
 from Bio.SeqUtils import seq1
 
-
+# extracts the first structure and first chain of a PDB file
 def pdb_to_fasta(pdb_file):
     """
     Extract the sequence from a PDB file and format it in FASTA.
