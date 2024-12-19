@@ -481,7 +481,7 @@ def cleanTrace(ArrayList trace) {
 
 
 
-/**
+/*
  * Processes the latest trace file in the specified directory.
  *
  * This function identifies and parses the latest trace file based on the given pattern, filters columns to be reported for evaluation,
