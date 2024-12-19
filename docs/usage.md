@@ -91,6 +91,8 @@ The provided structures (see samplesheet) are used to evaluate the quality of th
 Finally, a summary table with all the computed statistics and evaluations is reported in MultiQC (skip by using `--skip_multiqc`).
 Moreover, a Shiny app is generated with interactive summary plots (skip with `--skip_shiny`).
 
+If structures are provided, the [Foldmason](https://github.com/steineggerlab/foldmason) visualizatin will be rendered (skip with `--skip_visualisation`).
+
 :::warning
 You will need to have [Shiny](https://shiny.posit.co/py/) installed to run it! See [output documentation](https://nf-co.re/multiplesequencealign/output) for more info.
 :::

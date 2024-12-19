@@ -54,6 +54,7 @@ workflow ALIGN {
     // ------------------------------------------------
     COMPUTE_TREES (
         ch_fastas,
+        ch_optional_data,
         ch_tools_split.tree.unique()
     )
     trees = COMPUTE_TREES.out.trees
@@ -68,9 +69,15 @@ workflow ALIGN {
 
     // ------------------------------------------------
     // Add back trees to the fasta channel
+    // And prepare the input channels for the aligners
     // ------------------------------------------------
+
+    // Tools that accept sequence and tree
     ch_fasta_tools
         .join(trees, by: [0], remainder:true )
+        .filter{
+            it[1] != null
+        }
         .map {
             metafasta_tree, metaalign, fasta, tree ->
                 [ metafasta_tree + metaalign, fasta, tree ]
@@ -95,6 +102,8 @@ workflow ALIGN {
         }
         .set { ch_fasta_trees }
 
+
+    // tools that accept only optional data
     ch_optional_data.combine(ch_tools)
         .map {
             metadependency, template, dependency, metatree, metaalign ->
@@ -102,9 +111,28 @@ workflow ALIGN {
         }
         .branch {
             mtmalign: it[0]["aligner"] == "MTMALIGN"
-            foldmason: it[0]["aligner"] == "FOLDMASON"
         }
         .set { ch_optional_data_tools }
+
+
+    // tools that accept optional data and tree
+    ch_optional_data.combine(ch_tools)
+        .map {
+            metadependency, template, dependency, metatree, metaalign ->
+                [ metadependency + metatree , metaalign, template, dependency ]
+        }
+        .join(trees, by: 0, remainder: true)
+        .filter{
+            it.size() == 5
+        }
+        .map {
+            metratreeanddep, metaalign, template, dependency, tree ->
+                tree ? [ metratreeanddep + metaalign, tree, template, dependency ]:[ metratreeanddep + metaalign, [ ], template, dependency ]
+        }
+        .branch {
+            foldmason: it[0]["aligner"] == "FOLDMASON"
+        }
+        .set { ch_optional_data_tools_tree }
 
     // ------------------------------------------------
     // Compute the alignments
@@ -324,27 +352,35 @@ workflow ALIGN {
         ch_msa = ch_msa.mix(MTMALIGN_ALIGN.out.alignment)
         ch_versions = ch_versions.mix(MTMALIGN_ALIGN.out.versions.first())
 
-        ch_optional_data_tools.foldmason
+
+        // -----------------  FOLDMASON  ------------------
+
+        ch_optional_data_tools_tree.foldmason
             .multiMap {
-                meta, template, dependency ->
-                    pdbs: [ meta, dependency ]
+                meta, tree, template, dependency ->
+                    pdbs:  [ meta, dependency ]
+                    trees: [ meta, tree ]
             }
             .set { ch_pdb_foldmason }
 
         FOLDMASON_EASYMSA (
             ch_pdb_foldmason.pdbs,
+            ch_pdb_foldmason.trees,
             compress
         )
         ch_msa = ch_msa.mix(FOLDMASON_EASYMSA.out.msa_aa)
         ch_versions = ch_versions.mix(FOLDMASON_EASYMSA.out.versions.first())
     }
 
+
+
     // -----------------  CONSENSUS  ------------------
     if(params.build_consensus){
         ch_msa.map{ meta, msa -> [ meta["id"], msa]}
             .groupTuple()
-            .map{ id_meta, msas -> [ ["id": id_meta, "tree":"", "args_tree":"", "args_tree_clean":null, "aligner":"CONSENSUS", "args_aligner":"", "args_aligner_clean":null ], msas ]}
-            .set{ ch_msa_consensus }
+            .filter { it[1].size() > 1 }
+            .map { id_meta, msas -> [ ["id": id_meta, "tree":"DEFAULT", "args_tree":"", "args_tree_clean":"default", "aligner":"CONSENSUS", "args_aligner":"", "args_aligner_clean":"default" ], msas ]}
+            .set { ch_msa_consensus }
 
         CONSENSUS(ch_msa_consensus, [[:],[]], compress)
         ch_msa = ch_msa.mix(CONSENSUS.out.alignment)
@@ -354,5 +390,6 @@ workflow ALIGN {
 
     emit:
     msa      = ch_msa      // channel: [ val(meta), path(msa) ]
+    trees    = trees       // channel: [ val(meta), path(tree) ]
     versions = ch_versions // channel: [ versions.yml ]
 }

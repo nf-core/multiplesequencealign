@@ -11,8 +11,7 @@ process PREPARE_SHINY {
     path (app)
 
     output:
-    tuple val(meta), path("shiny_data.csv"), emit: data
-    path "shiny_app*"                      , emit: app
+    tuple val(meta), path("shiny_app*")    , emit: app
     path "static*"                         , emit: static_dir
     path "run.sh"                          , emit: run
     path "versions.yml"                    , emit: versions
@@ -24,12 +23,11 @@ process PREPARE_SHINY {
     def args         = task.ext.args ?: ''
     prefix           = task.ext.prefix ?: "${meta.id}"
     def docker_url   = "community.wave.seqera.io/library/pip_numpy_pandas_plotly_pruned:e8ce557dd7db3767"
-    def bash_command = "bash -c 'cd /app && shiny run --reload shiny_app.py'"
+    def bash_command = "bash -c 'cd /app && shiny run --reload --host=0.0.0.0 --port=8000 shiny_app.py'"
     """
-    cp $table shiny_data.csv
     cp -r $app/* .
     rm $app
-    echo -n 'docker run -v \$PWD:/app --network=host ' > run.sh
+    echo -n 'docker run -v \$PWD:/app -p 8000:8000 ' > run.sh
     echo -n "$docker_url $bash_command" >> run.sh
     chmod +x run.sh
 
@@ -41,7 +39,6 @@ process PREPARE_SHINY {
 
     stub:
     """
-    touch shiny_data.csv
     touch shiny_app.R
     touch run.sh
     mkdir static

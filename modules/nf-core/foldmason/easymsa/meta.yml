@@ -26,6 +26,15 @@ input:
         type: file
         description: Input protein structures in PDB format.
         pattern: "*.{pdb,mmcif}"
+  - - meta2:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. `[ id:'sample1', single_end:false ]`
+    - tree:
+        type: file
+        description: Input guide tree in Newick format.
+        pattern: "*.{dnd,nwk}"
   - - compress:
         type: boolean
         description: Flag representing whether the output MSA should be compressed.
@@ -49,7 +58,7 @@ output:
           description: |
             Groovy Map containing sample information
             e.g. `[ id:'sample1', single_end:false ]`
-      - "${prefix}_aa.fa${compress ? '.gz' : ''}":
+      - "${prefix}.fa${compress ? '.gz' : ''}":
           type: file
           description: Fasta file containing the multiple sequence alignment with Amino
             Acid alphabet

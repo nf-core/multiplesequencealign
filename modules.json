@@ -7,7 +7,7 @@
                 "nf-core": {
                     "clustalo/align": {
                         "branch": "master",
-                        "git_sha": "2a8530b890878747f5063a894bad9fb2abd5c071",
+                        "git_sha": "7b32b09fe7787c0fc6924e7b6f223a0b1daf0d2f",
                         "installed_by": ["modules"]
                     },
                     "clustalo/guidetree": {
@@ -36,9 +36,25 @@
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
                         "installed_by": ["modules"]
                     },
-                    "foldmason/easymsa": {
+                    "fastavalidator": {
                         "branch": "master",
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
+                    "foldmason/createdb": {
+                        "branch": "master",
+                        "git_sha": "0270c0fbbbb09456d7823605e4285c4a2c5bbf40",
+                        "installed_by": ["modules"]
+                    },
+                    "foldmason/easymsa": {
+                        "branch": "master",
+                        "git_sha": "0270c0fbbbb09456d7823605e4285c4a2c5bbf40",
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/foldmason/easymsa/foldmason-easymsa.diff"
+                    },
+                    "foldmason/msa2lddtreport": {
+                        "branch": "master",
+                        "git_sha": "d3555a4a33ae94269b65f79f7066ac2fcb836005",
                         "installed_by": ["modules"]
                     },
                     "kalign/align": {
@@ -48,11 +64,6 @@
                         "patch": "modules/nf-core/kalign/align/kalign-align.diff"
                     },
                     "learnmsa/align": {
-                        "branch": "master",
-                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
-                        "installed_by": ["modules"]
-                    },
-                    "mafft": {
                         "branch": "master",
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
                         "installed_by": ["modules"]
@@ -99,7 +110,7 @@
                     },
                     "tcoffee/align": {
                         "branch": "master",
-                        "git_sha": "66b22564bc1bc0db7292f2073cdef954ead773e7",
+                        "git_sha": "3e548877f25a5980a177cc4f81d2d2e8c24164ef",
                         "installed_by": ["modules"]
                     },
                     "tcoffee/alncompare": {
@@ -112,9 +123,15 @@
                         "git_sha": "023e51187884ea6cc7290767486f551565f1b77a",
                         "installed_by": ["modules"]
                     },
+                    "tcoffee/extractfrompdb": {
+                        "branch": "master",
+                        "git_sha": "3e548877f25a5980a177cc4f81d2d2e8c24164ef",
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/tcoffee/extractfrompdb/tcoffee-extractfrompdb.diff"
+                    },
                     "tcoffee/irmsd": {
                         "branch": "master",
-                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "git_sha": "3e548877f25a5980a177cc4f81d2d2e8c24164ef",
                         "installed_by": ["modules"]
                     },
                     "tcoffee/regressive": {
@@ -134,7 +151,7 @@
                     },
                     "untar": {
                         "branch": "master",
-                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "git_sha": "3e548877f25a5980a177cc4f81d2d2e8c24164ef",
                         "installed_by": ["modules"]
                     },
                     "upp/align": {

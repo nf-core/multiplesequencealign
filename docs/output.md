@@ -26,6 +26,7 @@ Statistics about the input files are collected and summarized into a final csv f
 
 - `summary/stats/`
   - `complete_summary_stats.csv`: csv file containing the summary for all the statistics computed on the input file.
+  - `complete_summary_stats_with_trace.csv`: csv file containing the content of complete_summary_stats merged with the information of the trace file. This will not be produced if `-resume` is used.
   - `sequences/`
     - `seqstats/*_seqstats.csv`: file containing the sequence input length for each sequence in the family defined by the file name. If `--calc_seq_stats` is specified.
     - `perc_sim/*_txt`: file containing the pairwise sequence similarity for all input sequences. If `--calc_sim` is specified.

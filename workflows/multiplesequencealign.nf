@@ -22,6 +22,9 @@ include { STATS                  } from '../subworkflows/local/stats'
 include { ALIGN                  } from '../subworkflows/local/align'
 include { EVALUATE               } from '../subworkflows/local/evaluate'
 include { TEMPLATES              } from '../subworkflows/local/templates'
+include { PREPROCESS             } from '../subworkflows/local/preprocess'
+include { VISUALIZATION          } from '../subworkflows/local/visualization'
+
 
 //
 // MODULE: local modules
@@ -41,6 +44,7 @@ include { PREPARE_SHINY   } from '../modules/local/prepare_shiny'
 include { UNTAR                          } from '../modules/nf-core/untar/main'
 include { CSVTK_JOIN as MERGE_STATS_EVAL } from '../modules/nf-core/csvtk/join/main.nf'
 include { PIGZ_COMPRESS                  } from '../modules/nf-core/pigz/compress/main'
+include { FASTAVALIDATOR                 } from '../modules/nf-core/fastavalidator/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -60,15 +64,15 @@ workflow MULTIPLESEQUENCEALIGN {
     evaluation_summary           = Channel.empty()
     stats_summary                = Channel.empty()
     stats_and_evaluation_summary = Channel.empty()
-    ch_shiny_stats               = Channel.empty()
     ch_refs                      = Channel.empty()
     ch_templates                 = Channel.empty()
-    ch_optional_data              = Channel.empty()
+    ch_optional_data             = Channel.empty()
 
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
 
     ch_input
+        .filter { it[1].size() > 0}
         .map {
             meta, fasta, ref, str, template ->
                 [ meta, file(fasta) ]
@@ -167,6 +171,20 @@ workflow MULTIPLESEQUENCEALIGN {
     }
 
     //
+    // VALIDATE AND PREPROCESS INPUT FILES
+    //
+
+    FASTAVALIDATOR(ch_seqs)
+    ch_versions = ch_versions.mix(FASTAVALIDATOR.out.versions)
+
+    if (!params.skip_preprocessing) {
+        PREPROCESS(ch_optional_data)
+        ch_optional_data = PREPROCESS.out.preprocessed_optionaldata
+        ch_versions      = ch_versions.mix(PREPROCESS.out.versions)
+    }
+
+
+    //
     // TEMPLATES
     //
     TEMPLATES (
@@ -238,8 +256,16 @@ workflow MULTIPLESEQUENCEALIGN {
     if (!params.skip_shiny) {
         shiny_app = Channel.fromPath(params.shiny_app)
         PREPARE_SHINY (stats_and_evaluation_summary, shiny_app)
-        ch_shiny_stats = PREPARE_SHINY.out.data.toList()
         ch_versions = ch_versions.mix(PREPARE_SHINY.out.versions)
+    }
+
+
+    if (!params.skip_visualisation) {
+        VISUALIZATION (
+            ALIGN.out.msa,
+            ALIGN.out.trees,
+            ch_optional_data
+        )
     }
 
     softwareVersionsToYAML(ch_versions)
