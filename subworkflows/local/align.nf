@@ -378,9 +378,9 @@ workflow ALIGN {
     if(params.build_consensus){
         ch_msa.map{ meta, msa -> [ meta["id"], msa]}
             .groupTuple()
-            .filter{ it[1].size() > 1 }
-            .map{ id_meta, msas -> [ ["id": id_meta, "tree":"DEFAULT", "args_tree":"", "args_tree_clean":"default", "aligner":"CONSENSUS", "args_aligner":"", "args_aligner_clean":"default" ], msas ]}
-            .set{ ch_msa_consensus }
+            .filter { it[1].size() > 1 }
+            .map { id_meta, msas -> [ ["id": id_meta, "tree":"DEFAULT", "args_tree":"", "args_tree_clean":"default", "aligner":"CONSENSUS", "args_aligner":"", "args_aligner_clean":"default" ], msas ]}
+            .set { ch_msa_consensus }
 
         CONSENSUS(ch_msa_consensus, [[:],[]], compress)
         ch_msa = ch_msa.mix(CONSENSUS.out.alignment)
