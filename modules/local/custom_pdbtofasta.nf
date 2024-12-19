@@ -12,7 +12,7 @@ process CUSTOM_PDBSTOFASTA {
 
     output:
     tuple val (meta), path("${prefix}.fa"), emit: fasta
-    path "versions.yml", emit: versions
+    path "versions.yml"                   , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
