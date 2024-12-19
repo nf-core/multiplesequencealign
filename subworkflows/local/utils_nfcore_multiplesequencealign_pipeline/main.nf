@@ -328,7 +328,7 @@ def keepKeysFromArrayList(arrayList, keysToKeep) {
     return modifiedData
 }
 
-/**
+/*
  * Utility function to convert time strings to minutes.
  *
  * This function takes a time string in the format of hours, minutes, seconds, and milliseconds,
