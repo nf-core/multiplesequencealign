@@ -261,7 +261,7 @@ def methodsDescriptionText(mqc_methods_yaml) {
 
 import groovy.transform.Field
 
-/**
+/*
  * Parses a CSV file and returns a list of maps representing the rows.
  *
  * @param csvContent The content of the CSV file as a string.
