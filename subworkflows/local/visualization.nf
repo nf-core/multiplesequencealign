@@ -10,8 +10,8 @@ workflow VISUALIZATION {
 
     main:
 
-    ch_versions     = Channel.empty()
-    ch_html         = Channel.empty()
+    ch_versions = Channel.empty()
+    ch_html     = Channel.empty()
 
 
     // Merge the msa and tree
