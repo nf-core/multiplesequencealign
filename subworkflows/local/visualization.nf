@@ -24,7 +24,7 @@ workflow VISUALIZATION {
         .filter {
             it.size() == 4
         }
-        .map{
+        .map {
             tree_meta, meta, msa, tree -> [meta.subMap(["id"]), meta, msa, tree]
         }
         .combine( ch_optional_data, by: [0])
