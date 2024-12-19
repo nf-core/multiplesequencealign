@@ -12,9 +12,9 @@ include { FASTAVALIDATOR     } from '../../modules/nf-core/fastavalidator/main'
 workflow COMPUTE_TREES {
 
     take:
-    ch_fastas          //channel: [ meta, /path/to/file.fasta ]
-    ch_optional_data   //channel: [ meta, template, [ /path/to/file1, /path/to/file2, ... ] ]
-    tree_tools         //channel: [ meta ] ( tools to be run: meta.tree, meta.args_tree )
+    ch_fastas        //channel: [ meta, /path/to/file.fasta ]
+    ch_optional_data //channel: [ meta, template, [ /path/to/file1, /path/to/file2, ... ] ]
+    tree_tools       //channel: [ meta ] ( tools to be run: meta.tree, meta.args_tree )
 
     main:
     ch_versions = Channel.empty()
