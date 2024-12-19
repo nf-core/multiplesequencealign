@@ -576,7 +576,7 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
 
 
 
-/**
+/*
  * Merges summary data with trace data from the latest trace file.
  *
  * @param summary_file The path to the summary file.
