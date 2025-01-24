@@ -4,8 +4,8 @@ process LEARNMSA_ALIGN {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/mulled-v2-741e0da5cf2d6d964f559672e2908c2111cbb46b:4930edd009376542543bfd2e20008bb1ae58f841-0' :
-        'community.wave.seqera.io/library/learnmsa:1b308c1f1a5765ca' }"
+        'oras://community.wave.seqera.io/library/learnmsa_mmseqs2_pigz_pip_pruned:ccded0c18518fd60' :
+        'community.wave.seqera.io/library/learnmsa_mmseqs2_pigz_pip_pruned:84236a93a8126753' }"
 
     input:
     tuple val(meta), path(fasta)

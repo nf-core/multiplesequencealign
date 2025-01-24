@@ -19,18 +19,16 @@
 
 ## Introduction
 
-**nf-core/multiplesequencealign** is a pipeline to deploy and systematically evaluate Multiple Sequence Alignment (MSA) methods.
+**nf-core/multiplesequencealign** can: 
 
-The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. Where possible, these processes have been submitted to and installed from [nf-core/modules](https://github.com/nf-core/modules) in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!
-
-On release, automated continuous integration tests run the pipeline on a full-sized dataset on the AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources.The results obtained from the full-sized test can be viewed on the [nf-core website](https://nf-co.re/proteinfold/results).
+1. **Deploy** one or more of the most popular Multiple Sequence Alignment (MSA) tools.
+2. **Benchmark** MSA tools using various metrics. 
 
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 
 The pipeline performs the following steps:
 
-1. **Input files summary**: (Optional) computation of summary statistics on the input files, such as the average sequence similarity across the input sequences, their length, plddt extraction if available.
-
+1. **Inputs summary**: (Optional) computation of summary statistics on the input files, such as the average sequence similarity across the input sequences, their length, plddt extraction if available.
 2. **Guide Tree**: (Optional) Renders a guide tree with a chosen tool (list available in [usage](docs/usage.md#2-guide-trees)). Some aligners use guide trees to define the order in which the sequences are aligned.
 3. **Align**: (Required) Aligns the sequences with a chosen tool (list available in [usage](docs/usage.md#3-align)).
 4. **Evaluate**: (Optional) Evaluates the generated alignments with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.
@@ -40,6 +38,20 @@ The pipeline performs the following steps:
 
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
+
+### Quick start -  test run
+
+To get a feeling of what the pipeline does, run: 
+
+```
+nextflow run nf-core/multiplesequencealign \
+   -profile test_small,docker \
+   --outdir results
+```
+
+### An easy run: 
+
+The pipeline takes 2 input files, samplesheet (your datasets) and toolsheet (which tools you want to use).
 
 #### 1. SAMPLESHEET
 
@@ -98,9 +110,8 @@ For more details and further functionality, please refer to the [usage documenta
 
 ## Pipeline output
 
-To see the results of an example test run with a full-size dataset refer to the [results](https://nf-co.re/multiplesequencealign/results) tab on the nf-core website pipeline page.
-For more details about the output files and reports, please refer to the
-[output documentation](https://nf-co.re/multiplesequencealign/output).
+Example results: [results](https://nf-co.re/multiplesequencealign/results) tab on the nf-core website pipeline page.
+For more details: [output documentation](https://nf-co.re/multiplesequencealign/output).
 
 ## Extending the pipeline
 
