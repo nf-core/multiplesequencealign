@@ -1,12 +1,10 @@
-bump_version: null
 lint:
   files_exist:
     - conf/igenomes.config
   files_unchanged:
     - .github/CONTRIBUTING.md
   multiqc_config: false
-nf_core_version: 3.0.2
-org_path: null
+nf_core_version: 3.1.0
 repository_type: pipeline
 template:
   author: Luisa Santus, Jose Espinosa Carrasco
@@ -16,6 +14,4 @@ template:
   name: multiplesequencealign
   org: nf-core
   outdir: .
-  skip_features: null
   version: 1.1.0dev
-update: null

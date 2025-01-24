@@ -13,7 +13,7 @@ include { FAMSA_ALIGN                       } from '../../modules/nf-core/famsa/
 include { FOLDMASON_EASYMSA                 } from '../../modules/nf-core/foldmason/easymsa/main'
 include { KALIGN_ALIGN                      } from '../../modules/nf-core/kalign/align/main'
 include { LEARNMSA_ALIGN                    } from '../../modules/nf-core/learnmsa/align/main'
-include { MAFFT                             } from '../../modules/nf-core/mafft/main'
+include { MAFFT_ALIGN                       } from '../../modules/nf-core/mafft/align/main'
 include { MAGUS_ALIGN                       } from '../../modules/nf-core/magus/align/main'
 include { MTMALIGN_ALIGN                    } from '../../modules/nf-core/mtmalign/align/main'
 include { MUSCLE5_SUPER5                    } from '../../modules/nf-core/muscle5/super5/main'
@@ -25,13 +25,13 @@ include { UPP_ALIGN                         } from '../../modules/nf-core/upp/al
 
 workflow ALIGN {
     take:
-    ch_fastas     // channel: [ val(meta), [ path(fastas) ] ]
-    ch_tools      // channel: [ val(meta_tree), val(meta_aligner) ]
-                    // [[tree:<tree>, args_tree:<args_tree>, args_tree_clean: <args_tree_clean>], [aligner:<aligner>, args_aligner:<args_aligner>, args_aligner_clean:<args_aligner_clean>]]
-                    // e.g.[[tree:FAMSA, args_tree:-gt upgma -parttree, args_tree_clean:-gt_upgma_-parttree], [aligner:FAMSA, args_aligner:null, args_aligner_clean:null]]
-                    // e.g.[[tree:null, args_tree:null, args_tree_clean:null], [aligner:TCOFFEE, args_aligner:-output fasta_aln, args_aligner_clean:-output_fasta_aln]]
-    ch_dependencies // channel: meta, [e.g. /path/to/file.pdb,/path/to/file.pdb,/path/to/file.pdb]
-    compress      // boolean: true or false
+    ch_fastas           // channel: [ val(meta), [ path(fastas) ] ]
+    ch_tools            // channel: [ val(meta_tree), val(meta_aligner) ]
+                        // [[tree:<tree>, args_tree:<args_tree>, args_tree_clean: <args_tree_clean>], [aligner:<aligner>, args_aligner:<args_aligner>, args_aligner_clean:<args_aligner_clean>]]
+                        // e.g.[[tree:FAMSA, args_tree:-gt upgma -parttree, args_tree_clean:-gt_upgma_-parttree], [aligner:FAMSA, args_aligner:null, args_aligner_clean:null]]
+                        // e.g.[[tree:null, args_tree:null, args_tree_clean:null], [aligner:TCOFFEE, args_aligner:-output fasta_aln, args_aligner_clean:-output_fasta_aln]]
+    ch_optional_data    // channel: meta, [e.g. /path/to/file.pdb,/path/to/file.pdb,/path/to/file.pdb]
+    compress            // boolean: true or false
 
     main:
 
@@ -54,6 +54,7 @@ workflow ALIGN {
     // ------------------------------------------------
     COMPUTE_TREES (
         ch_fastas,
+        ch_optional_data,
         ch_tools_split.tree.unique()
     )
     trees = COMPUTE_TREES.out.trees
@@ -68,9 +69,15 @@ workflow ALIGN {
 
     // ------------------------------------------------
     // Add back trees to the fasta channel
+    // And prepare the input channels for the aligners
     // ------------------------------------------------
+
+    // Tools that accept sequence and tree
     ch_fasta_tools
         .join(trees, by: [0], remainder:true )
+        .filter{
+            it[1] != null
+        }
         .map {
             metafasta_tree, metaalign, fasta, tree ->
                 [ metafasta_tree + metaalign, fasta, tree ]
@@ -95,16 +102,37 @@ workflow ALIGN {
         }
         .set { ch_fasta_trees }
 
-    ch_dependencies.combine(ch_tools)
+
+    // tools that accept only optional data
+    ch_optional_data.combine(ch_tools)
         .map {
             metadependency, template, dependency, metatree, metaalign ->
                 [ metadependency+metatree+metaalign, template, dependency ]
         }
         .branch {
             mtmalign: it[0]["aligner"] == "MTMALIGN"
+        }
+        .set { ch_optional_data_tools }
+
+
+    // tools that accept optional data and tree
+    ch_optional_data.combine(ch_tools)
+        .map {
+            metadependency, template, dependency, metatree, metaalign ->
+                [ metadependency + metatree , metaalign, template, dependency ]
+        }
+        .join(trees, by: 0, remainder: true)
+        .filter{
+            it.size() == 5
+        }
+        .map {
+            metratreeanddep, metaalign, template, dependency, tree ->
+                tree ? [ metratreeanddep + metaalign, tree, template, dependency ]:[ metratreeanddep + metaalign, [ ], template, dependency ]
+        }
+        .branch {
             foldmason: it[0]["aligner"] == "FOLDMASON"
         }
-        .set { ch_dependencies_tools }
+        .set { ch_optional_data_tools_tree }
 
     // ------------------------------------------------
     // Compute the alignments
@@ -123,6 +151,10 @@ workflow ALIGN {
     CLUSTALO_ALIGN (
         ch_fasta_trees_clustalo.fasta,
         ch_fasta_trees_clustalo.tree,
+        [],
+        [],
+        [],
+        [],
         compress
     )
     ch_msa = ch_msa.mix(CLUSTALO_ALIGN.out.alignment)
@@ -182,7 +214,7 @@ workflow ALIGN {
         }
         .set { ch_fasta_mafft }
 
-    MAFFT (
+    MAFFT_ALIGN (
         ch_fasta_mafft.fasta,
         [ [:], [] ],
         [ [:], [] ],
@@ -191,8 +223,8 @@ workflow ALIGN {
         [ [:], [] ],
         compress
     )
-    ch_msa = ch_msa.mix(MAFFT.out.fas) // the MAFFT module calls its output fas instead of alignment
-    ch_versions = ch_versions.mix(MAFFT.out.versions.first())
+    ch_msa = ch_msa.mix(MAFFT_ALIGN.out.fas) // the MAFFT module calls its output fas instead of alignment
+    ch_versions = ch_versions.mix(MAFFT_ALIGN.out.versions.first())
 
     // ----------------- MAGUS ------------------
     ch_fasta_trees.magus
@@ -285,19 +317,19 @@ workflow ALIGN {
         // -----------------  3DCOFFEE  ------------------
         ch_fasta_trees.tcoffee3d
             .map{ meta, fasta, tree -> [ meta["id"], meta, fasta, tree ] }
-            .combine(ch_dependencies.map{ meta, template, dependencies -> [ meta["id"], template, dependencies ] }, by: 0)
+            .combine(ch_optional_data.map{ meta, template, optional_data -> [ meta["id"], template, optional_data ] }, by: 0)
             .multiMap{
-                merging_id, meta, fastafile, treefile, templatefile, depencencyfiles ->
+                merging_id, meta, fastafile, treefile, templatefile, datafiles ->
                 fasta:      [ meta, fastafile ]
                 tree:       [ meta, treefile  ]
-                dependencies: [ meta, templatefile, depencencyfiles ]
+                optional_data: [ meta, templatefile, datafiles ]
             }
             .set { ch_fasta_trees_3dcoffee }
 
         TCOFFEE3D_ALIGN (
             ch_fasta_trees_3dcoffee.fasta,
             ch_fasta_trees_3dcoffee.tree,
-            ch_fasta_trees_3dcoffee.dependencies,
+            ch_fasta_trees_3dcoffee.optional_data,
             compress
         )
         ch_msa = ch_msa.mix(TCOFFEE3D_ALIGN.out.alignment)
@@ -306,7 +338,7 @@ workflow ALIGN {
         // 3. STRUCTURE BASED
 
         // -----------------  MTMALIGN  ------------------
-        ch_dependencies_tools.mtmalign
+        ch_optional_data_tools.mtmalign
             .multiMap {
                 meta, template, dependency ->
                     pdbs: [ meta, dependency ]
@@ -320,27 +352,35 @@ workflow ALIGN {
         ch_msa = ch_msa.mix(MTMALIGN_ALIGN.out.alignment)
         ch_versions = ch_versions.mix(MTMALIGN_ALIGN.out.versions.first())
 
-        ch_dependencies_tools.foldmason
+
+        // -----------------  FOLDMASON  ------------------
+
+        ch_optional_data_tools_tree.foldmason
             .multiMap {
-                meta, template, dependency ->
-                    pdbs: [ meta, dependency ]
+                meta, tree, template, dependency ->
+                    pdbs:  [ meta, dependency ]
+                    trees: [ meta, tree ]
             }
             .set { ch_pdb_foldmason }
 
         FOLDMASON_EASYMSA (
             ch_pdb_foldmason.pdbs,
+            ch_pdb_foldmason.trees,
             compress
         )
         ch_msa = ch_msa.mix(FOLDMASON_EASYMSA.out.msa_aa)
         ch_versions = ch_versions.mix(FOLDMASON_EASYMSA.out.versions.first())
     }
 
+
+
     // -----------------  CONSENSUS  ------------------
     if(params.build_consensus){
         ch_msa.map{ meta, msa -> [ meta["id"], msa]}
             .groupTuple()
-            .map{ id_meta, msas -> [ ["id": id_meta, "tree":"", "args_tree":"", "args_tree_clean":null, "aligner":"CONSENSUS", "args_aligner":"", "args_aligner_clean":null ], msas ]}
-            .set{ ch_msa_consensus }
+            .filter { it[1].size() > 1 }
+            .map { id_meta, msas -> [ ["id": id_meta, "tree":"DEFAULT", "args_tree":"", "args_tree_clean":"default", "aligner":"CONSENSUS", "args_aligner":"", "args_aligner_clean":"default" ], msas ]}
+            .set { ch_msa_consensus }
 
         CONSENSUS(ch_msa_consensus, [[:],[]], compress)
         ch_msa = ch_msa.mix(CONSENSUS.out.alignment)
@@ -350,5 +390,6 @@ workflow ALIGN {
 
     emit:
     msa      = ch_msa      // channel: [ val(meta), path(msa) ]
+    trees    = trees       // channel: [ val(meta), path(tree) ]
     versions = ch_versions // channel: [ versions.yml ]
 }

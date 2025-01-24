@@ -40,6 +40,20 @@
                     "help_text": "Suffix of the files in the accessory files directory (e.g. pdb for pdb files).",
                     "fa_icon": "fas fa-file-signature"
                 },
+                "optional_data_dir": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "exists": true,
+                    "description": "Path to a folder containing all the optional data files to be used (e.g. structures).",
+                    "help_text": "This is a folder with all the optional data files to be used in the pipeline.",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "skip_preprocessing": {
+                    "type": "boolean",
+                    "description": "Skip the preprocessing step for the input files.",
+                    "fa_icon": "fas fa-fast-forward",
+                    "help_text": "Skip the preprocessing step and use the files directly."
+                },
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",
@@ -200,6 +214,11 @@
                 "shiny_trace_mode": {
                     "type": "string",
                     "description": "variable containing the shiny_trace mode to be used."
+                },
+                "skip_visualisation": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Skip the visualization generation."
                 }
             }
         },
@@ -350,6 +369,12 @@
                     "fa_icon": "far fa-check-circle",
                     "description": "Base URL or local path to location of pipeline test dataset files",
                     "default": "https://raw.githubusercontent.com/nf-core/test-datasets/",
+                    "hidden": true
+                },
+                "trace_report_suffix": {
+                    "type": "string",
+                    "fa_icon": "far calendar",
+                    "description": "Suffix to add to the trace report filename. Default is the date and time in the format yyyy-MM-dd_HH-mm-ss.",
                     "hidden": true
                 }
             }
