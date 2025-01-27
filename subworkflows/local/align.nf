@@ -372,8 +372,6 @@ workflow ALIGN {
         ch_versions = ch_versions.mix(FOLDMASON_EASYMSA.out.versions.first())
     }
 
-
-
     // -----------------  CONSENSUS  ------------------
     if(params.build_consensus){
         ch_msa.map{ meta, msa -> [ meta["id"], msa]}

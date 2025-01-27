@@ -120,6 +120,7 @@ workflow PIPELINE_COMPLETION {
     monochrome_logs  // boolean: Disable ANSI colour codes in log output
     hook_url         //  string: hook URL for notifications
     multiqc_report   //  string: Path to MultiQC report
+    versions         //  string: Path to versions file in the collated format
     shiny_dir_path   //  string: Path to shiny stats file
     trace_dir_path   //  string: Path to trace file
     shiny_trace_mode // string: Mode to use for shiny trace file (default: "latest", options: "latest", "all")
@@ -127,6 +128,8 @@ workflow PIPELINE_COMPLETION {
     main:
     summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
     def multiqc_reports = multiqc_report.toList()
+
+    
 
     //
     // Completion email and summary
@@ -153,9 +156,9 @@ workflow PIPELINE_COMPLETION {
         def summary_file_with_traces = "${outdir}/summary/complete_summary_stats_eval_times.csv"
         def trace_dir_path = "${outdir}/pipeline_info/"
         if (shiny_trace_mode) {
-            merge_summary_and_traces(summary_file, trace_dir_path, summary_file_with_traces, "${shiny_dir_path}/complete_summary_stats_eval_times.csv")
+            merge_summary_and_traces(summary_file, trace_dir_path, versions, summary_file_with_traces, "${shiny_dir_path}/complete_summary_stats_eval_times.csv")
         }else{
-            merge_summary_and_traces(summary_file, trace_dir_path, summary_file_with_traces, "")
+            merge_summary_and_traces(summary_file, trace_dir_path, versions, summary_file_with_traces, "")
         }
     }
 
@@ -587,6 +590,50 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
     return trace_subworkflow
 }
 
+def parseVersions(String filePath) {
+    def versions = [:]
+    def tool = null
+
+    new File(filePath).eachLine { line ->
+        if (line.trim().endsWith(":")) {
+            // This line contains the tool name (ends with ":")
+            tool = line.trim().replace(":", "")
+        } else if (tool && line.trim().startsWith(" ")) {
+            // This line contains the version (indented with spaces)
+            def version = line.trim()
+            versions[tool] = version
+            tool = null // Reset tool for the next entry
+        }
+    }
+    return versions
+}
+
+
+
+def addVersions(String tracePath, String versionsFilePath, String outputFilePath) {
+    def versions = parseVersions(versionsFilePath)
+    // def outputLines = []
+    // def headerProcessed = false
+
+    // new File(tracePath).eachLine { line ->
+    //     if (!headerProcessed) {
+    //         // Add "version" column to the header
+    //         outputLines << line + ",version"
+    //         headerProcessed = true
+    //     } else {
+    //         def columns = line.split(",")
+    //         def processName = columns[23] // Assuming the process name is in the 24th column (index 23)
+            
+    //         // Extract the uppercase tool name from the process name
+    //         def toolName = processName.find(/[A-Z_]+/) // Matches uppercase words with underscores
+    //         def version = versions[toolName] ?: "unknown"
+    //         outputLines << line + "," + version
+    //     }
+    // }
+
+    // // Write the updated data to a new CSV file
+    // return outputLines.join("\n")
+}
 
 
 /*
@@ -597,7 +644,7 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
  * @param outFileName The name of the output file to save the merged data.
  */
 
-def merge_summary_and_traces(summary_file, trace_dir_path, outFileName, shinyOutFileName) {
+def merge_summary_and_traces(summary_file, trace_dir_path, versions_file, outFileName, shinyOutFileName) {
 
     // -------------------
     // TRACE FILE
@@ -607,6 +654,11 @@ def merge_summary_and_traces(summary_file, trace_dir_path, outFileName, shinyOut
     // 2. Clean the trace (only completed tasks, keep only needed columns)
     // 3. Extract tree and align traces separately
     def trace_file = processLatestTraceFile(trace_dir_path)
+
+    println "Trace file: ${trace_file}"
+
+
+    def trace_file_versions = addVersions(trace_file, versions_file)
 
     // -------------------
     // SUMMARY FILE
