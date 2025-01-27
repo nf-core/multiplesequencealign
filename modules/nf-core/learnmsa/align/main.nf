@@ -5,7 +5,7 @@ process LEARNMSA_ALIGN {
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'oras://community.wave.seqera.io/library/learnmsa_mmseqs2_pigz_pip_pruned:ccded0c18518fd60' :
-        'community.wave.seqera.io/library/learnmsa_pigz:8a1bb578b28c7eaa' }"
+        'community.wave.seqera.io/library/learnmsa_mmseqs2_pigz_scipy_pruned:d466bba19ea4dbaa' }"
 
     input:
     tuple val(meta), path(fasta)

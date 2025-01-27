@@ -21,7 +21,7 @@
 
 **nf-core/multiplesequencealign** can: 
 
-1. **Deploy** one or more of the most popular Multiple Sequence Alignment (MSA) tools.
+1. **Deploy** one (or many in parallel) of the most popular Multiple Sequence Alignment (MSA) tools.
 2. **Benchmark** MSA tools using various metrics. 
 
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
@@ -59,9 +59,6 @@ nextflow run nf-core/multiplesequencealign \
    --tools toolsheet.csv \
    --outdir outdir
 ```
-
-> [!WARNING]
-> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
 
 You need **2 input files**: 
 -  **samplesheet** (your datasets)
@@ -123,6 +120,10 @@ You need **2 input files**:
 </details>
 
 For more details: [usage documentation](https://nf-co.re/multiplesequencealign/usage) and the [parameter documentation](https://nf-co.re/multiplesequencealign/parameters).
+
+
+> [!WARNING]
+> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
 
 ## Pipeline output
 
