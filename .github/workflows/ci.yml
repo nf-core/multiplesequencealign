@@ -37,6 +37,7 @@ jobs:
           - "test"
           - "test_pdb"
           - "test_parameters"
+          - "test_nosamplesheet"
         isMaster:
           - ${{ github.base_ref == 'master' }}
         # Exclude conda and singularity on dev

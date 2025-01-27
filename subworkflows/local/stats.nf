@@ -13,7 +13,7 @@ include {   EXTRACT_PLDDT                                  } from '../../modules
 workflow STATS {
     take:
     ch_seqs       // channel: [ val(meta), path(/path/to/file.fasta) ]
-    ch_optional_data // channel: [ val(meta), path(/path/to/optional_data_dir) ]
+    ch_optional_data // channel: [ val(meta), path(/path/to/pdbs_dir) ]
 
     main:
 

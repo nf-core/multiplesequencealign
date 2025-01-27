@@ -101,12 +101,12 @@ workflow MULTIPLESEQUENCEALIGN {
 
     /*
     * We currently support 2 ways of reading in the optional_data:
-    * 1. Provide a folder containing the optional_data via the `optional_data_dir` parameter
+    * 1. Provide a folder containing the optional_data via the `pdbs_dir` parameter
     * 2. Provide the dependency files directly in the input samplesheet
     */
 
     // If the optional_data folder is provided, use it to identify the optional_data based on sequence IDs
-    if(params.optional_data_dir){
+    if(params.pdbs_dir){
 
         // Identify the sequence IDs from the input fasta file(s)
         ch_seqs.splitFasta(record: [ id: true ] )
@@ -114,12 +114,12 @@ workflow MULTIPLESEQUENCEALIGN {
             .set { ch_seqs_split }
 
         // if compressed, uncompress the optional_data folder
-        if(params.optional_data_dir.endsWith('.tar.gz')){
+        if(params.pdbs_dir.endsWith('.tar.gz')){
 
-            optional_data_dir = Channel.fromPath(params.optional_data_dir)
+            pdbs_dir = Channel.fromPath(params.pdbs_dir)
                                         .map { it -> [[id: it.baseName],it] }
 
-            UNTAR (optional_data_dir)
+            UNTAR (pdbs_dir)
                 .untar
                 .map { meta, dir -> [ file(dir).listFiles() ] }
                 .flatten()
@@ -129,7 +129,7 @@ workflow MULTIPLESEQUENCEALIGN {
         }
         // otherwise, directly use the optional_data within the folder
         else {
-            optional_data_to_be_mapped = Channel.fromPath(params.optional_data_dir+"/**")
+            optional_data_to_be_mapped = Channel.fromPath(params.pdbs_dir+"/**")
         }
 
         // Map the optional_data to the sequence IDs

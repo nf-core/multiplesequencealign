@@ -67,7 +67,19 @@ workflow PIPELINE_INITIALISATION {
     //
     // Create channel from input file provided through params.input
     //
-    ch_input = Channel.fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
+
+    // If the parameter fasta or pdb is provided, use it instead of the input samplesheet
+    if (params.seqs) {
+        // if only fasta
+        if (params.seqs) {
+            ch_input = Channel.fromList([
+                [ ["id": params.seqs.split("/")[-1].split("\\.")[0]], file(params.seqs), [], [], [] ]
+            ])
+        } 
+    }else{
+        ch_input = Channel.fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
+    }
+
     ch_tools = Channel.fromList(samplesheetToList(params.tools, "${projectDir}/assets/schema_tools.json"))
                 .map {
                     meta ->
