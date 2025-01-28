@@ -43,6 +43,7 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
         samplesheet,
         tools
     )
+
     emit:
     multiqc_report = MULTIPLESEQUENCEALIGN.out.multiqc_report // channel: /path/to/multiqc_report.html
     versions       = MULTIPLESEQUENCEALIGN.out.versions       // channel: /path/to/versions.txt
@@ -88,7 +89,6 @@ workflow {
         params.monochrome_logs,
         params.hook_url,
         NFCORE_MULTIPLESEQUENCEALIGN.out.multiqc_report,
-        NFCORE_MULTIPLESEQUENCEALIGN.out.versions,
         "${params.outdir}/shiny_app",
         "${params.outdir}/pipeline_info",
         params.shiny_trace_mode
