@@ -6,6 +6,18 @@ The directories listed below will be created in the results directory (specified
 All paths are relative to the top-level results directory.
 
 
+- `results/`
+  - `alignment`
+  - `trees`
+  - `evaluation`
+  - `summary`
+  - `shiny_app`
+  - `multiqc`
+  - `pipeline_info`
+
+
+
+
 ## Alignment
 
 All MSA computed are stored in the **alignment** directory.
