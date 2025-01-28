@@ -5,14 +5,158 @@
         "https://github.com/nf-core/modules.git": {
             "modules": {
                 "nf-core": {
-                    "fastqc": {
+                    "clustalo/align": {
+                        "branch": "master",
+                        "git_sha": "7b32b09fe7787c0fc6924e7b6f223a0b1daf0d2f",
+                        "installed_by": ["modules"]
+                    },
+                    "clustalo/guidetree": {
                         "branch": "master",
                         "git_sha": "08108058ea36a63f141c25c4e75f9f872a5b2296",
+                        "installed_by": ["modules"]
+                    },
+                    "csvtk/concat": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
+                    "csvtk/join": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/csvtk/join/csvtk-join.diff"
+                    },
+                    "famsa/align": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
+                    "famsa/guidetree": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
+                    "fastavalidator": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
+                    "foldmason/createdb": {
+                        "branch": "master",
+                        "git_sha": "0270c0fbbbb09456d7823605e4285c4a2c5bbf40",
+                        "installed_by": ["modules"]
+                    },
+                    "foldmason/easymsa": {
+                        "branch": "master",
+                        "git_sha": "0270c0fbbbb09456d7823605e4285c4a2c5bbf40",
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/foldmason/easymsa/foldmason-easymsa.diff"
+                    },
+                    "foldmason/msa2lddtreport": {
+                        "branch": "master",
+                        "git_sha": "d3555a4a33ae94269b65f79f7066ac2fcb836005",
+                        "installed_by": ["modules"]
+                    },
+                    "kalign/align": {
+                        "branch": "master",
+                        "git_sha": "cadb9bbfe56001ac421e0ee87808b0ccc754593a",
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/kalign/align/kalign-align.diff"
+                    },
+                    "learnmsa/align": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
+                    "mafft/align": {
+                        "branch": "master",
+                        "git_sha": "868cb0d7fc4862991fb7c2b4cd7289806cd53f81",
+                        "installed_by": ["modules"]
+                    },
+                    "mafft/guidetree": {
+                        "branch": "master",
+                        "git_sha": "968b494e20f439a9ed3d23c89274e6a4a625eb92",
+                        "installed_by": ["modules"]
+                    },
+                    "magus/align": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
+                    "mtmalign/align": {
+                        "branch": "master",
+                        "git_sha": "4eecd9a0c06fa508ae314c06ac952c161c019679",
                         "installed_by": ["modules"]
                     },
                     "multiqc": {
                         "branch": "master",
                         "git_sha": "f0719ae309075ae4a291533883847c3f7c441dad",
+                        "installed_by": ["modules"]
+                    },
+                    "muscle5/super5": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
+                    "pigz/compress": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
+                    "pigz/uncompress": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
+                    "tcoffee/align": {
+                        "branch": "master",
+                        "git_sha": "3e548877f25a5980a177cc4f81d2d2e8c24164ef",
+                        "installed_by": ["modules"]
+                    },
+                    "tcoffee/alncompare": {
+                        "branch": "master",
+                        "git_sha": "ffa000ab3c33df25a165b5f9a039c4cbb665a77b",
+                        "installed_by": ["modules"]
+                    },
+                    "tcoffee/consensus": {
+                        "branch": "master",
+                        "git_sha": "023e51187884ea6cc7290767486f551565f1b77a",
+                        "installed_by": ["modules"]
+                    },
+                    "tcoffee/extractfrompdb": {
+                        "branch": "master",
+                        "git_sha": "3e548877f25a5980a177cc4f81d2d2e8c24164ef",
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/tcoffee/extractfrompdb/tcoffee-extractfrompdb.diff"
+                    },
+                    "tcoffee/irmsd": {
+                        "branch": "master",
+                        "git_sha": "3e548877f25a5980a177cc4f81d2d2e8c24164ef",
+                        "installed_by": ["modules"]
+                    },
+                    "tcoffee/regressive": {
+                        "branch": "master",
+                        "git_sha": "66b22564bc1bc0db7292f2073cdef954ead773e7",
+                        "installed_by": ["modules"]
+                    },
+                    "tcoffee/seqreformat": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
+                    "tcoffee/tcs": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
+                    "untar": {
+                        "branch": "master",
+                        "git_sha": "3e548877f25a5980a177cc4f81d2d2e8c24164ef",
+                        "installed_by": ["modules"]
+                    },
+                    "upp/align": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
                         "installed_by": ["modules"]
                     }
                 }

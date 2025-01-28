@@ -1,0 +1,24 @@
+Changes in module 'nf-core/csvtk/join'
+--- modules/nf-core/csvtk/join/main.nf
++++ modules/nf-core/csvtk/join/main.nf
+@@ -22,12 +22,17 @@
+     prefix = task.ext.prefix ?: "${meta.id}"
+     out_extension = args.contains('--out-delimiter "\t"') || args.contains('-D "\t"') || args.contains("-D \$'\t'") ? "tsv" : "csv"
+     """
++    
++    # create an empty file to avoid crushing when there is less than two files to be merged
++    touch empty.csv
++
+     csvtk \\
+         join \\
+         $args \\
+         --num-cpus $task.cpus \\
+         --out-file ${prefix}.${out_extension} \\
+-        $csv
++        $csv \\
++        empty.csv
+ 
+     cat <<-END_VERSIONS > versions.yml
+     "${task.process}":
+
+************************************************************

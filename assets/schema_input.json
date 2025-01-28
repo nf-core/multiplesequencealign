@@ -7,27 +7,32 @@
     "items": {
         "type": "object",
         "properties": {
-            "sample": {
+            "id": {
                 "type": "string",
                 "pattern": "^\\S+$",
                 "errorMessage": "Sample name must be provided and cannot contain spaces",
                 "meta": ["id"]
             },
-            "fastq_1": {
+            "fasta": {
                 "type": "string",
-                "format": "file-path",
-                "exists": true,
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+                "pattern": "^\\S+\\.f(ast)?a$",
+                "errorMessage": "fasta file. Must end with .fa or .fasta",
+                "default": ""
             },
-            "fastq_2": {
+            "reference": {
                 "type": "string",
-                "format": "file-path",
-                "exists": true,
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+                "default": ""
+            },
+            "optional_data": {
+                "type": "string",
+                "default": ""
+            },
+            "template": {
+                "type": "string",
+                "default": ""
             }
         },
-        "required": ["sample", "fastq_1"]
+        "required": ["id"],
+        "anyOf": [{ "required": ["fasta"] }, { "required": ["optional_data"] }]
     }
 }
