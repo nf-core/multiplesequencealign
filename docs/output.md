@@ -11,12 +11,7 @@ All paths are relative to the top-level results directory.
   - `trees`
   - `evaluation`
   - `summary`
-  - `shiny_app`
-  - `multiqc`
-  - `pipeline_info`
-
-
-
+  - `reports`
 
 ## Alignment
 
@@ -76,7 +71,9 @@ Statistics about the input files are collected and summarized into a final csv f
   - `structures/` - `plddt/*_full_plddt.csv`: file containing the plddt of the structures for each sequence in the input file. If `--extract_plddt` is specified.
   </details>
 
-## Shiny App
+## Reports
+
+### Shiny App
 
 A Shiny app is created to explore interactively your results. It can be found in the **shiny_app** folder.
 
