@@ -21,22 +21,20 @@ All MSA computed are stored in the **alignment** directory.
 <summary>Output files</summary>
 
 - `alignment/`
-  - `*/*.fa`: each subdirectory is named after the sample id. It contains all the alignments computed on it. The filename contains all the informations of the input file used and the tool.
-    The file naming convention is:
-    {Input*file}*{Tree}\_args-{Tree_args}\_{MSA}\_args-{MSA_args}.aln
-
+  - `{SampleID}/{SampleID}_{Tree}_args-{Tree_args}_{MSA}_args-{MSA_args}.aln`. Each subdirectory is named after the sample id. It contains all the computed alignments for the given sample. The filename is built with the informations of the input file used and the tool(s).
+    
 </details>
 
 
 ## Trees
 
-If you explicitly specifified (via the toolsheet) to compute guidetrees to be used by the MSA tool, those are stored in the **trees** directory.
+If you have explicitly enabled the computation of guide trees via the toolsheet to be used by the MSA tool, these guide trees will be generated and stored in the trees directory.
 
 <details markdown="1">
 <summary>Output files</summary>
 
 - `trees/`
-  - `*/*.dnd`: guide tree files.
+  - `{SampleID}/{SampleID}_{Tree}_args-{Tree_args}.dnd`: guide tree files.
 
 </details>
 
