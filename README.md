@@ -26,9 +26,9 @@
 
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 
-The pipeline performs the following steps:
+Pipeline's steps:
 
-1. **Inputs summary**: (Optional) computation of summary statistics on the input files, such as the average sequence similarity across the input sequences, their length, plddt extraction if available.
+1. **Inputs summary**: (Optional) computation of summary statistics on the input files (e.g average sequence similarity across the input sequences, their length, plddt extraction if available).
 2. **Guide Tree**: (Optional) Renders a guide tree with a chosen tool (list available in [usage](docs/usage.md#2-guide-trees)). Some aligners use guide trees to define the order in which the sequences are aligned.
 3. **Align**: (Required) Aligns the sequences with a chosen tool (list available in [usage](docs/usage.md#3-align)).
 4. **Evaluate**: (Optional) Evaluates the generated alignments with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.
@@ -42,7 +42,7 @@ The pipeline performs the following steps:
 ### Quick start -  test run
 
 To get a feeling of what the pipeline does, run: 
-
+(No need to download or provide any file, try it!)
 ```
 nextflow run nf-core/multiplesequencealign \
    -profile test_small,docker \
@@ -51,6 +51,31 @@ nextflow run nf-core/multiplesequencealign \
 
 ### How to set up an easy run: 
 
+
+## CASE 1: One input dataset, multiple tools. 
+
+If you only want to deploy a 
+
+```bash
+nextflow run nf-core/multiplesequencealign \
+   -profile test_small,docker \
+   --seqs <YOUR_FASTA.fa> 
+   --outdir outdir
+```
+
+
+```bash
+nextflow run nf-core/multiplesequencealign \
+   -profile test_small,docker \
+   --pdbs_dir <PATH_TO_YOUR_PDB_DIR> 
+   --outdir outdir
+```
+
+
+
+
+
+## CASE 2: Multiple datasets, multiple tools. 
 
 ```bash
 nextflow run nf-core/multiplesequencealign \
