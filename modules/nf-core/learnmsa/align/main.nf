@@ -24,7 +24,7 @@ process LEARNMSA_ALIGN {
     def write_output = compress ? ">(pigz -cp ${task.cpus} > ${prefix}.aln.gz)" : "${prefix}.aln"
     """
     learnMSA \\
-        -i <(unpigz -cdf $fasta) \\
+        -i $fasta \\
         -o $write_output \\
         $args
 
