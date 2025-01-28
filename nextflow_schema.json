@@ -28,17 +28,9 @@
                     "schema": "assets/schema_input.json",
                     "mimetype": "text/csv",
                     "pattern": "^\\S+\\.csv$",
-                    "description": "Path to comma-separated file containing information about the samples in the experiment.",
-                    "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/multiplesequencealign/usage#samplesheet-input).",
+                    "description": "Path to comma-separated file containing information about datasets to be aligned and evaluated (samplesheet).",
+                    "help_text": "You will need to create a file with information about the datasets before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with maximum 5 columns, and a header row. See [usage docs](https://nf-co.re/multiplesequencealign/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
-                },
-                "seqs": {
-                    "type": "string",
-                    "format": "file-path",
-                    "exists": true,
-                    "description": "Path to the input fasta file.",
-                    "help_text": "Path to the input fasta file, it can be used in alternative to using the input samplesheet.",
-                    "fa_icon": "fas fa-folder-open"
                 },
                 "tools": {
                     "type": "string",
@@ -47,22 +39,30 @@
                     "mimetype": "text/csv",
                     "schema": "assets/schema_tools.json",
                     "pattern": "^\\S+\\.csv$",
-                    "description": "Path to comma-separated file containing information about the tools to be used in the experiment.",
-                    "help_text": "You will need to create a design file with information about the tools to be used before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/msa/usage#samplesheet-input).",
+                    "description": "Path to comma-separated file containing information about the tools to be deloyed (toolsheet).",
+                    "help_text": "You will need to create a file with information about the tools to be used before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 4 columns, and a header row. See [usage docs](https://nf-co.re/msa/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
                 },
-                "templates_suffix": {
+                "seqs": {
                     "type": "string",
-                    "description": "Suffix of the dependencies templates.",
-                    "help_text": "Suffix of the files in the accessory files directory (e.g. pdb for pdb files).",
-                    "fa_icon": "fas fa-file-signature"
+                    "format": "file-path",
+                    "exists": true,
+                    "description": "Path to the input fasta file.",
+                    "help_text": "Path to the input fasta file, it can be used in alternative to using the input samplesheet if you only have one dataset.",
+                    "fa_icon": "fas fa-folder-open"
                 },
                 "pdbs_dir": {
                     "type": "string",
                     "exists": true,
                     "description": "Path to a folder containing all the optional data files to be used (e.g. structures).",
-                    "help_text": "This is a folder with all the optional data files to be used in the pipeline.",
+                    "help_text": "This is a folder with all the optional data files to be used in the pipeline. It can be used in alternative to the samplesheet if you only have one dataset.",
                     "fa_icon": "fas fa-folder-open"
+                },
+                "templates_suffix": {
+                    "type": "string",
+                    "description": "Suffix of the files given in the optional_data directory.",
+                    "help_text": "To provide additional data (e.g. protein structures), you must provide the path of a directory where thay are stored. Here, you can provide the suffix of the files in the given directory (e.g. pdb for pdb files).",
+                    "fa_icon": "fas fa-file-signature"
                 },
                 "skip_preprocessing": {
                     "type": "boolean",
@@ -95,39 +95,8 @@
                 }
             }
         },
-        "reference_genome_options": {
-            "title": "Reference genome options",
-            "type": "object",
-            "fa_icon": "fas fa-dna",
-            "description": "Reference genome related files and options required for the workflow.",
-            "properties": {
-                "genome": {
-                    "type": "string",
-                    "description": "Name of iGenomes reference.",
-                    "fa_icon": "fas fa-book",
-                    "help_text": "If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. \n\nSee the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details."
-                },
-                "fasta": {
-                    "type": "string",
-                    "format": "file-path",
-                    "exists": true,
-                    "mimetype": "text/plain",
-                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
-                    "description": "Path to FASTA genome file.",
-                    "help_text": "This parameter is *mandatory* if `--genome` is not specified. If you don't have a BWA index available this will be generated for you automatically. Combine with `--save_reference` to save BWA index for future runs.",
-                    "fa_icon": "far fa-file-code"
-                },
-                "igenomes_ignore": {
-                    "type": "boolean",
-                    "description": "Do not load the iGenomes reference config.",
-                    "fa_icon": "fas fa-ban",
-                    "hidden": true,
-                    "help_text": "Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`."
-                }
-            }
-        },
         "align_options": {
-            "title": "Stats options",
+            "title": "Align options",
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define extra alignment options.",
