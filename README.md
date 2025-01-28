@@ -42,6 +42,7 @@ Pipeline's steps:
 ### Quick start -  test run
 
 To get a feeling of what the pipeline does, run: 
+
 (No need to download or provide any file, try it!)
 ```
 nextflow run nf-core/multiplesequencealign \
@@ -54,8 +55,10 @@ nextflow run nf-core/multiplesequencealign \
 
 ## CASE 1: One input dataset, multiple tools. 
 
-If you only want to deploy a 
+If you only have one dataset and want to test the MSA tools we provide by default: 
 
+
+Your input is a fasta file? Then:  
 ```bash
 nextflow run nf-core/multiplesequencealign \
    -profile test_small,docker \
@@ -63,7 +66,7 @@ nextflow run nf-core/multiplesequencealign \
    --outdir outdir
 ```
 
-
+Your input is a directory where your PDB files are stored? Then:
 ```bash
 nextflow run nf-core/multiplesequencealign \
    -profile test_small,docker \
@@ -71,7 +74,16 @@ nextflow run nf-core/multiplesequencealign \
    --outdir outdir
 ```
 
+<details>
+  <summary> FAQ: Can I use both <em>--seqs</em> and <em>--pdbs_dir</em>? </summary>
+  Yes, go for it!
+</details>
 
+<details>
+  <summary> FAQ: How can I select which tools to run and not using your default ones? </summary>
+  Create a toolsheet and add `--tools toolsheet.csv` in the command line.
+  More instructions on how to build a toolsheet under CASE 2 and <a href="https://nf-co.re/multiplesequencealign/usage">usage</a>.
+</details>
 
 
 
@@ -80,8 +92,8 @@ nextflow run nf-core/multiplesequencealign \
 ```bash
 nextflow run nf-core/multiplesequencealign \
    -profile test,docker \
-   --input samplesheet.csv \
-   --tools toolsheet.csv \
+   --input <samplesheet.csv> \
+   --tools <toolsheet.csv> \
    --outdir outdir
 ```
 
@@ -92,7 +104,7 @@ You need **2 input files**:
 <details>
   <summary> What is a samplesheet? </summary>
   
-  The sample sheet defines the **input data** (sequences, structures, etc.) that the pipeline will process.
+  The sample sheet defines the **input datasets** (sequences, structures, etc.) that the pipeline will process.
 
   A minimal version:
 
@@ -105,12 +117,14 @@ You need **2 input files**:
   A more complete one: 
 
   ```csv
-  id,fasta,reference,optional_data,template
-  seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures,seatoxin_template.txt
-  toxin,toxin.fa,toxin-ref.fa,toxin_structures,toxin_template.txt
+  id,fasta,reference,optional_data
+  seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures
+  toxin,toxin.fa,toxin-ref.fa,toxin_structures
   ```
 
   Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be aligned and the associated (if available) reference alignments and dependency files (this can be anything from protein structure or any other information you would want to use in your favourite MSA tool).
+
+  More details at: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a>.
 
   > [!NOTE]
   > The only required input is the id column and either fasta or optional_data.
@@ -121,23 +135,35 @@ You need **2 input files**:
   <summary> What is a toolsheet? </summary>
   
   The toolsheet specifies **which combination of tools will be deployed and benchmark in the pipeline**.
-  Each line of the toolsheet defines a combination of guide tree and multiple sequence aligner to run with the respective arguments to be used.
+
+  Each line defines a combination of guide tree and multiple sequence aligner to run with the respective arguments to be used.
+
   The only required field is `aligner`. The fields `tree`, `args_tree` and `args_aligner` are optional and can be left empty.
 
   A minimal version: 
 
   ```csv
-  tree,args_tree,aligner,args_aligner,
+  tree,args_tree,aligner,args_aligner
   ,,FAMSA,
   ```
 
+  This will run the FAMSA aligner. 
+
   A more complex one: 
   ```csv
-  tree,args_tree,aligner,args_aligner,
+  tree,args_tree,aligner,args_aligner
   FAMSA, -gt upgma -medoidtree, FAMSA,
   , ,TCOFFEE,
   FAMSA,,REGRESSIVE,
   ```
+
+  This will run, in parallel: 
+  - the FAMSA guidetree with the arguments <em>-gt upgma -medoidtree</em>. This guidetree is then used as input for the FAMSA aligner. 
+  - the TCOFFEE aligner
+  - the FAMSA guidetree with default arguments. This guidetree is then used as input for the REGRESSIVE aligner. 
+
+  More details at: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a>.
+
 
   > [!NOTE]
   > The only required input is `aligner`.
