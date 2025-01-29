@@ -2,10 +2,12 @@ process LEARNMSA_ALIGN {
     tag "$meta.id"
     label 'process_medium'
 
-    conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'oras://community.wave.seqera.io/library/mmseqs2_pigz_python_pip_pruned:3ef7e1448e2bdf57' :
-        'community.wave.seqera.io/library/learnmsa_mmseqs2_pigz_scipy_pruned:d466bba19ea4dbaa' }"
+    // Exit if running this module with -profile conda / -profile mamba
+    if (workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() >= 1) {
+        error("LearnMSA align module does not support Conda. Please use Docker / Singularity / Podman instead.")
+    }
+
+    container "registry.hub.docker.com/felbecker/learnmsa:2.0.9"
 
     input:
     tuple val(meta), path(fasta)

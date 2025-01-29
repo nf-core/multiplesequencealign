@@ -385,9 +385,6 @@
             "$ref": "#/$defs/compression"
         },
         {
-            "$ref": "#/$defs/reference_genome_options"
-        },
-        {
             "$ref": "#/$defs/institutional_config_options"
         },
         {
