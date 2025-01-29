@@ -203,7 +203,9 @@ You need **2 input files**:
 
 </details>
 
-For more details: [usage documentation](https://nf-co.re/multiplesequencealign/usage) and the [parameter documentation](https://nf-co.re/multiplesequencealign/parameters).
+
+
+For more details on more advanced runs: [usage documentation](https://nf-co.re/multiplesequencealign/usage) and the [parameter documentation](https://nf-co.re/multiplesequencealign/parameters).
 
 
 > [!WARNING]
