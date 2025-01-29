@@ -50,7 +50,7 @@ nextflow run nf-core/multiplesequencealign \
    --outdir results
 ```
 
-### How to set up an easy run: 
+## How to set up an easy run: 
 
 
 ## CASE 1: One input dataset, multiple tools. 

@@ -4,98 +4,25 @@
 
 > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
 
-## Overview
 
-**nf-core/multiplesequencealign** is a pipeline to deploy and systematically evaluate Multiple Sequence Alignment (MSA) methods.
+## Running the pipeline
 
-The main steps of the pipeline are:
+The typical command for running the pipeline is as follows:
 
-1. **Input files summary**: (Optional) computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc. Skipped by the `--skip_stats` parameter.
-2. **Guide Tree**: (Optional) Renders a guide tree. Only run if provided in the toolsheet input.
-3. **Align**: aligns the sequences.
-4. **Evaluate**: (Optional) The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skipped by passing `--skip_eval` as a parameter.
-5. **Report**: Reports about the collected information of the runs are reported in a Shiny app and a summary table in MultiQC. These processes can be skipped by passing `--skip_shiny` and `--skip_multiqc`, respectively.
+```bash
+nextflow run nf-core/multiplesequencealign --input ./samplesheet.csv --tools ./toolsheet.csv --outdir ./results -profile docker
+```
 
-## 1. Input files summary statistics
+This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
 
-This step generates the summary information about the input files and can be skipped using the `--skip_stats` parameter. The optional computed metrics are:
+Note that the pipeline will create the following files in your working directory:
 
-1. **Sequence similarity**: This step calculates pairwise and average sequence similarity using TCOFFEE. Activate with `--calc_sim` (default: `false`).
-2. **General summary**: Calculates the number and the average length of sequences. Activate with `--calc_seq_stats` (default: `true`).
-3. **Extract plddt**: If the structures were generated using AF2, plddt is extracted and reported. Activate with `--extract_plddt` (default: `false`).
-
-## 2. Guide trees
-
-Guide trees define the order in which sequences and profiles are aligned and play a crucial role in determining the final MSA accuracy. Tree rendering techniques most commonly rely on pairwise distances between sequences.
-
-> **Note**
-> None of the aligners listed below need an explicit definition of a guide tree: if they require one, they compute their own default guide tree. However, an explicit definition of a guide tree is available in case you want to test non-default combination of guide trees and aligner methods.
-
-Currently available GUIDE TREE methods are: (Optional):
-
-- [CLUSTALO](http://clustal.org/omega/#Documentation)
-- [FAMSA](https://github.com/refresh-bio/FAMSA)
-- [MAFFT](https://mafft.cbrc.jp/alignment/server/index.html)
-
-### 3. Align
-
-The available assembly methods are listed below (those that accept guide trees indicate it in parentheses):
-
-**sequence-based** (only require a fasta file as input):
-
-- [CLUSTALO](http://clustal.org/omega/#Documentation) (accepts guide tree)
-- [FAMSA](https://github.com/refresh-bio/FAMSA) (accepts guide tree)
-- [KALIGN](https://github.com/TimoLassmann/kalign)
-- [LEARNMSA](https://github.com/Gaius-Augustus/learnMSA)
-- [MAFFT](https://mafft.cbrc.jp/alignment/server/index.html)
-- [MAGUS](https://github.com/vlasmirnov/MAGUS) (accepts guide tree)
-- [MUSCLE5](https://drive5.com/muscle5/manual/)
-- [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) (accepts guide tree)
-- [REGRESSIVE](https://tcoffee.readthedocs.io/en/latest/tcoffee_quickstart_regressive.html) (accepts guide tree)
-- [UPP](https://github.com/smirarab/sepp) (accepts guide tree)
-
-**sequence- and structure-based** (require both fasta and structures as input):
-
-- [3DCOFFEE](https://tcoffee.org/Projects/expresso/index.html) (accepts guide tree)
-
-**structure-based** (only require stuctures as input):
-
-- [MTMALIGN](https://bio.tools/mtm-align)
-- [FOLDMASON](https://github.com/steineggerlab/foldmason)
-
-Optionally, [M-COFFEE](https://tcoffee.org/Projects/mcoffee/index.html) will combine the output of all alignments into a consensus MSA (`--build_consensus`).
-
-### 4. Evaluate
-
-Optionally, the produced MSAs will be evaluated. This step can be skipped using the `--skip_eval` parameter. The evaluations implemented are listed below.
-
-**sequence-based** (no extra input required):
-
-1. **Number of gaps**. Calculates the number of gaps and its average across sequences. Activate using `--calc_gaps` (default: `true`).
-
-**reference-based**:
-
-The reference MSAs (see samplesheet) are used to evaluate the quality of the produced MSA.
-
-2. **Sum Of Pairs (SP)**. Calculates the SP score using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#comparing-alternative-alignments) implementation. Activated using `--calc_sp` (default: `true`).
-3. **Total column (TC)**. Calculates the TC score [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#comparing-alternative-alignments). Activate using `--calc_tc` (default: `true`).
-
-**structure-based**:
-
-The provided structures (see samplesheet) are used to evaluate the quality of the alignment.
-
-4. **iRMSD**: Calculates the iRMSD using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#apdb-irmsd) implementation. Activate using `--calc_irmsd` (default: false).
-
-### 5. Report
-
-Finally, a summary table with all the computed statistics and evaluations is reported in MultiQC (skip by using `--skip_multiqc`).
-Moreover, a Shiny app is generated with interactive summary plots (skip with `--skip_shiny`).
-
-If structures are provided, the [Foldmason](https://github.com/steineggerlab/foldmason) visualizatin will be rendered (skip with `--skip_visualisation`).
-
-:::warning
-You will need to have [Shiny](https://shiny.posit.co/py/) installed to run it! See [output documentation](https://nf-co.re/multiplesequencealign/output) for more info.
-:::
+```bash
+work                # Directory containing the nextflow working files
+<OUTDIR>            # Finished results in specified location (defined with --outdir)
+.nextflow_log       # Log file from Nextflow
+# Other nextflow hidden files, eg. history of pipeline runs and old logs.
+```
 
 ## Samplesheet input
 
@@ -160,24 +87,90 @@ Finally, the arguments to the aligner tool can be set by using the `args_aligner
 | `aligner`      | Required. Tool to run the alignment. Available options listed above.             |
 | `args_aligner` | Optional. Arguments to the alignment tool.                                       |
 
-## Running the pipeline
 
-The typical command for running the pipeline is as follows:
+## 1. Input files summary statistics
 
-```bash
-nextflow run nf-core/multiplesequencealign --input ./samplesheet.csv --tools ./toolsheet.csv --outdir ./results -profile docker
-```
+This step generates the summary information about the input files and can be skipped using the `--skip_stats` parameter. The optional computed metrics are:
 
-This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
+1. **Sequence similarity**: This step calculates pairwise and average sequence similarity using TCOFFEE. Activate with `--calc_sim` (default: `false`).
+2. **General summary**: Calculates the number and the average length of sequences. Activate with `--calc_seq_stats` (default: `true`).
+3. **Extract plddt**: If the structures were generated using AF2, plddt is extracted and reported. Activate with `--extract_plddt` (default: `false`).
 
-Note that the pipeline will create the following files in your working directory:
+## 2. Guide trees
 
-```bash
-work                # Directory containing the nextflow working files
-<OUTDIR>            # Finished results in specified location (defined with --outdir)
-.nextflow_log       # Log file from Nextflow
-# Other nextflow hidden files, eg. history of pipeline runs and old logs.
-```
+Guide trees define the order in which sequences and profiles are aligned and play a crucial role in determining the final MSA accuracy. Tree rendering techniques most commonly rely on pairwise distances between sequences.
+
+> **Note**
+> None of the aligners listed below need an explicit definition of a guide tree: if they require one, they compute their own default guide tree. However, an explicit definition of a guide tree is available in case you want to test non-default combination of guide trees and aligner methods.
+
+Currently available GUIDE TREE methods are: (Optional):
+
+- [CLUSTALO](http://clustal.org/omega/#Documentation)
+- [FAMSA](https://github.com/refresh-bio/FAMSA)
+- [MAFFT](https://mafft.cbrc.jp/alignment/server/index.html)
+
+## 3. Align
+
+The available assembly methods are listed below (those that accept guide trees indicate it in parentheses):
+
+**sequence-based** (only require a fasta file as input):
+
+- [CLUSTALO](http://clustal.org/omega/#Documentation) (accepts guide tree)
+- [FAMSA](https://github.com/refresh-bio/FAMSA) (accepts guide tree)
+- [KALIGN](https://github.com/TimoLassmann/kalign)
+- [LEARNMSA](https://github.com/Gaius-Augustus/learnMSA)
+- [MAFFT](https://mafft.cbrc.jp/alignment/server/index.html)
+- [MAGUS](https://github.com/vlasmirnov/MAGUS) (accepts guide tree)
+- [MUSCLE5](https://drive5.com/muscle5/manual/)
+- [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) (accepts guide tree)
+- [REGRESSIVE](https://tcoffee.readthedocs.io/en/latest/tcoffee_quickstart_regressive.html) (accepts guide tree)
+- [UPP](https://github.com/smirarab/sepp) (accepts guide tree)
+
+**sequence- and structure-based** (require both fasta and structures as input):
+
+- [3DCOFFEE](https://tcoffee.org/Projects/expresso/index.html) (accepts guide tree)
+
+**structure-based** (only require stuctures as input):
+
+- [MTMALIGN](https://bio.tools/mtm-align)
+- [FOLDMASON](https://github.com/steineggerlab/foldmason)
+
+Optionally, [M-COFFEE](https://tcoffee.org/Projects/mcoffee/index.html) will combine the output of all alignments into a consensus MSA (`--build_consensus`).
+
+## 4. Evaluate
+
+Optionally, the produced MSAs will be evaluated. This step can be skipped using the `--skip_eval` parameter. The evaluations implemented are listed below.
+
+**sequence-based** (no extra input required):
+
+1. **Number of gaps**. Calculates the number of gaps and its average across sequences. Activate using `--calc_gaps` (default: `true`).
+
+**reference-based**:
+
+The reference MSAs (see samplesheet) are used to evaluate the quality of the produced MSA.
+
+2. **Sum Of Pairs (SP)**. Calculates the SP score using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#comparing-alternative-alignments) implementation. Activated using `--calc_sp` (default: `true`).
+3. **Total column (TC)**. Calculates the TC score [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#comparing-alternative-alignments). Activate using `--calc_tc` (default: `true`).
+
+**structure-based**:
+
+The provided structures (see samplesheet) are used to evaluate the quality of the alignment.
+
+4. **iRMSD**: Calculates the iRMSD using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#apdb-irmsd) implementation. Activate using `--calc_irmsd` (default: false).
+
+## 5. Report
+
+Finally, a summary table with all the computed statistics and evaluations is reported in MultiQC (skip by using `--skip_multiqc`).
+Moreover, a Shiny app is generated with interactive summary plots (skip with `--skip_shiny`).
+
+If structures are provided, the [Foldmason](https://github.com/steineggerlab/foldmason) visualizatin will be rendered (skip with `--skip_visualisation`).
+
+:::warning
+You will need to have [Shiny](https://shiny.posit.co/py/) installed to run it! See [output documentation](https://nf-co.re/multiplesequencealign/output) for more info.
+:::
+
+
+## Using profiles for advanced runs
 
 If you wish to repeatedly use the same parameters for multiple runs, rather than specifying each flag in the command, you can specify these in a params file.
 
