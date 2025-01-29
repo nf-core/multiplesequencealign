@@ -166,6 +166,11 @@ workflow PIPELINE_COMPLETION {
         def trace_dir_path = "${outdir}/pipeline_info/"
         def versions_path = "${trace_dir_path}/nf_core_multiplesequencealign_software_mqc_versions.yml"
 
+        // If the summary file does not exis, we skip the merging of the summary and trace files
+        if (!new File(summary_file).exists()) {
+            return
+        }
+
         if (shiny_trace_mode) {
             merge_summary_and_traces(summary_file, trace_dir_path, versions_path, summary_file_with_traces, "${shiny_dir_path}/complete_summary_stats_eval_times.csv")
         }else{

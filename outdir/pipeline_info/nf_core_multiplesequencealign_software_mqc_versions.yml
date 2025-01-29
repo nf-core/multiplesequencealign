@@ -1,0 +1,9 @@
+CLUSTALO_GUIDETREE:
+  clustalo: 1.2.4
+FAMSA_ALIGN:
+  famsa: 2.2.2- (2022-10-09)
+FASTAVALIDATOR:
+  py_fasta_validator: 0.6
+Workflow:
+    nf-core/multiplesequencealign: v1.1.0dev
+    Nextflow: 24.10.2
