@@ -132,6 +132,7 @@ workflow PIPELINE_COMPLETION {
     monochrome_logs  // boolean: Disable ANSI colour codes in log output
     hook_url         //  string: hook URL for notifications
     multiqc_report   //  string: Path to MultiQC report
+    summary          //  string: Path to summary file
     shiny_dir_path   //  string: Path to shiny stats file
     trace_dir_path   //  string: Path to trace file
     shiny_trace_mode // string: Mode to use for shiny trace file (default: "latest", options: "latest", "all")
@@ -139,6 +140,10 @@ workflow PIPELINE_COMPLETION {
     main:
     summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
     def multiqc_reports = multiqc_report.toList()
+    
+
+    def summary_reports = summary.toList()
+    //print(summary_reports)
 
     //
     // Completion email and summary
@@ -156,15 +161,27 @@ workflow PIPELINE_COMPLETION {
             )
         }
 
+        println summary_reports.getVal()
+        print(multiqc_reports.getVal())
         completionSummary(monochrome_logs)
         if (hook_url) {
             imNotification(summary_params, hook_url)
         }
 
+        // check if summary report is empty 
+        if (summary_reports.getVal().isEmpty()) {
+            return
+        }
+
+
         def summary_file = "${outdir}/summary/complete_summary_stats_eval.csv"
-        def summary_file_with_traces = "${outdir}/summary/complete_summary_stats_eval_times.csv"
-        def trace_dir_path = "${outdir}/pipeline_info/"
         def versions_path = "${trace_dir_path}/nf_core_multiplesequencealign_software_mqc_versions.yml"
+
+        // Input files 
+        def trace_dir_path = "${outdir}/pipeline_info/"
+
+        // Output file naming
+        def summary_file_with_traces = "${outdir}/summary/complete_summary_stats_eval_times.csv"
 
         // If the summary file does not exis, we skip the merging of the summary and trace files
         if (!new File(summary_file).exists()) {

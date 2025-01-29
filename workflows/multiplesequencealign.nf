@@ -59,15 +59,17 @@ workflow MULTIPLESEQUENCEALIGN {
     ch_tools    // channel: [ val(guide_tree_tool), val(args_guide_tree_tool), val(alignment_tool), val(args_alignment_tool) ]
 
     main:
-    ch_multiqc_files             = Channel.empty()
-    multiqc_report               = Channel.empty()
-    evaluation_summary           = Channel.empty()
-    stats_summary                = Channel.empty()
-    stats_and_evaluation_summary = Channel.empty()
-    ch_refs                      = Channel.empty()
-    ch_templates                 = Channel.empty()
-    ch_optional_data             = Channel.empty()
-    ch_versions                  = Channel.empty()
+    ch_multiqc_files                = Channel.empty()
+    ch_multiqc_report               = Channel.empty()
+    evaluation_summary              = Channel.empty()
+    stats_summary                   = Channel.empty()
+    stats_and_evaluation_summary    = Channel.empty()
+    ch_refs                         = Channel.empty()
+    ch_templates                    = Channel.empty()
+    ch_optional_data                = Channel.empty()
+    ch_versions                     = Channel.empty()
+    ch_stats_and_evaluation_summary = Channel.empty()
+
 
     ch_input
         .filter { it[1].size() > 0}
@@ -318,12 +320,13 @@ workflow MULTIPLESEQUENCEALIGN {
             [],
             []
         )
-        multiqc_report = MULTIQC.out.multiqc_report
+        ch_multiqc_report = MULTIQC.out.report.toList()
     }
 
     emit:
-    multiqc_report = multiqc_report// channel: /path/to/multiqc_report.html
-    versions       = ch_versions                 // channel: [ path(versions.yml) ]
+    multiqc_report = ch_multiqc_report                   // channel: /path/to/multiqc_report.html
+    summary        = ch_stats_and_evaluation_summary
+    versions       = ch_versions                     // channel: [ path(versions.yml) ]
 
 }
 
