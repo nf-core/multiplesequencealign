@@ -23,17 +23,15 @@ process LEARNMSA_ALIGN {
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def write_output = compress ? ">(pigz -cp ${task.cpus} > ${prefix}.aln.gz)" : "${prefix}.aln"
     """
     learnMSA \\
         -i $fasta \\
-        -o $write_output \\
+        -o "${prefix}.aln" \\
         $args
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         learnmsa: \$(learnMSA -h | grep 'version' | awk -F 'version ' '{print \$2}' | awk '{print \$1}' | sed 's/)//g')
-        pigz: \$(echo \$(pigz --version 2>&1) | sed 's/^.*pigz\\w*//' ))
     END_VERSIONS
     """
 
@@ -46,7 +44,6 @@ process LEARNMSA_ALIGN {
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         learnmsa: \$(learnMSA -h | grep 'version' | awk -F 'version ' '{print \$2}' | awk '{print \$1}' | sed 's/)//g')
-        pigz: \$(echo \$(pigz --version 2>&1) | sed 's/^.*pigz\\w*//' ))
     END_VERSIONS
     """
 }
