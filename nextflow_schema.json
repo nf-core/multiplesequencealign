@@ -5,8 +5,8 @@
     "description": "Pipeline to run and benchmark multiple sequence alignment tools.",
     "type": "object",
     "$defs": {
-        "input_output_options": {
-            "title": "Input/output options",
+        "input_data_options": {
+            "title": "Basic Input/output options",
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
@@ -32,16 +32,11 @@
                     "help_text": "You will need to create a file with information about the datasets before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with maximum 5 columns, and a header row. See [usage docs](https://nf-co.re/multiplesequencealign/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
                 },
-                "tools": {
+                "outdir": {
                     "type": "string",
-                    "format": "file-path",
-                    "exists": true,
-                    "mimetype": "text/csv",
-                    "schema": "assets/schema_tools.json",
-                    "pattern": "^\\S+\\.csv$",
-                    "description": "Path to comma-separated file containing information about the tools to be deloyed (toolsheet).",
-                    "help_text": "You will need to create a file with information about the tools to be used before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 4 columns, and a header row. See [usage docs](https://nf-co.re/msa/usage#samplesheet-input).",
-                    "fa_icon": "fas fa-file-csv"
+                    "format": "directory-path",
+                    "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
+                    "fa_icon": "fas fa-folder-open"
                 },
                 "seqs": {
                     "type": "string",
@@ -65,11 +60,98 @@
                     "help_text": "To provide additional data (e.g. protein structures), you must provide the path of a directory where thay are stored. Here, you can provide the suffix of the files in the given directory (e.g. pdb for pdb files).",
                     "fa_icon": "fas fa-file-signature"
                 },
+                "email": {
+                    "type": "string",
+                    "description": "Email address for completion summary.",
+                    "fa_icon": "fas fa-envelope",
+                    "help_text": "Set this parameter to your e-mail address to get a summary e-mail with details of the run sent to you when the workflow exits. If set in your user config file (`~/.nextflow/config`) then you don't need to specify this on the command line for every run.",
+                    "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
+                },
+                "multiqc_title": {
+                    "type": "string",
+                    "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
+                    "fa_icon": "fas fa-file-signature"
+                }
+            }
+        },
+        "input_tools_options": {
+            "title": "Tools input options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define which tools the pipeline should deploy.",
+            "oneOf": [
+                {"required": ["tools"]}, 
+                {"required": ["aligner"]}
+            ],
+            "properties": {
+                "tools": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "mimetype": "text/csv",
+                    "schema": "assets/schema_tools.json",
+                    "pattern": "^\\S+\\.csv$",
+                    "description": "Path to comma-separated file containing information about the tools to be deloyed (toolsheet).",
+                    "help_text": "You will need to create a file with information about the tools to be used before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 4 columns, and a header row. See [usage docs](https://nf-co.re/msa/usage#samplesheet-input).",
+                    "fa_icon": "fas fa-file-csv"
+                },
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",
                     "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
                     "fa_icon": "fas fa-folder-open"
+                },
+                "seqs": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "description": "Path to the input fasta file.",
+                    "help_text": "Path to the input fasta file, it can be used in alternative to using the input samplesheet if you only have one dataset.",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "pdbs_dir": {
+                    "type": "string",
+                    "exists": true,
+                    "description": "Path to a folder containing all the optional data files to be used (e.g. structures).",
+                    "help_text": "This is a folder with all the optional data files to be used in the pipeline. It can be used in alternative to the samplesheet if you only have one dataset.",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "tree": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Tool to use for tree building.",
+                    "enum": [ "FAMSA", "CLUSTALO", "MAFFT"],
+                    "fa_icon": "fas fa-terminal", 
+                    "help_text": "The tool to be used for tree building. If not set, the tree will not be built. This parameter is meant to be used in alternative to the toolsheet, in case you want to deploy only one tool."
+                },
+                "args_tree": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Extra arguments for the tree building tool.",
+                    "fa_icon": "fas fa-terminal",
+                    "help_text": "Extra arguments to be passed to the tree building tool. This parameter is meant to be used in alternative to the toolsheet, in case you want to deploy only one tool."
+                }, 
+                "aligner": {
+                    "type": "string",
+                    "default": "",
+                    "description": "The aligner to be used.",
+                    "enum": [ "CLUSTALO", "FAMSA", "KALIGN", "LEARNMSA", "MAFFT", "MAGUS", "MUSCLE5", "TCOFFEE", "REGRESSIVE", "UPP", "3DCOFFEE", "MTMALIGN", "FOLDMASON"],
+                    "fa_icon": "fas fa-terminal",
+                    "help_text": "The aligner to be used. This parameter is meant to be used in alternative to the toolsheet, in case you want to deploy only one tool."
+                },
+                "args_aligner": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Extra arguments for the aligner tool.",
+                    "fa_icon": "fas fa-terminal",
+                    "help_text": "Extra arguments to be passed to the aligner tool. This parameter is meant to be used in alternative to the toolsheet, in case you want to deploy only one tool."
+                },
+                "templates_suffix": {
+                    "type": "string",
+                    "default": ".pdb",
+                    "description": "Suffix of the files given in the optional_data directory.",
+                    "help_text": "To provide additional data (e.g. protein structures), you must provide the path of a directory where thay are stored. Here, you can provide the suffix of the files in the given directory (e.g. pdb for pdb files).",
+                    "fa_icon": "fas fa-file-signature"
                 },
                 "email": {
                     "type": "string",
@@ -390,7 +472,10 @@
     },
     "allOf": [
         {
-            "$ref": "#/$defs/input_output_options"
+            "$ref": "#/$defs/input_data_options"
+        },
+        {
+            "$ref": "#/$defs/input_tools_options"
         },
         {
             "$ref": "#/$defs/global_options"

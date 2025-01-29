@@ -19,20 +19,40 @@
 
 ## Introduction
 
-**nf-core/multiplesequencealign** can: 
+Use **nf-core/multiplesequencealign** to: 
 
 1. **Deploy** one (or many in parallel) of the most popular Multiple Sequence Alignment (MSA) tools.
-2. **Benchmark** MSA tools using various metrics. 
+2. **Benchmark** MSA tools (and their inputs) using various metrics. 
+
+
+Main steps:
+  <details>
+      <summary><strong>Inputs summary</strong> (Optional)</summary>
+      <p>Computation of summary statistics on the input files (e.g., average sequence similarity across the input sequences, their length, pLDDT extraction if available).</p>
+  </details>
+
+  <details>
+      <summary><strong>Guide Tree</strong> (Optional)</summary>
+      <p>Renders a guide tree with a chosen tool (list available in <a href="docs/usage.md#2-guide-trees">usage</a>). Some aligners use guide trees to define the order in which the sequences are aligned.</p>
+  </details>
+
+  <details>
+      <summary><strong>Align</strong> (Required)</summary>
+      <p>Aligns the sequences with a chosen tool (list available in <a href="docs/usage.md#3-align">usage</a>).</p>
+  </details>
+
+  <details>
+      <summary><strong>Evaluate</strong> (Optional)</summary>
+      <p>Evaluates the generated alignments with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.</p>
+  </details>
+
+  <details>
+      <summary><strong>Report</strong>(Optional)</summary>
+      <p>Reports the collected information of the runs in a Shiny app and a summary table in MultiQC. Optionally, it can also render the <a href="https://github.com/steineggerlab/foldmason">Foldmason</a> MSA visualization in HTML format.</p>
+  </details>
 
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 
-Pipeline's steps:
-
-1. **Inputs summary**: (Optional) computation of summary statistics on the input files (e.g average sequence similarity across the input sequences, their length, plddt extraction if available).
-2. **Guide Tree**: (Optional) Renders a guide tree with a chosen tool (list available in [usage](docs/usage.md#2-guide-trees)). Some aligners use guide trees to define the order in which the sequences are aligned.
-3. **Align**: (Required) Aligns the sequences with a chosen tool (list available in [usage](docs/usage.md#3-align)).
-4. **Evaluate**: (Optional) Evaluates the generated alignments with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.
-5. **Report**: Reports the collected information of the runs in a Shiny app and a summary table in MultiQC. Optionally, it can also render the [Foldmason](https://github.com/steineggerlab/foldmason) MSA visualization in html format.
 
 ## Usage
 
@@ -53,16 +73,17 @@ nextflow run nf-core/multiplesequencealign \
 ## How to set up an easy run: 
 
 
-## CASE 1: One input dataset, multiple tools. 
+### CASE 1: One input dataset, one tool. 
 
-If you only have one dataset and want to test the MSA tools we provide by default: 
+If you only have one dataset and want align it using one specific MSA tool (e.g. FAMSA or FOLDMASON): 
 
 
 Your input is a fasta file? Then:  
 ```bash
 nextflow run nf-core/multiplesequencealign \
-   -profile test_small,docker \
-   --seqs <YOUR_FASTA.fa> 
+   -profile docker \
+   --seqs <YOUR_FASTA.fa> \
+   --aligner FAMSA \
    --outdir outdir
 ```
 
@@ -70,24 +91,36 @@ Your input is a directory where your PDB files are stored? Then:
 ```bash
 nextflow run nf-core/multiplesequencealign \
    -profile test_small,docker \
-   --pdbs_dir <PATH_TO_YOUR_PDB_DIR> 
+   --pdbs_dir <PATH_TO_YOUR_PDB_DIR> \
+   --aligner FOLDMASON \
    --outdir outdir
 ```
 
+
+<details>
+  <summary> FAQ: Which are the available tools I can use? </summary>
+  Check the list here: <a href="https://nf-co.re/multiplesequencealign/usage/#2-guide-trees"> available tools</a>.
+</details>
+
 <details>
   <summary> FAQ: Can I use both <em>--seqs</em> and <em>--pdbs_dir</em>? </summary>
-  Yes, go for it!
+  Yes, go for it! This might be useful if you want a structural evaluation of a sequence-based aligner for instance. 
 </details>
 
 <details>
-  <summary> FAQ: How can I select which tools to run and not using your default ones? </summary>
-  Create a toolsheet and add `--tools toolsheet.csv` in the command line.
-  More instructions on how to build a toolsheet under CASE 2 and <a href="https://nf-co.re/multiplesequencealign/usage">usage</a>.
+  <summary> FAQ: Can I specify also which guidetree to use? </summary>
+  Yes, use the --tree flag. More info: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a> and <a href="https://nf-co.re/multiplesequencealign/parameters">parameters</a>.
+</details>
+
+<details>
+  <summary> FAQ: Can I specify the arguments of the tools (tree and aligner)? </summary>
+  Yes, use the --args_tree and --args_aligner flags. More info: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a> and <a href="https://nf-co.re/multiplesequencealign/parameters">parameters</a>.
 </details>
 
 
 
-## CASE 2: Multiple datasets, multiple tools. 
+
+### CASE 2: Multiple datasets, multiple tools. 
 
 ```bash
 nextflow run nf-core/multiplesequencealign \
@@ -124,7 +157,7 @@ You need **2 input files**:
 
   Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be aligned and the associated (if available) reference alignments and dependency files (this can be anything from protein structure or any other information you would want to use in your favourite MSA tool).
 
-  More details at: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a>.
+  Please check: <a href="https://nf-co.re/multiplesequencealign/usage/#samplesheet-input">usage</a>.
 
   > [!NOTE]
   > The only required input is the id column and either fasta or optional_data.
@@ -162,7 +195,7 @@ You need **2 input files**:
   - the TCOFFEE aligner
   - the FAMSA guidetree with default arguments. This guidetree is then used as input for the REGRESSIVE aligner. 
 
-  More details at: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a>.
+  Please check: <a href="https://nf-co.re/multiplesequencealign/usage/#toolsheet-input">usage</a>.
 
 
   > [!NOTE]

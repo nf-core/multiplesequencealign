@@ -1,2 +1,2 @@
 tree,args_tree,aligner,args_aligner
-,,LEARNMSA,"--sequence_weights -b 64 --use_language_model"
+,,FAMSA,

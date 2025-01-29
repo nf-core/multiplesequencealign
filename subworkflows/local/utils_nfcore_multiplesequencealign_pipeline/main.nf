@@ -80,23 +80,35 @@ workflow PIPELINE_INITIALISATION {
         ch_input = Channel.fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
     }
 
-    ch_tools = Channel.fromList(samplesheetToList(params.tools, "${projectDir}/assets/schema_tools.json"))
-                .map {
-                    meta ->
-                        def meta_clone = meta[0].clone()
-                        def tree_map = [:]
-                        def align_map = [:]
+    if (params.aligner){
 
-                        tree_map["tree"] = Utils.clean_tree(meta_clone["tree"])
-                        tree_map["args_tree"] = meta_clone["args_tree"]
-                        tree_map["args_tree_clean"] = Utils.cleanArgs(meta_clone.args_tree)
+        ch_tools = Channel.fromList([
+            [["aligner": params.aligner, "tree": params.tree, "args_tree": params.args_tree, "args_aligner": params.args_aligner]]
+        ])
 
-                        align_map["aligner"] = meta_clone["aligner"]
-                        align_map["args_aligner"] = Utils.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
-                        align_map["args_aligner_clean"] = Utils.cleanArgs(meta_clone.args_aligner)
+    }else{
 
-                        [ tree_map, align_map ]
-                }.unique()
+        Channel.fromList(samplesheetToList(params.tools, "${projectDir}/assets/schema_tools.json")).set{ ch_tools }
+    
+    }
+
+    ch_tools.map {
+                meta ->
+                    def meta_clone = meta[0].clone()
+                    def tree_map = [:]
+                    def align_map = [:]
+
+                    tree_map["tree"] = Utils.clean_tree(meta_clone["tree"])
+                    tree_map["args_tree"] = meta_clone["args_tree"]
+                    tree_map["args_tree_clean"] = Utils.cleanArgs(meta_clone.args_tree)
+
+                    align_map["aligner"] = meta_clone["aligner"].toString().toUpperCase()
+                    align_map["args_aligner"] = Utils.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
+                    align_map["args_aligner_clean"] = Utils.cleanArgs(meta_clone.args_aligner)
+
+                    [ tree_map, align_map ]
+            }.unique()
+            .set{ ch_tools }
 
     emit:
     samplesheet = ch_input
@@ -681,8 +693,6 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
         mergedData << mergedRow
     }
 
-    print("Merged data: ${mergedData}")
-
     // Save the merged data to a file
     saveMapToCsv(mergedData, outFileName)
     saveMapToCsv(mergedData, shinyOutFileName)
@@ -709,7 +719,7 @@ class Utils {
 
     public static clean_tree(argsTree){
 
-        def tree = argsTree.toString()
+        def tree = argsTree.toString().toUpperCase()
         if(tree == null || tree == "" || tree == "null"){
             return "DEFAULT"
         }
