@@ -1,0 +1,218 @@
+<!--
+  ~ Copyright 2013-2024, Seqera Labs
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+</head>
+<body>
+<pre class="mermaid" style="text-align: center;">
+flowchart TB
+    subgraph " "
+    v2["Channel.fromList"]
+    v3["Channel.fromList"]
+    v29["Channel.fromPath"]
+    v100["hmm_in"]
+    v101["hmm_batch"]
+    v102["profile1"]
+    v103["profile2"]
+    v104["compress"]
+    v110["compress"]
+    v116["compress"]
+    v122["compress"]
+    v128[" "]
+    v129[" "]
+    v130[" "]
+    v131[" "]
+    v132[" "]
+    v133["compress"]
+    v139["compress"]
+    v145["compress"]
+    v152[" "]
+    v153["compress"]
+    v160[" "]
+    v161["compress"]
+    v167["compress"]
+    v176["compress"]
+    v183["compress"]
+    v192["compress"]
+    v203["Channel.of"]
+    end
+    subgraph " "
+    v25["ch_refs"]
+    v28["ch_templates"]
+    v38[" "]
+    v39[" "]
+    v45[" "]
+    v50[" "]
+    v52[" "]
+    v63[" "]
+    v64[" "]
+    v89[" "]
+    v155[" "]
+    v178[" "]
+    v185[" "]
+    v191[" "]
+    v194[" "]
+    v196["msa"]
+    v211[" "]
+    end
+    subgraph NFCORE_MULTIPLESEQUENCEALIGN
+    subgraph MULTIPLESEQUENCEALIGN
+    v31([UNTAR])
+    v37([FASTAVALIDATOR])
+    subgraph ALIGN
+    subgraph COMPUTE_TREES
+    v60([CUSTOM_PDBSTOFASTA])
+    v62([FASTAVALIDATOR])
+    v70([FAMSA_GUIDETREE])
+    v73([CLUSTALO_GUIDETREE])
+    v77([MAFFT_GUIDETREE])
+    v4(( ))
+    end
+    v105([CLUSTALO_ALIGN])
+    v111([FAMSA_ALIGN])
+    v117([KALIGN_ALIGN])
+    v123([LEARNMSA_ALIGN])
+    v134([MAFFT_ALIGN])
+    v140([MAGUS_ALIGN])
+    v146([MUSCLE5_SUPER5])
+    v154([TCOFFEE_ALIGN])
+    v162([TCOFFEE_REGRESSIVE])
+    v168([UPP_ALIGN])
+    v177([TCOFFEE3D_ALIGN])
+    v184([MTMALIGN_ALIGN])
+    v193([FOLDMASON_EASYMSA])
+    v106(( ))
+    end
+    v30(( ))
+    v34(( ))
+    end
+    end
+    v23(( ))
+    v26(( ))
+    v2 --> v4
+    v2 --> v23
+    v2 --> v26
+    v3 --> v4
+    v23 --> v25
+    v26 --> v28
+    v29 --> v30
+    v30 --> v31
+    v31 --> v4
+    v31 --> v34
+    v4 --> v37
+    v37 --> v39
+    v37 --> v38
+    v37 --> v34
+    v4 --> v45
+    v4 --> v50
+    v4 --> v52
+    v4 --> v60
+    v60 --> v62
+    v60 --> v4
+    v60 --> v34
+    v62 --> v64
+    v62 --> v63
+    v62 --> v34
+    v4 --> v70
+    v70 --> v4
+    v70 --> v34
+    v4 --> v73
+    v73 --> v4
+    v73 --> v34
+    v4 --> v77
+    v77 --> v4
+    v77 --> v34
+    v4 --> v89
+    v100 --> v105
+    v101 --> v105
+    v102 --> v105
+    v103 --> v105
+    v104 --> v105
+    v4 --> v105
+    v105 --> v34
+    v105 --> v106
+    v110 --> v111
+    v4 --> v111
+    v111 --> v34
+    v111 --> v106
+    v116 --> v117
+    v4 --> v117
+    v117 --> v34
+    v117 --> v106
+    v122 --> v123
+    v4 --> v123
+    v123 --> v34
+    v123 --> v106
+    v128 --> v134
+    v129 --> v134
+    v130 --> v134
+    v131 --> v134
+    v132 --> v134
+    v133 --> v134
+    v4 --> v134
+    v134 --> v34
+    v134 --> v106
+    v139 --> v140
+    v4 --> v140
+    v140 --> v34
+    v140 --> v106
+    v145 --> v146
+    v4 --> v146
+    v146 --> v34
+    v146 --> v106
+    v152 --> v154
+    v153 --> v154
+    v4 --> v154
+    v154 --> v155
+    v154 --> v34
+    v154 --> v106
+    v160 --> v162
+    v161 --> v162
+    v4 --> v162
+    v162 --> v34
+    v162 --> v106
+    v167 --> v168
+    v4 --> v168
+    v168 --> v34
+    v168 --> v106
+    v176 --> v177
+    v4 --> v177
+    v177 --> v178
+    v177 --> v34
+    v177 --> v106
+    v183 --> v184
+    v4 --> v184
+    v184 --> v185
+    v184 --> v34
+    v184 --> v106
+    v4 --> v191
+    v192 --> v193
+    v4 --> v193
+    v193 --> v194
+    v193 --> v34
+    v193 --> v106
+    v106 --> v196
+    v203 --> v34
+    v34 --> v211
+
+</pre>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, maxTextSize: Number.MAX_SAFE_INTEGER, maxEdges: Number.MAX_SAFE_INTEGER });
+</script>
+</body>
+</html>

@@ -166,9 +166,6 @@ workflow MULTIPLESEQUENCEALIGN {
                 .map { dep_id, dep, fasta_id -> [ fasta_id, dep ] }
                 .groupTuple(by: 0)
                 .set { ch_optional_data }
-
-
-            ch_optional_data.view()
         }
 
     } else {
@@ -225,8 +222,7 @@ workflow MULTIPLESEQUENCEALIGN {
     def render_templates = false
     ch_tools.map { meta, meta2 ->
             meta2["aligner"]
-        }
-        .filter { it == "3DCOFFEE" }.view()
+        }.filter { it == "3DCOFFEE" }
         .count().map{
             if(it > 0) {
                 render_templates = true
@@ -242,12 +238,10 @@ workflow MULTIPLESEQUENCEALIGN {
             "${params.templates_suffix}"
         )
         ch_optional_data_template = TEMPLATES.out.optional_data_template  
-        ch_optional_data_template.view()
     }else{
         ch_optional_data_template = ch_optional_data.map{
             meta, data -> [meta, data, []]
         }
-        ch_optional_data_template.view()
     }
 
     //

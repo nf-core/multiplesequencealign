@@ -102,7 +102,6 @@ workflow ALIGN {
         }
         .set { ch_fasta_trees }
 
-
     // tools that accept only optional data
     ch_optional_data.combine(ch_tools)
         .map {
@@ -113,6 +112,8 @@ workflow ALIGN {
             mtmalign: it[0]["aligner"] == "MTMALIGN"
         }
         .set { ch_optional_data_tools }
+
+    
 
 
     // tools that accept optional data and tree
@@ -133,6 +134,7 @@ workflow ALIGN {
             foldmason: it[0]["aligner"] == "FOLDMASON"
         }
         .set { ch_optional_data_tools_tree }
+    
 
     // ------------------------------------------------
     // Compute the alignments
@@ -363,7 +365,6 @@ workflow ALIGN {
             }
             .set { ch_pdb_foldmason }
 
-        ch_pdb_foldmason.pdbs.view()
         FOLDMASON_EASYMSA (
             ch_pdb_foldmason.pdbs,
             ch_pdb_foldmason.trees,
