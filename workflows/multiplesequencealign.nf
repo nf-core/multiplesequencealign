@@ -217,31 +217,13 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // TEMPLATES
     //
-     
-    // Render the templates if the aligner is 3DCOFFEE
-    def render_templates = false
-    ch_tools.map { meta, meta2 ->
-            meta2["aligner"]
-        }.filter { it == "3DCOFFEE" }
-        .count().map{
-            if(it > 0) {
-                render_templates = true
-            }else{
-                render_templates = false
-            }
-        }
 
-    if(render_templates){
-        TEMPLATES (
-            ch_optional_data,
-            ch_templates,
-            "${params.templates_suffix}"
-        )
-        ch_optional_data_template = TEMPLATES.out.optional_data_template  
-    }
-    else{
-        ch_optional_data_template = ch_optional_data.map{ meta, data -> [ meta, [], data ] }
-    }
+    TEMPLATES (
+        ch_optional_data,
+        ch_templates,
+        "${params.templates_suffix}"
+    )
+    ch_optional_data_template = TEMPLATES.out.optional_data_template  
 
     //
     // Compute summary statistics about the input sequences
