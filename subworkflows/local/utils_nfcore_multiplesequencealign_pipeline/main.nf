@@ -69,23 +69,31 @@ workflow PIPELINE_INITIALISATION {
     //
 
     // If the parameter fasta or pdb is provided, use it instead of the input samplesheet
-    if (params.seqs) {
-        // if only fasta
-        if (params.seqs) {
+    if (params.seqs || params.pdbs_dir) {
+
+        if (params.seqs || !params.pdbs_dir) {
             ch_input = Channel.fromList([
                 [ ["id": params.seqs.split("/")[-1].split("\\.")[0]], file(params.seqs), [], [], [] ]
             ])
-        } 
+        }else if(params.seqs && params.pdbs_dir){
+            ch_input = Channel.fromList([
+                [ ["id": params.seqs.split("/")[-1].split("\\.")[0]], file(params.seqs), [], file(params.pdbs_dir), [] ]
+            ])
+        }else{
+            ch_input = Channel.fromList([
+                [ ["id": params.pdbs_dir.split("/")[0]], [], [], file(params.pdbs_dir), [] ]
+            ])
+        }
+
     }else{
         ch_input = Channel.fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
     }
 
-    if (params.aligner){
 
+    if (params.aligner){
         ch_tools = Channel.fromList([
             [["aligner": params.aligner, "tree": params.tree, "args_tree": params.args_tree, "args_aligner": params.args_aligner]]
         ])
-
     }else{
 
         Channel.fromList(samplesheetToList(params.tools, "${projectDir}/assets/schema_tools.json")).set{ ch_tools }
@@ -109,6 +117,7 @@ workflow PIPELINE_INITIALISATION {
                     [ tree_map, align_map ]
             }.unique()
             .set{ ch_tools }
+
 
     emit:
     samplesheet = ch_input
@@ -555,9 +564,6 @@ def processLatestTraceFile(String traceDirPath) {
     def traceTrees = prepTrace(cleanTraceData, suffix_to_replace = "_GUIDETREE", subworkflow = "COMPUTE_TREES", keys)
     def traceAlign = prepTrace(cleanTraceData, suffix_to_replace = "_ALIGN", subworkflow = "ALIGN", keys)
 
-    print(traceTrees)
-    print(traceAlign)
-
     // Return the extracted traces as a map
     return [traceTrees: traceTrees, traceAlign: traceAlign]
 }
@@ -714,8 +720,6 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     data.each { row ->
         def treeMatch = trace_file.traceTrees.find { it.id == row.id && it.tree == row.tree && it.args_tree_clean == row.args_tree_clean}
         def alignMatch = trace_file.traceAlign.find { it.id == row.id && it.aligner == row.aligner && it.args_aligner_clean == row.args_aligner_clean}
-        print(alignMatch)
-        print(row)
         def mergedRow = row + (treeMatch ?: [:]) + (alignMatch ?: [:])
         mergedData << mergedRow
     }

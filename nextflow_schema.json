@@ -197,6 +197,13 @@
                     "description": "Skip the validation of the input files.",
                     "fa_icon": "fas fa-fast-forward",
                     "help_text": "Skip the validation of the input files. This is not recommended, as it can lead to errors in the pipeline."
+                },
+                "skip_pdbconversion":{
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Skip the conversion of pdb files to fasta.",
+                    "fa_icon": "fas fa-fast-forward",
+                    "help_text": "Skip the conversion of pdb files to fasta. PDBs are converted if they are the only input file (no fasta) and are wished to be used either to run sequence-based aligners or sequence-based stats of the input files."
                 }
             }
         },

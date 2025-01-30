@@ -363,6 +363,7 @@ workflow ALIGN {
             }
             .set { ch_pdb_foldmason }
 
+        ch_pdb_foldmason.pdbs.view()
         FOLDMASON_EASYMSA (
             ch_pdb_foldmason.pdbs,
             ch_pdb_foldmason.trees,

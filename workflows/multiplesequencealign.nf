@@ -29,8 +29,9 @@ include { VISUALIZATION          } from '../subworkflows/local/visualization'
 //
 // MODULE: local modules
 //
-include { PREPARE_MULTIQC } from '../modules/local/prepare_multiqc'
-include { PREPARE_SHINY   } from '../modules/local/prepare_shiny'
+include { PREPARE_MULTIQC    } from '../modules/local/prepare_multiqc'
+include { PREPARE_SHINY      } from '../modules/local/prepare_shiny'
+include { CUSTOM_PDBSTOFASTA } from '../modules/local/custom_pdbtofasta'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -104,15 +105,16 @@ workflow MULTIPLESEQUENCEALIGN {
     * 2. Provide the dependency files directly in the input samplesheet
     */
 
+
+
+
     // If the optional_data folder is provided, use it to identify the optional_data based on sequence IDs
     if(params.pdbs_dir){
 
-        // Identify the sequence IDs from the input fasta file(s)
-        ch_seqs.splitFasta(record: [ id: true ] )
-            .map { id, seq_id -> [ seq_id, id ] }
-            .set { ch_seqs_split }
-
-        // if compressed, uncompress the optional_data folder
+        // *****************************************
+        // Get the structures into a channel.
+        // If the folder is compressed, decompress 
+        // *****************************************
         if(params.pdbs_dir.endsWith('.tar.gz')){
 
             pdbs_dir = Channel.fromPath(params.pdbs_dir)
@@ -131,13 +133,44 @@ workflow MULTIPLESEQUENCEALIGN {
             optional_data_to_be_mapped = Channel.fromPath(params.pdbs_dir+"/**")
         }
 
-        // Map the optional_data to the sequence IDs
-        optional_data_to_be_mapped
-            .map { it -> [ [ id: it.baseName ], it ] }
-            .combine(ch_seqs_split, by: 0)
-            .map { dep_id, dep, fasta_id -> [ fasta_id, dep ] }
-            .groupTuple(by: 0)
-            .set { ch_optional_data }
+
+
+        // ******************************************************************
+        // If the sequences are not provided, extract the fasta from the pdb
+        // otherwise, map the optional_data to the sequence IDs provided by the 
+        // various fasta files
+        // *****************************************************************
+        if(!params.seqs){
+            optional_data_to_be_mapped
+                .map { it -> [ [ id: params.pdbs_dir.split("/")[-1].split("\\.")[0] ], it ] }
+                .groupTuple(by: 0)
+                .set { ch_optional_data }
+            if(!params.skip_pdbconversion){
+                CUSTOM_PDBSTOFASTA(ch_optional_data)
+                ch_versions = ch_versions.mix(CUSTOM_PDBSTOFASTA.out.versions)
+                ch_seqs = CUSTOM_PDBSTOFASTA.out.fasta
+            }
+
+
+        }else{
+            
+            // Identify the sequence IDs from the input fasta file(s)
+            ch_seqs.splitFasta(record: [ id: true ] )
+                .map { id, seq_id -> [ seq_id, id ] }
+                .set { ch_seqs_split }
+
+            // Map the optional_data to the sequence IDs
+            optional_data_to_be_mapped
+                .map { it -> [ [ id: it.baseName ], it ] }
+                .combine(ch_seqs_split, by: 0)
+                .map { dep_id, dep, fasta_id -> [ fasta_id, dep ] }
+                .groupTuple(by: 0)
+                .set { ch_optional_data }
+
+
+            ch_optional_data.view()
+        }
+
     } else {
 
         // otherwise, use the dependency files provided in the input samplesheet
@@ -187,12 +220,35 @@ workflow MULTIPLESEQUENCEALIGN {
     //
     // TEMPLATES
     //
-    TEMPLATES (
-        ch_optional_data,
-        ch_templates,
-        "${params.templates_suffix}"
-    )
-    ch_optional_data_template = TEMPLATES.out.optional_data_template
+     
+    // Render the templates if the aligner is 3DCOFFEE
+    def render_templates = false
+    ch_tools.map { meta, meta2 ->
+            meta2["aligner"]
+        }
+        .filter { it == "3DCOFFEE" }.view()
+        .count().map{
+            if(it > 0) {
+                render_templates = true
+            }else{
+                render_templates = false
+            }
+        }
+
+    if(render_templates){
+        TEMPLATES (
+            ch_optional_data,
+            ch_templates,
+            "${params.templates_suffix}"
+        )
+        ch_optional_data_template = TEMPLATES.out.optional_data_template  
+        ch_optional_data_template.view()
+    }else{
+        ch_optional_data_template = ch_optional_data.map{
+            meta, data -> [meta, data, []]
+        }
+        ch_optional_data_template.view()
+    }
 
     //
     // Compute summary statistics about the input sequences
