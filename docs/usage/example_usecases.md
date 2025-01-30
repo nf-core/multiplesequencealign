@@ -13,12 +13,13 @@
     --aligner FAMSA \
     --args_aligner "-refine_mode on" \
     --tree CLUSTALO \
-    --outdir outdir \
+    --outdir results \
     --skip_stats \
     --skip_eval \
     --skip_preprocessing \
     --skip_multiqc \
-    --skip_visualisation
+    --skip_visualisation \
+    --skip_shiny
 
     You can leave the --tree and --args_aligner and --args_tree empty (just do not use the flags). Default values will be used.
 

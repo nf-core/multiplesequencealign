@@ -91,9 +91,9 @@ workflow {
         params.hook_url,
         NFCORE_MULTIPLESEQUENCEALIGN.out.multiqc_report,
         NFCORE_MULTIPLESEQUENCEALIGN.out.summary,
-        "${params.outdir}/shiny_app",
-        "${params.outdir}/pipeline_info",
-        params.shiny_trace_mode
+        NFCORE_MULTIPLESEQUENCEALIGN.out.versions,
+        "${params.outdir}/reports/shiny_app",
+        "${params.outdir}/pipeline_info"
     )
 }
 

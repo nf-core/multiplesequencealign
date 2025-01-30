@@ -308,14 +308,6 @@
                     "fa_icon": "fas fa-folder-open",
                     "description": "Folder containing the main shiny app."
                 },
-                "shiny_trace_mode": {
-                    "type": "string",
-                    "default": "latest",
-                    "fa_icon": "fas fa-cogs",
-                    "enum": ["latest", "all"],
-                    "description": "variable containing the shiny_trace mode to be used.", 
-                    "help_text": "The shiny_trace mode to be used. If set to 'latest', only the latest trace report will be displayed. If set to 'all', all trace reports will be used."
-                },
                 "skip_visualisation": {
                     "type": "boolean",
                     "default": false,

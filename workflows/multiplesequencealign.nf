@@ -68,7 +68,6 @@ workflow MULTIPLESEQUENCEALIGN {
     ch_templates                    = Channel.empty()
     ch_optional_data                = Channel.empty()
     ch_versions                     = Channel.empty()
-    ch_stats_and_evaluation_summary = Channel.empty()
 
 
     ch_input
@@ -323,10 +322,11 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_multiqc_report = MULTIQC.out.report.toList()
     }
 
+
     emit:
     multiqc_report = ch_multiqc_report                   // channel: /path/to/multiqc_report.html
-    summary        = ch_stats_and_evaluation_summary
-    versions       = ch_versions                     // channel: [ path(versions.yml) ]
+    summary        = stats_and_evaluation_summary
+    versions       = ch_collated_versions               // channel: [ path(versions.yml) ]
 
 }
 

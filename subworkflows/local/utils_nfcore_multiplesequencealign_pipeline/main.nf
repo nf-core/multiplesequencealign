@@ -102,7 +102,7 @@ workflow PIPELINE_INITIALISATION {
                     tree_map["args_tree"] = meta_clone["args_tree"]
                     tree_map["args_tree_clean"] = Utils.cleanArgs(meta_clone.args_tree)
 
-                    align_map["aligner"] = meta_clone["aligner"].toString().toUpperCase()
+                    align_map["aligner"] = meta_clone["aligner"].toString()
                     align_map["args_aligner"] = Utils.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
                     align_map["args_aligner_clean"] = Utils.cleanArgs(meta_clone.args_aligner)
 
@@ -133,17 +133,16 @@ workflow PIPELINE_COMPLETION {
     hook_url         //  string: hook URL for notifications
     multiqc_report   //  string: Path to MultiQC report
     summary          //  string: Path to summary file
+    versions         //  string: Path to versions file
     shiny_dir_path   //  string: Path to shiny stats file
     trace_dir_path   //  string: Path to trace file
-    shiny_trace_mode // string: Mode to use for shiny trace file (default: "latest", options: "latest", "all")
 
     main:
-    summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
-    def multiqc_reports = multiqc_report.toList()
-    
-
+    summary_params      = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
+    def multiqc_reports = multiqc_report.toList()  
     def summary_reports = summary.toList()
-    //print(summary_reports)
+    def versions        = versions.toList()
+    def skip_shiny      = params.skip_shiny
 
     //
     // Completion email and summary
@@ -161,8 +160,6 @@ workflow PIPELINE_COMPLETION {
             )
         }
 
-        println summary_reports.getVal()
-        print(multiqc_reports.getVal())
         completionSummary(monochrome_logs)
         if (hook_url) {
             imNotification(summary_params, hook_url)
@@ -174,8 +171,8 @@ workflow PIPELINE_COMPLETION {
         }
 
 
-        def summary_file = "${outdir}/summary/complete_summary_stats_eval.csv"
-        def versions_path = "${trace_dir_path}/nf_core_multiplesequencealign_software_mqc_versions.yml"
+        def summary_file  = summary_reports.getVal()[0][1].toString()
+        def versions_path = versions.getVal()[0].toString()
 
         // Input files 
         def trace_dir_path = "${outdir}/pipeline_info/"
@@ -183,12 +180,7 @@ workflow PIPELINE_COMPLETION {
         // Output file naming
         def summary_file_with_traces = "${outdir}/summary/complete_summary_stats_eval_times.csv"
 
-        // If the summary file does not exis, we skip the merging of the summary and trace files
-        if (!new File(summary_file).exists()) {
-            return
-        }
-
-        if (shiny_trace_mode) {
+        if (!skip_shiny) {
             merge_summary_and_traces(summary_file, trace_dir_path, versions_path, summary_file_with_traces, "${shiny_dir_path}/complete_summary_stats_eval_times.csv")
         }else{
             merge_summary_and_traces(summary_file, trace_dir_path, versions_path, summary_file_with_traces, "")
@@ -671,6 +663,7 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     // 3. Extract tree and align traces separately
     def trace_file = processLatestTraceFile(trace_dir_path)
 
+
     // -------------------
     // SUMMARY FILE
     // -------------------
@@ -699,7 +692,10 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     if(trace_file.traceTrees.size() == 0 ){
         log.warn "Skipping merging of summary and trace files. Are you using -resume? \n \tIf so, you will not be able to access the running times of the modules and the final merging step will be skipped.\n\tPlease refer to the documentation.\n"
         // save the summary file to the output file
-        saveMapToCsv(data, shinyOutFileName)
+        if (shinyOutFileName != "") {
+            saveMapToCsv(data, shinyOutFileName)
+            return
+        }
         saveMapToCsv(data, summary_file)
         return
     }
@@ -741,7 +737,7 @@ class Utils {
 
     public static clean_tree(argsTree){
 
-        def tree = argsTree.toString().toUpperCase()
+        def tree = argsTree.toString()
         if(tree == null || tree == "" || tree == "null"){
             return "DEFAULT"
         }
