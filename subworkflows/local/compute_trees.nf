@@ -20,6 +20,8 @@ workflow COMPUTE_TREES {
     ch_versions = Channel.empty()
     ch_trees    = Channel.empty()
 
+
+
     //
     // For the inputs that only have optional data but not a fasta
     // we need to generate the fasta file
@@ -33,6 +35,19 @@ workflow COMPUTE_TREES {
         .map {
             it -> [it[0], it[2]]
         }.set { ch_optional_data_no_fasta }
+
+
+    ch_optional_data_no_fasta
+        .combine(tree_tools)
+        .filter {
+            it[2]["tree"] != "DEFAULT"
+        }
+        .map{
+            meta, optional_data, tree_args ->
+                [ meta, optional_data ]
+        }
+        .set{ ch_optional_data_no_fasta }
+
 
     CUSTOM_PDBSTOFASTA(ch_optional_data_no_fasta)
     ch_versions = ch_versions.mix(CUSTOM_PDBSTOFASTA.out.versions)
