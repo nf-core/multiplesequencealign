@@ -689,7 +689,7 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     }
 
     // // check if the trace file is empty
-    if(trace_file.traceTrees.size() == 0 ){
+    if(trace_file.traceAlign.size() == 0 ){
         log.warn "Skipping merging of summary and trace files. Are you using -resume? \n \tIf so, you will not be able to access the running times of the modules and the final merging step will be skipped.\n\tPlease refer to the documentation.\n"
         // save the summary file to the output file
         if (shinyOutFileName != "") {

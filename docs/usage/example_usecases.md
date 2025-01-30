@@ -8,20 +8,16 @@
     Running FAMSA (with arguments -refine_mode on) using the guidetree built using CLUSTALO.
 
     nextflow run main.nf \
-    -profile docker \
+    -profile easy_deploy,docker \
     --seqs test.fa \
     --aligner FAMSA \
     --args_aligner "-refine_mode on" \
     --tree CLUSTALO \
-    --outdir results \
-    --skip_stats \
-    --skip_eval \
-    --skip_preprocessing \
-    --skip_multiqc \
-    --skip_visualisation \
-    --skip_shiny
+    --outdir results 
 
     You can leave the --tree and --args_aligner and --args_tree empty (just do not use the flags). Default values will be used.
+
+    Change the profile from docker to singularity or your preferred choice!
 
 </details>
 

@@ -190,6 +190,13 @@
                     "description": "Skip the preprocessing step for the input files.",
                     "fa_icon": "fas fa-fast-forward",
                     "help_text": "Skip the preprocessing step and use the files directly. Currently the preprocessing only features the structures where the header is cleaned."
+                }, 
+                "skip_validaton": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Skip the validation of the input files.",
+                    "fa_icon": "fas fa-fast-forward",
+                    "help_text": "Skip the validation of the input files. This is not recommended, as it can lead to errors in the pipeline."
                 }
             }
         },
