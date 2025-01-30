@@ -336,6 +336,9 @@ def saveMapToCsv(List<Map> data, String fileName) {
         return
     }
 
+    // if the directory does not exist, create it
+    new File(fileName).parentFile.mkdirs()
+
     // Extract headers from the keys of the first map
     def headers = data[0].keySet().join(',')
 
@@ -552,6 +555,9 @@ def processLatestTraceFile(String traceDirPath) {
     def traceTrees = prepTrace(cleanTraceData, suffix_to_replace = "_GUIDETREE", subworkflow = "COMPUTE_TREES", keys)
     def traceAlign = prepTrace(cleanTraceData, suffix_to_replace = "_ALIGN", subworkflow = "ALIGN", keys)
 
+    print(traceTrees)
+    print(traceAlign)
+
     // Return the extracted traces as a map
     return [traceTrees: traceTrees, traceAlign: traceAlign]
 }
@@ -688,6 +694,7 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
         row.put("version_tree", versions[tree])
     }
 
+
     // // check if the trace file is empty
     if(trace_file.traceAlign.size() == 0 ){
         log.warn "Skipping merging of summary and trace files. Are you using -resume? \n \tIf so, you will not be able to access the running times of the modules and the final merging step will be skipped.\n\tPlease refer to the documentation.\n"
@@ -707,14 +714,18 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     data.each { row ->
         def treeMatch = trace_file.traceTrees.find { it.id == row.id && it.tree == row.tree && it.args_tree_clean == row.args_tree_clean}
         def alignMatch = trace_file.traceAlign.find { it.id == row.id && it.aligner == row.aligner && it.args_aligner_clean == row.args_aligner_clean}
+        print(alignMatch)
+        print(row)
         def mergedRow = row + (treeMatch ?: [:]) + (alignMatch ?: [:])
         mergedData << mergedRow
     }
 
+
     // Save the merged data to a file
     saveMapToCsv(mergedData, outFileName)
-    saveMapToCsv(mergedData, shinyOutFileName)
-
+    if (shinyOutFileName != "") {
+        saveMapToCsv(mergedData, shinyOutFileName)
+    }
 }
 
 import nextflow.Nextflow
@@ -722,13 +733,11 @@ import groovy.text.SimpleTemplateEngine
 
 class Utils {
 
-
-
     public static cleanArgs(argString) {
         def cleanArgs = argString.toString().trim().replace("  ", " ").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
         // if clearnArgs is empty, return ""
 
-        if (cleanArgs == null || cleanArgs == "") {
+        if (cleanArgs == null || cleanArgs == "" || cleanArgs == "null") {
             return "default"
         }else{
             return cleanArgs
@@ -786,9 +795,5 @@ class Utils {
         return args
 
     }
-
-
-
-
 
 }

@@ -191,7 +191,7 @@
                     "fa_icon": "fas fa-fast-forward",
                     "help_text": "Skip the preprocessing step and use the files directly. Currently the preprocessing only features the structures where the header is cleaned."
                 }, 
-                "skip_validaton": {
+                "skip_validation": {
                     "type": "boolean",
                     "default": false,
                     "description": "Skip the validation of the input files.",
