@@ -41,6 +41,7 @@ workflow TEMPLATES {
 
     // Merge the optional_data and templates channels, ready for the alignment
     ch_optional_data_template = ch_templates_merged.combine(ch_optional_data, by:0)
+    ch_optional_data_template.view()
 
     emit:
     optional_data_template =  ch_optional_data_template

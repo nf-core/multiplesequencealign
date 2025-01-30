@@ -238,10 +238,9 @@ workflow MULTIPLESEQUENCEALIGN {
             "${params.templates_suffix}"
         )
         ch_optional_data_template = TEMPLATES.out.optional_data_template  
-    }else{
-        ch_optional_data_template = ch_optional_data.map{
-            meta, data -> [meta, data, []]
-        }
+    }
+    else{
+        ch_optional_data_template = ch_optional_data.map{ meta, data -> [ meta, [], data ] }
     }
 
     //
