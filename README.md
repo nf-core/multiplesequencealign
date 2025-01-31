@@ -66,7 +66,7 @@ To get a feeling of what the pipeline does, run:
 
 ```
 nextflow run nf-core/multiplesequencealign \
-   -profile test_small,docker \
+   -profile test,docker \
    --outdir results
 ```
 
@@ -90,7 +90,7 @@ Your input is a directory where your PDB files are stored? Then:
 
 ```bash
 nextflow run nf-core/multiplesequencealign \
-   -profile test_small,docker \
+   -profile test,docker \
    --pdbs_dir <PATH_TO_YOUR_PDB_DIR> \
    --aligner FOLDMASON \
    --outdir outdir

@@ -36,7 +36,6 @@ jobs:
         test_name:
           - "test"
           - "test_pdb"
-          - "test_parameters"
           - "test_nosheet"
         isMaster:
           - ${{ github.base_ref == 'master' }}
@@ -104,6 +103,9 @@ jobs:
         params:
           - "--skip_stats"
           - "--skip_eval"
+          - "--skip_visualisation"
+          - "--skip_validation"
+          - "--skip_preprocessing"
           - "--skip_compression"
           - "--skip_shiny"
         test_name:

@@ -40,5 +40,14 @@
 
 </details>
 
+
+Can i run the same tool multiple times with different arguments? 
+
+Can i run a structural evaluation on sequence based aligners? 
+
+How can I run one dataset on multiple tools? 
+
+How can I run one 
+
 What happens if i have the pdbs only and not the fasta?
 What if i cannot download the large container?

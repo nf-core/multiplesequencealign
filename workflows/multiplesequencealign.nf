@@ -225,6 +225,7 @@ workflow MULTIPLESEQUENCEALIGN {
         .combine(ch_tools)
         .filter { it[3]["aligner"] == "3DCOFFEE" }
         .map { it -> [ it[0], it[1] ]}
+        .first()
         .set { ch_optional_data_3dcoffee }
 
     // For the one needing the template, create the template or use the provided one

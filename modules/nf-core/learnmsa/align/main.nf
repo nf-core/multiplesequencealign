@@ -42,11 +42,7 @@ process LEARNMSA_ALIGN {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        \$(if learnMSA -h &>/dev/null; then
-            learnmsa: "STUB_TEST_HARDCODED_VERSION"
-        else
-            learnmsa: \$(learnMSA -h | grep 'version' | awk -F 'version ' '{print \$2}' | awk '{print \$1}' | sed 's/)//g')
-        fi)
+        learnmsa: \$(if command -v learnMSA &>/dev/null; then learnMSA -h | grep 'version' | awk -F 'version ' '{print \$2}' | awk '{print \$1}' | sed 's/)//g'; else echo "STUB_TEST_HARDCODED_VERSION"; fi)
     END_VERSIONS
     """
 }
