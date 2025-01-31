@@ -12,13 +12,9 @@
             "description": "Define where the pipeline should find input data and save output data.",
             "oneOf": [
                 {
-                    "anyOf":[
-                    {"required": ["seqs", "outdir"]}, 
-                    {"required": ["pdbs_dir", "outdir"]}
-                ]
+                    "anyOf": [{ "required": ["seqs", "outdir"] }, { "required": ["pdbs_dir", "outdir"] }]
                 },
-                {"required": ["input", "outdir"]}
-
+                { "required": ["input", "outdir"] }
             ],
             "properties": {
                 "input": {
@@ -79,10 +75,7 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define which tools the pipeline should deploy.",
-            "oneOf": [
-                {"required": ["tools"]}, 
-                {"required": ["aligner"]}
-            ],
+            "oneOf": [{ "required": ["tools"] }, { "required": ["aligner"] }],
             "properties": {
                 "tools": {
                     "type": "string",
@@ -95,75 +88,45 @@
                     "help_text": "You will need to create a file with information about the tools to be used before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 4 columns, and a header row. See [usage docs](https://nf-co.re/msa/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
                 },
-                "outdir": {
-                    "type": "string",
-                    "format": "directory-path",
-                    "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
-                    "fa_icon": "fas fa-folder-open"
-                },
-                "seqs": {
-                    "type": "string",
-                    "format": "file-path",
-                    "exists": true,
-                    "description": "Path to the input fasta file.",
-                    "help_text": "Path to the input fasta file, it can be used in alternative to using the input samplesheet if you only have one dataset.",
-                    "fa_icon": "fas fa-folder-open"
-                },
-                "pdbs_dir": {
-                    "type": "string",
-                    "exists": true,
-                    "description": "Path to a folder containing all the optional data files to be used (e.g. structures).",
-                    "help_text": "This is a folder with all the optional data files to be used in the pipeline. It can be used in alternative to the samplesheet if you only have one dataset.",
-                    "fa_icon": "fas fa-folder-open"
-                },
                 "tree": {
                     "type": "string",
-                    "default": "",
                     "description": "Tool to use for tree building.",
-                    "enum": [ "FAMSA", "CLUSTALO", "MAFFT"],
-                    "fa_icon": "fas fa-terminal", 
+                    "enum": ["FAMSA", "CLUSTALO", "MAFFT"],
+                    "fa_icon": "fas fa-terminal",
                     "help_text": "The tool to be used for tree building. If not set, the tree will not be built. This parameter is meant to be used in alternative to the toolsheet, in case you want to deploy only one tool."
                 },
                 "args_tree": {
                     "type": "string",
-                    "default": "",
                     "description": "Extra arguments for the tree building tool.",
                     "fa_icon": "fas fa-terminal",
                     "help_text": "Extra arguments to be passed to the tree building tool. This parameter is meant to be used in alternative to the toolsheet, in case you want to deploy only one tool."
-                }, 
+                },
                 "aligner": {
                     "type": "string",
-                    "default": "",
                     "description": "The aligner to be used.",
-                    "enum": [ "CLUSTALO", "FAMSA", "KALIGN", "LEARNMSA", "MAFFT", "MAGUS", "MUSCLE5", "TCOFFEE", "REGRESSIVE", "UPP", "3DCOFFEE", "MTMALIGN", "FOLDMASON"],
+                    "enum": [
+                        "CLUSTALO",
+                        "FAMSA",
+                        "KALIGN",
+                        "LEARNMSA",
+                        "MAFFT",
+                        "MAGUS",
+                        "MUSCLE5",
+                        "TCOFFEE",
+                        "REGRESSIVE",
+                        "UPP",
+                        "3DCOFFEE",
+                        "MTMALIGN",
+                        "FOLDMASON"
+                    ],
                     "fa_icon": "fas fa-terminal",
                     "help_text": "The aligner to be used. This parameter is meant to be used in alternative to the toolsheet, in case you want to deploy only one tool."
                 },
                 "args_aligner": {
                     "type": "string",
-                    "default": "",
                     "description": "Extra arguments for the aligner tool.",
                     "fa_icon": "fas fa-terminal",
                     "help_text": "Extra arguments to be passed to the aligner tool. This parameter is meant to be used in alternative to the toolsheet, in case you want to deploy only one tool."
-                },
-                "templates_suffix": {
-                    "type": "string",
-                    "default": ".pdb",
-                    "description": "Suffix of the files given in the optional_data directory.",
-                    "help_text": "To provide additional data (e.g. protein structures), you must provide the path of a directory where thay are stored. Here, you can provide the suffix of the files in the given directory (e.g. pdb for pdb files).",
-                    "fa_icon": "fas fa-file-signature"
-                },
-                "email": {
-                    "type": "string",
-                    "description": "Email address for completion summary.",
-                    "fa_icon": "fas fa-envelope",
-                    "help_text": "Set this parameter to your e-mail address to get a summary e-mail with details of the run sent to you when the workflow exits. If set in your user config file (`~/.nextflow/config`) then you don't need to specify this on the command line for every run.",
-                    "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
-                },
-                "multiqc_title": {
-                    "type": "string",
-                    "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
-                    "fa_icon": "fas fa-file-signature"
                 }
             }
         },
@@ -175,32 +138,27 @@
             "properties": {
                 "use_gpu": {
                     "type": "boolean",
-                    "default": false,
                     "description": "Run on CPUs (default) or GPUs",
                     "fa_icon": "fas fa-microchip"
                 },
                 "skip_compression": {
                     "type": "boolean",
-                    "default": false,
                     "description": "Produce uncompressed alignment files"
                 },
                 "skip_preprocessing": {
                     "type": "boolean",
-                    "default": false,
                     "description": "Skip the preprocessing step for the input files.",
                     "fa_icon": "fas fa-fast-forward",
                     "help_text": "Skip the preprocessing step and use the files directly. Currently the preprocessing only features the structures where the header is cleaned."
-                }, 
+                },
                 "skip_validation": {
                     "type": "boolean",
-                    "default": false,
                     "description": "Skip the validation of the input files.",
                     "fa_icon": "fas fa-fast-forward",
                     "help_text": "Skip the validation of the input files. This is not recommended, as it can lead to errors in the pipeline."
                 },
-                "skip_pdbconversion":{
+                "skip_pdbconversion": {
                     "type": "boolean",
-                    "default": false,
                     "description": "Skip the conversion of pdb files to fasta.",
                     "fa_icon": "fas fa-fast-forward",
                     "help_text": "Skip the conversion of pdb files to fasta. PDBs are converted if they are the only input file (no fasta) and are wished to be used either to run sequence-based aligners or sequence-based stats of the input files."
@@ -215,7 +173,6 @@
             "properties": {
                 "build_consensus": {
                     "type": "boolean",
-                    "default": false,
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Build consensus alignment with M-COFFEE."
                 }
@@ -229,7 +186,6 @@
             "properties": {
                 "skip_stats": {
                     "type": "boolean",
-                    "default": false,
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Skip all of the statistics computation on the fasta file."
                 },
@@ -241,13 +197,11 @@
                 },
                 "calc_seq_stats": {
                     "type": "boolean",
-                    "default": false,
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Calculate general statistics on input files."
                 },
                 "extract_plddt": {
                     "type": "boolean",
-                    "default": false,
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Extract plddt from structure files. Only works if the files have been generated by AF2."
                 }
@@ -261,13 +215,12 @@
             "properties": {
                 "skip_eval": {
                     "type": "boolean",
-                    "default": false,
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Skip all of the evaluations computation on the msa."
                 },
                 "calc_sp": {
                     "type": "boolean",
-                    "default": true,
+                    "default": "true",
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Calculate the Sum of Pairs of alignment."
                 },
@@ -279,13 +232,11 @@
                 },
                 "calc_irmsd": {
                     "type": "boolean",
-                    "default": false,
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Calculate the iRMSD of alignment."
                 },
                 "calc_tcs": {
                     "type": "boolean",
-                    "default": false,
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Calculate the Transitive Consistency Score (TCS) of alignment."
                 },
@@ -305,13 +256,11 @@
             "properties": {
                 "skip_multiqc": {
                     "type": "boolean",
-                    "default": false,
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Skip the multiqc report generation."
                 },
                 "skip_shiny": {
                     "type": "boolean",
-                    "default": false,
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Skip the shiny report generation."
                 },
@@ -324,7 +273,6 @@
                 },
                 "skip_visualisation": {
                     "type": "boolean",
-                    "default": false,
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Skip the visualization generation."
                 }

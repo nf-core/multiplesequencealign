@@ -15,14 +15,13 @@
     --aligner FAMSA \
     --args_aligner "-refine_mode on" \
     --tree CLUSTALO \
-    --outdir results 
+    --outdir results
 
     You can leave the --tree and --args_aligner and --args_tree empty (just do not use the flags). Default values will be used.
 
     Change the profile from docker to singularity or your preferred choice!
 
 </details>
-
 
 <details>
   <summary> I want to deploy one tool on one dataset. I want to run a structural aligner. </summary>
@@ -35,11 +34,10 @@
     --aligner FAMSA \
     --args_aligner "-refine_mode on" \
     --tree CLUSTALO \
-    --outdir results 
+    --outdir results
 
     You can leave the --tree and --args_aligner and --args_tree empty (just do not use the flags). Default values will be used.
 
 </details>
 
-
-What happens if i have the pdbs only and not the fasta? 
+What happens if i have the pdbs only and not the fasta?

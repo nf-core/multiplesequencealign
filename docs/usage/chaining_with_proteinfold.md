@@ -11,8 +11,6 @@ This is made compatible with nf-core/proteinfold and will predict and output the
 
 Now, to run you simply can use the following code.
 
-
-
 Here we showcase how to run proteinfold in its colabfold local flavour - but it works for all the proteinfold modes.
 
 ```bash

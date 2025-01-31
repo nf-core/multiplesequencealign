@@ -19,7 +19,7 @@ Learn more about contributing: [CONTRIBUTING.md](https://github.com/nf-core/mult
 - [ ] Ensure the test suite passes (`nextflow run . -profile test,docker --outdir <OUTDIR>`).
 - [ ] Check for unexpected warnings in debug mode (`nextflow run . -profile debug,test,docker --outdir <OUTDIR>`).
 - [ ] The new module is installed.
-- [ ] `subworkflows/local/compute_trees.nf` is updaded. 
+- [ ] `subworkflows/local/compute_trees.nf` is updaded.
 - [ ] `modules.config` is updated.
 - [ ] Usage Documentation in `docs/usage.md` is updated.
 - [ ] Output Documentation in `docs/output.md` is updated.

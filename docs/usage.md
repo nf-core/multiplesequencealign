@@ -4,7 +4,6 @@
 
 > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
 
-
 ## Running the pipeline
 
 The typical command for running the pipeline is as follows:
@@ -91,7 +90,6 @@ Finally, the arguments to the aligner tool can be set by using the `args_aligner
 | `aligner`      | Required. Tool to run the alignment. Available options listed above.             |
 | `args_aligner` | Optional. Arguments to the alignment tool.                                       |
 
-
 ## 1. Input files summary statistics
 
 This step generates the summary information about the input files and can be skipped using the `--skip_stats` parameter. The optional computed metrics are:
@@ -173,7 +171,6 @@ If structures are provided, the [Foldmason](https://github.com/steineggerlab/fol
 You will need to have [Shiny](https://shiny.posit.co/py/) installed to run it! See [output documentation](https://nf-co.re/multiplesequencealign/output) for more info.
 :::
 
-
 ## Using profiles for advanced runs
 
 If you wish to repeatedly use the same parameters for multiple runs, rather than specifying each flag in the command, you can specify these in a params file.
@@ -200,8 +197,7 @@ outdir: './results/'
 
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
 
-
-### FAQS 
+### FAQS
 
 <details>
   <summary> How can i run a structural aligner?   </summary>
@@ -209,9 +205,6 @@ You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-c
   XXX
 
 </details>
-
-
-
 
 ### Updating the pipeline
 

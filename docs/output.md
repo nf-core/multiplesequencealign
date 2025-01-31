@@ -1,10 +1,8 @@
 # nf-core/multiplesequencealign: Output
 
-
-The directories listed below will be created in the results directory (specified by `--outdir`) after the pipeline has finished. 
+The directories listed below will be created in the results directory (specified by `--outdir`) after the pipeline has finished.
 
 All paths are relative to the top-level results directory.
-
 
 - `results/`
   - `alignment`
@@ -22,9 +20,8 @@ All MSA computed are stored in the **alignment** directory.
 
 - `alignment/`
   - `{SampleID}/{SampleID}_{Tree}_args-{Tree_args}_{MSA}_args-{MSA_args}.aln`. Each subdirectory is named after the sample id. It contains all the computed alignments for the given sample. The filename is built with the informations of the input file used and the tool(s).
-    
-</details>
 
+</details>
 
 ## Trees
 
@@ -38,7 +35,6 @@ If you have explicitly enabled the computation of guide trees via the toolsheet 
 
 </details>
 
-
 ## Evaluation
 
 Files with the summary of the computed evaluation statistics are stored in the **evaluation** directory.
@@ -51,7 +47,6 @@ Files with the summary of the computed evaluation statistics are stored in the *
   - `tcoffee_tcs/`: directory containing the files with the complete TCS files. If `--calc_tcs` is specified.
   - `complete_summary_eval.csv`: csv file containing the summary of all evaluation metrics for each input file.
   </details>
-
 
 ## Summary stats
 
@@ -71,7 +66,6 @@ Statistics about the input files are collected and summarized into a final csv f
 
 ## Reports
 
-
 ### Visualization
 
 [Foldmason](https://github.com/steineggerlab/foldmason) produces an html report for the visualization of the alignment and the protein structures.
@@ -82,12 +76,10 @@ Only available if structures were provided as input.
 <summary>Output files</summary>
 
 - `reports/visualization/`
+
   - `{SampleID}_{Tree}_args-{Tree_args}_{MSA}_args-{MSA_args}.html`: foldmason HTML report.
 
   </details>
-
-
-
 
 ### Shiny App
 

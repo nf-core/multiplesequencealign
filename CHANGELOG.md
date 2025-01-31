@@ -42,7 +42,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#174](https://github.com/nf-core/multiplesequencealign/issues/174)] - Add the chaining of proteinfold output to MSA input.
 - [[#177](https://github.com/nf-core/multiplesequencealign/pull/177)] - Add MAFFT guidetree.
 - [[#179](https://github.com/nf-core/multiplesequencealign/pull/179)] - Add visualisation subworkflow and final csv merging onComplete.
-- [[#168](https://github.com/nf-core/multiplesequencealign/issues/168)] - Add GPU support. 
+- [[#168](https://github.com/nf-core/multiplesequencealign/issues/168)] - Add GPU support.
 
 ### `Fixed`
 

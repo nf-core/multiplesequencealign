@@ -1,3 +1,2 @@
 tree,args_tree,aligner,args_aligner
-,,FAMSA,
-CLUSTALO,,FOLDMASON,
+,,LEARNMSA,"--use_language_model --sequence_weights"

@@ -1,6 +1,6 @@
 # Extending nf-core/multiplesequencealign
 
-This pipeline is extensible, allowing the incorporation of new methods for assembling MSAs, guide trees, and evaluating MSAs. 
+This pipeline is extensible, allowing the incorporation of new methods for assembling MSAs, guide trees, and evaluating MSAs.
 
 Before adding a component, a Nextflow module must be created. Typically, it's best to create an nf-core module, but for specific cases or testing, a local module may be more suitable. Even for local modules, following nf-core conventions is recommended. Some useful resources for this process are listed below:
 
