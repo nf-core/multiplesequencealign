@@ -218,12 +218,29 @@ workflow MULTIPLESEQUENCEALIGN {
     // TEMPLATES
     //
 
+
+    // Templates are currenlty needed only if 3DCOFFEE is used 
+    // This may change in the future
+    ch_optional_data
+        .combine(ch_tools)
+        .branch {
+            need_template: it[2] == "3DCOFFEE"
+            default:   true
+        }.set { ch_optional_data }    
+
+    // For the one needing the template, create the template or use the provided one
     TEMPLATES (
-        ch_optional_data,
+        ch_optional_data.need_template,
         ch_templates,
         "${params.templates_suffix}"
     )
     ch_optional_data_template = TEMPLATES.out.optional_data_template  
+
+    // // Ignre the templates for the rest, and put all the optional_data in the final channel
+    // ch_optional_data_template = ch_optional_data_template
+    //                                 .mix(ch_optional_data.default.map{ meta, optional_data -> [ meta, optional_data,[] ] })
+
+    // ch_optional_data_template.view()
 
     //
     // Compute summary statistics about the input sequences

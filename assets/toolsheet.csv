@@ -1,2 +1,4 @@
 tree,args_tree,aligner,args_aligner
-,,LEARNMSA,"--use_language_model --sequence_weights"
+,,FOLDMASON,
+,,FAMSA,
+,,3DCOFFEE,

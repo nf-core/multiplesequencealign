@@ -11,7 +11,6 @@ process LEARNMSA_ALIGN {
 
     input:
     tuple val(meta), path(fasta)
-    val(compress)
 
     output:
     tuple val(meta), path("*.aln{.gz,}"), emit: alignment
