@@ -51,3 +51,8 @@ How can I run one
 
 What happens if i have the pdbs only and not the fasta?
 What if i cannot download the large container?
+
+
+Which trees can I use? Some options
+
+Where can i see an example? 

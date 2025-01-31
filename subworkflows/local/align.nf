@@ -24,6 +24,7 @@ include { TCOFFEE_CONSENSUS as CONSENSUS          } from '../../modules/nf-core/
 include { UPP_ALIGN                               } from '../../modules/nf-core/upp/align/main'
 include { PIGZ_COMPRESS as PIGZ_COMPRESS_LEARNMSA } from '../../modules/nf-core/pigz/compress/main'
 
+
 workflow ALIGN {
     take:
     ch_fastas           // channel: [ val(meta), [ path(fastas) ] ]
