@@ -260,7 +260,6 @@
                 "shiny_app": {
                     "type": "string",
                     "format": "directory-path",
-                    "default": "${projectDir}/bin/shiny_app",
                     "fa_icon": "fas fa-folder-open",
                     "description": "Folder containing the main shiny app."
                 },
