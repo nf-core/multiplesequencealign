@@ -223,24 +223,34 @@ workflow MULTIPLESEQUENCEALIGN {
     // This may change in the future
     ch_optional_data
         .combine(ch_tools)
-        .branch {
-            need_template: it[2] == "3DCOFFEE"
-            default:   true
-        }.set { ch_optional_data }    
+        .filter { it[3]["aligner"] == "3DCOFFEE" }
+        .map { it -> [ it[0], it[1] ]}
+        .set { ch_optional_data_3dcoffee }
 
     // For the one needing the template, create the template or use the provided one
+    ch_optional_data_template = Channel.empty()
     TEMPLATES (
-        ch_optional_data.need_template,
+        ch_optional_data_3dcoffee,
         ch_templates,
         "${params.templates_suffix}"
     )
     ch_optional_data_template = TEMPLATES.out.optional_data_template  
 
-    // // Ignre the templates for the rest, and put all the optional_data in the final channel
-    // ch_optional_data_template = ch_optional_data_template
-    //                                 .mix(ch_optional_data.default.map{ meta, optional_data -> [ meta, optional_data,[] ] })
+    // If the TEMPLATE is not needed, detect that TEMPLATE was not run and use the old optional_data to
+    // proceed with the pipeline 
+    // If 3DCOFFEE was called, the last element is a templata (the filte on -1) and therefore we understand
+    // that the template was run and the channel remains empty ( ch_optional_data_notemplate )
+    ch_optional_data
+        .join(ch_optional_data_template, by: 0, remainder:true)
+        .filter {
+            it[-1] == null
+        }
+        .map {
+            it -> [ it[0], [], it[1] ]
+        }
+        .set{ ch_optional_data_no_template }
 
-    // ch_optional_data_template.view()
+    ch_optional_data_template = ch_optional_data_template.mix(ch_optional_data_no_template)
 
     //
     // Compute summary statistics about the input sequences

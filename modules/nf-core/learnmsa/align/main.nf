@@ -2,7 +2,7 @@ process LEARNMSA_ALIGN {
     tag "$meta.id"
     label 'process_medium'
 
-    // Exit if running this module with -profile conda / -profile mamba
+    // //Exit if running this module with -profile conda / -profile mamba
     if (workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() >= 1) {
         error("LearnMSA align module does not support Conda. Please use Docker / Singularity / Podman instead.")
     }
@@ -38,11 +38,15 @@ process LEARNMSA_ALIGN {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    touch ${prefix}.aln${compress ? '.gz' : ''}
+    touch ${prefix}.aln
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        learnmsa: \$(learnMSA -h | grep 'version' | awk -F 'version ' '{print \$2}' | awk '{print \$1}' | sed 's/)//g')
+        \$(if learnMSA -h &>/dev/null; then
+            learnmsa: "STUB_TEST_HARDCODED_VERSION"
+        else
+            learnmsa: \$(learnMSA -h | grep 'version' | awk -F 'version ' '{print \$2}' | awk '{print \$1}' | sed 's/)//g')
+        fi)
     END_VERSIONS
     """
 }

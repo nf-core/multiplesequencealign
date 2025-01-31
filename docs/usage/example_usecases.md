@@ -41,3 +41,4 @@
 </details>
 
 What happens if i have the pdbs only and not the fasta?
+What if i cannot download the large container?

@@ -120,13 +120,17 @@ The available assembly methods are listed below (those that accept guide trees i
 - [CLUSTALO](http://clustal.org/omega/#Documentation) (accepts guide tree)
 - [FAMSA](https://github.com/refresh-bio/FAMSA) (accepts guide tree)
 - [KALIGN](https://github.com/TimoLassmann/kalign)
-- [LEARNMSA](https://github.com/Gaius-Augustus/learnMSA)
+- [LEARNMSA](https://github.com/Gaius-Augustus/learnMSA) *Read note below
 - [MAFFT](https://mafft.cbrc.jp/alignment/server/index.html)
 - [MAGUS](https://github.com/vlasmirnov/MAGUS) (accepts guide tree)
 - [MUSCLE5](https://drive5.com/muscle5/manual/)
 - [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) (accepts guide tree)
 - [REGRESSIVE](https://tcoffee.readthedocs.io/en/latest/tcoffee_quickstart_regressive.html) (accepts guide tree)
 - [UPP](https://github.com/smirarab/sepp) (accepts guide tree)
+
+
+> [!NOTE]
+>  LearnMSA can (and should) run on GPUs. If you have GPUs available please turn the GPU run mode on using `--use_gpu`. You might have to update you configuration file if you are running on a cluster with custom queue names. Check the [CRG](https://github.com/nf-core/configs/blob/master/conf/pipeline/multiplesequencealign/crg.config) one to see an example. 
 
 **sequence- and structure-based** (require both fasta and structures as input):
 
