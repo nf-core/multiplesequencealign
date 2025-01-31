@@ -27,6 +27,11 @@ work                # Directory containing the nextflow working files
 # Other nextflow hidden files, eg. history of pipeline runs and old logs.
 ```
 
+:::note
+We have a lot of use cases examples under [FAQs]("https://nf-co.re/multiplesequencealign/usage/FAQs)
+:::
+
+
 ## Samplesheet input
 
 The sample sheet defines the **input data** that the pipeline will process.
@@ -66,6 +71,8 @@ FAMSA, -gt upgma -medoidtree, FAMSA,
 , ,TCOFFEE,
 FAMSA,,REGRESSIVE,
 ```
+
+More examples [here](https://github.com/nf-core/test-datasets/tree/multiplesequencealign/toolsheet).
 
 :::note
 Each of the trees and aligners are available as standalones. You can leave `args_tree` and `args_aligner` empty if you are cool with the default settings of each method. Alternatively, you can leave `args_tree` empty to use the default guide tree with each aligner.
@@ -110,6 +117,29 @@ Currently available GUIDE TREE methods are: (Optional):
 - [CLUSTALO](http://clustal.org/omega/#Documentation)
 - [FAMSA](https://github.com/refresh-bio/FAMSA)
 - [MAFFT](https://mafft.cbrc.jp/alignment/server/index.html)
+
+
+Here some specific Guide Tree settings: 
+Use the values in columns `tree` and `args_tree`. The rest of the columns are just explainatory here. 
+
+| tree       | args_Tree               | Distance Measure                         | Core Algorithm                             | Speed-up Heuristic |
+|-----------|-------------------------|------------------------------------------|--------------------------------------------|--------------------|
+| MAFFT     |                         | k-mer-based                              | UPGMA + single linkage combined           |                    |
+| MAFFT     | --minimumlinkage         | k-mer-based                              | single linkage                            |                    |
+| MAFFT     | --averagelinkage         | k-mer-based                              | UPGMA                                      |                    |
+| MAFFT     | --parttree               | k-mer-based                              | single linkage + UPGMA combined           | PartTree           |
+| MAFFT     | --dpparttree             | dynamic programming alignment-based      | single linkage + UPGMA combined           | PartTree           |
+| MAFFT     | --fastaparttree          | FASTA alignment-based                    | single linkage + UPGMA combined           | PartTree           |
+| CLUSTALO |                       | sequence embedding + approx. alignment   | UPGMA                                      | bisecting K-means  |
+| FAMSA     |                         | longest common subsequence-based         | single linkage                            |                    |
+| FAMSA     | -gt upgma               | longest common subsequence-based         | UPGMA                                      |                    |
+| FAMSA     | -gt nj                  | longest common subsequence-based         | neighbour joining                         |                    |
+| FAMSA     | -parttree               | longest common subsequence-based         | single linkage                            | PartTree           |
+| FAMSA     | -gt upgma -parttree     | longest common subsequence-based         | UPGMA                                      | PartTree           |
+| FAMSA     | -medoidtree             | longest common subsequence-based         | single linkage                            | MedoidTree         |
+| FAMSA     | -gt upgma -medoidtree   | longest common subsequence-based         | UPGMA                                      | MedoidTree         |
+
+
 
 ## 3. Align
 
@@ -201,14 +231,6 @@ outdir: './results/'
 
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
 
-### FAQS
-
-<details>
-  <summary> How can i run a structural aligner?   </summary>
-  
-  XXX
-
-</details>
 
 ### Updating the pipeline
 

@@ -72,25 +72,30 @@ nextflow run nf-core/multiplesequencealign \
 
 ## How to set up an easy run:
 
+> [!NOTE]
+>We have a lot more of use cases examples under [FAQs]("https://nf-co.re/multiplesequencealign/usage/FAQs)
+> Find some example input data [here](https://github.com/nf-core/test-datasets/tree/multiplesequencealign)
+
+
 ### CASE 1: One input dataset, one tool.
 
 If you only have one dataset and want align it using one specific MSA tool (e.g. FAMSA or FOLDMASON):
 
-Your input is a fasta file? Then:
+Your input is a fasta file ([example](https://github.com/nf-core/test-datasets/blob/multiplesequencealign/testdata/setoxin-ref.fa))? Then:
 
 ```bash
 nextflow run nf-core/multiplesequencealign \
-   -profile docker \
+   -profile easy_deploy,docker \
    --seqs <YOUR_FASTA.fa> \
    --aligner FAMSA \
    --outdir outdir
 ```
 
-Your input is a directory where your PDB files are stored? Then:
+Your input is a directory where your PDB files are stored ([example](https://github.com/nf-core/test-datasets/blob/multiplesequencealign/testdata/af2_structures/seatoxin-ref.tar.gz))? Then:
 
 ```bash
 nextflow run nf-core/multiplesequencealign \
-   -profile test,docker \
+   -profile easy_deploy,docker \
    --pdbs_dir <PATH_TO_YOUR_PDB_DIR> \
    --aligner FOLDMASON \
    --outdir outdir

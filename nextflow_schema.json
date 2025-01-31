@@ -5,17 +5,11 @@
     "description": "Pipeline to run and benchmark multiple sequence alignment tools.",
     "type": "object",
     "$defs": {
-        "input_data_options": {
+        "input_output_options": {
             "title": "Basic Input/output options",
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "oneOf": [
-                {
-                    "anyOf": [{ "required": ["seqs", "outdir"] }, { "required": ["pdbs_dir", "outdir"] }]
-                },
-                { "required": ["input", "outdir"] }
-            ],
             "properties": {
                 "input": {
                     "type": "string",
@@ -191,7 +185,6 @@
                 },
                 "calc_sim": {
                     "type": "boolean",
-                    "default": true,
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Calculate the percentage similarity across the sequences in the input files."
                 },
@@ -426,7 +419,7 @@
     },
     "allOf": [
         {
-            "$ref": "#/$defs/input_data_options"
+            "$ref": "#/$defs/input_output_options"
         },
         {
             "$ref": "#/$defs/input_tools_options"

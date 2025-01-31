@@ -1,27 +1,24 @@
 process LEARNMSA_ALIGN {
     tag "$meta.id"
     label 'process_medium'
-
-    // //Exit if running this module with -profile conda / -profile mamba
-    if (workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() >= 1) {
-        error("LearnMSA align module does not support Conda. Please use Docker / Singularity / Podman instead.")
-    }
-
     container "registry.hub.docker.com/felbecker/learnmsa:2.0.9"
 
     input:
     tuple val(meta), path(fasta)
 
     output:
-    tuple val(meta), path("*.aln{.gz,}"), emit: alignment
+    tuple val(meta), path("*.aln")      , emit: alignment
     path "versions.yml"                 , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
-    def args = task.ext.args ?: ''
+    def args   = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
+    if (workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() >= 1) {
+        error("LearnMSA align module does not support Conda. Please use Docker / Singularity / Podman instead.")
+    }
     """
     learnMSA \\
         -i $fasta \\
