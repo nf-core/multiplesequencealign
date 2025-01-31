@@ -2,12 +2,12 @@
 // Compute guide trees either with FAMSA or Clusta Omega
 //
 
-include { FAMSA_GUIDETREE    } from '../../modules/nf-core/famsa/guidetree/main'
-include { CLUSTALO_GUIDETREE } from '../../modules/nf-core/clustalo/guidetree/main'
-include { MAFFT_GUIDETREE    } from '../../modules/nf-core/mafft/guidetree/main'
+include { FAMSA_GUIDETREE    } from '../../../modules/nf-core/famsa/guidetree/main'
+include { CLUSTALO_GUIDETREE } from '../../../modules/nf-core/clustalo/guidetree/main'
+include { MAFFT_GUIDETREE    } from '../../../modules/nf-core/mafft/guidetree/main'
 
-include { CUSTOM_PDBSTOFASTA } from '../../modules/local/custom_pdbtofasta.nf'
-include { FASTAVALIDATOR     } from '../../modules/nf-core/fastavalidator/main'
+include { CUSTOM_PDBSTOFASTA } from '../../../modules/local/custom/pdbtofasta'
+include { FASTAVALIDATOR     } from '../../../modules/nf-core/fastavalidator/main'
 
 workflow COMPUTE_TREES {
 

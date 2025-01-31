@@ -2,19 +2,19 @@
 // Evaluates the quality of MSA against a reference or a structure
 //
 
-include { TCOFFEE_IRMSD } from '../../modules/nf-core/tcoffee/irmsd'
-include { CALC_GAPS     } from '../../modules/local/calculate_gaps'
-include { TCOFFEE_TCS   } from '../../modules/nf-core/tcoffee/tcs'
-include { PARSE_IRMSD   } from '../../modules/local/parse_irmsd.nf'
+include { TCOFFEE_IRMSD } from '../../../modules/nf-core/tcoffee/irmsd'
+include { TCOFFEE_TCS   } from '../../../modules/nf-core/tcoffee/tcs'
+include { CALC_GAPS     } from '../../../modules/local/custom/calculate_gaps'
+include { PARSE_IRMSD   } from '../../../modules/local/custom/parse_irmsd'
 
-include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_SP } from '../../modules/nf-core/tcoffee/alncompare'
-include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_TC } from '../../modules/nf-core/tcoffee/alncompare'
-include { CSVTK_CONCAT  as CONCAT_SP                  } from '../../modules/nf-core/csvtk/concat/main.nf'
-include { CSVTK_CONCAT  as CONCAT_TC                  } from '../../modules/nf-core/csvtk/concat/main.nf'
-include { CSVTK_CONCAT  as CONCAT_IRMSD               } from '../../modules/nf-core/csvtk/concat/main.nf'
-include { CSVTK_CONCAT  as CONCAT_GAPS                } from '../../modules/nf-core/csvtk/concat/main.nf'
-include { CSVTK_CONCAT  as CONCAT_TCS                 } from '../../modules/nf-core/csvtk/concat/main.nf'
-include { CSVTK_JOIN    as MERGE_EVAL                 } from '../../modules/nf-core/csvtk/join/main.nf'
+include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_SP } from '../../../modules/nf-core/tcoffee/alncompare'
+include { TCOFFEE_ALNCOMPARE as TCOFFEE_ALNCOMPARE_TC } from '../../../modules/nf-core/tcoffee/alncompare'
+include { CSVTK_CONCAT  as CONCAT_SP                  } from '../../../modules/nf-core/csvtk/concat/main.nf'
+include { CSVTK_CONCAT  as CONCAT_TC                  } from '../../../modules/nf-core/csvtk/concat/main.nf'
+include { CSVTK_CONCAT  as CONCAT_IRMSD               } from '../../../modules/nf-core/csvtk/concat/main.nf'
+include { CSVTK_CONCAT  as CONCAT_GAPS                } from '../../../modules/nf-core/csvtk/concat/main.nf'
+include { CSVTK_CONCAT  as CONCAT_TCS                 } from '../../../modules/nf-core/csvtk/concat/main.nf'
+include { CSVTK_JOIN    as MERGE_EVAL                 } from '../../../modules/nf-core/csvtk/join/main.nf'
 
 workflow EVALUATE {
 

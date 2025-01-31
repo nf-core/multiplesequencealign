@@ -1,4 +1,4 @@
-include { CREATE_TEMPLATE } from '../../modules/local/create_template'
+include { CREATE_TEMPLATE } from '../../../modules/local/custom/create_template'
 
 workflow TEMPLATES {
 

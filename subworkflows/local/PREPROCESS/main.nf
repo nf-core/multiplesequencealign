@@ -1,5 +1,5 @@
 
-include { TCOFFEE_EXTRACTFROMPDB } from '../../modules/nf-core/tcoffee/extractfrompdb/main'
+include { TCOFFEE_EXTRACTFROMPDB } from '../../../modules/nf-core/tcoffee/extractfrompdb/main'
 
 workflow PREPROCESS {
     take:

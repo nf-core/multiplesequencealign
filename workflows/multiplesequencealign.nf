@@ -18,20 +18,20 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_mult
 //
 // SUBWORKFLOW: Local subworkflows
 //
-include { STATS                  } from '../subworkflows/local/stats'
-include { ALIGN                  } from '../subworkflows/local/align'
-include { EVALUATE               } from '../subworkflows/local/evaluate'
-include { TEMPLATES              } from '../subworkflows/local/templates'
-include { PREPROCESS             } from '../subworkflows/local/preprocess'
-include { VISUALIZATION          } from '../subworkflows/local/visualization'
+include { STATS                  } from '../subworkflows/local/STATS'
+include { ALIGN                  } from '../subworkflows/local/ALIGN'
+include { EVALUATE               } from '../subworkflows/local/EVALUATE'
+include { TEMPLATES              } from '../subworkflows/local/TEMPLATES'
+include { PREPROCESS             } from '../subworkflows/local/PREPROCESS'
+include { VISUALIZATION          } from '../subworkflows/local/VISUALIZATION'
 
 
 //
 // MODULE: local modules
 //
-include { PREPARE_MULTIQC    } from '../modules/local/prepare_multiqc'
-include { PREPARE_SHINY      } from '../modules/local/prepare_shiny'
-include { CUSTOM_PDBSTOFASTA } from '../modules/local/custom_pdbtofasta'
+include { PREPARE_MULTIQC    } from '../modules/local/custom/prepare_multiqc'
+include { PREPARE_SHINY      } from '../modules/local/custom/prepare_shiny'
+include { CUSTOM_PDBSTOFASTA } from '../modules/local/custom/pdbtofasta'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
