@@ -88,7 +88,7 @@ Your input dataset can be passed via the --seqs or --pdbs_dir, as explained in t
 
     No problem, you can provide the PDBs as input (either via the samplesheet using the optional_data column or via the flag --pdbs_dir).
 
-    The flag --skip_pdbcoversion false will make sure that the fasta file is automatically extracted from the provided PDBs and subsequently used in the pipeline.
+    The flag `--skip_pdbcoversion false` will make sure that the fasta file is automatically extracted from the provided PDBs and subsequently used in the pipeline.
 
     nextflow run main.nf &\
       -profile easy_deploy,docker \
