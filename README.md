@@ -62,7 +62,7 @@ Main steps:
 
 To get a feeling of what the pipeline does, run:
 
-(No need to download or provide any file, try it!)
+(You don't need to download or provide any file, try it!)
 
 ```
 nextflow run nf-core/multiplesequencealign \
