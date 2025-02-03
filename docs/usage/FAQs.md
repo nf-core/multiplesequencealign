@@ -1,7 +1,5 @@
 ## Here a collection of usecases and FAQs
 
-## TODO: replace main.nf with nf-core/multiplesequencealign and test.fa with <<YOUR_FASTA.fa>> AND ADD LINK
-
 ### INPUTS
 
 ### USECASES
@@ -28,7 +26,7 @@
     --tree CLUSTALO \
     --outdir results
 
-    You can leave the --tree and --args_aligner and --args_tree empty (just do not use the flags). Default values will be used.
+    You can leave the <code>--tree</code> and <code>--args_aligner</code> and <code>--args_tree</code> empty (just do not use the flags). Default values will be used.
 
     Change the profile from docker to singularity or your preferred choice!
 
@@ -37,7 +35,7 @@
 <details>
   <summary> I want to deploy one tool on one dataset. I want to run a structural aligner. </summary>
 
-    The following example: running FOLDMASON (with arguments -refine_mode on) using the guidetree built using CLUSTALO.
+    The following example: running FOLDMASON (with arguments <code>-refine_mode</code> on) using the guidetree built using CLUSTALO.
 
     nextflow run main.nf &\
     -profile easy_deploy,docker \
@@ -46,8 +44,7 @@
     --tree CLUSTALO \
     --outdir results
 
-    You can leave the --tree and --args_aligner and --args_tree empty (just do not use the flags). Default values will be used.
-    Foldmason is just an example, you can pick any other structural aligner.
+    You can leave the <code>--tree</code> and <code>--args_aligner</code> and <code>--args_tree</code> empty (just do not use the flags). Default values will be used. Foldmason is just an example, you can pick any other structural aligner.
 
 </details>
 
@@ -56,12 +53,12 @@
     You should use the <a href="https://nf-co.re/multiplesequencealign/usage/#toolsheet-input">toolsheet</a> to specify the tools use.
 
     nextflow run main.nf &\
-    -profile easy_deploy,docker \
-    --seqs <YOUR_PDB_DIR>\
+    You should use the <a href="https://nf-co.re/multiplesequencealign/usage/#toolsheet-input">toolsheet</a> to specify the tools to use.
+    --seqs <YOUR_FASTA.fa>\
     --tools <YOUR_TOOLSHEET>\
     --outdir results
 
-Your input dataset can be passed via the --seqs or --pdbs_dir, as explained in the examples above.
+Your input dataset can be passed via the <code>--seqs</code> or <code>--pdbs_dir</code>, as explained in the examples above.
 
 </details>
 

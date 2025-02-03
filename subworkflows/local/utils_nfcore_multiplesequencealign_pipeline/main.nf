@@ -71,7 +71,7 @@ workflow PIPELINE_INITIALISATION {
     // If the parameter fasta or pdb is provided, use it instead of the input samplesheet
     if (params.seqs || params.pdbs_dir) {
 
-        if (params.seqs || !params.pdbs_dir) {
+        if (params.seqs && !params.pdbs_dir) {
             ch_input = Channel.fromList([
                 [ ["id": params.seqs.split("/")[-1].split("\\.")[0]], file(params.seqs), [], [], [] ]
             ])

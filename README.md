@@ -112,12 +112,12 @@ nextflow run nf-core/multiplesequencealign \
 
 <details>
   <summary> FAQ: Can I specify also which guidetree to use? </summary>
-  Yes, use the --tree flag. More info: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a> and <a href="https://nf-co.re/multiplesequencealign/parameters">parameters</a>.
+  Yes, use the <code>--tree</code> flag. More info: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a> and <a href="https://nf-co.re/multiplesequencealign/parameters">parameters</a>.
 </details>
 
 <details>
   <summary> FAQ: Can I specify the arguments of the tools (tree and aligner)? </summary>
-  Yes, use the --args_tree and --args_aligner flags. More info: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a> and <a href="https://nf-co.re/multiplesequencealign/parameters">parameters</a>.
+  Yes, use the <code>--args_tree</code> and <code>--args_aligner</code> flags. More info: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a> and <a href="https://nf-co.re/multiplesequencealign/parameters">parameters</a>.
 </details>
 
 ### CASE 2: Multiple datasets, multiple tools.
@@ -166,7 +166,7 @@ Please check: <a href="https://nf-co.re/multiplesequencealign/usage/#samplesheet
 
 <details>
   <summary> What is a toolsheet?</summary>
-  The toolsheet specifies **which combination of tools will be deployed and benchmark in the pipeline**.
+  The toolsheet specifies <em>which combination of tools will be deployed and benchmarked in the pipeline</em>.
 
 Each line defines a combination of guide tree and multiple sequence aligner to run with the respective arguments to be used.
 

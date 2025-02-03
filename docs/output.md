@@ -13,7 +13,7 @@ All paths are relative to the top-level results directory.
 
 ## Alignment
 
-All MSA computed are stored in the **alignment** directory.
+All MSAs computed are stored in the **alignment** directory.
 
 <details markdown="1">
 <summary>Output files</summary>

@@ -41,11 +41,6 @@
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
                         "installed_by": ["modules"]
                     },
-                    "fastqc": {
-                        "branch": "master",
-                        "git_sha": "dc94b6ee04a05ddb9f7ae050712ff30a13149164",
-                        "installed_by": ["modules"]
-                    },
                     "foldmason/createdb": {
                         "branch": "master",
                         "git_sha": "0270c0fbbbb09456d7823605e4285c4a2c5bbf40",
