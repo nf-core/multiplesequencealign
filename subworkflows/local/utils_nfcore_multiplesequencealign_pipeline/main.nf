@@ -173,7 +173,7 @@ workflow PIPELINE_COMPLETION {
             imNotification(summary_params, hook_url)
         }
 
-        // check if summary report is empty 
+        // check if summary report is empty
         if (summary_reports.getVal().isEmpty()){
             return
         }

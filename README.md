@@ -107,7 +107,7 @@ nextflow run nf-core/multiplesequencealign \
 </details>
 
 <details>
-  <summary> FAQ: Can I use both <em>--seqs</em> and <em>--pdbs_dir</em>? </summary>
+  <summary> FAQ: Can I use both <em>--seqs</em> and <em>--pdbs_dir</em>?</summary>
   Yes, go for it! This might be useful if you want a structural evaluation of a sequence-based aligner for instance. 
 </details>
 
@@ -137,8 +137,7 @@ You need **2 input files**:
 - **toolsheet** (which tools you want to use).
 
 <details>
-  <summary> What is a samplesheet? </summary>
-  
+  <summary> What is a samplesheet?</summary>
   The sample sheet defines the **input datasets** (sequences, structures, etc.) that the pipeline will process.
 
 A minimal version:
@@ -167,8 +166,7 @@ Please check: <a href="https://nf-co.re/multiplesequencealign/usage/#samplesheet
 </details>
 
 <details>
-  <summary> What is a toolsheet? </summary>
-  
+  <summary> What is a toolsheet?</summary>
   The toolsheet specifies **which combination of tools will be deployed and benchmark in the pipeline**.
 
 Each line defines a combination of guide tree and multiple sequence aligner to run with the respective arguments to be used.
