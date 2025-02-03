@@ -90,7 +90,7 @@ nextflow run nf-core/multiplesequencealign \
    --outdir outdir
 ```
 
-Your input is a directory where your PDB files are stored ([example](https://github.com/nf-core/test-datasets/blob/multiplesequencealign/testdata/af2_structures/seatoxin-ref.tar.gz))? Then:
+Is your input a directory where your PDB files are stored ([example](https://github.com/nf-core/test-datasets/blob/multiplesequencealign/testdata/af2_structures/seatoxin-ref.tar.gz))? Then:
 
 ```bash
 nextflow run nf-core/multiplesequencealign \
