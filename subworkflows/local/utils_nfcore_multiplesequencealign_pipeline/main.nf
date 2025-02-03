@@ -628,7 +628,7 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
 
 
 /*
-* Parsea the verions file and returns a map with the tools and their versions.
+* Parses the verions file and returns a map with the tools and their versions.
 *
 * @param filePath The path to the versions file.
 * @return A map containing the tools and their versions.
