@@ -108,7 +108,7 @@ nextflow run nf-core/multiplesequencealign \
 
 <details>
   <summary> FAQ: Can I use both <em>--seqs</em> and <em>--pdbs_dir</em>?</summary>
-  Yes, go for it! This might be useful if you want a structural evaluation of a sequence-based aligner for instance. 
+  Yes, go for it! This might be useful if you want a structural evaluation of a sequence-based aligner for instance.
 </details>
 
 <details>
