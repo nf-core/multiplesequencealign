@@ -78,7 +78,7 @@ nextflow run nf-core/multiplesequencealign \
 
 ### CASE 1: One input dataset, one tool.
 
-If you only have one dataset and want align it using one specific MSA tool (e.g. FAMSA or FOLDMASON):
+If you only have one dataset and want to align it using one specific MSA tool (e.g. FAMSA or FOLDMASON), you can run the pipeline with one single command.
 
 Your input is a fasta file ([example](https://github.com/nf-core/test-datasets/blob/multiplesequencealign/testdata/setoxin-ref.fa))? Then:
 
