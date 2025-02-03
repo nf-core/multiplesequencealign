@@ -73,9 +73,8 @@ nextflow run nf-core/multiplesequencealign \
 ## How to set up an easy run:
 
 > [!NOTE]
->We have a lot more of use cases examples under [FAQs]("https://nf-co.re/multiplesequencealign/usage/FAQs)
+> We have a lot more of use cases examples under [FAQs]("https://nf-co.re/multiplesequencealign/usage/FAQs)
 > Find some example input data [here](https://github.com/nf-core/test-datasets/tree/multiplesequencealign)
-
 
 ### CASE 1: One input dataset, one tool.
 

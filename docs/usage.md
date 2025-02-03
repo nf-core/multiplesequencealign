@@ -31,7 +31,6 @@ work                # Directory containing the nextflow working files
 We have a lot of use cases examples under [FAQs]("https://nf-co.re/multiplesequencealign/usage/FAQs)
 :::
 
-
 ## Samplesheet input
 
 The sample sheet defines the **input data** that the pipeline will process.
@@ -118,28 +117,25 @@ Currently available GUIDE TREE methods are: (Optional):
 - [FAMSA](https://github.com/refresh-bio/FAMSA)
 - [MAFFT](https://mafft.cbrc.jp/alignment/server/index.html)
 
+Here some specific Guide Tree settings:
+Use the values in columns `tree` and `args_tree`. The rest of the columns are just explainatory here.
 
-Here some specific Guide Tree settings: 
-Use the values in columns `tree` and `args_tree`. The rest of the columns are just explainatory here. 
-
-| tree       | args_Tree               | Distance Measure                         | Core Algorithm                             | Speed-up Heuristic |
-|-----------|-------------------------|------------------------------------------|--------------------------------------------|--------------------|
-| MAFFT     |                         | k-mer-based                              | UPGMA + single linkage combined           |                    |
-| MAFFT     | --minimumlinkage         | k-mer-based                              | single linkage                            |                    |
-| MAFFT     | --averagelinkage         | k-mer-based                              | UPGMA                                      |                    |
-| MAFFT     | --parttree               | k-mer-based                              | single linkage + UPGMA combined           | PartTree           |
-| MAFFT     | --dpparttree             | dynamic programming alignment-based      | single linkage + UPGMA combined           | PartTree           |
-| MAFFT     | --fastaparttree          | FASTA alignment-based                    | single linkage + UPGMA combined           | PartTree           |
-| CLUSTALO |                       | sequence embedding + approx. alignment   | UPGMA                                      | bisecting K-means  |
-| FAMSA     |                         | longest common subsequence-based         | single linkage                            |                    |
-| FAMSA     | -gt upgma               | longest common subsequence-based         | UPGMA                                      |                    |
-| FAMSA     | -gt nj                  | longest common subsequence-based         | neighbour joining                         |                    |
-| FAMSA     | -parttree               | longest common subsequence-based         | single linkage                            | PartTree           |
-| FAMSA     | -gt upgma -parttree     | longest common subsequence-based         | UPGMA                                      | PartTree           |
-| FAMSA     | -medoidtree             | longest common subsequence-based         | single linkage                            | MedoidTree         |
-| FAMSA     | -gt upgma -medoidtree   | longest common subsequence-based         | UPGMA                                      | MedoidTree         |
-
-
+| tree     | args_Tree             | Distance Measure                       | Core Algorithm                  | Speed-up Heuristic |
+| -------- | --------------------- | -------------------------------------- | ------------------------------- | ------------------ |
+| MAFFT    |                       | k-mer-based                            | UPGMA + single linkage combined |                    |
+| MAFFT    | --minimumlinkage      | k-mer-based                            | single linkage                  |                    |
+| MAFFT    | --averagelinkage      | k-mer-based                            | UPGMA                           |                    |
+| MAFFT    | --parttree            | k-mer-based                            | single linkage + UPGMA combined | PartTree           |
+| MAFFT    | --dpparttree          | dynamic programming alignment-based    | single linkage + UPGMA combined | PartTree           |
+| MAFFT    | --fastaparttree       | FASTA alignment-based                  | single linkage + UPGMA combined | PartTree           |
+| CLUSTALO |                       | sequence embedding + approx. alignment | UPGMA                           | bisecting K-means  |
+| FAMSA    |                       | longest common subsequence-based       | single linkage                  |                    |
+| FAMSA    | -gt upgma             | longest common subsequence-based       | UPGMA                           |                    |
+| FAMSA    | -gt nj                | longest common subsequence-based       | neighbour joining               |                    |
+| FAMSA    | -parttree             | longest common subsequence-based       | single linkage                  | PartTree           |
+| FAMSA    | -gt upgma -parttree   | longest common subsequence-based       | UPGMA                           | PartTree           |
+| FAMSA    | -medoidtree           | longest common subsequence-based       | single linkage                  | MedoidTree         |
+| FAMSA    | -gt upgma -medoidtree | longest common subsequence-based       | UPGMA                           | MedoidTree         |
 
 ## 3. Align
 
@@ -150,7 +146,7 @@ The available assembly methods are listed below (those that accept guide trees i
 - [CLUSTALO](http://clustal.org/omega/#Documentation) (accepts guide tree)
 - [FAMSA](https://github.com/refresh-bio/FAMSA) (accepts guide tree)
 - [KALIGN](https://github.com/TimoLassmann/kalign)
-- [LEARNMSA](https://github.com/Gaius-Augustus/learnMSA) *Read note below
+- [LEARNMSA](https://github.com/Gaius-Augustus/learnMSA) \*Read note below
 - [MAFFT](https://mafft.cbrc.jp/alignment/server/index.html)
 - [MAGUS](https://github.com/vlasmirnov/MAGUS) (accepts guide tree)
 - [MUSCLE5](https://drive5.com/muscle5/manual/)
@@ -158,9 +154,8 @@ The available assembly methods are listed below (those that accept guide trees i
 - [REGRESSIVE](https://tcoffee.readthedocs.io/en/latest/tcoffee_quickstart_regressive.html) (accepts guide tree)
 - [UPP](https://github.com/smirarab/sepp) (accepts guide tree)
 
-
 > [!NOTE]
->  LearnMSA can (and should) run on GPUs. If you have GPUs available please turn the GPU run mode on using `--use_gpu`. You might have to update you configuration file if you are running on a cluster with custom queue names. Check the [CRG](https://github.com/nf-core/configs/blob/master/conf/pipeline/multiplesequencealign/crg.config) one to see an example. 
+> LearnMSA can (and should) run on GPUs. If you have GPUs available please turn the GPU run mode on using `--use_gpu`. You might have to update you configuration file if you are running on a cluster with custom queue names. Check the [CRG](https://github.com/nf-core/configs/blob/master/conf/pipeline/multiplesequencealign/crg.config) one to see an example.
 
 **sequence- and structure-based** (require both fasta and structures as input):
 
@@ -230,7 +225,6 @@ outdir: './results/'
 ```
 
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
-
 
 ### Updating the pipeline
 
