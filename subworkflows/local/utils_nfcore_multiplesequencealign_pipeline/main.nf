@@ -97,7 +97,6 @@ workflow PIPELINE_INITIALISATION {
     }else{
 
         Channel.fromList(samplesheetToList(params.tools, "${projectDir}/assets/schema_tools.json")).set{ ch_tools }
-    
     }
 
     ch_tools.map {
@@ -148,7 +147,7 @@ workflow PIPELINE_COMPLETION {
 
     main:
     summary_params      = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
-    def multiqc_reports = multiqc_report.toList()  
+    def multiqc_reports = multiqc_report.toList()
     def summary_reports = summary.toList()
     def versions        = versions.toList()
     def skip_shiny      = params.skip_shiny
@@ -175,7 +174,7 @@ workflow PIPELINE_COMPLETION {
         }
 
         // check if summary report is empty 
-        if (summary_reports.getVal().isEmpty()) {
+        if (summary_reports.getVal().isEmpty()){
             return
         }
 
@@ -183,7 +182,7 @@ workflow PIPELINE_COMPLETION {
         def summary_file  = summary_reports.getVal()[0][1].toString()
         def versions_path = versions.getVal()[0].toString()
 
-        // Input files 
+        // Input files
         def trace_dir_path = "${outdir}/pipeline_info/"
 
         // Output file naming
@@ -692,7 +691,7 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     // -------------------
     def versions = parseVersions(versions_path)
 
-    // Merge versions and data 
+    // Merge versions and data
     data.each { row ->
         def aligner = row.aligner
         row.put("version_aligner", versions[aligner])

@@ -53,7 +53,7 @@ include { FASTAVALIDATOR                 } from '../modules/nf-core/fastavalidat
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-workflow MULTIPLESEQUENCEALIGN {
+workflow MULTIPLESEQUENCEALIGN{
 
     take:
     ch_input    // channel: [ meta, path(sequence.fasta), path(reference.fasta), path(dependency_files.tar.gz), path(templates.txt) ]
@@ -113,7 +113,7 @@ workflow MULTIPLESEQUENCEALIGN {
 
         // *****************************************
         // Get the structures into a channel.
-        // If the folder is compressed, decompress 
+        // If the folder is compressed, decompress
         // *****************************************
         if(params.pdbs_dir.endsWith('.tar.gz')){
 
@@ -137,7 +137,7 @@ workflow MULTIPLESEQUENCEALIGN {
 
         // ******************************************************************
         // If the sequences are not provided, extract the fasta from the pdb
-        // otherwise, map the optional_data to the sequence IDs provided by the 
+        // otherwise, map the optional_data to the sequence IDs provided by the
         // various fasta files
         // *****************************************************************
         if(!params.seqs){
@@ -153,7 +153,6 @@ workflow MULTIPLESEQUENCEALIGN {
 
 
         }else{
-            
             // Identify the sequence IDs from the input fasta file(s)
             ch_seqs.splitFasta(record: [ id: true ] )
                 .map { id, seq_id -> [ seq_id, id ] }
@@ -219,7 +218,7 @@ workflow MULTIPLESEQUENCEALIGN {
     //
 
 
-    // Templates are currenlty needed only if 3DCOFFEE is used 
+    // Templates are currenlty needed only if 3DCOFFEE is used
     // This may change in the future
     ch_optional_data
         .combine(ch_tools)
@@ -235,10 +234,9 @@ workflow MULTIPLESEQUENCEALIGN {
         ch_templates,
         "${params.templates_suffix}"
     )
-    ch_optional_data_template = TEMPLATES.out.optional_data_template  
-
+    ch_optional_data_template = TEMPLATES.out.optional_data_template
     // If the TEMPLATE is not needed, detect that TEMPLATE was not run and use the old optional_data to
-    // proceed with the pipeline 
+    // proceed with the pipeline
     // If 3DCOFFEE was called, the last element is a templata (the filte on -1) and therefore we understand
     // that the template was run and the channel remains empty ( ch_optional_data_notemplate )
     ch_optional_data
@@ -334,8 +332,7 @@ workflow MULTIPLESEQUENCEALIGN {
             sort: true,
             newLine: true
         ).set { ch_collated_versions }
-    
-    
+
     if (!params.skip_multiqc){
         //
         // MODULE: MultiQC

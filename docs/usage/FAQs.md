@@ -107,11 +107,3 @@
       --skip_pdbconversion false
 </details>
 
-
-
-
-
-Which trees can I use? Some options
-
-
-How to prepare your inputs. 

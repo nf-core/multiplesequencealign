@@ -102,7 +102,7 @@ nextflow run nf-core/multiplesequencealign \
 ```
 
 <details>
-  <summary> FAQ: Which are the available tools I can use? </summary>
+  <summary> FAQ: Which are the available tools I can use?</summary>
   Check the list here: <a href="https://nf-co.re/multiplesequencealign/usage/#2-guide-trees"> available tools</a>.
 </details>
 

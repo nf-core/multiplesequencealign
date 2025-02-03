@@ -115,8 +115,6 @@ workflow ALIGN {
         }
         .set { ch_optional_data_tools }
 
-    
-
 
     // tools that accept optional data and tree
     ch_optional_data.combine(ch_tools)
@@ -136,7 +134,7 @@ workflow ALIGN {
             foldmason: it[0]["aligner"] == "FOLDMASON"
         }
         .set { ch_optional_data_tools_tree }
-    
+
 
     // ------------------------------------------------
     // Compute the alignments
