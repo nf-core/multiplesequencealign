@@ -19,88 +19,199 @@
 
 ## Introduction
 
-**nf-core/multiplesequencealign** is a pipeline to deploy and systematically evaluate Multiple Sequence Alignment (MSA) methods.
+Use **nf-core/multiplesequencealign** to:
 
-The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. Where possible, these processes have been submitted to and installed from [nf-core/modules](https://github.com/nf-core/modules) in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!
+1. **Deploy** one (or many in parallel) of the most popular Multiple Sequence Alignment (MSA) tools.
+2. **Benchmark** MSA tools (and their inputs) using various metrics.
 
-On release, automated continuous integration tests run the pipeline on a full-sized dataset on the AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources.The results obtained from the full-sized test can be viewed on the [nf-core website](https://nf-co.re/proteinfold/results).
+Main steps:
+
+  <details>
+      <summary><strong>Inputs summary</strong> (Optional)</summary>
+      <p>Computation of summary statistics on the input files (e.g., average sequence similarity across the input sequences, their length, pLDDT extraction if available).</p>
+  </details>
+
+  <details>
+      <summary><strong>Guide Tree</strong> (Optional)</summary>
+      <p>Renders a guide tree with a chosen tool (list available in <a href="docs/usage.md#2-guide-trees">usage</a>). Some aligners use guide trees to define the order in which the sequences are aligned.</p>
+  </details>
+
+  <details>
+      <summary><strong>Align</strong> (Required)</summary>
+      <p>Aligns the sequences with a chosen tool (list available in <a href="docs/usage.md#3-align">usage</a>).</p>
+  </details>
+
+  <details>
+      <summary><strong>Evaluate</strong> (Optional)</summary>
+      <p>Evaluates the generated alignments with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.</p>
+  </details>
+
+  <details>
+      <summary><strong>Report</strong>(Optional)</summary>
+      <p>Reports the collected information of the runs in a Shiny app and a summary table in MultiQC. Optionally, it can also render the <a href="https://github.com/steineggerlab/foldmason">Foldmason</a> MSA visualization in HTML format.</p>
+  </details>
 
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
-
-The pipeline performs the following steps:
-
-1. **Input files summary**: (Optional) computation of summary statistics on the input files, such as the average sequence similarity across the input sequences, their length, plddt extraction if available.
-
-2. **Guide Tree**: (Optional) Renders a guide tree with a chosen tool (list available in [usage](docs/usage.md#2-guide-trees)). Some aligners use guide trees to define the order in which the sequences are aligned.
-3. **Align**: (Required) Aligns the sequences with a chosen tool (list available in [usage](docs/usage.md#3-align)).
-4. **Evaluate**: (Optional) Evaluates the generated alignments with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.
-5. **Report**: Reports the collected information of the runs in a Shiny app and a summary table in MultiQC. Optionally, it can also render the [Foldmason](https://github.com/steineggerlab/foldmason) MSA visualization in html format.
 
 ## Usage
 
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-#### 1. SAMPLESHEET
+### Quick start - test run
 
-The sample sheet defines the **input data** that the pipeline will process.
-It should look like this:
+To get a feeling of what the pipeline does, run:
 
-`samplesheet.csv`:
+(You don't need to download or provide any file, try it!)
+
+```
+nextflow run nf-core/multiplesequencealign \
+   -profile test,docker \
+   --outdir results
+```
+
+## How to set up an easy run:
+
+> [!NOTE]
+> We have a lot more of use cases examples under [FAQs]("https://nf-co.re/multiplesequencealign/usage/FAQs)
+> Find some example input data [here](https://github.com/nf-core/test-datasets/tree/multiplesequencealign)
+
+### CASE 1: One input dataset, one tool.
+
+If you only have one dataset and want to align it using one specific MSA tool (e.g. FAMSA or FOLDMASON), you can run the pipeline with one single command.
+
+Is your input a fasta file ([example](https://github.com/nf-core/test-datasets/blob/multiplesequencealign/testdata/setoxin-ref.fa))? Then:
+
+```bash
+nextflow run nf-core/multiplesequencealign \
+   -profile easy_deploy,docker \
+   --seqs <YOUR_FASTA.fa> \
+   --aligner FAMSA \
+   --outdir outdir
+```
+
+Is your input a directory where your PDB files are stored ([example](https://github.com/nf-core/test-datasets/blob/multiplesequencealign/testdata/af2_structures/seatoxin-ref.tar.gz))? Then:
+
+```bash
+nextflow run nf-core/multiplesequencealign \
+   -profile easy_deploy,docker \
+   --pdbs_dir <PATH_TO_YOUR_PDB_DIR> \
+   --aligner FOLDMASON \
+   --outdir outdir
+```
+
+<details>
+  <summary> FAQ: Which are the available tools I can use?</summary>
+  Check the list here: <a href="https://nf-co.re/multiplesequencealign/usage/#3-align"> available tools</a>.
+</details>
+
+<details>
+  <summary> FAQ: Can I use both <em>--seqs</em> and <em>--pdbs_dir</em>?</summary>
+  Yes, go for it! This might be useful if you want a structural evaluation of a sequence-based aligner for instance.
+</details>
+
+<details>
+  <summary> FAQ: Can I specify also which guidetree to use? </summary>
+  Yes, use the <code>--tree</code> flag. More info: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a> and <a href="https://nf-co.re/multiplesequencealign/parameters">parameters</a>.
+</details>
+
+<details>
+  <summary> FAQ: Can I specify the arguments of the tools (tree and aligner)? </summary>
+  Yes, use the <code>--args_tree</code> and <code>--args_aligner</code> flags. More info: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a> and <a href="https://nf-co.re/multiplesequencealign/parameters">parameters</a>.
+</details>
+
+### CASE 2: Multiple datasets, multiple tools.
+
+```bash
+nextflow run nf-core/multiplesequencealign \
+   -profile test,docker \
+   --input <samplesheet.csv> \
+   --tools <toolsheet.csv> \
+   --outdir outdir
+```
+
+You need **2 input files**:
+
+- **samplesheet** (your datasets)
+- **toolsheet** (which tools you want to use).
+
+<details>
+  <summary> What is a samplesheet?</summary>
+  The sample sheet defines the **input datasets** (sequences, structures, etc.) that the pipeline will process.
+
+A minimal version:
 
 ```csv
-id,fasta,reference,optional_data,template
-seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures,seatoxin_template.txt
-toxin,toxin.fa,toxin-ref.fa,toxin_structures,toxin_template.txt
+id,fasta
+seatoxin,seatoxin.fa
+toxin,toxin.fa
+```
+
+A more complete one:
+
+```csv
+id,fasta,reference,optional_data
+seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures
+toxin,toxin.fa,toxin-ref.fa,toxin_structures
 ```
 
 Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be aligned and the associated (if available) reference alignments and dependency files (this can be anything from protein structure or any other information you would want to use in your favourite MSA tool).
 
+Please check: <a href="https://nf-co.re/multiplesequencealign/usage/#samplesheet-input">usage</a>.
+
 > [!NOTE]
 > The only required input is the id column and either fasta or optional_data.
 
-#### 2. TOOLSHEET
+</details>
 
-The toolsheet specifies **which combination of tools will be deployed and benchmark in the pipeline**.
-Each line of the toolsheet defines a combination of guide tree and multiple sequence aligner to run with the respective arguments to be used.
+<details>
+  <summary> What is a toolsheet?</summary>
+  The toolsheet specifies <em>which combination of tools will be deployed and benchmarked in the pipeline</em>.
+
+Each line defines a combination of guide tree and multiple sequence aligner to run with the respective arguments to be used.
+
 The only required field is `aligner`. The fields `tree`, `args_tree` and `args_aligner` are optional and can be left empty.
 
-It should look at follows:
-
-`toolsheet.csv`:
+A minimal version:
 
 ```csv
-tree,args_tree,aligner,args_aligner,
+tree,args_tree,aligner,args_aligner
+,,FAMSA,
+```
+
+This will run the FAMSA aligner.
+
+A more complex one:
+
+```csv
+tree,args_tree,aligner,args_aligner
 FAMSA, -gt upgma -medoidtree, FAMSA,
 , ,TCOFFEE,
 FAMSA,,REGRESSIVE,
 ```
 
+This will run, in parallel:
+
+- the FAMSA guidetree with the arguments <em>-gt upgma -medoidtree</em>. This guidetree is then used as input for the FAMSA aligner.
+- the TCOFFEE aligner
+- the FAMSA guidetree with default arguments. This guidetree is then used as input for the REGRESSIVE aligner.
+
+Please check: <a href="https://nf-co.re/multiplesequencealign/usage/#toolsheet-input">usage</a>.
+
 > [!NOTE]
 > The only required input is `aligner`.
 
-#### 3. RUN THE PIPELINE
+</details>
 
-Now, you can run the pipeline using:
-
-```bash
-nextflow run nf-core/multiplesequencealign \
-   -profile test,docker \
-   --input samplesheet.csv \
-   --tools toolsheet.csv \
-   --outdir outdir
-```
+For more details on more advanced runs: [usage documentation](https://nf-co.re/multiplesequencealign/usage) and the [parameter documentation](https://nf-co.re/multiplesequencealign/parameters).
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
 
-For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/multiplesequencealign/usage) and the [parameter documentation](https://nf-co.re/multiplesequencealign/parameters).
-
 ## Pipeline output
 
-To see the results of an example test run with a full-size dataset refer to the [results](https://nf-co.re/multiplesequencealign/results) tab on the nf-core website pipeline page.
-For more details about the output files and reports, please refer to the
-[output documentation](https://nf-co.re/multiplesequencealign/output).
+Example results: [results](https://nf-co.re/multiplesequencealign/results) tab on the nf-core website pipeline page.
+For more details: [output documentation](https://nf-co.re/multiplesequencealign/output).
 
 ## Extending the pipeline
 

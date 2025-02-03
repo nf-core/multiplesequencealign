@@ -22,9 +22,10 @@ process CALC_GAPS {
     def header = meta.keySet().join(",")
     def values = meta.values().join(",")
     """
+    sed 's/\\./-/g' ${msa} > ${prefix}_clean.aln
     echo "${header},total_gaps,avg_gaps" > ${prefix}_gaps.csv
-    total_gaps=\$(grep -v ">" $msa | awk -F "-" '{total += NF-1;} END {print total}');
-    nseq=\$(grep -c ">" $msa);
+    total_gaps=\$(grep -v ">" ${prefix}_clean.aln | awk -F "-" '{total += NF-1;} END {print total}');
+    nseq=\$(grep -c ">" ${prefix}_clean.aln);
     avg_gaps=\$(awk -v var1="\$total_gaps" -v var2="\$nseq" 'BEGIN { print var1 / var2 }')
     echo "${values},\$total_gaps,\$avg_gaps" >> ${prefix}_gaps.csv
 

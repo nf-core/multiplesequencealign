@@ -1,4 +1,4 @@
-process CREATE_TCOFFEETEMPLATE {
+process CREATE_TEMPLATE {
     tag "$meta.id"
     label 'process_low'
 

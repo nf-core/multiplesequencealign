@@ -1,4 +1,4 @@
-include { CREATE_TCOFFEETEMPLATE } from '../../modules/local/create_tcoffee_template'
+include { CREATE_TEMPLATE } from '../../../modules/local/custom/create_template'
 
 workflow TEMPLATES {
 
@@ -20,15 +20,15 @@ workflow TEMPLATES {
         .set { ch_optional_data_branched }
 
     // Create the new templates and merge them with the existing templates
-    CREATE_TCOFFEETEMPLATE (
+    CREATE_TEMPLATE (
         ch_optional_data_branched.no_template
             .map {
                 meta,optional_data,template ->
                     [ meta, suffix, optional_data ]
             }
     )
-    new_templates = CREATE_TCOFFEETEMPLATE.out.template
-    ch_versions = CREATE_TCOFFEETEMPLATE.out.versions
+    new_templates = CREATE_TEMPLATE.out.template
+    ch_versions = CREATE_TEMPLATE.out.versions
 
     ch_optional_data_branched.template
         .map {

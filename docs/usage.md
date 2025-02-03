@@ -4,17 +4,97 @@
 
 > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
 
-## Overview
+## Running the pipeline
 
-**nf-core/multiplesequencealign** is a pipeline to deploy and systematically evaluate Multiple Sequence Alignment (MSA) methods.
+The typical command for running the pipeline is as follows:
 
-The main steps of the pipeline are:
+```bash
+nextflow run nf-core/multiplesequencealign \
+        --input ./samplesheet.csv \
+        --tools ./toolsheet.csv \
+        --outdir ./results \
+        -profile docker
+```
 
-1. **Input files summary**: (Optional) computation of summary statistics on the input fasta file, such as the average sequence similarity across the input sequences, their length, etc. Skipped by the `--skip_stats` parameter.
-2. **Guide Tree**: (Optional) Renders a guide tree. Only run if provided in the toolsheet input.
-3. **Align**: aligns the sequences.
-4. **Evaluate**: (Optional) The obtained alignments are evaluated with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc. Skipped by passing `--skip_eval` as a parameter.
-5. **Report**: Reports about the collected information of the runs are reported in a Shiny app and a summary table in MultiQC. These processes can be skipped by passing `--skip_shiny` and `--skip_multiqc`, respectively.
+This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
+
+Note that the pipeline will create the following files in your working directory:
+
+```bash
+work                # Directory containing the nextflow working files
+<OUTDIR>            # Finished results in specified location (defined with --outdir)
+.nextflow_log       # Log file from Nextflow
+# Other nextflow hidden files, eg. history of pipeline runs and old logs.
+```
+
+:::note
+We have a lot of use cases examples under [FAQs]("https://nf-co.re/multiplesequencealign/usage/FAQs)
+:::
+
+## Samplesheet input
+
+The sample sheet defines the **input data** that the pipeline will process.
+It should look like this:
+
+```csv title="samplesheet.csv"
+id,fasta,reference,optional_data,template
+seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures,seatoxin_template.txt
+toxin,toxin.fa,toxin-ref.fa,toxin_structures,toxin_template.txt
+```
+
+Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be processed.
+
+| Column          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`            | Required. Name of the set of sequences. It can correspond to the protein family name or to an internal id. It must be unique.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `fasta`         | Required (At least one of fasta or optional_data must be provided). Full path to the fasta file that contains the sequence to be aligned.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `reference`     | Optional. Full path to the reference alignment. It is used for the reference-based evaluation steps. It can be left empty.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `optional_data` | Required (At least one of fasta or optional_data must be provided). Full path to the folder that contains the dependency files (e.g. protein structures) for the sequences to be aligned. Currently, it is used for structural aligners and structure-based evaluation steps. It can be left empty.                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `template`      | Optional. Files that define the mapping between the input sequence and the dependency files (e.g. protein structures) to be used. Used by 3D-Coffee. If not specified, they will be automatically generated assuming that the sequence name provided in the fasta is the same as the file name of the corresponding PDB file. E.g. if you set (default) the parameter `templates_suffix` to `.pdb`, then: ">MyProteinName" in the fasta file and "MyProteinName.pdb" for the corresponding protein structure. For more information on how to generate a template file manually, please look at the T-Coffee [documentation](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html). |
+
+:::note
+You can have some samples with optional_data and/or references and some without. The pipeline will run the modules requiring optional_data/references only on the samples for which you have provided the required information and the others will be just skipped.
+:::
+
+## Toolsheet input
+
+We provide a toolsheet as input to facilitate testing multiple arguments per tool when using the pipeline as a benchmarking framework. This, enables having multiple entries in the toolsheet, each corresponding to different arguments to be tested for the same tool.
+
+Each line of the toolsheet defines a combination of guide tree and multiple sequence aligner to run with the respective arguments to be used.
+
+A typical toolsheet should look as follows:
+
+```csv title="toolsheet.csv"
+tree,args_tree,aligner,args_aligner,
+FAMSA, -gt upgma -medoidtree, FAMSA,
+, ,TCOFFEE,
+FAMSA,,REGRESSIVE,
+```
+
+More examples [here](https://github.com/nf-core/test-datasets/tree/multiplesequencealign/toolsheet).
+
+:::note
+Each of the trees and aligners are available as standalones. You can leave `args_tree` and `args_aligner` empty if you are cool with the default settings of each method. Alternatively, you can leave `args_tree` empty to use the default guide tree with each aligner.
+:::
+
+:::note
+use the exact spelling as listed below in [align](#3-align) and [guide trees](#2-guide-trees)!
+:::
+
+`tree` is the tool used to build the tree (optional).
+
+Arguments to the tree tool can be provided using `args_tree`. Please refer to each tool's documentation (optional).
+
+The `aligner` column contains the tool to run the alignment (optional).
+
+Finally, the arguments to the aligner tool can be set by using the `args_aligner` column (optional).
+
+| Column         | Description                                                                      |
+| -------------- | -------------------------------------------------------------------------------- |
+| `tree`         | Optional. Tool used to build the tree.                                           |
+| `args_tree`    | Optional. Arguments to the tree tool. Please refer to each tool's documentation. |
+| `aligner`      | Required. Tool to run the alignment. Available options listed below.             |
+| `args_aligner` | Optional. Arguments to the alignment tool.                                       |
 
 ## 1. Input files summary statistics
 
@@ -37,7 +117,27 @@ Currently available GUIDE TREE methods are: (Optional):
 - [FAMSA](https://github.com/refresh-bio/FAMSA)
 - [MAFFT](https://mafft.cbrc.jp/alignment/server/index.html)
 
-### 3. Align
+Here some specific Guide Tree settings:
+Use the values in columns `tree` and `args_tree`. The rest of the columns are just explainatory here.
+
+| tree     | args_Tree             | Distance Measure                       | Core Algorithm                  | Speed-up Heuristic |
+| -------- | --------------------- | -------------------------------------- | ------------------------------- | ------------------ |
+| MAFFT    |                       | k-mer-based                            | UPGMA + single linkage combined |                    |
+| MAFFT    | --minimumlinkage      | k-mer-based                            | single linkage                  |                    |
+| MAFFT    | --averagelinkage      | k-mer-based                            | UPGMA                           |                    |
+| MAFFT    | --parttree            | k-mer-based                            | single linkage + UPGMA combined | PartTree           |
+| MAFFT    | --dpparttree          | dynamic programming alignment-based    | single linkage + UPGMA combined | PartTree           |
+| MAFFT    | --fastaparttree       | FASTA alignment-based                  | single linkage + UPGMA combined | PartTree           |
+| CLUSTALO |                       | sequence embedding + approx. alignment | UPGMA                           | bisecting K-means  |
+| FAMSA    |                       | longest common subsequence-based       | single linkage                  |                    |
+| FAMSA    | -gt upgma             | longest common subsequence-based       | UPGMA                           |                    |
+| FAMSA    | -gt nj                | longest common subsequence-based       | neighbour joining               |                    |
+| FAMSA    | -parttree             | longest common subsequence-based       | single linkage                  | PartTree           |
+| FAMSA    | -gt upgma -parttree   | longest common subsequence-based       | UPGMA                           | PartTree           |
+| FAMSA    | -medoidtree           | longest common subsequence-based       | single linkage                  | MedoidTree         |
+| FAMSA    | -gt upgma -medoidtree | longest common subsequence-based       | UPGMA                           | MedoidTree         |
+
+## 3. Align
 
 The available assembly methods are listed below (those that accept guide trees indicate it in parentheses):
 
@@ -46,13 +146,16 @@ The available assembly methods are listed below (those that accept guide trees i
 - [CLUSTALO](http://clustal.org/omega/#Documentation) (accepts guide tree)
 - [FAMSA](https://github.com/refresh-bio/FAMSA) (accepts guide tree)
 - [KALIGN](https://github.com/TimoLassmann/kalign)
-- [LEARNMSA](https://github.com/Gaius-Augustus/learnMSA)
+- [LEARNMSA](https://github.com/Gaius-Augustus/learnMSA) \*Read note below
 - [MAFFT](https://mafft.cbrc.jp/alignment/server/index.html)
 - [MAGUS](https://github.com/vlasmirnov/MAGUS) (accepts guide tree)
 - [MUSCLE5](https://drive5.com/muscle5/manual/)
 - [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/index.html) (accepts guide tree)
 - [REGRESSIVE](https://tcoffee.readthedocs.io/en/latest/tcoffee_quickstart_regressive.html) (accepts guide tree)
 - [UPP](https://github.com/smirarab/sepp) (accepts guide tree)
+
+> [!NOTE]
+> LearnMSA can (and should) run on GPUs. If you have GPUs available please turn the GPU run mode on using `--use_gpu`. You might have to update you configuration file if you are running on a cluster with custom queue names. Check the [CRG](https://github.com/nf-core/configs/blob/master/conf/pipeline/multiplesequencealign/crg.config) one to see an example.
 
 **sequence- and structure-based** (require both fasta and structures as input):
 
@@ -65,7 +168,7 @@ The available assembly methods are listed below (those that accept guide trees i
 
 Optionally, [M-COFFEE](https://tcoffee.org/Projects/mcoffee/index.html) will combine the output of all alignments into a consensus MSA (`--build_consensus`).
 
-### 4. Evaluate
+## 4. Evaluate
 
 Optionally, the produced MSAs will be evaluated. This step can be skipped using the `--skip_eval` parameter. The evaluations implemented are listed below.
 
@@ -86,7 +189,7 @@ The provided structures (see samplesheet) are used to evaluate the quality of th
 
 4. **iRMSD**: Calculates the iRMSD using the [TCOFFEE](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html#apdb-irmsd) implementation. Activate using `--calc_irmsd` (default: false).
 
-### 5. Report
+## 5. Report
 
 Finally, a summary table with all the computed statistics and evaluations is reported in MultiQC (skip by using `--skip_multiqc`).
 Moreover, a Shiny app is generated with interactive summary plots (skip with `--skip_shiny`).
@@ -97,87 +200,7 @@ If structures are provided, the [Foldmason](https://github.com/steineggerlab/fol
 You will need to have [Shiny](https://shiny.posit.co/py/) installed to run it! See [output documentation](https://nf-co.re/multiplesequencealign/output) for more info.
 :::
 
-## Samplesheet input
-
-The sample sheet defines the **input data** that the pipeline will process.
-It should look like this:
-
-```csv title="samplesheet.csv"
-id,fasta,reference,optional_data,template
-seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures,seatoxin_template.txt
-toxin,toxin.fa,toxin-ref.fa,toxin_structures,toxin_template.txt
-```
-
-Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be processed.
-
-| Column          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`            | Required. Name of the set of sequences. It can correspond to the protein family name or to an internal id. It must be unique.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `fasta`         | Required (At least one of fasta or optional_data must be provided). Full path to the fasta file that contains the sequence to be aligned.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `reference`     | Optional. Full path to the reference alignment. It is used for the reference-based evaluation steps. It can be left empty.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `optional_data` | Required (At least one of fasta or optional_data must be provided). Full path to the folder that contains the dependency files (e.g. protein structures) for the sequences to be aligned. Currently, it is used for structural aligners and structure-based evaluation steps. It can be left empty.                                                                                                                                                                                                                                                                                                                                                                                                |
-| `template`      | Optional. Files that define the mapping between the input sequence and the dependency files (e.g. protein structures) to be used. Used by 3D-Coffee. If not specified, they will be automatically generated assuming that the sequence name provided in the fasta is the same as the file name of the corresponding PDB file. E.g. if you set (default) the parameter templates_suffix to .pdb, then: ">MyProteinName" in the fasta file and "MyProteinName.pdb" for the corresponding protein structure. For more information on how to generate a template file manually, please look at the T-Coffee [documentation](https://tcoffee.readthedocs.io/en/latest/tcoffee_main_documentation.html). |
-
-:::note
-You can have some samples with optional_data and/or references and some without. The pipeline will run the modules requiring optional_data/references only on the samples for which you have provided the required information and the others will be just skipped.
-:::
-
-## Toolsheet input
-
-We provide a toolsheet as input to facilitate testing multiple arguments per tool when using the pipeline as a benchmarking framework. This, enables having multiple entries in the toolsheet, each corresponding to different arguments to be tested for the same tool.
-
-Each line of the toolsheet defines a combination of guide tree and multiple sequence aligner to run with the respective arguments to be used.
-
-A typical toolsheet should look at follows:
-
-```csv title="toolsheet.csv"
-tree,args_tree,aligner,args_aligner,
-FAMSA, -gt upgma -medoidtree, FAMSA,
-, ,TCOFFEE,
-FAMSA,,REGRESSIVE,
-```
-
-:::note
-Each of the trees and aligners are available as standalones. You can leave `args_tree` and `args_aligner` empty if you are cool with the default settings of each method. Alternatively, you can leave `args_tree` empty to use the default guide tree with each aligner.
-:::
-
-:::note
-use the exact spelling as listed above in [align](#3-align) and [guide trees](#2-guide-trees)!
-:::
-
-`tree` is the tool used to build the tree (optional).
-
-Arguments to the tree tool can be provided using `args_tree`. Please refer to each tool's documentation (optional).
-
-The `aligner` column contains the tool to run the alignment (optional).
-
-Finally, the arguments to the aligner tool can be set by using the `args_aligner` column (optional).
-
-| Column         | Description                                                                      |
-| -------------- | -------------------------------------------------------------------------------- |
-| `tree`         | Optional. Tool used to build the tree.                                           |
-| `args_tree`    | Optional. Arguments to the tree tool. Please refer to each tool's documentation. |
-| `aligner`      | Required. Tool to run the alignment. Available options listed above.             |
-| `args_aligner` | Optional. Arguments to the alignment tool.                                       |
-
-## Running the pipeline
-
-The typical command for running the pipeline is as follows:
-
-```bash
-nextflow run nf-core/multiplesequencealign --input ./samplesheet.csv --tools ./toolsheet.csv --outdir ./results -profile docker
-```
-
-This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
-
-Note that the pipeline will create the following files in your working directory:
-
-```bash
-work                # Directory containing the nextflow working files
-<OUTDIR>            # Finished results in specified location (defined with --outdir)
-.nextflow_log       # Log file from Nextflow
-# Other nextflow hidden files, eg. history of pipeline runs and old logs.
-```
+## Using profiles for advanced runs
 
 If you wish to repeatedly use the same parameters for multiple runs, rather than specifying each flag in the command, you can specify these in a params file.
 

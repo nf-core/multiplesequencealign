@@ -1,18 +1,15 @@
 # Using nf-core/proteinfold to generate the input protein structures
 
-Structural aligners leverage protein structural information to render the MSA.
+Structural aligners leverage protein structural information to compute MSAs.
 
 You can provide your PDB structures via the samplesheet, as outlined in the primary usage documentation. However, if you do not already have protein structures available, you may opt to use protein structure prediction tools to create these models.
 
-To facilitate this, we offer seamless integration with the nf-core/proteinfold pipeline, enabling you to generate the protein structures required for this workflow.
+To facilitate this, we offer an integration with the nf-core/proteinfold pipeline, enabling you to generate the protein structures required for this workflow.
 
 To do so, you only need to build one samplesheet file, in the exact format required by nf-core/multiplesequencealign pipeline.
 This is made compatible with nf-core/proteinfold and will predict and output the structures in the format required by the nf-core/multiplesquencealign pipeline.
 
 Now, to run you simply can use the following code.
-
-> [!NOTE]
-> Please refer to the [proteinfold documentation](https://nf-co.re/proteinfold/1.1.1/) for picking your favourite params.
 
 Here we showcase how to run proteinfold in its colabfold local flavour - but it works for all the proteinfold modes.
 
@@ -36,7 +33,7 @@ nextflow run nf-core/proteinfold \
 nextflow run nf-core/multiplesequencealign \
    --input ./samplesheet.csv \
    --tools ./toolsheet.csv \
-   --optional_data_dir ./proteinfold_results/*/*/top_ranked_structures \
+   --pdbs_dir ./proteinfold_results/*/*/top_ranked_structures \
    --outdir ./results \
    -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
 
