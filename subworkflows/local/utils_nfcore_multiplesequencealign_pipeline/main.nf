@@ -105,7 +105,7 @@ workflow PIPELINE_INITIALISATION {
                     def tree_map = [:]
                     def align_map = [:]
 
-                    tree_map["tree"] = Utils.clean_tree(meta_clone["tree"])
+                    tree_map["tree"] = Utils.clean_tree(meta_clone["tree"].toString())
                     tree_map["args_tree"] = meta_clone["args_tree"]
                     tree_map["args_tree_clean"] = Utils.cleanArgs(meta_clone.args_tree)
 
@@ -559,9 +559,18 @@ def processLatestTraceFile(String traceDirPath) {
 
     // Retain only the necessary columns and parse arguments from tree and aligner
     def cleanTraceData = cleanTrace(trace_co2_csv)
+
     // Extract the tree and align traces separately
     def traceTrees = prepTrace(cleanTraceData, suffix_to_replace = "_GUIDETREE", subworkflow = "COMPUTE_TREES", keys)
     def traceAlign = prepTrace(cleanTraceData, suffix_to_replace = "_ALIGN", subworkflow = "ALIGN", keys)
+
+    // Add an empty tree trace for the default tree
+    empty_trace = [:]
+    keys_to_add = keys - ["id", "tree", "args", "aligner", "name"]
+    keys_to_add.each { key -> empty_trace[key+"_tree"] = null }
+    empty_trace["tree"] = "DEFAULT"
+    empty_trace["args_tree_clean"] = "default"
+    traceTrees.add(empty_trace)
 
     // Return the extracted traces as a map
     return [traceTrees: traceTrees, traceAlign: traceAlign]
@@ -588,21 +597,29 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
     // For each row, create a new row with the necessary keys and values
     trace_subworkflow.each { row ->
         def newRow = [:]
-
-        // Clean the names (remove the unnecessary suffix)
-        newRow.tree = row.process.replace(suffix_to_replace, "")
-
+        def keys_iterator = keys
         def suffix = ""
         if(subworkflow == "ALIGN") {
             suffix = "_aligner"
             specific_key = "aligner"
+            // Extract tree from tag - if not present, set to default
+            // the tree is in the tag under tree: 
+            def treeMatch = (row.tag =~ /tree: (\S*)/)
+            newRow.tree = treeMatch ? treeMatch[0][1] : "DEFAULT"
+
+            def treeArgsMatch = (row.tag =~ /argstree: (\S*)/)
+            newRow.args_tree_clean = treeArgsMatch ? treeArgsMatch[0][1] : "default"
+
+            // remove tree and args_tree from keys
+            keys_iterator = keys - ["tree", "args_tree_clean"]
+
         } else if(subworkflow == "COMPUTE_TREES") {
             suffix = "_tree"
             specific_key = "tree"
         }
 
 
-        keys.each { key ->
+        keys_iterator.each { key ->
 
             def newKey = key + suffix
 
@@ -610,7 +627,7 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
                 newKey = key
             }
             row[specific_key] = row.process.replace(suffix_to_replace, "")
-
+            
             if ((key == 'realtime' || key == 'rss')) {
                 newRow[newKey] = (key == 'realtime') ? convertTime(row[key]) : convertMemory(row[key])
             }else if(key == "args") {
@@ -618,11 +635,13 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
             }else {
                 newRow[newKey] = row[key]
             }
+
         }
 
         row.clear()
         row.putAll(newRow)
     }
+
     return trace_subworkflow
 }
 
@@ -674,7 +693,6 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     // 3. Extract tree and align traces separately
     def trace_file = processLatestTraceFile(trace_dir_path)
 
-
     // -------------------
     // SUMMARY FILE
     // -------------------
@@ -699,7 +717,6 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
         row.put("version_tree", versions[tree])
     }
 
-
     // // check if the trace file is empty
     if(trace_file.traceAlign.size() == 0 ){
         log.warn "Skipping merging of summary and trace files. Are you using -resume? \n \tIf so, you will not be able to access the running times of the modules and the final merging step will be skipped.\n\tPlease refer to the documentation.\n"
@@ -715,14 +732,28 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     // -------------------
     // MERGE
     // -------------------
+
+    // Check if data contains the key "aligner"
     def mergedData = []
     data.each { row ->
-        def treeMatch = trace_file.traceTrees.find { it.id == row.id && it.tree == row.tree && it.args_tree_clean == row.args_tree_clean}
-        def alignMatch = trace_file.traceAlign.find { it.id == row.id && it.aligner == row.aligner && it.args_aligner_clean == row.args_aligner_clean}
+
+        print("row: ${row}")
+
+        def treeMatch = [:]
+        if(row.tree == "DEFAULT"){
+            treeMatch = trace_file.traceTrees.find {it.tree == row.tree && it.args_tree_clean == row.args_tree_clean}
+        }else{
+            treeMatch = trace_file.traceTrees.find { it.id == row.id && it.tree == row.tree && it.args_tree_clean == row.args_tree_clean}
+        }
+
+        print("treeMatch: ${treeMatch}")
+
+        def alignMatch = trace_file.traceAlign.find { it.id == row.id && it.tree == row.tree && it.args_tree_clean == row.args_tree_clean && it.aligner == row.aligner && it.args_aligner_clean == row.args_aligner_clean}
         def mergedRow = row + (treeMatch ?: [:]) + (alignMatch ?: [:])
         mergedData << mergedRow
     }
 
+    print(trace_file.traceTrees)
 
     // Save the merged data to a file
     saveMapToCsv(mergedData, outFileName)
@@ -747,9 +778,8 @@ class Utils {
         }
     }
 
-    public static clean_tree(argsTree){
-
-        def tree = argsTree.toString()
+    public static clean_tree(treeIn){
+        def tree = treeIn.toString()
         if(tree == null || tree == "" || tree == "null"){
             return "DEFAULT"
         }
