@@ -1,6 +1,8 @@
 # nf-core/multiplesequencealign: Output
 
+The main output is the computed alignments. 
 
+Additionally, the pipeline can provide a variety of files useful to inspect (e.g. used guide trees) and summay reports. 
 
 
 The directories listed below will be created in the results directory (specified by `--outdir`) after the pipeline has finished.
@@ -8,37 +10,37 @@ The directories listed below will be created in the results directory (specified
 All paths are relative to the top-level results directory.
 
 - `results/`
-  - `alignment`
-  - `trees`
-  - `evaluation`
+  - <details markdown="1">
+    <summary><code>alignment/</code></summary>
+      <b>All MSA computed.</b>
+
+      - <code>{SampleID}/{SampleID}_{Tree}_args-{Tree_args}_{MSA}_args-{MSA_args}.aln</code>. Each subdirectory is named after the sample id. It contains all the computed alignments for the given sample. The filename is built with the informations of the input file used and the tool(s).
+
+    </details>
+  - <details markdown="1">
+    <summary><code>trees/</code></summary>
+
+      <b>Rendered guide trees </b>
+
+      If you have explicitly enabled the computation of guide trees via the toolsheet to be used by the MSA tool, these guide trees will be generated and stored in the trees directory.
+
+      - <code>{SampleID}/{SampleID}_{Tree}_args-{Tree_args}.dnd</code>. Each subdirectory is named after the sample id. It contains all the computed trees for the given sample. The filename is built with the informations of the input file used and the tool(s).
+
+    </details>
+  - <details markdown="1">
+    <summary><code>evaluation/</code></summary>
+      <b>Computed evaluation statistics.</b>
+      - <code>tcoffee_irmsd/</code>: directory containing the files with the complete iRMSD files. If `--calc_irmsd` is specified.
+      - <code>tcoffee_tcs/</code>: directory containing the files with the complete TCS files. If `--calc_tcs` is specified.
+      - <code>complete_summary_eval.csv</code>: csv file containing the summary of all evaluation metrics for each input file.
+    </details>  
+  
+  
   - `summary`
   - `reports`
 
-## Alignment
 
-All MSA computed are stored in the **alignment** directory.
 
-<details markdown="1">
-<summary>Output files</summary>
-
-- `alignment/`
-  - `{SampleID}/{SampleID}_{Tree}_args-{Tree_args}_{MSA}_args-{MSA_args}.aln`. Each subdirectory is named after the sample id. It contains all the computed alignments for the given sample. The filename is built with the informations of the input file used and the tool(s).
-
-</details>
-
-## Trees
-
-If you have explicitly enabled the computation of guide trees via the toolsheet to be used by the MSA tool, these guide trees will be generated and stored in the trees directory.
-
-<details markdown="1">
-<summary>Output files</summary>
-
-- `trees/`
-  - `{SampleID}/{SampleID}_{Tree}_args-{Tree_args}.dnd`: guide tree files.
-
-</details>
-
-### MultiQC
 
 ## Evaluation
 
@@ -47,10 +49,7 @@ Files with the summary of the computed evaluation statistics are stored in the *
 <details markdown="1">
 <summary>Output files</summary>
 
-- `evaluation/`
-  - `tcoffee_irmsd/`: directory containing the files with the complete iRMSD files. If `--calc_irmsd` is specified.
-  - `tcoffee_tcs/`: directory containing the files with the complete TCS files. If `--calc_tcs` is specified.
-  - `complete_summary_eval.csv`: csv file containing the summary of all evaluation metrics for each input file.
+
   </details>
 
 ## Summary stats
