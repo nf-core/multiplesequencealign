@@ -303,7 +303,6 @@ workflow MULTIPLESEQUENCEALIGN{
             csv -> [ [id:"summary_eval"], csv ]
         }
         .set { evaluation_summary }
-        evaluation_summary.view()
     }
 
     

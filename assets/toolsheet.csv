@@ -1,5 +1,4 @@
 tree,args_tree,aligner,args_aligner
-FAMSA,-parttree,FAMSA,
-FAMSA,,FAMSA,
-,,MAFFT,
-,,MAFFT,--dpparttree
+FAMSA,-gt upgma -medoidtree,FAMSA,
+FAMSA,,FAMSA,"-refine_mode on"
+,,CLUSTALO,
