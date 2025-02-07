@@ -228,7 +228,7 @@ workflow MULTIPLESEQUENCEALIGN{
         .filter { it[3]["aligner"] == "3DCOFFEE" }
         .map { it -> [ it[0], it[1] ]}
         .unique()
-        .set { ch_optional_data_3dcoffee }    
+        .set { ch_optional_data_3dcoffee }
 }
 
     // For the one needing the template, create the template or use the provided one
@@ -305,7 +305,7 @@ workflow MULTIPLESEQUENCEALIGN{
         .set { evaluation_summary }
     }
 
-    
+
 
     //
     // Combine stats and evaluation reports into a single CSV

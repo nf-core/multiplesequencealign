@@ -603,7 +603,7 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
             suffix = "_aligner"
             specific_key = "aligner"
             // Extract tree from tag - if not present, set to default
-            // the tree is in the tag under tree: 
+            // the tree is in the tag under tree:
             def treeMatch = (row.tag =~ /tree: (\S*)/)
             newRow.tree = treeMatch ? treeMatch[0][1] : "DEFAULT"
 
@@ -627,7 +627,7 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
                 newKey = key
             }
             row[specific_key] = row.process.replace(suffix_to_replace, "")
-            
+
             if ((key == 'realtime' || key == 'rss')) {
                 newRow[newKey] = (key == 'realtime') ? convertTime(row[key]) : convertMemory(row[key])
             }else if(key == "args") {

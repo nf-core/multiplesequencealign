@@ -328,14 +328,14 @@ def server(input, output, session):
     def corr():
         data = inputfile[list(set(options_eval.keys()) & set(inputfile.columns) - set(vars_cat))]
         corr = data.corr().fillna(0)
-        
+   
         # Perform hierarchical clustering
         linkage_matrix = linkage(corr, method='ward')
         cluster_order = leaves_list(linkage_matrix)
-        
+
         # Reorder the correlation matrix
         reordered_corr = corr.iloc[cluster_order, cluster_order]
-        
+
         xlabs = [options_eval.get(x, x) for x in reordered_corr.columns]
         ylabs = [options_eval.get(y, y) for y in reordered_corr.index]
 

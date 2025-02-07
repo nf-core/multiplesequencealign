@@ -1,4 +1,4 @@
-##  FAQs
+## FAQs
 
 ### INPUT
 
@@ -10,9 +10,9 @@
 <details>
   <summary> What happens if I have the only PDBs and not the corresponding fasta files?  </summary>
 
-  No problem, you can provide the PDBs as input (either via the samplesheet using the optional_data column or via the flag <code>--pdbs_dir</code>).
+No problem, you can provide the PDBs as input (either via the samplesheet using the optional_data column or via the flag <code>--pdbs_dir</code>).
 
-  The flag <code>--skip_pdbcoversion</code> false will make sure that the fasta file is automatically extracted from the provided PDBs and subsequently used in the pipeline.
+The flag <code>--skip_pdbcoversion</code> false will make sure that the fasta file is automatically extracted from the provided PDBs and subsequently used in the pipeline.
 
   <pre><code> nextflow run nf-core/multiplesequencealign \
       -profile easy_deploy,docker \
@@ -24,19 +24,16 @@
 
 </details>
 
-
 ### USECASES
-
-
 
 <details>
   <summary> I want to deploy one tool on one dataset. I am not interested in any evaluation, report etc. </summary>
 
-  You should use the easy_deploy profile!
+You should use the easy_deploy profile!
 
-  This will skip all the evaluation, reporting etc. step and keep the deployment to the minimum.
+This will skip all the evaluation, reporting etc. step and keep the deployment to the minimum.
 
-  The following example: running FAMSA (with arguments -refine_mode on) using the guidetree built using CLUSTALO.
+The following example: running FAMSA (with arguments -refine_mode on) using the guidetree built using CLUSTALO.
 
   <pre><code>nextflow run nf-core/multiplesequencealign \
   -profile easy_deploy,docker \
@@ -46,16 +43,16 @@
   --tree CLUSTALO \
   --outdir results</code></pre>
 
-  You can leave the <code>--tree</code> and <code>--args_aligner</code> and <code>--args_tree</code> empty (just do not use the flags). Default values will be used.
+You can leave the <code>--tree</code> and <code>--args_aligner</code> and <code>--args_tree</code> empty (just do not use the flags). Default values will be used.
 
-  Change the profile from docker to singularity or your preferred choice!
+Change the profile from docker to singularity or your preferred choice!
 
 </details>
 
 <details>
   <summary> I want to deploy one tool on one dataset. I want to run a structural aligner. </summary>
 
-  The following example: running FOLDMASON (with arguments -refine_mode on) using the guidetree built using CLUSTALO.
+The following example: running FOLDMASON (with arguments -refine_mode on) using the guidetree built using CLUSTALO.
 
   <pre><code>nextflow run nf-core/multiplesequencealign \
   -profile easy_deploy,docker \
@@ -64,8 +61,8 @@
   --tree CLUSTALO \
   --outdir results</pre></code>
 
-  You can leave the <code>--tree</code> and <code>--args_aligner</code> and <code>--args_tree</code> empty (just do not use the flags). Default values will be used.
-  Foldmason is just an example, you can pick any other structural aligner.
+You can leave the <code>--tree</code> and <code>--args_aligner</code> and <code>--args_tree</code> empty (just do not use the flags). Default values will be used.
+Foldmason is just an example, you can pick any other structural aligner.
 
 </details>
 
@@ -93,11 +90,9 @@ Your input dataset can be passed via the <code>--seqs</code> or <code>--pdbs_dir
 <details>
   <summary> Can i run a structural evaluation on sequence-based aligners?  </summary>
 
-  Yes, as long as you provide the structures, either via the samplesheet or via the <code>--pdbs_dir</code> flag.
+Yes, as long as you provide the structures, either via the samplesheet or via the <code>--pdbs_dir</code> flag.
 
-  You can also run proteinfold before to get your structures, in case you do not have them already.
-  <a href="https://nf-co.re/multiplesequencealign/usage/#toolsheet-input"> Here </a> instructions on how to do it.
+You can also run proteinfold before to get your structures, in case you do not have them already.
+<a href="https://nf-co.re/multiplesequencealign/usage/#toolsheet-input"> Here </a> instructions on how to do it.
 
 </details>
-
-

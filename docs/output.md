@@ -1,66 +1,70 @@
 # nf-core/multiplesequencealign: Output
 
-The main output of this pipeline are the **computed MSAs**  and **summary reports**, where all the evaluation metrics and resources used are collected. . 
+The main output of this pipeline are the **computed MSAs** and **summary reports**, where all the evaluation metrics and resources used are collected. .
 
-Additionally, the pipeline can provide a variety of files useful to inspect (e.g. used guide trees). 
+Additionally, the pipeline can provide a variety of files useful to inspect (e.g. used guide trees).
 
 The directories listed below will be created in the results directory (specified by `--outdir`) after the pipeline has finished.
 
 All paths are relative to the top-level results directory.
 
 - `results/`
+
   - <details markdown="1">
     <summary><code>alignments/</code></summary>
       <b>MSA computed.</b>
 
-      Each subdirectory is named after the sample id. It contains all the computed alignments for the given sample. The filename is built with the informations of the input file used and the tool(s). 
-      - <code>{SampleID}/{SampleID}_{Tree}_args-{Tree_args}_{MSA}_args-{MSA_args}.aln</code>. 
+    Each subdirectory is named after the sample id. It contains all the computed alignments for the given sample. The filename is built with the informations of the input file used and the tool(s).
+
+    - <code>{SampleID}/{SampleID}_{Tree}\_args-{Tree_args}_{MSA}\_args-{MSA_args}.aln</code>.
 
     </details>
+
   - <details markdown="1">
     <summary><code>trees/</code></summary>
 
-      <b>Rendered guide trees </b>
+    <b>Rendered guide trees </b>
 
-      If you have explicitly enabled the computation of guide trees via the toolsheet to be used by the MSA tool, these guide trees will be generated and stored in the trees directory.
-      
-      Each subdirectory is named after the sample id. It contains all the computed trees for the given sample. The filename is built with the informations of the input file used and the tool(s).
+    If you have explicitly enabled the computation of guide trees via the toolsheet to be used by the MSA tool, these guide trees will be generated and stored in the trees directory.
 
-      - <code>{SampleID}/{SampleID}_{Tree}_args-{Tree_args}.dnd</code>.
-      
+    Each subdirectory is named after the sample id. It contains all the computed trees for the given sample. The filename is built with the informations of the input file used and the tool(s).
+
+    - <code>{SampleID}/{SampleID}\_{Tree}\_args-{Tree_args}.dnd</code>.
+
     </details>
+
   - <details markdown="1">
     <summary><code>evaluation/</code></summary>
 
-      <b>Computed evaluation statistics.</b>
-      - <code>tcoffee_irmsd/</code>: directory containing the files with the complete iRMSD files. If `--calc_irmsd` is specified.
-      - <code>tcoffee_tcs/</code>: directory containing the files with the complete TCS files. If `--calc_tcs` is specified.
-      - <code>complete_summary_eval.csv</code>: csv file containing the summary of all evaluation metrics for each input file.
-    </details>  
-  
-  
+    <b>Computed evaluation statistics.</b>
+
+    - <code>tcoffee_irmsd/</code>: directory containing the files with the complete iRMSD files. If `--calc_irmsd` is specified.
+    - <code>tcoffee_tcs/</code>: directory containing the files with the complete TCS files. If `--calc_tcs` is specified.
+    - <code>complete_summary_eval.csv</code>: csv file containing the summary of all evaluation metrics for each input file.
+    </details>
+
   - <details markdown="1">
     <summary><code>stats/</code></summary>
-    <b> Computed statistics about the input files </b> 
+    <b> Computed statistics about the input files </b>
 
     (e.g length of the sequences, number of the sequences, etc.).
 
     - <code>stats/</code>
+
       - <code>complete_summary_stats.csv</code>: csv file containing the summary for all the statistics computed on the input file.
       - <code>sequences/</code>
-        - <code>seqstats/*_seqstats.csv</code>: file containing the sequence input length for each sequence in the family defined by the file name. If <code>--calc_seq_stats</code> is specified.
-        - <code>perc_sim/*.txt</code>: file containing the pairwise sequence similarity for all input sequences. If <code>--calc_sim</code> is specified.
-      - <code>structures/</code> 
-        - <code>plddt/*_full_plddt.csv</code>: file containing the plddt of the structures for each sequence in the input file. If <code>--extract_plddt</code> is specified.
-      </details>
+        - <code>seqstats/\*\_seqstats.csv</code>: file containing the sequence input length for each sequence in the family defined by the file name. If <code>--calc_seq_stats</code> is specified.
+        - <code>perc_sim/\*.txt</code>: file containing the pairwise sequence similarity for all input sequences. If <code>--calc_sim</code> is specified.
+      - <code>structures/</code>
+        - <code>plddt/\*\_full_plddt.csv</code>: file containing the plddt of the structures for each sequence in the input file. If <code>--extract_plddt</code> is specified.
+        </details>
 
     - <details markdown="1">
       <summary><code>summary/</code></summary>
         <b> CSV file with the summary of all statistics, evaluation metrics and resources used by each combination of tools </b>
 
-
-        - <code>complete_summary_stats_with_trace.csv</code>: csv file containing the content of complete_summary_stats merged with the information of the trace file. This will not contain the resources usage running with <code>-resume</code>.
-        </details>
+      - <code>complete_summary_stats_with_trace.csv</code>: csv file containing the content of complete_summary_stats merged with the information of the trace file. This will not contain the resources usage running with <code>-resume</code>.
+      </details>
 
     - <details markdown="1">
       <summary><code>reports/</code></summary>
@@ -69,59 +73,54 @@ All paths are relative to the top-level results directory.
       - <details markdown="2">
           <summary><code>multiqc</code></summary>
 
-          <b> MultiQC summary </b>
+        <b> MultiQC summary </b>
 
-          <a href="http://multiqc.info">MultiQC</a> is a visualization tool that generates a single HTML report summarising all samples in your project. Most of the pipeline QC results are visualised in the report and further statistics are available in the report data directory.
+        <a href="http://multiqc.info">MultiQC</a> is a visualization tool that generates a single HTML report summarising all samples in your project. Most of the pipeline QC results are visualised in the report and further statistics are available in the report data directory.
 
-          Results generated by MultiQC collate pipeline QC from supported tools e.g. FastQC. The pipeline has special steps which also allow the software versions to be reported in the MultiQC output for future traceability. For more information about how to use MultiQC reports, see <a href="http://multiqc.info">multiqc.info</a>.
+        Results generated by MultiQC collate pipeline QC from supported tools e.g. FastQC. The pipeline has special steps which also allow the software versions to be reported in the MultiQC output for future traceability. For more information about how to use MultiQC reports, see <a href="http://multiqc.info">multiqc.info</a>.
 
-          - <code>reports/multiqc/</code>
-            - <code>multiqc_report.html</code>: a standalone HTML file that can be viewed in your web browser.
-            - <code>multiqc_data/</code>: directory containing parsed statistics from the different tools used in the pipeline.
-            - <code>multiqc_plots/</code>: directory containing static images from the report in various formats.
+        - <code>reports/multiqc/</code> - <code>multiqc_report.html</code>: a standalone HTML file that can be viewed in your web browser. - <code>multiqc_data/</code>: directory containing parsed statistics from the different tools used in the pipeline. - <code>multiqc_plots/</code>: directory containing static images from the report in various formats.
         </details>
-      
+
       - <details markdown="2">
           <summary><code>visualisation</code></summary>
             <b>Foldmason</b> report for the visualization of the alignment and the protein structures.
             Only available if structures were provided as input.
 
-          - <code>reports/visualization/</code>  
-          - <code>{SampleID}_{Tree}_args-{Tree_args}_{MSA}_args-{MSA_args}.html</code>: foldmason HTML report.
-          </details>
-
+        - <code>reports/visualization/</code>
+        - <code>{SampleID}_{Tree}\_args-{Tree_args}_{MSA}\_args-{MSA_args}.html</code>: foldmason HTML report.
+        </details>
 
       - <details markdown="1">
           <summary> <code>shiny_app/</code></summary>
 
-          <b> A Shiny app is created to explore interactively your results </b>.
+        <b> A Shiny app is created to explore interactively your results </b>.
 
-          A shiny app is prepared to visualize the summary statistics and evaluation of the produced alignments (skip with <code>--skip_shiny</code>).
+        A shiny app is prepared to visualize the summary statistics and evaluation of the produced alignments (skip with <code>--skip_shiny</code>).
 
-          To run the Shiny app use the following commands from the results directory:
+        To run the Shiny app use the following commands from the results directory:
 
-          <code>cd shiny_app</code>
-          
-          <code>./run.sh</code>
+        <code>cd shiny_app</code>
 
-          Be aware that you have to have <a href="https://shiny.posit.co/py/">shiny</a> installed to access this feature.
+        <code>./run.sh</code>
 
-          - <code>run.sh</code>: executable to start the shiny app.
-          - <code>*.py*</code>: shiny app files.
-          - <code>*.csv</code>: csv file used by shiny app.
-            </details>
+        Be aware that you have to have <a href="https://shiny.posit.co/py/">shiny</a> installed to access this feature.
+
+        - <code>run.sh</code>: executable to start the shiny app.
+        - <code>_.py_</code>: shiny app files.
+        - <code>\*.csv</code>: csv file used by shiny app.
         </details>
-
+        </details>
 
       - <details markdown="1">
           <summary><code>pipeline_info</code></summary>
           <b>Extra information about the pipeline execution.</b>
 
-          - Reports generated by Nextflow: <code>execution_report.html</code>, <code>execution_timeline.html</code>, <code>execution_trace.txt</code> and <code>pipeline_dag.dot</code>, <code>pipeline_dag.svg</code>.
-          - Reports generated by the pipeline: <code>pipeline_report.html</code>, <code>pipeline_report.txt</code> and <code>software_versions.yml</code>. The <code>pipeline_report*</code> files will only be present if the <code>--email</code>,  <code>--email_on_fail</code> parameter's are used when running the pipeline.
-          - Reformatted samplesheet files used as input to the pipeline: <code>samplesheet.valid.csv</code>.
-          - Parameters used by the pipeline run: <code>params.json</code>.
-          <a href="https://www.nextflow.io/docs/latest/tracing.html">Nextflow</a> provides excellent functionality for generating various reports relevant to the running and execution of the pipeline. This will allow you to troubleshoot errors with the running of the pipeline, and also provide you with other information such as launch commands, run times and resource usage.
+        - Reports generated by Nextflow: <code>execution_report.html</code>, <code>execution_timeline.html</code>, <code>execution_trace.txt</code> and <code>pipeline_dag.dot</code>, <code>pipeline_dag.svg</code>.
+        - Reports generated by the pipeline: <code>pipeline_report.html</code>, <code>pipeline_report.txt</code> and <code>software_versions.yml</code>. The <code>pipeline_report\*</code> files will only be present if the <code>--email</code>, <code>--email_on_fail</code> parameter's are used when running the pipeline.
+        - Reformatted samplesheet files used as input to the pipeline: <code>samplesheet.valid.csv</code>.
+        - Parameters used by the pipeline run: <code>params.json</code>.
+        <a href="https://www.nextflow.io/docs/latest/tracing.html">Nextflow</a> provides excellent functionality for generating various reports relevant to the running and execution of the pipeline. This will allow you to troubleshoot errors with the running of the pipeline, and also provide you with other information such as launch commands, run times and resource usage.
         </details>
-  
+
   </details>

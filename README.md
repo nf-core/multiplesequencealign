@@ -79,9 +79,9 @@ nextflow run nf-core/multiplesequencealign \
 
 You can provide either (or both) a **fasta** file or a set of **protein structures**.
 
-Alternatively, you can provide a [samplesheet](https://nf-co.re/multiplesequencealign/usage/#samplesheet-input) and a [toolsheet](https://nf-co.re/multiplesequencealign/usage/#toolsheet-input). 
+Alternatively, you can provide a [samplesheet](https://nf-co.re/multiplesequencealign/usage/#samplesheet-input) and a [toolsheet](https://nf-co.re/multiplesequencealign/usage/#toolsheet-input).
 
-See below how to provide them. 
+See below how to provide them.
 
 > Find some example input data [here](https://github.com/nf-core/test-datasets/tree/multiplesequencealign)
 
