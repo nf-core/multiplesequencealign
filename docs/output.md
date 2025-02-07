@@ -27,7 +27,7 @@ All paths are relative to the top-level results directory.
 
     If you have explicitly enabled the computation of guide trees via the toolsheet to be used by the MSA tool, these guide trees will be generated and stored in the trees directory.
 
-    Each subdirectory is named after the sample id. It contains all the computed trees for the given sample. The filename is built with the informations of the input file used and the tool(s).
+    Each subdirectory is named after the sample id and contains all the computed trees for the given sample. The filename is built with the information from the input file used and the tool(s).
 
     - <code>{SampleID}/{SampleID}\_{Tree}\_args-{Tree_args}.dnd</code>.
 

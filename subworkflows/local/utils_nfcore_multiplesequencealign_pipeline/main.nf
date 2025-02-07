@@ -742,7 +742,7 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
         def treeMatch = [:]
         if(row.tree == "DEFAULT"){
             treeMatch = trace_file.traceTrees.find {it.tree == row.tree && it.args_tree_clean == row.args_tree_clean}
-        }else{
+        } else {
             treeMatch = trace_file.traceTrees.find { it.id == row.id && it.tree == row.tree && it.args_tree_clean == row.args_tree_clean}
         }
 
