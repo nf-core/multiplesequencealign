@@ -224,7 +224,7 @@ For more details: [output documentation](https://nf-co.re/multiplesequencealign/
 
 ## Extending the pipeline
 
-For details on how to add your favourite guide tree, MSA or evaluation step in nf-core/multiplesequencealign please refer to the [extending documentation](https://nf-co.re/multiplesequencealign/docs/usage/adding_a_tool.md).
+For details on how to add your favourite guide tree, MSA or evaluation step in nf-core/multiplesequencealign please refer to the [extending documentation](https://nf-co.re/multiplesequencealign/docs/usage/adding_a_tool).
 
 ## Credits
 
