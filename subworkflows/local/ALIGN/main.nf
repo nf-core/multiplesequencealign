@@ -10,16 +10,16 @@ include { COMPUTE_TREES                           } from '../../../subworkflows/
 // Include the nf-core modules
 include { CLUSTALO_ALIGN                          } from '../../../modules/nf-core/clustalo/align/main'
 include { FAMSA_ALIGN                             } from '../../../modules/nf-core/famsa/align/main'
-include { FOLDMASON_EASYMSA                       } from '../../../modules/nf-core/foldmason/easymsa/main'
+include { FOLDMASON_EASYMSA as FOLDMASON_ALIGN    } from '../../../modules/nf-core/foldmason/easymsa/main'
 include { KALIGN_ALIGN                            } from '../../../modules/nf-core/kalign/align/main'
 include { LEARNMSA_ALIGN                          } from '../../../modules/nf-core/learnmsa/align/main'
 include { MAFFT_ALIGN                             } from '../../../modules/nf-core/mafft/align/main'
 include { MAGUS_ALIGN                             } from '../../../modules/nf-core/magus/align/main'
 include { MTMALIGN_ALIGN                          } from '../../../modules/nf-core/mtmalign/align/main'
-include { MUSCLE5_SUPER5                          } from '../../../modules/nf-core/muscle5/super5/main'
+include { MUSCLE5_SUPER5  as MUSCLE5_ALIGN        } from '../../../modules/nf-core/muscle5/super5/main'
 include { TCOFFEE_ALIGN                           } from '../../../modules/nf-core/tcoffee/align/main'
 include { TCOFFEE_ALIGN as TCOFFEE3D_ALIGN        } from '../../../modules/nf-core/tcoffee/align/main'
-include { TCOFFEE_REGRESSIVE                      } from '../../../modules/nf-core/tcoffee/regressive/main'
+include { TCOFFEE_REGRESSIVE as REGRESSIVE_ALIGN  } from '../../../modules/nf-core/tcoffee/regressive/main'
 include { TCOFFEE_CONSENSUS as CONSENSUS          } from '../../../modules/nf-core/tcoffee/consensus/main'
 include { UPP_ALIGN                               } from '../../../modules/nf-core/upp/align/main'
 include { PIGZ_COMPRESS as PIGZ_COMPRESS_LEARNMSA } from '../../../modules/nf-core/pigz/compress/main'
@@ -260,12 +260,12 @@ workflow ALIGN {
         }
         .set { ch_fasta_muscle5 }
 
-    MUSCLE5_SUPER5 (
+    MUSCLE5_ALIGN (
         ch_fasta_muscle5.fasta,
         compress
     )
-    ch_msa = ch_msa.mix(MUSCLE5_SUPER5.out.alignment.first())
-    ch_versions = ch_versions.mix(MUSCLE5_SUPER5.out.versions.first())
+    ch_msa = ch_msa.mix(MUSCLE5_ALIGN.out.alignment.first())
+    ch_versions = ch_versions.mix(MUSCLE5_ALIGN.out.versions.first())
 
     // -----------------  TCOFFEE  ------------------
     ch_fasta_trees.tcoffee
@@ -294,14 +294,14 @@ workflow ALIGN {
         }
         .set { ch_fasta_trees_regressive }
 
-    TCOFFEE_REGRESSIVE (
+    REGRESSIVE_ALIGN (
         ch_fasta_trees_regressive.fasta,
         ch_fasta_trees_regressive.tree,
         [ [:], [], [] ],
         compress
     )
-    ch_msa = ch_msa.mix(TCOFFEE_REGRESSIVE.out.alignment)
-    ch_versions = ch_versions.mix(TCOFFEE_REGRESSIVE.out.versions.first())
+    ch_msa = ch_msa.mix(REGRESSIVE_ALIGN.out.alignment)
+    ch_versions = ch_versions.mix(REGRESSIVE_ALIGN.out.versions.first())
 
     // -----------------  UPP  -------------------
     ch_fasta_trees.upp
@@ -372,13 +372,13 @@ workflow ALIGN {
             }
             .set { ch_pdb_foldmason }
 
-        FOLDMASON_EASYMSA (
+        FOLDMASON_ALIGN (
             ch_pdb_foldmason.pdbs,
             ch_pdb_foldmason.trees,
             compress
         )
-        ch_msa = ch_msa.mix(FOLDMASON_EASYMSA.out.msa_aa)
-        ch_versions = ch_versions.mix(FOLDMASON_EASYMSA.out.versions.first())
+        ch_msa = ch_msa.mix(FOLDMASON_ALIGN.out.msa_aa)
+        ch_versions = ch_versions.mix(FOLDMASON_ALIGN.out.versions.first())
     }
 
     // -----------------  CONSENSUS  ------------------

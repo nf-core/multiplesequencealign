@@ -218,14 +218,18 @@ workflow MULTIPLESEQUENCEALIGN{
     //
 
 
-    // Templates are currenlty needed only if 3DCOFFEE is used
+    // Templates are currenlty needed only if 3DCOFFEE is used or if the IRMSD is used to evaluate the alignment
     // This may change in the future
-    ch_optional_data
+    if(params.calc_irmsd && !params.skip_eval) {
+        ch_optional_data_3dcoffee = ch_optional_data
+    } else {
+        ch_optional_data
         .combine(ch_tools)
         .filter { it[3]["aligner"] == "3DCOFFEE" }
         .map { it -> [ it[0], it[1] ]}
-        .first()
+        .unique()
         .set { ch_optional_data_3dcoffee }
+}
 
     // For the one needing the template, create the template or use the provided one
     ch_optional_data_template = Channel.empty()
@@ -287,7 +291,21 @@ workflow MULTIPLESEQUENCEALIGN{
         EVALUATE (ALIGN.out.msa, ch_refs, ch_optional_data_template)
         ch_versions        = ch_versions.mix(EVALUATE.out.versions)
         evaluation_summary = evaluation_summary.mix(EVALUATE.out.eval_summary)
+    } else {
+        ALIGN.out.msa.collectFile(keepHeader: true, skip: 1,sort: true){ meta, msa ->
+
+            content =  meta.keySet().collect{it}.join(",")
+            content += "\n"
+            content += meta.values().collect{it}.join(",")
+            content += "\n"
+            ["complete_summary_eval.csv", "${content}"]
+        }.map {
+            csv -> [ [id:"summary_eval"], csv ]
+        }
+        .set { evaluation_summary }
     }
+
+
 
     //
     // Combine stats and evaluation reports into a single CSV

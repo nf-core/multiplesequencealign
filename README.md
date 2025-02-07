@@ -74,6 +74,15 @@ nextflow run nf-core/multiplesequencealign \
 
 > [!NOTE]
 > We have a lot more of use cases examples under [FAQs]("https://nf-co.re/multiplesequencealign/usage/FAQs)
+
+### Input data
+
+You can provide either (or both) a **fasta** file or a set of **protein structures**.
+
+Alternatively, you can provide a [samplesheet](https://nf-co.re/multiplesequencealign/usage/#samplesheet-input) and a [toolsheet](https://nf-co.re/multiplesequencealign/usage/#toolsheet-input).
+
+See below how to provide them.
+
 > Find some example input data [here](https://github.com/nf-core/test-datasets/tree/multiplesequencealign)
 
 ### CASE 1: One input dataset, one tool.
@@ -137,7 +146,7 @@ You need **2 input files**:
 
 <details>
   <summary> What is a samplesheet?</summary>
-  The sample sheet defines the **input datasets** (sequences, structures, etc.) that the pipeline will process.
+  The sample sheet defines the <b>input datasets</b> (sequences, structures, etc.) that the pipeline will process.
 
 A minimal version:
 
@@ -215,7 +224,7 @@ For more details: [output documentation](https://nf-co.re/multiplesequencealign/
 
 ## Extending the pipeline
 
-For details on how to add your favourite guide tree, MSA or evaluation step in nf-core/multiplesequencealign please refer to the [extending documentation](docs/extending.md).
+For details on how to add your favourite guide tree, MSA or evaluation step in nf-core/multiplesequencealign please refer to the [extending documentation](https://nf-co.re/multiplesequencealign/docs/usage/adding_a_tool).
 
 ## Credits
 
