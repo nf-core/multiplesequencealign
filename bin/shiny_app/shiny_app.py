@@ -328,7 +328,7 @@ def server(input, output, session):
     def corr():
         data = inputfile[list(set(options_eval.keys()) & set(inputfile.columns) - set(vars_cat))]
         corr = data.corr().fillna(0)
-   
+
         # Perform hierarchical clustering
         linkage_matrix = linkage(corr, method='ward')
         cluster_order = leaves_list(linkage_matrix)
