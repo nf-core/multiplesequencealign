@@ -1,7 +1,7 @@
 process LEARNMSA_ALIGN {
     tag "$meta.id"
     label 'process_medium'
-    container "registry.hub.docker.com/felbecker/learnmsa:2.0.9"
+    container "oras://community.wave.seqera.io/library/mmseqs2_pigz_python_tf-keras_pruned:e72a5f6b969868d5"
 
     input:
     tuple val(meta), path(fasta)
