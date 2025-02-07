@@ -60,6 +60,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#153](https://github.com/nf-core/multiplesequencealign/pull/153)] - Fix time parser in shiny app.
 - [[#154](https://github.com/nf-core/multiplesequencealign/pull/154)] - Fix metromap.
 - [[#155](https://github.com/nf-core/multiplesequencealign/pull/155)] - Fix typos.
+- [[#192](https://github.com/nf-core/multiplesequencealign/pull/192)] - Update documentation and fix bug on the merging csv onComplete.
 
 ### `Dependencies`
 
