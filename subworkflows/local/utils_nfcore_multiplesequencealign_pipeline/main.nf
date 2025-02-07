@@ -71,7 +71,7 @@ workflow PIPELINE_INITIALISATION {
     // If the parameter fasta or pdb is provided, use it instead of the input samplesheet
     if (params.seqs || params.pdbs_dir) {
 
-        if (params.seqs || !params.pdbs_dir) {
+        if (params.seqs && !params.pdbs_dir) {
             ch_input = Channel.fromList([
                 [ ["id": params.seqs.split("/")[-1].split("\\.")[0]], file(params.seqs), [], [], [] ]
             ])
@@ -647,7 +647,7 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
 
 
 /*
-* Parsea the verions file and returns a map with the tools and their versions.
+* Parses the verions file and returns a map with the tools and their versions.
 *
 * @param filePath The path to the versions file.
 * @return A map containing the tools and their versions.

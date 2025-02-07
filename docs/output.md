@@ -9,7 +9,6 @@ The directories listed below will be created in the results directory (specified
 All paths are relative to the top-level results directory.
 
 - `results/`
-
   - <details markdown="1">
     <summary><code>alignments/</code></summary>
       <b>MSA computed.</b>

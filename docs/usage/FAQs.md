@@ -45,6 +45,7 @@ The following example: running FAMSA (with arguments -refine_mode on) using the 
 
 You can leave the <code>--tree</code> and <code>--args_aligner</code> and <code>--args_tree</code> empty (just do not use the flags). Default values will be used.
 
+
 Change the profile from docker to singularity or your preferred choice!
 
 </details>
@@ -53,6 +54,7 @@ Change the profile from docker to singularity or your preferred choice!
   <summary> I want to deploy one tool on one dataset. I want to run a structural aligner. </summary>
 
 The following example: running FOLDMASON (with arguments -refine_mode on) using the guidetree built using CLUSTALO.
+
 
   <pre><code>nextflow run nf-core/multiplesequencealign \
   -profile easy_deploy,docker \
@@ -63,6 +65,7 @@ The following example: running FOLDMASON (with arguments -refine_mode on) using 
 
 You can leave the <code>--tree</code> and <code>--args_aligner</code> and <code>--args_tree</code> empty (just do not use the flags). Default values will be used.
 Foldmason is just an example, you can pick any other structural aligner.
+
 
 </details>
 
@@ -75,6 +78,7 @@ Foldmason is just an example, you can pick any other structural aligner.
   --seqs YOUR_FASTA\
   --tools YOUR_TOOLSHEET\
   --outdir results</pre></code>
+
 
 Your input dataset can be passed via the <code>--seqs</code> or <code>--pdbs_dir</code>, as explained in the examples above.
 
@@ -94,5 +98,6 @@ Yes, as long as you provide the structures, either via the samplesheet or via th
 
 You can also run proteinfold before to get your structures, in case you do not have them already.
 <a href="https://nf-co.re/multiplesequencealign/usage/#toolsheet-input"> Here </a> instructions on how to do it.
+
 
 </details>

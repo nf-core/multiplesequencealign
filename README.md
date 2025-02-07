@@ -62,7 +62,7 @@ Main steps:
 
 To get a feeling of what the pipeline does, run:
 
-(No need to download or provide any file, try it!)
+(You don't need to download or provide any file, try it!)
 
 ```
 nextflow run nf-core/multiplesequencealign \
@@ -87,9 +87,9 @@ See below how to provide them.
 
 ### CASE 1: One input dataset, one tool.
 
-If you only have one dataset and want align it using one specific MSA tool (e.g. FAMSA or FOLDMASON):
+If you only have one dataset and want to align it using one specific MSA tool (e.g. FAMSA or FOLDMASON), you can run the pipeline with one single command.
 
-Your input is a fasta file ([example](https://github.com/nf-core/test-datasets/blob/multiplesequencealign/testdata/setoxin-ref.fa))? Then:
+Is your input a fasta file ([example](https://github.com/nf-core/test-datasets/blob/multiplesequencealign/testdata/setoxin-ref.fa))? Then:
 
 ```bash
 nextflow run nf-core/multiplesequencealign \
@@ -99,7 +99,7 @@ nextflow run nf-core/multiplesequencealign \
    --outdir outdir
 ```
 
-Your input is a directory where your PDB files are stored ([example](https://github.com/nf-core/test-datasets/blob/multiplesequencealign/testdata/af2_structures/seatoxin-ref.tar.gz))? Then:
+Is your input a directory where your PDB files are stored ([example](https://github.com/nf-core/test-datasets/blob/multiplesequencealign/testdata/af2_structures/seatoxin-ref.tar.gz))? Then:
 
 ```bash
 nextflow run nf-core/multiplesequencealign \
@@ -111,7 +111,7 @@ nextflow run nf-core/multiplesequencealign \
 
 <details>
   <summary> FAQ: Which are the available tools I can use?</summary>
-  Check the list here: <a href="https://nf-co.re/multiplesequencealign/usage/#2-guide-trees"> available tools</a>.
+  Check the list here: <a href="https://nf-co.re/multiplesequencealign/usage/#3-align"> available tools</a>.
 </details>
 
 <details>
@@ -121,12 +121,12 @@ nextflow run nf-core/multiplesequencealign \
 
 <details>
   <summary> FAQ: Can I specify also which guidetree to use? </summary>
-  Yes, use the --tree flag. More info: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a> and <a href="https://nf-co.re/multiplesequencealign/parameters">parameters</a>.
+  Yes, use the <code>--tree</code> flag. More info: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a> and <a href="https://nf-co.re/multiplesequencealign/parameters">parameters</a>.
 </details>
 
 <details>
   <summary> FAQ: Can I specify the arguments of the tools (tree and aligner)? </summary>
-  Yes, use the --args_tree and --args_aligner flags. More info: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a> and <a href="https://nf-co.re/multiplesequencealign/parameters">parameters</a>.
+  Yes, use the <code>--args_tree</code> and <code>--args_aligner</code> flags. More info: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a> and <a href="https://nf-co.re/multiplesequencealign/parameters">parameters</a>.
 </details>
 
 ### CASE 2: Multiple datasets, multiple tools.
@@ -175,7 +175,7 @@ Please check: <a href="https://nf-co.re/multiplesequencealign/usage/#samplesheet
 
 <details>
   <summary> What is a toolsheet?</summary>
-  The toolsheet specifies **which combination of tools will be deployed and benchmark in the pipeline**.
+  The toolsheet specifies <em>which combination of tools will be deployed and benchmarked in the pipeline</em>.
 
 Each line defines a combination of guide tree and multiple sequence aligner to run with the respective arguments to be used.
 
