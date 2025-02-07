@@ -3,6 +3,11 @@ process LEARNMSA_ALIGN {
     label 'process_medium'
     container "oras://community.wave.seqera.io/library/mmseqs2_pigz_python_tf-keras_pruned:e72a5f6b969868d5"
 
+    conda "${moduleDir}/environment.yml"
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'oras://community.wave.seqera.io/library/mmseqs2_pigz_python_tf-keras_pruned:e72a5f6b969868d5':
+        'community.wave.seqera.io/library/mmseqs2_pigz_python_tf-keras_pruned:36afb1dbd73d19ec' }"
+
     input:
     tuple val(meta), path(fasta)
 
@@ -16,13 +21,11 @@ process LEARNMSA_ALIGN {
     script:
     def args   = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
-    if (workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() >= 1) {
-        error("LearnMSA align module does not support Conda. Please use Docker / Singularity / Podman instead.")
-    }
     """
     learnMSA \\
         -i $fasta \\
         -o "${prefix}.aln" \\
+        --plm_cache_dir tmp \\
         $args
 
     cat <<-END_VERSIONS > versions.yml
