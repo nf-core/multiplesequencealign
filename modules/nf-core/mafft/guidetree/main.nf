@@ -32,6 +32,9 @@ process MAFFT_GUIDETREE {
     # remove all prefices added by mafft which make the output incompatible with other tools
     awk '{gsub(/^[0-9]+_/, ""); print}' ${prefix}.dnd.tmp > ${prefix}.dnd
 
+    # convert back . to _
+    sed -i 's/\./_/g' ${prefix}.dnd
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         mafft: \$(mafft --version 2>&1 | sed 's/^v//' | sed 's/ (.*)//')
