@@ -53,11 +53,9 @@ Main steps:
 
 <br>
 
-More introctory material: [talk](https://www.youtube.com/watch?v=suNulysHIN0) from the nextlow summit, [poster](docs/images/poster-nf-msa.pdf). 
-
+More introctory material: [talk](https://www.youtube.com/watch?v=suNulysHIN0) from the nextlow summit, [poster](docs/images/poster-nf-msa.pdf).
 
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
-
 
 ## Usage
 
@@ -223,11 +221,11 @@ For more details on more advanced runs: [usage documentation](https://nf-co.re/m
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
 
-## Pipeline resources 
+## Pipeline resources
 
 Which resources is the pipeline using? You can find the default resources used in [base.config](conf/base.config).
 
-If you are using specific profiles, e.g. [test](conf/test.config), these will overwrite the defaults. 
+If you are using specific profiles, e.g. [test](conf/test.config), these will overwrite the defaults.
 
 If you want to modify the needed resources, please refer [usage](https://nf-co.re/multiplesequencealign/dev/docs/usage/#custom-configuration).
 
