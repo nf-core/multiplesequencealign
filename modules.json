@@ -41,6 +41,11 @@
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
                         "installed_by": ["modules"]
                     },
+                    "fastqc": {
+                        "branch": "master",
+                        "git_sha": "81880787133db07d9b4c1febd152c090eb8325dc",
+                        "installed_by": ["modules"]
+                    },
                     "foldmason/createdb": {
                         "branch": "master",
                         "git_sha": "0270c0fbbbb09456d7823605e4285c4a2c5bbf40",
@@ -75,7 +80,7 @@
                     },
                     "mafft/guidetree": {
                         "branch": "master",
-                        "git_sha": "968b494e20f439a9ed3d23c89274e6a4a625eb92",
+                        "git_sha": "8f6381611bd76874b12d9f1626c34e3b8598967f",
                         "installed_by": ["modules"]
                     },
                     "magus/align": {

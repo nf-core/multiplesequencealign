@@ -2,10 +2,7 @@ process UPP_ALIGN {
     tag "$meta.id"
     label 'process_medium'
 
-    conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'oras://community.wave.seqera.io/library/sepp_pigz:d72591720d0277b1':
-        'community.wave.seqera.io/library/sepp_pigz:ea6dbc7704a2e251' }"
+    container "registry.hub.docker.com/luisas/upp:2.0"
 
     input:
     tuple val(meta) , path(fasta)
@@ -23,8 +20,10 @@ process UPP_ALIGN {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     def tree_args = tree ? "-t $tree" : ""
+    if (workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() >= 1) {
+        error("UPP2 align module does not support Conda. Please use Docker / Singularity / Podman instead.")
+    }
     """
-
     if [ "$workflow.containerEngine" = 'singularity' ]; then
         export CONDA_PREFIX="/opt/conda/"
         export PASTA_TOOLS_DEVDIR="/opt/conda/bin/"
