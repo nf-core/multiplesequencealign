@@ -1,3 +1,3 @@
 tree,args_tree,aligner,args_aligner
-MAFFT,,FAMSA,
-,,CLUSTALO,
+FAMSA,,FAMSA,
+,,MAFFT,--dpparttree
