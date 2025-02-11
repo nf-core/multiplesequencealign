@@ -70,6 +70,14 @@ To get a feeling of what the pipeline does, run:
 
 ```
 nextflow run nf-core/multiplesequencealign \
+   -profile test_tiny,docker \
+   --outdir results
+```
+
+and if you want to see how a more complete run looks like, you can try:
+
+```
+nextflow run nf-core/multiplesequencealign \
    -profile test,docker \
    --outdir results
 ```
