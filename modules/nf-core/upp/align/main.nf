@@ -2,7 +2,7 @@ process UPP_ALIGN {
     tag "$meta.id"
     label 'process_medium'
 
-    container "registry.hub.docker.com/luisas/upptest:2.0"
+    container "registry.hub.docker.com/luisas/upp:2.0"
 
     input:
     tuple val(meta) , path(fasta)
