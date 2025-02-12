@@ -20,50 +20,10 @@ workflow COMPUTE_TREES {
     ch_versions = Channel.empty()
     ch_trees    = Channel.empty()
 
-
-
-    //
-    // For the inputs that only have optional data but not a fasta
-    // we need to generate the fasta file
-    //
-
-    ch_optional_data
-        .join(ch_fastas, remainder:true)
-        .filter {
-            it[-1] == null
-        }
-        .map {
-            it -> [it[0], it[2]]
-        }.set { ch_optional_data_no_fasta }
-
-
-    ch_optional_data_no_fasta
-        .combine(tree_tools)
-        .filter {
-            it[2]["tree"] != "DEFAULT"
-        }
-        .map{
-            meta, optional_data, tree_args ->
-                [ meta, optional_data ]
-        }
-        .set{ ch_optional_data_no_fasta }
-
-
-    CUSTOM_PDBSTOFASTA(ch_optional_data_no_fasta)
-    ch_versions = ch_versions.mix(CUSTOM_PDBSTOFASTA.out.versions)
-
-    if(!params.skip_validation){
-        FASTAVALIDATOR(CUSTOM_PDBSTOFASTA.out.fasta)
-        ch_versions = ch_versions.mix(FASTAVALIDATOR.out.versions)
-    }
-    ch_fastas_all = ch_fastas.mix(CUSTOM_PDBSTOFASTA.out.fasta)
-
-
-
     //
     // Render the required guide trees
     //
-    ch_fastas_all
+    ch_fastas
         .combine(tree_tools)
         .map {
             metafasta, fasta, metatree ->

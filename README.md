@@ -51,6 +51,10 @@ Main steps:
       <p>Reports the collected information of the runs in a Shiny app and a summary table in MultiQC. Optionally, it can also render the <a href="https://github.com/steineggerlab/foldmason">Foldmason</a> MSA visualization in HTML format.</p>
   </details>
 
+<br>
+
+More introctory material: [talk](https://www.youtube.com/watch?v=suNulysHIN0) from the nextlow summit, [poster](docs/images/poster-nf-msa.pdf).
+
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 
 ## Usage
@@ -63,6 +67,14 @@ Main steps:
 To get a feeling of what the pipeline does, run:
 
 (You don't need to download or provide any file, try it!)
+
+```
+nextflow run nf-core/multiplesequencealign \
+   -profile test_tiny,docker \
+   --outdir results
+```
+
+and if you want to see how a more complete run looks like, you can try:
 
 ```
 nextflow run nf-core/multiplesequencealign \
@@ -216,6 +228,14 @@ For more details on more advanced runs: [usage documentation](https://nf-co.re/m
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
+
+## Pipeline resources
+
+Which resources is the pipeline using? You can find the default resources used in [base.config](conf/base.config).
+
+If you are using specific profiles, e.g. [test](conf/test.config), these will overwrite the defaults.
+
+If you want to modify the needed resources, please refer [usage](https://nf-co.re/multiplesequencealign/dev/docs/usage/#custom-configuration).
 
 ## Pipeline output
 

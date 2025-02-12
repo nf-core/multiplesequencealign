@@ -199,6 +199,27 @@ workflow MULTIPLESEQUENCEALIGN{
     }
 
     //
+    // For the inputs that only have optional data but not a fasta
+    // we need to generate the fasta file
+    //
+
+    ch_optional_data
+        .join(ch_seqs, remainder:true)
+        .filter {
+            it[-1] == null
+        }
+        .map {
+            it -> [it[0], it[1]]
+        }.set { ch_optional_data_no_fasta }
+
+
+    CUSTOM_PDBSTOFASTA(ch_optional_data_no_fasta)
+    ch_versions = ch_versions.mix(CUSTOM_PDBSTOFASTA.out.versions)
+    ch_seqs = ch_seqs.mix(CUSTOM_PDBSTOFASTA.out.fasta)
+
+
+
+    //
     // VALIDATE AND PREPROCESS INPUT FILES
     //
     if (!params.skip_validation) {
@@ -241,7 +262,7 @@ workflow MULTIPLESEQUENCEALIGN{
     ch_optional_data_template = TEMPLATES.out.optional_data_template
     // If the TEMPLATE is not needed, detect that TEMPLATE was not run and use the old optional_data to
     // proceed with the pipeline
-    // If 3DCOFFEE was called, the last element is a templata (the filte on -1) and therefore we understand
+    // If 3DCOFFEE was called, the last element is a template (the filter on -1) and therefore we understand
     // that the template was run and the channel remains empty ( ch_optional_data_notemplate )
     ch_optional_data
         .join(ch_optional_data_template, by: 0, remainder:true)
@@ -292,8 +313,8 @@ workflow MULTIPLESEQUENCEALIGN{
         ch_versions        = ch_versions.mix(EVALUATE.out.versions)
         evaluation_summary = evaluation_summary.mix(EVALUATE.out.eval_summary)
     } else {
+        // Create a dummy evaluation summary if the evaluation is skipped
         ALIGN.out.msa.collectFile(keepHeader: true, skip: 1,sort: true){ meta, msa ->
-
             content =  meta.keySet().collect{it}.join(",")
             content += "\n"
             content += meta.values().collect{it}.join(",")

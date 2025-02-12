@@ -1,6 +1,6 @@
 # nf-core/multiplesequencealign: Output
 
-The main output of this pipeline are the **computed MSAs** and **summary reports**, where all the evaluation metrics and resources used are collected. .
+The main output of this pipeline are the **computed MSAs** and **summary reports**, where all the evaluation metrics and resources used are collected.
 
 Additionally, the pipeline can provide a variety of files useful to inspect (e.g. used guide trees).
 
@@ -38,9 +38,11 @@ All paths are relative to the top-level results directory.
 
     <b>Computed evaluation statistics.</b>
 
+    - <code>complete_summary_eval.csv</code>: csv file containing the summary of all evaluation metrics for each input file.
+    - <code>consensus/</code>: directory containing the files with the informations about the consensus alignment. If `--build_consensus` is specified.
     - <code>tcoffee_irmsd/</code>: directory containing the files with the complete iRMSD files. If `--calc_irmsd` is specified.
     - <code>tcoffee_tcs/</code>: directory containing the files with the complete TCS files. If `--calc_tcs` is specified.
-    - <code>complete_summary_eval.csv</code>: csv file containing the summary of all evaluation metrics for each input file.
+
     </details>
 
   - <details markdown="1">

@@ -40,7 +40,7 @@ workflow VISUALIZATION {
     ch_versions = ch_versions.mix(FOLDMASON_CREATEDB.out.versions)
 
     ch_msa_tree_data
-        .combine(FOLDMASON_CREATEDB.out.db.collect(), by:0)
+        .combine(FOLDMASON_CREATEDB.out.db, by:0)
         .multiMap{
             id, meta, msafile, treefile, pdb, dbfiles ->
             msa:  [ meta, msafile ]

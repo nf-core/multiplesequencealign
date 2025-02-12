@@ -164,7 +164,7 @@ The available assembly methods are listed below (those that accept guide trees i
 **structure-based** (only require stuctures as input):
 
 - [MTMALIGN](https://bio.tools/mtm-align)
-- [FOLDMASON](https://github.com/steineggerlab/foldmason)
+- [FOLDMASON](https://github.com/steineggerlab/foldmason) (accepts guidetree)
 
 Optionally, [M-COFFEE](https://tcoffee.org/Projects/mcoffee/index.html) will combine the output of all alignments into a consensus MSA (`--build_consensus`).
 
