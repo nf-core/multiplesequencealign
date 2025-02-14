@@ -33,12 +33,12 @@ Main steps:
 
   <details>
       <summary><strong>Guide Tree</strong> (Optional)</summary>
-      <p>Renders a guide tree with a chosen tool (list available in <a href="docs/usage.md#2-guide-trees">usage</a>). Some aligners use guide trees to define the order in which the sequences are aligned.</p>
+      <p>Renders a guide tree with a chosen tool (list available in <a href="https://nf-co.re/multiplesequencealign/usage.md#2-guide-trees">usage</a>). Some aligners use guide trees to define the order in which the sequences are aligned.</p>
   </details>
 
   <details>
       <summary><strong>Align</strong> (Required)</summary>
-      <p>Aligns the sequences with a chosen tool (list available in <a href="docs/usage.md#3-align">usage</a>).</p>
+      <p>Aligns the sequences with a chosen tool (list available in <a href="https://nf-co.re/multiplesequencealign/usage.md#3-align">usage</a>).</p>
   </details>
 
   <details>
@@ -53,7 +53,7 @@ Main steps:
 
 <br>
 
-More introctory material: [talk](https://www.youtube.com/watch?v=suNulysHIN0) from the nextlow summit, [poster](docs/images/poster-nf-msa.pdf).
+More introductory material: [talk](https://www.youtube.com/watch?v=suNulysHIN0) from the nextlow summit, [poster](https://github.com/nf-core/multiplesequencealign/blob/dev/docs/images/poster-nf-msa.pdf).
 
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 
@@ -235,7 +235,7 @@ Which resources is the pipeline using? You can find the default resources used i
 
 If you are using specific profiles, e.g. [test](conf/test.config), these will overwrite the defaults.
 
-If you want to modify the needed resources, please refer [usage](https://nf-co.re/multiplesequencealign/dev/docs/usage/#custom-configuration).
+If you want to modify the needed resources, please refer [usage](https://nf-co.re/multiplesequencealign/docs/usage/#custom-configuration).
 
 ## Pipeline output
 
