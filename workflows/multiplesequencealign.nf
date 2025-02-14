@@ -145,12 +145,6 @@ workflow MULTIPLESEQUENCEALIGN{
                 .map { it -> [ [ id: params.pdbs_dir.split("/")[-1].split("\\.")[0] ], it ] }
                 .groupTuple(by: 0)
                 .set { ch_optional_data }
-            if(!params.skip_pdbconversion){
-                CUSTOM_PDBSTOFASTA(ch_optional_data)
-                ch_versions = ch_versions.mix(CUSTOM_PDBSTOFASTA.out.versions)
-                ch_seqs = CUSTOM_PDBSTOFASTA.out.fasta
-            }
-
 
         }else{
             // Identify the sequence IDs from the input fasta file(s)

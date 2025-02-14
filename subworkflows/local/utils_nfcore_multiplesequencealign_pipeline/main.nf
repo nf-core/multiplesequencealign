@@ -355,6 +355,9 @@ def saveMapToCsv(List<Map> data, String fileName) {
         row.values().join(',')
     }.join('\n')
 
+    // make sure that the null are replaced by empty strings
+    csvContent = csvContent.replaceAll("null", "")
+
     // Write headers and CSV content to the specified file
     new File(fileName).withWriter { writer ->
         writer.write(headers + '\n' + csvContent + '\n')
