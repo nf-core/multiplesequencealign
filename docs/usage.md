@@ -28,7 +28,7 @@ work                # Directory containing the nextflow working files
 ```
 
 :::note
-We have a lot of use cases examples under [FAQs]("https://nf-co.re/multiplesequencealign/usage/FAQs)
+We have a lot of use cases examples under [FAQs](https://nf-co.re/multiplesequencealign/usage/FAQs)
 :::
 
 ## Samplesheet input
