@@ -41,6 +41,11 @@
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
                         "installed_by": ["modules"]
                     },
+                    "fastqc": {
+                        "branch": "master",
+                        "git_sha": "81880787133db07d9b4c1febd152c090eb8325dc",
+                        "installed_by": ["modules"]
+                    },
                     "foldmason/createdb": {
                         "branch": "master",
                         "git_sha": "0270c0fbbbb09456d7823605e4285c4a2c5bbf40",
@@ -110,7 +115,7 @@
                     },
                     "tcoffee/align": {
                         "branch": "master",
-                        "git_sha": "3e548877f25a5980a177cc4f81d2d2e8c24164ef",
+                        "git_sha": "a380f1dade8d24fea92176d0ffaa5ab6235b8e15",
                         "installed_by": ["modules"]
                     },
                     "tcoffee/alncompare": {
@@ -136,7 +141,7 @@
                     },
                     "tcoffee/regressive": {
                         "branch": "master",
-                        "git_sha": "66b22564bc1bc0db7292f2073cdef954ead773e7",
+                        "git_sha": "6c2b47b2e26cf091cfce73658709823675833978",
                         "installed_by": ["modules"]
                     },
                     "tcoffee/seqreformat": {
