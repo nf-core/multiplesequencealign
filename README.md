@@ -33,12 +33,12 @@ Main steps:
 
   <details>
       <summary><strong>Guide Tree</strong> (Optional)</summary>
-      <p>Renders a guide tree with a chosen tool (list available in <a href="https://nf-co.re/multiplesequencealign/usage.md#2-guide-trees">usage</a>). Some aligners use guide trees to define the order in which the sequences are aligned.</p>
+      <p>Renders a guide tree with a chosen tool (list available in <a href="https://nf-co.re/multiplesequencealign/usage#2-guide-trees">usage</a>). Some aligners use guide trees to define the order in which the sequences are aligned.</p>
   </details>
 
   <details>
       <summary><strong>Align</strong> (Required)</summary>
-      <p>Aligns the sequences with a chosen tool (list available in <a href="https://nf-co.re/multiplesequencealign/usage.md#3-align">usage</a>).</p>
+      <p>Aligns the sequences with a chosen tool (list available in <a href="https://nf-co.re/multiplesequencealign/usage#3-align">usage</a>).</p>
   </details>
 
   <details>
@@ -244,7 +244,7 @@ For more details: [output documentation](https://nf-co.re/multiplesequencealign/
 
 ## Extending the pipeline
 
-For details on how to add your favourite guide tree, MSA or evaluation step in nf-core/multiplesequencealign please refer to the [extending documentation](https://nf-co.re/multiplesequencealign/docs/usage/adding_a_tool).
+For details on how to add your favourite guide tree, MSA or evaluation step in nf-core/multiplesequencealign please refer to the [extending documentation](https://nf-co.re/multiplesequencealign/usage/adding_a_tool).
 
 ## Credits
 
