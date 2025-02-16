@@ -4,8 +4,8 @@ process CSVTK_JOIN {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/csvtk:0.30.0--h9ee0642_0':
-        'biocontainers/csvtk:0.30.0--h9ee0642_0' }"
+        'https://depot.galaxyproject.org/singularity/csvtk:0.31.0--h9ee0642_0':
+        'biocontainers/csvtk:0.31.0--h9ee0642_0' }"
 
     input:
     tuple val(meta), path(csv)
@@ -23,7 +23,7 @@ process CSVTK_JOIN {
     out_extension = args.contains('--out-delimiter "\t"') || args.contains('-D "\t"') || args.contains("-D \$'\t'") ? "tsv" : "csv"
     """
     
-    # if the input is horter than 2, add an emtpy file as the second input
+    # create an empty file to avoid crushing when there is less than two files to be merged
     touch empty.csv
 
     csvtk \\
