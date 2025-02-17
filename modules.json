@@ -17,12 +17,12 @@
                     },
                     "csvtk/concat": {
                         "branch": "master",
-                        "git_sha": "81880787133db07d9b4c1febd152c090eb8325dc",
+                        "git_sha": "fa92936611247ca647ddee970f94d83f1bcb0ffe",
                         "installed_by": ["modules"]
                     },
                     "csvtk/join": {
                         "branch": "master",
-                        "git_sha": "81880787133db07d9b4c1febd152c090eb8325dc",
+                        "git_sha": "fa92936611247ca647ddee970f94d83f1bcb0ffe",
                         "installed_by": ["modules"],
                         "patch": "modules/nf-core/csvtk/join/csvtk-join.diff"
                     },
@@ -75,12 +75,12 @@
                     },
                     "mafft/align": {
                         "branch": "master",
-                        "git_sha": "81880787133db07d9b4c1febd152c090eb8325dc",
+                        "git_sha": "fa92936611247ca647ddee970f94d83f1bcb0ffe",
                         "installed_by": ["modules"]
                     },
                     "mafft/guidetree": {
                         "branch": "master",
-                        "git_sha": "8f6381611bd76874b12d9f1626c34e3b8598967f",
+                        "git_sha": "fa92936611247ca647ddee970f94d83f1bcb0ffe",
                         "installed_by": ["modules"]
                     },
                     "magus/align": {
