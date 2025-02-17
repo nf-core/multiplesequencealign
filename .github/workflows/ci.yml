@@ -136,7 +136,6 @@ jobs:
           - "24.10.4"
           - "latest-everything"
         profile:
-          - "conda"
           - "docker"
           - "singularity"
         params:
@@ -153,8 +152,6 @@ jobs:
           - ${{ github.base_ref == 'master' }}
         # Exclude conda and singularity on dev
         exclude:
-          - isMaster: false
-            profile: "conda"
           - isMaster: false
             profile: "singularity"
     steps:
