@@ -91,7 +91,9 @@ jobs:
         # Exclude conda and singularity on dev
         exclude:
           - isMaster: false
-            profile: "conda"
+            test_name: "test_pdb"
+          - isMaster: false
+            test_name: "test_conda"
     steps:
       - name: Check out pipeline code
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
