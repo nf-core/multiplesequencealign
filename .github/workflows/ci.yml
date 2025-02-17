@@ -150,7 +150,7 @@ jobs:
           - "test"
         isMaster:
           - ${{ github.base_ref == 'master' }}
-        # Exclude conda and singularity on dev
+        # Exclude singularity on dev
         exclude:
           - isMaster: false
             profile: "singularity"
