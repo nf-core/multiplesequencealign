@@ -1,4 +1,4 @@
-Changes in module 'nf-core/tcoffee/extractfrompdb'
+Changes in component 'nf-core/tcoffee/extractfrompdb'
 Changes in 'tcoffee/extractfrompdb/main.nf':
 --- modules/nf-core/tcoffee/extractfrompdb/main.nf
 +++ modules/nf-core/tcoffee/extractfrompdb/main.nf
@@ -38,6 +38,6 @@ Changes in 'tcoffee/extractfrompdb/main.nf':
 
 'modules/nf-core/tcoffee/extractfrompdb/meta.yml' is unchanged
 'modules/nf-core/tcoffee/extractfrompdb/environment.yml' is unchanged
-'modules/nf-core/tcoffee/extractfrompdb/tests/main.nf.test.snap' is unchanged
 'modules/nf-core/tcoffee/extractfrompdb/tests/main.nf.test' is unchanged
+'modules/nf-core/tcoffee/extractfrompdb/tests/main.nf.test.snap' is unchanged
 ************************************************************
