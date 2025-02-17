@@ -23,7 +23,7 @@ jobs:
     name: "Run pipeline with test data (${{ matrix.NXF_VER }} | ${{ matrix.test_name }} | ${{ matrix.profile }})"
     # Only run on push if this is the nf-core dev branch (merged PRs)
     if: "${{ github.event_name != 'push' || (github.event_name == 'push' && github.repository == 'nf-core/multiplesequencealign') }}"
-    runs-on: gpu
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         NXF_VER:
@@ -74,7 +74,7 @@ jobs:
     name: "Run pipeline with test data (${{ matrix.NXF_VER }} | ${{ matrix.test_name }} | ${{ matrix.profile }})"
     # Only run on push if this is the nf-core dev branch (merged PRs)
     if: "${{ github.event_name != 'push' || (github.event_name == 'push' && github.repository == 'nf-core/multiplesequencealign') }}"
-    runs-on: gpu
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         NXF_VER:
@@ -129,7 +129,7 @@ jobs:
     name: Stub run
     # Only run on push if this is the nf-core dev branch (merged PRs)
     if: "${{ github.event_name != 'push' || (github.event_name == 'push' && github.repository == 'nf-core/multiplesequencealign') }}"
-    runs-on: gpu
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         NXF_VER:

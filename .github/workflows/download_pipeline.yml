@@ -43,7 +43,7 @@ jobs:
           echo "REPO_BRANCH=${{ github.event.inputs.testbranch || 'dev' }}" >> "$GITHUB_OUTPUT"
 
   download:
-    runs-on: ubuntu-latest
+    runs-on: gpu
     needs: configure
     steps:
       - name: Install Nextflow
