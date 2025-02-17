@@ -62,8 +62,8 @@ All paths are relative to the top-level results directory.
         </details>
 
     - <details markdown="1">
-      <summary><code>summary/</code></summary>
-        <b> CSV file with the summary of all statistics, evaluation metrics and resources used by each combination of tools </b>
+        <summary><code>summary/</code></summary>
+          <b> CSV file with the summary of all statistics, evaluation metrics and resources used by each combination of tools </b>
 
       - <code>complete_summary_stats_with_trace.csv</code>: csv file containing the content of complete_summary_stats merged with the information of the trace file. This will not contain the resources usage running with <code>-resume</code>.
       </details>
