@@ -4,6 +4,7 @@ nextflow_pipeline {
     script "../main.nf"
     tag "multiplesequencealign"
     tag "PIPELINE"
+    tag "gpu"
 
     test("Run with profile test") {
 
