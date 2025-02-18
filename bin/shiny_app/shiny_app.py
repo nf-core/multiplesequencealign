@@ -99,7 +99,7 @@ xlims = {
     "tc": [0, 100],
     "perc_sim": [0, 100],
     "tcs": [0, 1000],
-    "plddt": [0, 100]
+    "plddt": [0, 1]
 }
 
 app_ui = ui.page_fluid(
@@ -311,9 +311,7 @@ def server(input, output, session):
             legend_title_text = options_eval.get(color, color),
             xaxis = dict(range = xlims.get(x, [0, None])),
             yaxis = dict(range = xlims.get(y, [0, None])),
-            autosize = True,
-            width=510,  # Set a fixed width
-            height=400,  # Set a fixed height
+            autosize = True
         )
 
         fig.update_xaxes(automargin = True)
@@ -327,6 +325,10 @@ def server(input, output, session):
 
     def corr():
         data = inputfile[list(set(options_eval.keys()) & set(inputfile.columns) - set(vars_cat))]
+
+        # If the column contain any missing values, exclude it from the correlation matrix
+        data = data.dropna(axis=1)
+
         corr = data.corr().fillna(0)
 
         # Perform hierarchical clustering
