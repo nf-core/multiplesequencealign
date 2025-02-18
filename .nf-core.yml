@@ -6,6 +6,7 @@ lint:
   files_unchanged:
     - .github/CONTRIBUTING.md
   multiqc_config: false
+  actions_ci: false
 nf_core_version: 3.2.0
 repository_type: pipeline
 template:
