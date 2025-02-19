@@ -329,7 +329,7 @@ def server(input, output, session):
         # If the column contain any missing values, exclude it from the correlation matrix
         data = data.dropna(axis=1)
 
-        corr = data.corr().fillna(0)
+        corr = data.corr()
 
         # Perform hierarchical clustering
         linkage_matrix = linkage(corr, method='ward')
