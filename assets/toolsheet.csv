@@ -1,2 +1,3 @@
 tree,args_tree,aligner,args_aligner
-,,REGRESSIVE,"-reg_method famsa"
+FAMSA,,FAMSA,
+,,MAFFT,--dpparttree
