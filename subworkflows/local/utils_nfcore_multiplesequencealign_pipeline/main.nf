@@ -511,7 +511,7 @@ def cleanTrace(ArrayList trace) {
     // Convert each row into a mutable map for dynamic property addition
     def cleanedTrace = trace.collect { row ->
 
-        // We need to do this beacause the module for 3DCOFFEE has to be called 3DCOFFEE
+        // We need to do this beacause the module for 3DCOFFEE has to be called TCOFFEE3D
         // since a module cannot start with a number
         def mutableRow = new LinkedHashMap(row.collectEntries { key, value ->
             [(key): (value instanceof String ? value.replaceAll("TCOFFEE3D", "3DCOFFEE") : value)]
