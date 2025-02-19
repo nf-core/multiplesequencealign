@@ -511,8 +511,11 @@ def cleanTrace(ArrayList trace) {
     // Convert each row into a mutable map for dynamic property addition
     def cleanedTrace = trace.collect { row ->
 
-        def mutableRow = new LinkedHashMap(row)
-
+        // We need to do this beacause the module for 3DCOFFEE has to be called TCOFFEE3D
+        // since a module cannot start with a number
+        def mutableRow = new LinkedHashMap(row.collectEntries { key, value ->
+            [(key): (value instanceof String ? value.replaceAll("TCOFFEE3D", "3DCOFFEE") : value)]
+        })
         // Extract the tag from the 'name' column using a regex pattern
         def tagMatch = (mutableRow.name =~ /\((.*)\)/)
         mutableRow.tag = tagMatch ? tagMatch[0][1] : null

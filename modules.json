@@ -110,7 +110,7 @@
                     },
                     "pigz/uncompress": {
                         "branch": "master",
-                        "git_sha": "c70357ea249a541df53dd5b479b3c32b0c26c4d2",
+                        "git_sha": "db63f85c5ad0cea2a5e21b79a3851d0dabe9d351",
                         "installed_by": ["modules"]
                     },
                     "tcoffee/align": {
