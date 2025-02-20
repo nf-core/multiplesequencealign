@@ -60,16 +60,15 @@ workflow MULTIPLESEQUENCEALIGN{
     ch_tools    // channel: [ val(guide_tree_tool), val(args_guide_tree_tool), val(alignment_tool), val(args_alignment_tool) ]
 
     main:
-    ch_multiqc_files                = Channel.empty()
-    ch_multiqc_report               = Channel.empty()
-    evaluation_summary              = Channel.empty()
-    stats_summary                   = Channel.empty()
-    stats_and_evaluation_summary    = Channel.empty()
-    ch_refs                         = Channel.empty()
-    ch_templates                    = Channel.empty()
-    ch_optional_data                = Channel.empty()
-    ch_versions                     = Channel.empty()
-
+    ch_multiqc_files             = Channel.empty()
+    ch_multiqc_report            = Channel.empty()
+    evaluation_summary           = Channel.empty()
+    stats_summary                = Channel.empty()
+    stats_and_evaluation_summary = Channel.empty()
+    ch_refs                      = Channel.empty()
+    ch_templates                 = Channel.empty()
+    ch_optional_data             = Channel.empty()
+    ch_versions                  = Channel.empty()
 
     ch_input
         .filter { it[1].size() > 0}
@@ -140,13 +139,13 @@ workflow MULTIPLESEQUENCEALIGN{
         // otherwise, map the optional_data to the sequence IDs provided by the
         // various fasta files
         // *****************************************************************
-        if(!params.seqs){
+        if(!params.seqs) {
             optional_data_to_be_mapped
                 .map { it -> [ [ id: params.pdbs_dir.split("/")[-1].split("\\.")[0] ], it ] }
                 .groupTuple(by: 0)
                 .set { ch_optional_data }
 
-        }else{
+        } else {
             // Identify the sequence IDs from the input fasta file(s)
             ch_seqs.splitFasta(record: [ id: true ] )
                 .map { id, seq_id -> [ seq_id, id ] }

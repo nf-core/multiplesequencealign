@@ -24,7 +24,7 @@ The flag <code>--skip_pdbcoversion</code> false will make sure that the fasta fi
 
 </details>
 
-### USECASES
+### USE CASES
 
 <details>
   <summary> I want to deploy one tool on one dataset. I am not interested in any evaluation, report etc. </summary>
