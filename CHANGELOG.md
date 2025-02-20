@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nova Icaria is a beach in Barcelona. We started from Somorrostro (beach in front of CRG) and we are going up the way to Costa Brava.
 
-Minor release of nf-coremultiplesequencealign/.
+Minor release of nf-core/multiplesequencealign.
 
 This fixes few bugs, improves the documentation and adds the possibility to avoid the samplesheet and toolsheet and pass direclty the input files and tools directives.
 

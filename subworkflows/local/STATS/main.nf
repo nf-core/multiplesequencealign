@@ -1,14 +1,14 @@
 //
 // Compute stats about the input sequences
 //
-include {   CALCULATE_SEQSTATS                             } from '../../../modules/local/custom/calculate_seqstats'
-include {   PARSE_SIM                                      } from '../../../modules/local/custom/parse_sim'
-include {   EXTRACT_PLDDT                                  } from '../../../modules/local/custom/extract_plddt'
-include {   TCOFFEE_SEQREFORMAT as TCOFFEE_SEQREFORMAT_SIM } from '../../../modules/nf-core/tcoffee/seqreformat/main.nf'
-include {   CSVTK_CONCAT  as CONCAT_SEQSTATS               } from '../../../modules/nf-core/csvtk/concat/main.nf'
-include {   CSVTK_CONCAT  as CONCAT_SIMSTATS               } from '../../../modules/nf-core/csvtk/concat/main.nf'
-include {   CSVTK_CONCAT  as CONCAT_PLDDTS                 } from '../../../modules/nf-core/csvtk/concat/main.nf'
-include {   CSVTK_JOIN    as MERGE_STATS                   } from '../../../modules/nf-core/csvtk/join/main.nf'
+include { CALCULATE_SEQSTATS                             } from '../../../modules/local/custom/calculate_seqstats'
+include { PARSE_SIM                                      } from '../../../modules/local/custom/parse_sim'
+include { EXTRACT_PLDDT                                  } from '../../../modules/local/custom/extract_plddt'
+include { TCOFFEE_SEQREFORMAT as TCOFFEE_SEQREFORMAT_SIM } from '../../../modules/nf-core/tcoffee/seqreformat/main.nf'
+include { CSVTK_CONCAT  as CONCAT_SEQSTATS               } from '../../../modules/nf-core/csvtk/concat/main.nf'
+include { CSVTK_CONCAT  as CONCAT_SIMSTATS               } from '../../../modules/nf-core/csvtk/concat/main.nf'
+include { CSVTK_CONCAT  as CONCAT_PLDDTS                 } from '../../../modules/nf-core/csvtk/concat/main.nf'
+include { CSVTK_JOIN    as MERGE_STATS                   } from '../../../modules/nf-core/csvtk/join/main.nf'
 
 workflow STATS {
     take:

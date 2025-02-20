@@ -73,17 +73,15 @@ FAMSA,,REGRESSIVE,
 
 More examples [here](https://github.com/nf-core/test-datasets/tree/multiplesequencealign/toolsheet).
 
-:::note
-Each of the trees and aligners are available as standalones. You can leave `args_tree` and `args_aligner` empty if you are cool with the default settings of each method. Alternatively, you can leave `args_tree` empty to use the default guide tree with each aligner.
-:::
+> [!NOTE]
+> Each of the trees and aligners are available as standalones. You can leave `args_tree` and `args_aligner` empty if you are cool with the default settings of each method. Alternatively, you can leave `args_tree` empty to use the default guide tree with each aligner.
 
-:::note
-use the exact spelling as listed below in [align](#3-align) and [guide trees](#2-guide-trees)!
-:::
+> [!NOTE]
+> Use the exact spelling as listed below in [align](#3-align) and [guide trees](#2-guide-trees)!
 
 `tree` is the tool used to build the tree (optional).
 
-Arguments to the tree tool can be provided using `args_tree`. Please refer to each tool's documentation (optional).
+Arguments to the tree tool can be provided using `args_tree` (optional). Please refer to each tool's documentation.
 
 The `aligner` column contains the tool to run the alignment (optional).
 
@@ -194,7 +192,7 @@ The provided structures (see samplesheet) are used to evaluate the quality of th
 Finally, a summary table with all the computed statistics and evaluations is reported in MultiQC (skip by using `--skip_multiqc`).
 Moreover, a Shiny app is generated with interactive summary plots (skip with `--skip_shiny`).
 
-If structures are provided, the [Foldmason](https://github.com/steineggerlab/foldmason) visualizatin will be rendered (skip with `--skip_visualisation`).
+If structures are provided, the [Foldmason](https://github.com/steineggerlab/foldmason) visualisation will be rendered (skip with `--skip_visualisation`).
 
 :::warning
 You will need to have [Shiny](https://shiny.posit.co/py/) installed to run it! See [output documentation](https://nf-co.re/multiplesequencealign/output) for more info.

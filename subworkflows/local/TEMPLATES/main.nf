@@ -9,7 +9,7 @@ workflow TEMPLATES {
 
     main:
 
-    ch_versions     = Channel.empty()
+    ch_versions = Channel.empty()
 
     ch_optional_data_template = ch_optional_data.join(ch_templates, by:0, remainder:true)
     ch_optional_data_template

@@ -2,7 +2,6 @@ lint:
   files_exist:
     - conf/igenomes.config
     - conf/igenomes_ignored.config
-    - .github/PULL_REQUEST_TEMPLATE.md
   files_unchanged:
     - .github/CONTRIBUTING.md
   multiqc_config: false
@@ -10,7 +9,7 @@ lint:
 nf_core_version: 3.2.0
 repository_type: pipeline
 template:
-  author: Luisa Santus, Jose Espinosa Carrasco
+  author: Luisa Santus, Jose Espinosa-Carrasco
   description: Pipeline to run and benchmark multiple sequence alignment tools.
   force: false
   is_nfcore: true
