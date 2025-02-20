@@ -59,7 +59,7 @@ All paths are relative to the top-level results directory.
         - <code>perc_sim/\*.txt</code>: file containing the pairwise sequence similarity for all input sequences. If <code>--calc_sim</code> is specified.
       - <code>structures/</code>
         - <code>plddt/\*\_full_plddt.csv</code>: file containing the plddt of the structures for each sequence in the input file. If <code>--extract_plddt</code> is specified.
-        </details>
+      </details>
 
     - <details markdown="1">
         <summary><code>summary/</code></summary>
