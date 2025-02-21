@@ -1,16 +1,16 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://raw.githubusercontent.com/nf-core/multiplesequencealign/master/nextflow_schema.json",
     "title": "nf-core/multiplesequencealign pipeline parameters",
     "description": "Pipeline to run and benchmark multiple sequence alignment tools.",
     "type": "object",
-    "definitions": {
+    "$defs": {
         "input_output_options": {
-            "title": "Input/output options",
+            "title": "Basic Input/output options",
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": ["input", "outdir"],
+            "required": ["outdir"],
             "properties": {
                 "input": {
                     "type": "string",
@@ -19,32 +19,37 @@
                     "schema": "assets/schema_input.json",
                     "mimetype": "text/csv",
                     "pattern": "^\\S+\\.csv$",
-                    "description": "Path to comma-separated file containing information about the samples in the experiment.",
-                    "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/multiplesequencealign/usage#samplesheet-input).",
+                    "description": "Path to comma-separated file containing information about datasets to be aligned and evaluated (samplesheet).",
+                    "help_text": "You will need to create a file with information about the datasets before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with maximum 5 columns, and a header row. See [usage docs](https://nf-co.re/multiplesequencealign/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
-                },
-                "tools": {
-                    "type": "string",
-                    "format": "file-path",
-                    "exists": true,
-                    "mimetype": "text/csv",
-                    "schema": "assets/schema_tools.json",
-                    "pattern": "^\\S+\\.csv$",
-                    "description": "Path to comma-separated file containing information about the tools to be used in the experiment.",
-                    "help_text": "You will need to create a design file with information about the tools to be used before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/msa/usage#samplesheet-input).",
-                    "fa_icon": "fas fa-file-csv"
-                },
-                "templates_suffix": {
-                    "type": "string",
-                    "description": "Suffix of the dependencies templates.",
-                    "help_text": "Suffix of the files in the accessory files directory (e.g. pdb for pdb files).",
-                    "fa_icon": "fas fa-file-signature"
                 },
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",
                     "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
                     "fa_icon": "fas fa-folder-open"
+                },
+                "seqs": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "description": "Path to the input fasta file.",
+                    "help_text": "Path to the input fasta file, it can be used in alternative to using the input samplesheet if you only have one dataset.",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "pdbs_dir": {
+                    "type": "string",
+                    "exists": true,
+                    "description": "Path to a folder containing all the optional data files to be used (e.g. structures).",
+                    "help_text": "This is a folder with all the optional data files to be used in the pipeline. It can be used in alternative to the samplesheet if you only have one dataset.",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "templates_suffix": {
+                    "type": "string",
+                    "default": ".pdb",
+                    "description": "Suffix of the files given in the optional_data directory.",
+                    "help_text": "To provide additional data (e.g. protein structures), you must provide the path of a directory where thay are stored. Here, you can provide the suffix of the files in the given directory (e.g. pdb for pdb files).",
+                    "fa_icon": "fas fa-file-signature"
                 },
                 "email": {
                     "type": "string",
@@ -60,8 +65,103 @@
                 }
             }
         },
+        "input_tools_options": {
+            "title": "Tools input options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define which tools the pipeline should deploy.",
+            "oneOf": [{ "required": ["tools"] }, { "required": ["aligner"] }],
+            "properties": {
+                "tools": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "mimetype": "text/csv",
+                    "schema": "assets/schema_tools.json",
+                    "pattern": "^\\S+\\.csv$",
+                    "description": "Path to comma-separated file containing information about the tools to be deloyed (toolsheet).",
+                    "help_text": "You will need to create a file with information about the tools to be used before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 4 columns, and a header row. See [usage docs](https://nf-co.re/msa/usage#samplesheet-input).",
+                    "fa_icon": "fas fa-file-csv"
+                },
+                "tree": {
+                    "type": "string",
+                    "description": "Tool to use for tree building.",
+                    "enum": ["FAMSA", "CLUSTALO", "MAFFT"],
+                    "fa_icon": "fas fa-terminal",
+                    "help_text": "The tool to be used for tree building. If not set, the tree will not be built. This parameter is meant to be used in alternative to the toolsheet, in case you want to deploy only one tool."
+                },
+                "args_tree": {
+                    "type": "string",
+                    "description": "Extra arguments for the tree building tool.",
+                    "fa_icon": "fas fa-terminal",
+                    "help_text": "Extra arguments to be passed to the tree building tool. This parameter is meant to be used in alternative to the toolsheet, in case you want to deploy only one tool."
+                },
+                "aligner": {
+                    "type": "string",
+                    "description": "The aligner to be used.",
+                    "enum": [
+                        "CLUSTALO",
+                        "FAMSA",
+                        "KALIGN",
+                        "LEARNMSA",
+                        "MAFFT",
+                        "MAGUS",
+                        "MUSCLE5",
+                        "TCOFFEE",
+                        "REGRESSIVE",
+                        "UPP",
+                        "3DCOFFEE",
+                        "MTMALIGN",
+                        "FOLDMASON"
+                    ],
+                    "fa_icon": "fas fa-terminal",
+                    "help_text": "The aligner to be used. This parameter is meant to be used in alternative to the toolsheet, in case you want to deploy only one tool."
+                },
+                "args_aligner": {
+                    "type": "string",
+                    "description": "Extra arguments for the aligner tool.",
+                    "fa_icon": "fas fa-terminal",
+                    "help_text": "Extra arguments to be passed to the aligner tool. This parameter is meant to be used in alternative to the toolsheet, in case you want to deploy only one tool."
+                }
+            }
+        },
+        "global_options": {
+            "title": "Global options",
+            "type": "object",
+            "description": "Define wether and how to run compression",
+            "default": "",
+            "properties": {
+                "use_gpu": {
+                    "type": "boolean",
+                    "description": "Run on CPUs (default) or GPUs",
+                    "fa_icon": "fas fa-microchip"
+                },
+                "skip_compression": {
+                    "type": "boolean",
+                    "description": "Produce uncompressed alignment files"
+                },
+                "skip_preprocessing": {
+                    "type": "boolean",
+                    "description": "Skip the preprocessing step for the input files.",
+                    "fa_icon": "fas fa-fast-forward",
+                    "help_text": "Skip the preprocessing step and use the files directly. Currently the preprocessing only features the structures where the header is cleaned."
+                },
+                "skip_validation": {
+                    "type": "boolean",
+                    "description": "Skip the validation of the input files.",
+                    "fa_icon": "fas fa-fast-forward",
+                    "help_text": "Skip the validation of the input files. This is not recommended, as it can lead to errors in the pipeline."
+                },
+                "skip_pdbconversion": {
+                    "type": "boolean",
+                    "description": "Skip the conversion of pdb files to fasta.",
+                    "fa_icon": "fas fa-fast-forward",
+                    "help_text": "Skip the conversion of pdb files to fasta. PDBs are converted if they are the only input file (no fasta) and are wished to be used either to run sequence-based aligners or sequence-based stats of the input files."
+                }
+            }
+        },
         "align_options": {
-            "title": "Stats options",
+            "title": "Align options",
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define extra alignment options.",
@@ -98,11 +198,6 @@
                     "type": "boolean",
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Extract plddt from structure files. Only works if the files have been generated by AF2."
-                },
-                "calc_gaps": {
-                    "type": "boolean",
-                    "fa_icon": "fas fa-fast-forward",
-                    "description": "Extract total number of gaps and average number of gaps of the alignment."
                 }
             }
         },
@@ -119,11 +214,13 @@
                 },
                 "calc_sp": {
                     "type": "boolean",
+                    "default": "true",
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Calculate the Sum of Pairs of alignment."
                 },
                 "calc_tc": {
                     "type": "boolean",
+                    "default": true,
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Calculate the Total Column Score of alignment."
                 },
@@ -136,6 +233,12 @@
                     "type": "boolean",
                     "fa_icon": "fas fa-fast-forward",
                     "description": "Calculate the Transitive Consistency Score (TCS) of alignment."
+                },
+                "calc_gaps": {
+                    "type": "boolean",
+                    "default": true,
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Extract total number of gaps and average number of gaps of the alignment."
                 }
             }
         },
@@ -159,23 +262,12 @@
                     "type": "string",
                     "format": "directory-path",
                     "fa_icon": "fas fa-folder-open",
-                    "description": "File containing the main shiny app."
+                    "description": "Folder containing the main shiny app."
                 },
-                "shiny_trace_mode": {
-                    "type": "string",
-                    "description": "variable containing the shiny_trace mode to be used."
-                }
-            }
-        },
-        "compression": {
-            "title": "Compression",
-            "type": "object",
-            "description": "Define wether and how to run compression",
-            "default": "",
-            "properties": {
-                "skip_compression": {
+                "skip_visualisation": {
                     "type": "boolean",
-                    "description": "Produce uncompressed alignment files"
+                    "fa_icon": "fas fa-fast-forward",
+                    "description": "Skip the visualization generation."
                 }
             }
         },
@@ -227,41 +319,6 @@
                 }
             }
         },
-        "max_job_request_options": {
-            "title": "Max job request options",
-            "type": "object",
-            "fa_icon": "fab fa-acquisitions-incorporated",
-            "description": "Set the top limit for requested resources for any single job.",
-            "help_text": "If you are running on a smaller system, a pipeline step requesting more resources than are available may cause the Nextflow to stop the run with an error. These options allow you to cap the maximum resources requested by any single job so that the pipeline will run on your system.\n\nNote that you can not _increase_ the resources requested by any job using these options. For that you will need your own configuration file. See [the nf-core website](https://nf-co.re/usage/configuration) for details.",
-            "properties": {
-                "max_cpus": {
-                    "type": "integer",
-                    "description": "Maximum number of CPUs that can be requested for any single job.",
-                    "default": 16,
-                    "fa_icon": "fas fa-microchip",
-                    "hidden": true,
-                    "help_text": "Use to set an upper-limit for the CPU requirement for each process. Should be an integer e.g. `--max_cpus 1`"
-                },
-                "max_memory": {
-                    "type": "string",
-                    "description": "Maximum amount of memory that can be requested for any single job.",
-                    "default": "128.GB",
-                    "fa_icon": "fas fa-memory",
-                    "pattern": "^\\d+(\\.\\d+)?\\.?\\s*(K|M|G|T)?B$",
-                    "hidden": true,
-                    "help_text": "Use to set an upper-limit for the memory requirement for each process. Should be a string in the format integer-unit e.g. `--max_memory '8.GB'`"
-                },
-                "max_time": {
-                    "type": "string",
-                    "description": "Maximum amount of time that can be requested for any single job.",
-                    "default": "240.h",
-                    "fa_icon": "far fa-clock",
-                    "pattern": "^(\\d+\\.?\\s*(s|m|h|d|day)\\s*)+$",
-                    "hidden": true,
-                    "help_text": "Use to set an upper-limit for the time requirement for each process. Should be a string in the format integer-unit e.g. `--max_time '2.h'`"
-                }
-            }
-        },
         "generic_options": {
             "title": "Generic options",
             "type": "object",
@@ -269,12 +326,6 @@
             "description": "Less common options for the pipeline, typically set in a config file.",
             "help_text": "These options are common to all nf-core pipelines and allow you to customise some of the core preferences for how the pipeline runs.\n\nTypically these options would be set in a Nextflow config file loaded for all pipeline runs, such as `~/.nextflow/config`.",
             "properties": {
-                "help": {
-                    "type": "boolean",
-                    "description": "Display help text.",
-                    "fa_icon": "fas fa-question-circle",
-                    "hidden": true
-                },
                 "version": {
                     "type": "boolean",
                     "description": "Display version and exit.",
@@ -350,32 +401,17 @@
                     "fa_icon": "fas fa-check-square",
                     "hidden": true
                 },
-                "validationShowHiddenParams": {
-                    "type": "boolean",
-                    "fa_icon": "far fa-eye-slash",
-                    "description": "Show all params when using `--help`",
-                    "hidden": true,
-                    "help_text": "By default, parameters set as _hidden_ in the schema are not shown on the command line when a user runs with `--help`. Specifying this option will tell the pipeline to show all parameters."
-                },
-                "validationFailUnrecognisedParams": {
-                    "type": "boolean",
-                    "fa_icon": "far fa-check-circle",
-                    "description": "Validation of parameters fails when an unrecognised parameter is found.",
-                    "hidden": true,
-                    "help_text": "By default, when an unrecognised parameter is found, it returns a warinig."
-                },
-                "validationLenientMode": {
-                    "type": "boolean",
-                    "fa_icon": "far fa-check-circle",
-                    "description": "Validation of parameters in lenient more.",
-                    "hidden": true,
-                    "help_text": "Allows string values that are parseable as numbers or booleans. For further information see [JSONSchema docs](https://github.com/everit-org/json-schema#lenient-mode)."
-                },
                 "pipelines_testdata_base_path": {
                     "type": "string",
                     "fa_icon": "far fa-check-circle",
                     "description": "Base URL or local path to location of pipeline test dataset files",
                     "default": "https://raw.githubusercontent.com/nf-core/test-datasets/",
+                    "hidden": true
+                },
+                "trace_report_suffix": {
+                    "type": "string",
+                    "fa_icon": "far calendar",
+                    "description": "Suffix to add to the trace report filename. Default is the date and time in the format yyyy-MM-dd_HH-mm-ss.",
                     "hidden": true
                 }
             }
@@ -383,31 +419,31 @@
     },
     "allOf": [
         {
-            "$ref": "#/definitions/input_output_options"
+            "$ref": "#/$defs/input_output_options"
         },
         {
-            "$ref": "#/definitions/align_options"
+            "$ref": "#/$defs/input_tools_options"
         },
         {
-            "$ref": "#/definitions/stats_options"
+            "$ref": "#/$defs/global_options"
         },
         {
-            "$ref": "#/definitions/eval_options"
+            "$ref": "#/$defs/align_options"
         },
         {
-            "$ref": "#/definitions/reports_options"
+            "$ref": "#/$defs/stats_options"
         },
         {
-            "$ref": "#/definitions/compression"
+            "$ref": "#/$defs/eval_options"
         },
         {
-            "$ref": "#/definitions/institutional_config_options"
+            "$ref": "#/$defs/reports_options"
         },
         {
-            "$ref": "#/definitions/max_job_request_options"
+            "$ref": "#/$defs/institutional_config_options"
         },
         {
-            "$ref": "#/definitions/generic_options"
+            "$ref": "#/$defs/generic_options"
         }
     ]
 }

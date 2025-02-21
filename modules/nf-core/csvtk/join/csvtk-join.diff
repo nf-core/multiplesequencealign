@@ -1,4 +1,6 @@
-Changes in module 'nf-core/csvtk/join'
+Changes in component 'nf-core/csvtk/join'
+'modules/nf-core/csvtk/join/environment.yml' is unchanged
+Changes in 'csvtk/join/main.nf':
 --- modules/nf-core/csvtk/join/main.nf
 +++ modules/nf-core/csvtk/join/main.nf
 @@ -22,12 +22,17 @@
@@ -21,4 +23,9 @@ Changes in module 'nf-core/csvtk/join'
      cat <<-END_VERSIONS > versions.yml
      "${task.process}":
 
+'modules/nf-core/csvtk/join/meta.yml' is unchanged
+'modules/nf-core/csvtk/join/tests/main.nf.test' is unchanged
+'modules/nf-core/csvtk/join/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/csvtk/join/tests/nextflow.config' is unchanged
+'modules/nf-core/csvtk/join/tests/tags.yml' is unchanged
 ************************************************************

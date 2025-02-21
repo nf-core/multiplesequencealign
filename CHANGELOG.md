@@ -3,6 +3,44 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0 - Nova Icaria](https://github.com/nf-core/multiplesequencealign/releases/tag/1.1.0)
+
+Nova Icaria is a beach in Barcelona. We started from Somorrostro (beach in front of CRG) and we are going up the way to Costa Brava.
+
+Minor release of nf-core/multiplesequencealign.
+
+This fixes few bugs, improves the documentation and adds the possibility to avoid the samplesheet and toolsheet and pass direclty the input files and tools directives.
+
+### Credits
+
+Special thanks to the following for their contributions to the release:
+
+- [Jose Espinosa Carrasco](https://github.com/joseespinosa)
+- [Júlia Mir Pedrol](https://github.com/mirpedrol)
+
+Thank you to everyone else that has contributed by reporting bugs, enhancements or in any other way, shape or form.
+
+### Enhancements & fixes
+
+- [[#174](https://github.com/nf-core/multiplesequencealign/issues/174)] - Add the chaining of proteinfold output to MSA input.
+- [[#177](https://github.com/nf-core/multiplesequencealign/pull/177)] - Add MAFFT guidetree.
+- [[#179](https://github.com/nf-core/multiplesequencealign/pull/179)] - Add visualisation subworkflow and final csv merging onComplete.
+- [[#189](https://github.com/nf-core/multiplesequencealign/pull/189)] - Add GPU support and the alternatives to samplesheet and toolsheet (aligner, seqs)
+- [[#192](https://github.com/nf-core/multiplesequencealign/pull/192)] - Update documentation and fix bug on the merging of the `csv` file `onComplete`.
+
+### Parameters
+
+| Old parameter | New parameter          |
+| ------------- | ---------------------- |
+|               | `--seqs`               |
+|               | `--pdb_dir`            |
+|               | `--aligner`            |
+|               | `--args_aligner`       |
+|               | `--tree`               |
+|               | `--args_tree`          |
+|               | `--skip_validation`    |
+|               | `--skip_preprocessing` |
+
 ## [1.0.0 - Somorrostro](https://github.com/nf-core/multiplesequencealign/releases/tag/1.0.0)
 
 Somorrostro is a beach in Barcelona.

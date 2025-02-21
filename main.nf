@@ -9,13 +9,12 @@
 ----------------------------------------------------------------------------------------
 */
 
-nextflow.enable.dsl = 2
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT FUNCTIONS / MODULES / SUBWORKFLOWS / WORKFLOWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
+
 
 include { MULTIPLESEQUENCEALIGN   } from './workflows/multiplesequencealign'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_multiplesequencealign_pipeline'
@@ -37,20 +36,18 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
     tools       // channel: toolsheet read in from --tools
 
     main:
-    ch_versions = Channel.empty()
-
     //
     // WORKFLOW: Run pipeline
     //
     MULTIPLESEQUENCEALIGN (
         samplesheet,
-        tools,
-        ch_versions
+        tools
     )
 
     emit:
-    multiqc_report =  MULTIPLESEQUENCEALIGN.out.multiqc
-
+    multiqc_report = MULTIPLESEQUENCEALIGN.out.multiqc_report // channel: /path/to/multiqc_report.html
+    versions       = MULTIPLESEQUENCEALIGN.out.versions       // channel: /path/to/versions.txt
+    summary        = MULTIPLESEQUENCEALIGN.out.summary        // channel: /path/to/summary.txt
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,13 +58,11 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
 workflow {
 
     main:
-
     //
     // SUBWORKFLOW: Run initialisation tasks
     //
     PIPELINE_INITIALISATION (
         params.version,
-        params.help,
         params.validate_params,
         params.monochrome_logs,
         args,
@@ -83,10 +78,10 @@ workflow {
         PIPELINE_INITIALISATION.out.samplesheet,
         PIPELINE_INITIALISATION.out.tools
     )
-
     //
     // SUBWORKFLOW: Run completion tasks
     //
+
     PIPELINE_COMPLETION (
         params.email,
         params.email_on_fail,
@@ -95,9 +90,10 @@ workflow {
         params.monochrome_logs,
         params.hook_url,
         NFCORE_MULTIPLESEQUENCEALIGN.out.multiqc_report,
-        "${params.outdir}/shiny_app",
-        "${params.outdir}/pipeline_info",
-        params.shiny_trace_mode
+        NFCORE_MULTIPLESEQUENCEALIGN.out.summary,
+        NFCORE_MULTIPLESEQUENCEALIGN.out.versions,
+        "${params.outdir}/reports/shiny_app",
+        "${params.outdir}/pipeline_info"
     )
 }
 

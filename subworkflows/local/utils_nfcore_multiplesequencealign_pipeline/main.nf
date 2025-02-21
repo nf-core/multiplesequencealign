@@ -8,29 +8,25 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { UTILS_NFVALIDATION_PLUGIN } from '../../nf-core/utils_nfvalidation_plugin'
-include { paramsSummaryMap          } from 'plugin/nf-validation'
-include { fromSamplesheet           } from 'plugin/nf-validation'
-include { UTILS_NEXTFLOW_PIPELINE   } from '../../nf-core/utils_nextflow_pipeline'
+include { UTILS_NFSCHEMA_PLUGIN     } from '../../nf-core/utils_nfschema_plugin'
+include { paramsSummaryMap          } from 'plugin/nf-schema'
+include { samplesheetToList         } from 'plugin/nf-schema'
 include { completionEmail           } from '../../nf-core/utils_nfcore_pipeline'
 include { completionSummary         } from '../../nf-core/utils_nfcore_pipeline'
-include { dashedLine                } from '../../nf-core/utils_nfcore_pipeline'
-include { nfCoreLogo                } from '../../nf-core/utils_nfcore_pipeline'
 include { imNotification            } from '../../nf-core/utils_nfcore_pipeline'
 include { UTILS_NFCORE_PIPELINE     } from '../../nf-core/utils_nfcore_pipeline'
-include { workflowCitation          } from '../../nf-core/utils_nfcore_pipeline'
+include { UTILS_NEXTFLOW_PIPELINE   } from '../../nf-core/utils_nextflow_pipeline'
 
 /*
-========================================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     SUBWORKFLOW TO INITIALISE PIPELINE
-========================================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
 workflow PIPELINE_INITIALISATION {
 
     take:
     version           // boolean: Display version and exit
-    help              // boolean: Display help text
     validate_params   // boolean: Boolean whether to validate parameters against the schema at runtime
     monochrome_logs   // boolean: Do not use coloured log outputs
     nextflow_cli_args //  array: List of positional nextflow CLI args
@@ -55,16 +51,10 @@ workflow PIPELINE_INITIALISATION {
     //
     // Validate parameters and generate parameter summary to stdout
     //
-    pre_help_text = nfCoreLogo(monochrome_logs)
-    post_help_text = '\n' + workflowCitation() + '\n' + dashedLine(monochrome_logs)
-    def String workflow_command = "nextflow run ${workflow.manifest.name} -profile <docker/singularity/.../institute> --input samplesheet.csv --outdir <OUTDIR>"
-    UTILS_NFVALIDATION_PLUGIN (
-        help,
-        workflow_command,
-        pre_help_text,
-        post_help_text,
+    UTILS_NFSCHEMA_PLUGIN (
+        workflow,
         validate_params,
-        "nextflow_schema.json"
+        null
     )
 
     //
@@ -77,24 +67,56 @@ workflow PIPELINE_INITIALISATION {
     //
     // Create channel from input file provided through params.input
     //
-    ch_input = Channel.fromSamplesheet('input')
-    ch_tools = Channel.fromSamplesheet('tools')
-                .map {
-                    meta ->
-                        def meta_clone = meta[0].clone()
-                        def tree_map = [:]
-                        def align_map = [:]
 
-                        tree_map["tree"] = meta_clone["tree"]
-                        tree_map["args_tree"] = meta_clone["args_tree"]
-                        tree_map["args_tree_clean"] = Utils.cleanArgs(meta_clone.args_tree)
+    // If the parameter fasta or pdb is provided, use it instead of the input samplesheet
+    if (params.seqs || params.pdbs_dir) {
 
-                        align_map["aligner"] = meta_clone["aligner"]
-                        align_map["args_aligner"] = Utils.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
-                        align_map["args_aligner_clean"] = Utils.cleanArgs(align_map["args_aligner"])
+        if (params.seqs && !params.pdbs_dir) {
+            ch_input = Channel.fromList([
+                [ ["id": params.seqs.split("/")[-1].split("\\.")[0]], file(params.seqs), [], [], [] ]
+            ])
+        }else if(params.seqs && params.pdbs_dir){
+            ch_input = Channel.fromList([
+                [ ["id": params.seqs.split("/")[-1].split("\\.")[0]], file(params.seqs), [], file(params.pdbs_dir), [] ]
+            ])
+        }else{
+            ch_input = Channel.fromList([
+                [ ["id": params.pdbs_dir.split("/")[0]], [], [], file(params.pdbs_dir), [] ]
+            ])
+        }
 
-                        [ tree_map, align_map ]
-                }.unique()
+    }else{
+        ch_input = Channel.fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
+    }
+
+
+    if (params.aligner){
+        ch_tools = Channel.fromList([
+            [["aligner": params.aligner, "tree": params.tree, "args_tree": params.args_tree, "args_aligner": params.args_aligner]]
+        ])
+    }else{
+
+        Channel.fromList(samplesheetToList(params.tools, "${projectDir}/assets/schema_tools.json")).set{ ch_tools }
+    }
+
+    ch_tools.map {
+                meta ->
+                    def meta_clone = meta[0].clone()
+                    def tree_map = [:]
+                    def align_map = [:]
+
+                    tree_map["tree"] = Utils.clean_tree(meta_clone["tree"].toString())
+                    tree_map["args_tree"] = meta_clone["args_tree"]
+                    tree_map["args_tree_clean"] = Utils.cleanArgs(meta_clone.args_tree)
+
+                    align_map["aligner"] = meta_clone["aligner"].toString()
+                    align_map["args_aligner"] = Utils.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
+                    align_map["args_aligner_clean"] = Utils.cleanArgs(meta_clone.args_aligner)
+
+                    [ tree_map, align_map ]
+            }.unique()
+            .set{ ch_tools }
+
 
     emit:
     samplesheet = ch_input
@@ -103,9 +125,9 @@ workflow PIPELINE_INITIALISATION {
 }
 
 /*
-========================================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     SUBWORKFLOW FOR PIPELINE COMPLETION
-========================================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
 workflow PIPELINE_COMPLETION {
@@ -118,32 +140,59 @@ workflow PIPELINE_COMPLETION {
     monochrome_logs  // boolean: Disable ANSI colour codes in log output
     hook_url         //  string: hook URL for notifications
     multiqc_report   //  string: Path to MultiQC report
+    summary          //  string: Path to summary file
+    versions         //  string: Path to versions file
     shiny_dir_path   //  string: Path to shiny stats file
     trace_dir_path   //  string: Path to trace file
-    shiny_trace_mode // string: Mode to use for shiny trace file (default: "latest", options: "latest", "all")
 
     main:
-
-    summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
+    summary_params      = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
+    def multiqc_reports = multiqc_report.toList()
+    def summary_reports = summary.toList()
+    def versions        = versions.toList()
+    def skip_shiny      = params.skip_shiny
 
     //
     // Completion email and summary
     //
     workflow.onComplete {
         if (email || email_on_fail) {
-            completionEmail(summary_params, email, email_on_fail, plaintext_email, outdir, monochrome_logs, multiqc_report.toList())
+            completionEmail(
+                summary_params,
+                email,
+                email_on_fail,
+                plaintext_email,
+                outdir,
+                monochrome_logs,
+                multiqc_reports.getVal(),
+            )
         }
 
         completionSummary(monochrome_logs)
-
         if (hook_url) {
             imNotification(summary_params, hook_url)
         }
 
-        if (shiny_trace_mode) {
-            getTraceForShiny(trace_dir_path, shiny_dir_path, shiny_trace_mode)
+        // check if summary report is empty
+        if (summary_reports.getVal().isEmpty()){
+            return
         }
 
+
+        def summary_file  = summary_reports.getVal()[0][1].toString()
+        def versions_path = versions.getVal()[0].toString()
+
+        // Input files
+        def trace_dir_path = "${outdir}/pipeline_info/"
+
+        // Output file naming
+        def summary_file_with_traces = "${outdir}/summary/complete_summary_stats_eval_times.csv"
+
+        if (!skip_shiny) {
+            merge_summary_and_traces(summary_file, trace_dir_path, versions_path, summary_file_with_traces, "${shiny_dir_path}/complete_summary_stats_eval_times.csv")
+        }else{
+            merge_summary_and_traces(summary_file, trace_dir_path, versions_path, summary_file_with_traces, "")
+        }
     }
 
     workflow.onError {
@@ -153,28 +202,24 @@ workflow PIPELINE_COMPLETION {
 
 
 /*
-========================================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     FUNCTIONS
-========================================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-//
 
 //
-// Validate channels from input samplesheet
+// Exit pipeline if incorrect --genome key provided
 //
-def validateInputSamplesheet(input) {
-    def (metas, fastqs) = input[1..2]
-
-    // Check that multiple runs of the same sample are of the same datatype i.e. single-end / paired-end
-    def endedness_ok = metas.collect{ it.single_end }.unique().size == 1
-    if (!endedness_ok) {
-        error("Please check input samplesheet -> Multiple runs of a sample must be of the same datatype i.e. single-end or paired-end: ${metas[0].id}")
+def genomeExistsError() {
+    if (params.genomes && params.genome && !params.genomes.containsKey(params.genome)) {
+        def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+            "  Genome '${params.genome}' not found in any config files provided to the pipeline.\n" +
+            "  Currently, the available genome keys are:\n" +
+            "  ${params.genomes.keySet().join(", ")}\n" +
+            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        error(error_string)
     }
-
-    return [ metas[0], fastqs ]
 }
-
-
 //
 // Generate methods description for MultiQC
 //
@@ -226,7 +271,7 @@ def toolBibliographyText() {
 }
 
 def methodsDescriptionText(mqc_methods_yaml) {
-    // Convert  to a named map so can be used as with familar NXF ${workflow} variable syntax in the MultiQC YML file
+    // Convert  to a named map so can be used as with familiar NXF ${workflow} variable syntax in the MultiQC YML file
     def meta = [:]
     meta.workflow = workflow.toMap()
     meta["manifest_map"] = workflow.manifest.toMap()
@@ -237,8 +282,10 @@ def methodsDescriptionText(mqc_methods_yaml) {
         // Removing `https://doi.org/` to handle pipelines using DOIs vs DOI resolvers
         // Removing ` ` since the manifest.doi is a string and not a proper list
         def temp_doi_ref = ""
-        String[] manifest_doi = meta.manifest_map.doi.tokenize(",")
-        for (String doi_ref: manifest_doi) temp_doi_ref += "(doi: <a href=\'https://doi.org/${doi_ref.replace("https://doi.org/", "").replace(" ", "")}\'>${doi_ref.replace("https://doi.org/", "").replace(" ", "")}</a>), "
+        def manifest_doi = meta.manifest_map.doi.tokenize(",")
+        manifest_doi.each { doi_ref ->
+            temp_doi_ref += "(doi: <a href=\'https://doi.org/${doi_ref.replace("https://doi.org/", "").replace(" ", "")}\'>${doi_ref.replace("https://doi.org/", "").replace(" ", "")}</a>), "
+        }
         meta["doi_text"] = temp_doi_ref.substring(0, temp_doi_ref.length() - 2)
     } else meta["doi_text"] = ""
     meta["nodoi_text"] = meta.manifest_map.doi ? "" : "<li>If available, make sure to update the text to include the Zenodo DOI of version of the pipeline used. </li>"
@@ -259,96 +306,463 @@ def methodsDescriptionText(mqc_methods_yaml) {
     return description_html.toString()
 }
 
-def getHeader(trace_file){
-    // Get the header of the trace file
-    def trace_lines = trace_file.readLines()
-    def header = trace_lines[0]
-    return header
+
+
+import groovy.transform.Field
+
+/*
+ * Parses a CSV file and returns a list of maps representing the rows.
+ *
+ * @param csvContent The content of the CSV file as a string.
+ * @return A list of maps where each map represents a row in the CSV.
+ */
+def parseCsv(csvContent) {
+    def lines = csvContent.split('\n')
+    def headers = lines[0].split(',')
+    def data = []
+
+    lines.drop(1).each { line ->
+        def values = line.split(',', -1)
+        def row = [:]
+        headers.eachWithIndex { header, index ->
+            row[header] = values[index]
+        }
+        data << row
+    }
+
+    return data
+}
+/**
+ * Saves a list of maps to a CSV file.
+ *
+ * @param data The list of maps to be saved. Each map represents a row in the CSV.
+ * @param fileName The name of the file to save the CSV data to.
+ */
+def saveMapToCsv(List<Map> data, String fileName) {
+    if (data.isEmpty()) {
+        println "No data to write"
+        return
+    }
+
+    // if the directory does not exist, create it
+    new File(fileName).parentFile.mkdirs()
+
+    // Extract headers from the keys of the first map
+    def headers = data[0].keySet().join(',')
+
+    // Generate CSV content by joining the values of each map with commas
+    def csvContent = data.collect { row ->
+        row.values().join(',')
+    }.join('\n')
+
+    // make sure that the null are replaced by empty strings
+    csvContent = csvContent.replaceAll("null", "")
+
+    // Write headers and CSV content to the specified file
+    new File(fileName).withWriter { writer ->
+        writer.write(headers + '\n' + csvContent + '\n')
+    }
 }
 
-def filterTraceForShiny(trace_file){
-    // Retain only the lines that contain "COMPLETED" and "MULTIPLESEQUENCEALIGN:ALIGN"
-    def trace_lines = trace_file.readLines()
-    def shiny_trace_lines = []
-    for (line in trace_lines){
-        if (line.contains("COMPLETED") && line.contains("MULTIPLESEQUENCEALIGN:ALIGN")){
-            shiny_trace_lines.add(line)
+/**
+ * Filters each row in the given ArrayList to retain only the specified keys.
+ *
+ * @param arrayList The ArrayList iterator containing rows of data.
+ * @param keysToKeep A list of keys to retain in each row.
+ * @return A new ArrayList with rows containing only the specified keys.
+ */
+
+def keepKeysFromArrayList(arrayList, keysToKeep) {
+    def modifiedData = arrayList.collect { row ->
+        def map = row as Map
+        def mutableRow = map.findAll { key, value ->
+            keysToKeep.contains(key)
+        }
+        return mutableRow
+    }
+    return modifiedData
+}
+
+/*
+ * Utility function to convert time strings to minutes.
+ *
+ * This function takes a time string in the format of hours, minutes, seconds, and milliseconds,
+ * and converts it to a total number of minutes.
+ *
+ * Example input formats:
+ * - "1h 30m"
+ * - "45m 30s"
+ * - "2h 15m 10s 500ms"
+ *
+ * @param timeStr The time string to be converted.
+ * @return The total time in minutes as a double.
+ * @throws IllegalArgumentException if the time string is not in the correct format.
+ */
+def convertTime(String timeStr) {
+    def pattern = /((?<hours>\d+(\.\d+)?)h)?\s*((?<minutes>\d+(\.\d+)?)m)?\s*((?<seconds>\d+(\.\d+)?)s)?\s*((?<milliseconds>\d+(\.\d+)?)ms)?/
+    def matcher = timeStr.trim() =~ pattern
+
+    if (!matcher.matches()) {
+        throw new IllegalArgumentException("Time string is not in the correct format: $timeStr")
+    }
+
+    def hours = matcher.group('hours')?.toDouble() ?: 0.0
+    def minutes = matcher.group('minutes')?.toDouble() ?: 0.0
+    def seconds = matcher.group('seconds')?.toDouble() ?: 0.0
+    def milliseconds = matcher.group('milliseconds')?.toDouble() ?: 0.0
+
+    return (hours * 60) + minutes + (seconds / 60) + (milliseconds / 60000)
+}
+
+
+/**
+ * Utility function to convert memory to GB.
+ *
+ * This function takes a memory string with units (GB, MB, KB) and converts it to gigabytes (GB).
+ *
+ * Example input formats:
+ * - "16GB"
+ * - "2048MB"
+ * - "1048576KB"
+ *
+ * @param memory The memory string to be converted.
+ * @return The memory in gigabytes as a double, or null if the input is invalid.
+ */
+def convertMemory(String memory) {
+    if (!memory) {
+        return null
+    }
+
+    if (memory.contains("GB")) {
+        return memory.replace("GB", "").toDouble()
+    } else if (memory.contains("MB")) {
+        return memory.replace("MB", "").toDouble() / 1000
+    } else if (memory.contains("KB")) {
+        return memory.replace("KB", "").toDouble() / 1000000
+    }
+    return null
+}
+
+
+/**
+ * Processes the latest trace file in the specified directory.
+ * The trace file is identified based on the given filePattern.
+ *
+ * This function identifies and parses the latest trace file, filters lines related to evaluation,
+ * and converts the trace data into CSV format.
+ *
+ * @param traceDirPath The path to the directory containing trace files.
+ * @param filePattern The pattern to identify the trace files.
+ * @return The parsed CSV data from the trace file.
+ */
+def latesTraceFileToCSV(String traceDirPath, String filePattern) {
+    // Identify and parse the latest trace file based on the given pattern
+    def traceFile = new File(traceDirPath).listFiles().findAll { it.name.startsWith(filePattern) }.sort { -it.lastModified() }.take(1)[0]
+
+    // Keep only the lines that report running times related to evaluation
+    def header = traceFile.readLines()[0].replaceAll("\t", ",")
+    def traceFileAlign = traceFile.readLines().findAll { it.contains("COMPLETED") && it.contains("MULTIPLESEQUENCEALIGN:ALIGN") }.collect { it.replaceAll("\t", ",") }.join("\n")
+    def trace = header + "\n" + traceFileAlign
+
+    // Parse the trace data into CSV format
+    def traceCsv = parseCsv(trace)
+
+    return traceCsv
+}
+
+/*
+ * Left join of two lists of maps based on a common ID key.
+ *
+ * @param list1 The first list of maps.
+ * @param list2 The second list of maps.
+ * @param idKey The key used to identify and merge maps from both lists.
+ * @return A new list of merged maps.
+ */
+def mergeListsById(list1, list2, idKey) {
+    // Create a map from list1 with the idKey as the key and the map as the value
+    def map1 = list1.collectEntries { [(it[idKey]): it] }
+
+    // Iterate over list2 and merge with corresponding entries from map1
+    def mergedList = list2.collect { row ->
+        def id = row[idKey]
+        def mergedRow = map1.containsKey(id) ? map1[id] + row : row
+        return mergedRow
+    }
+
+    // Return the merged list
+    return mergedList
+}
+
+
+/*
+ * Cleans the trace data by converting each row into a mutable map
+ * and performing necessary transformations.
+ *
+ * The following transformations are performed:
+ * - Extract the tag from the 'name' column using a regex pattern
+ * - Extract 'id' and 'args' from the tag
+ * - Process the 'full_name' to extract workflow and process details
+ *
+ * @param trace The trace data to be cleaned.
+ * @return The cleaned trace data.
+ */
+def cleanTrace(ArrayList trace) {
+
+    // Convert each row into a mutable map for dynamic property addition
+    def cleanedTrace = trace.collect { row ->
+
+        // We need to do this beacause the module for 3DCOFFEE has to be called TCOFFEE3D
+        // since a module cannot start with a number
+        def mutableRow = new LinkedHashMap(row.collectEntries { key, value ->
+            [(key): (value instanceof String ? value.replaceAll("TCOFFEE3D", "3DCOFFEE") : value)]
+        })
+        // Extract the tag from the 'name' column using a regex pattern
+        def tagMatch = (mutableRow.name =~ /\((.*)\)/)
+        mutableRow.tag = tagMatch ? tagMatch[0][1] : null
+
+        // Extract 'id' and 'args' from the tag safely
+        mutableRow.id = mutableRow.tag?.tokenize(' ')?.first()
+        mutableRow.args = mutableRow.tag?.split("args:")?.with { it.size() > 1 ? it[1].trim() : "default" }
+
+        // Process the 'full_name' to extract workflow and process details
+        mutableRow.full_name = mutableRow.name.split(/\(/)?.first()?.trim()
+        def nameParts = mutableRow.full_name?.tokenize(':') ?: []
+        mutableRow.process = nameParts ? nameParts.last() : null
+        mutableRow.subworkflow = nameParts.size() > 1 ? nameParts[-2] : null
+
+        return mutableRow
+    }
+
+    // Return the cleaned trace
+    return cleanedTrace.findAll { it != null }
+}
+
+
+
+/*
+ * Processes the latest trace file in the specified directory.
+ *
+ * This function identifies and parses the latest trace file based on the given pattern, filters columns to be reported for evaluation,
+ * cleans the trace data, and extracts tree and alignment traces separately.
+ *
+ * @param traceDirPath The path to the directory containing trace files.
+ * @param filePattern The pattern to identify the trace files.
+ * @return A map containing the tree traces and alignment traces.
+ */
+def processTraceFile(String traceDirPath) {
+
+    // Parse the trace file
+    def traceCsv = latesTraceFileToCSV(traceDirPath, "execution_trace")
+    // Parse the co2 file
+    def co2Csv = latesTraceFileToCSV(traceDirPath, "co2footprint_trace")
+
+    // Merge the trace and co2 files
+    // we need to do this because the co2 file has the energy consumption and CO2e but misses other columns of interest from the main file
+    co2Csv = keepKeysFromArrayList(co2Csv, ["name", "energy_consumption", "CO2e", "powerdraw_cpu", "cpu_model", "requested_memory"])
+
+    trace_co2_csv = mergeListsById(traceCsv.collect { it as Map }, co2Csv, "name")
+    keys = ["id","name", "args", "tree", "aligner", "realtime", "%cpu", "rss", "peak_rss", "vmem", "peak_mem", "rchar", "wchar", "cpus", "energy_consumption", "CO2e", "powerdraw_cpu", "cpu_model", "requested_memory"]
+
+    // Retain only the necessary columns and parse arguments from tree and aligner
+    def cleanTraceData = cleanTrace(trace_co2_csv)
+
+    // Extract the tree and align traces separately
+    def traceTrees = prepTrace(cleanTraceData, suffix_to_replace = "_GUIDETREE", subworkflow = "COMPUTE_TREES", keys)
+    def traceAlign = prepTrace(cleanTraceData, suffix_to_replace = "_ALIGN", subworkflow = "ALIGN", keys)
+
+    // Add an empty tree trace for the default tree
+    empty_trace = [:]
+    keys_to_add = keys - ["id", "tree", "args", "aligner"]
+    keys_to_add.each { key -> empty_trace[key+"_tree"] = null }
+    empty_trace["tree"] = "DEFAULT"
+    empty_trace["args_tree_clean"] = "default"
+    traceTrees.add(empty_trace)
+
+    // Return the extracted traces as a map
+    return [traceTrees: traceTrees, traceAlign: traceAlign]
+}
+
+
+/**
+ * Prepares and modifies trace data by retaining and transforming specified keys.
+ * We need to do this because the trace data needs to have a suffix assigned
+ * depending on the subworkflow type (ALIGN or COMPUTE_TREES), so that we can identify
+ * which resource usage data corresponds to which process.
+ *
+ * @param trace The list of trace data maps.
+ * @param suffix_to_replace The suffix to be removed from the process names.
+ * @param subworkflow The subworkflow type to filter the trace data.
+ * @param keys The list of keys to retain and transform in the trace data.
+ * @return The modified trace data for the specified subworkflow.
+ */
+def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
+
+    // Extract the tree and align traces separately
+    def trace_subworkflow = trace.findAll { it.subworkflow == subworkflow }
+
+    // For each row, create a new row with the necessary keys and values
+    trace_subworkflow.each { row ->
+        def newRow = [:]
+        def keys_iterator = keys
+        def suffix = ""
+        if(subworkflow == "ALIGN") {
+            suffix = "_aligner"
+            specific_key = "aligner"
+            // Extract tree from tag - if not present, set to default
+            // the tree is in the tag under tree:
+            def treeMatch = (row.tag =~ /tree: (\S*)/)
+            newRow.tree = treeMatch ? treeMatch[0][1] : "DEFAULT"
+
+            def treeArgsMatch = (row.tag =~ /argstree: (.*)/)
+            newRow.args_tree_clean = treeArgsMatch ? Utils.cleanArgs(treeArgsMatch[0][1]) : "default"
+
+            // remove tree and args_tree from keys
+            keys_iterator = keys - ["tree", "args_tree_clean"]
+
+        } else if(subworkflow == "COMPUTE_TREES") {
+            suffix = "_tree"
+            specific_key = "tree"
+        }
+
+
+        keys_iterator.each { key ->
+
+            def newKey = key + suffix
+
+            if (key in ['id', "tree", "aligner"]) {
+                newKey = key
+            }
+            row[specific_key] = row.process.replace(suffix_to_replace, "")
+
+            if ((key == 'realtime' || key == 'rss')) {
+                newRow[newKey] = (key == 'realtime') ? convertTime(row[key]) : convertMemory(row[key])
+            }else if(key == "args") {
+                newRow[newKey+"_clean"] = row.args
+            }else {
+                newRow[newKey] = row[key]
+            }
+
+        }
+
+        row.clear()
+        row.putAll(newRow)
+    }
+
+    return trace_subworkflow
+}
+
+
+/*
+* Parses the verions file and returns a map with the tools and their versions.
+*
+* @param filePath The path to the versions file.
+* @return A map containing the tools and their versions.
+*/
+
+def parseVersions(String filePath) {
+    def versions = [:]
+    def tool = null
+
+    new File(filePath).eachLine { line ->
+        if (line.trim().endsWith(":")) {
+            // This line contains the tool name (ends with ":")
+            tool = line.trim().replace(":", "")
+            // remove _ALIGN or _GUIDETREE from the tool name
+            tool = tool.replace("_ALIGN", "").replace("_GUIDETREE", "")
+        } else if (tool) {
+            // This line contains the version (indented with spaces)
+            def version = line.trim().split(":").last()
+            versions[tool] = version
+            tool = null // Reset tool for the next entry
         }
     }
-    return shiny_trace_lines
+    return versions
 }
 
-// if multiple lines have the same name column
-// only the one with the latest timestamp will be kept
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
-def takeLatestComplete(traceInfos) {
+/*
+ * Merges summary data with trace data from the latest trace file.
+ *
+ * @param summary_file The path to the summary file.
+ * @param trace_dir_path The directory path containing trace files.
+ * @param outFileName The name of the output file to save the merged data.
+ */
 
-    // colnames and the position of the columns name and start
-    colnames = traceInfos.first().split('\t').collect { it.trim() }
-    def name_index = colnames.indexOf("name")
-    def start_index = colnames.indexOf("start")
+def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFileName, shinyOutFileName) {
 
-    // remove the column name line
-    traceInfos = traceInfos.drop(1)
-    // Initialize a map to store entries by their names and latest submit timestamps
-    def latestEntries = [:]
-    def formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
-    // Iterate over each line
-    // If the name is not in the map or the submit timestamp is after the latest one, update the map
-    traceInfos.each { line ->
-        def values = line.split('\t')
-        def name = values[name_index]
-        def submit = LocalDateTime.parse(values[start_index], formatter)
-        if (!latestEntries.containsKey(name) || submit.isAfter(latestEntries[name][start_index])) {
-            latestEntries[name] = values
-        }
+    // -------------------
+    // TRACE FILE
+    // -------------------
+
+    // 1. Identify and parse the latest trace file
+    // 2. Clean the trace (only completed tasks, keep only needed columns)
+    // 3. Extract tree and align traces separately
+    def trace_file = processTraceFile(trace_dir_path)
+
+    // -------------------
+    // SUMMARY FILE
+    // -------------------
+
+    // Parse the summary data (scientific accuracy file: SP, TC etc.)
+    def data = parseCsv(new File(summary_file).readLines().collect { it.replaceAll("\t", ",") }.join("\n"))
+    data = data.collect { row ->
+        def mutableRow = row as Map
+        return mutableRow
     }
-    def filteredData = colnames.join('\t') + '\n'
-    filteredData = filteredData + latestEntries.values().collect { it.join('\t') }.join('\n')
-    def result = []
-    result.addAll(filteredData)
-    return result
-}
 
-def getTraceForShiny(trace_dir_path, shiny_dir_path, shiny_trace_mode){
-        // According to the mode selected, get either the latest trace file or all trace files
-        // If all trace files are selected, it is assumed that the trace files were generated with the "resume" mode
-        def trace_dir = new File("${trace_dir_path}")
-        def trace_files = []
-        if (shiny_trace_mode == "all"){
-            trace_files = trace_dir.listFiles().findAll { it.name.startsWith("execution_trace") }
-        }
-        else if(shiny_trace_mode == "latest"){
-            trace_files = trace_dir.listFiles().findAll { it.name.startsWith("execution_trace") }.sort { -it.lastModified() }.take(1)
-        }
-        else{
-            print("Invalid shiny trace mode. Please use either 'latest' or 'all'")
-        }
-        // Filter the trace files for shiny
-        // and move the trace file to the shiny directory
-        if (trace_files.size() > 0) {
-            def trace_infos = []
-            def header_added = false
-            for (file in trace_files){
-                if( !header_added ){
-                    trace_infos = trace_infos + getHeader(file)
-                    header_added = true
-                }
-                trace_infos = trace_infos + filterTraceForShiny(file)
-            }
-            // if trace infos is empty then print a message
-            if(trace_infos.size() == 0){
-                print("There is an issue with your trace file!")
-            }
+    // -------------------
+    // VERSIONS FILE
+    // -------------------
+    def versions = parseVersions(versions_path)
 
-            trace_infos = takeLatestComplete(trace_infos)
-            def shiny_trace_file = new File("${shiny_dir_path}/trace.txt")
-            shiny_trace_file.write(trace_infos.join("\n"))
-        }else{
-            print("No trace file found in the " + trace_dir_path + " directory.")
+    // Merge versions and data
+    data.each { row ->
+        def aligner = row.aligner
+        row.put("version_aligner", versions[aligner])
+        def tree = row.tree
+        row.put("version_tree", versions[tree])
+    }
+
+
+    // // check if the trace file is empty
+
+    //if(trace_file.traceAlign.size() == 0 ){
+    if(workflow.resume){
+        log.warn "You are running on -resume  ==> You will not be able to access the running times in the final report.\n"
+        // save the summary file to the output file
+        if (shinyOutFileName != "") {
+            saveMapToCsv(data, shinyOutFileName)
         }
+        saveMapToCsv(data, outFileName)
+        return
+    }
+
+    // -------------------
+    // MERGE
+    // -------------------
+
+    // Check if data contains the key "aligner"
+    def mergedData = []
+    data.each { row ->
+
+        def treeMatch = [:]
+        if(row.tree == "DEFAULT"){
+            treeMatch = trace_file.traceTrees.find {it.tree == row.tree && it.args_tree_clean == row.args_tree_clean}
+        } else {
+            treeMatch = trace_file.traceTrees.find { it.id == row.id && it.tree == row.tree && it.args_tree_clean == row.args_tree_clean}
+        }
+
+        def alignMatch = trace_file.traceAlign.find { it.id == row.id && it.tree == row.tree && row.args_tree_clean == it.args_tree_clean && it.aligner == row.aligner && it.args_aligner_clean == row.args_aligner_clean}
+        def mergedRow = row + (treeMatch ?: [:]) + (alignMatch ?: [:])
+        mergedData << mergedRow
+    }
+
+
+    // Save the merged data to a file
+    saveMapToCsv(mergedData, outFileName)
+    if (shinyOutFileName != "") {
+        saveMapToCsv(mergedData, shinyOutFileName)
+    }
 }
 
 import nextflow.Nextflow
@@ -356,17 +770,24 @@ import groovy.text.SimpleTemplateEngine
 
 class Utils {
 
-
-
     public static cleanArgs(argString) {
+
         def cleanArgs = argString.toString().trim().replace("  ", " ").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
         // if clearnArgs is empty, return ""
 
-        if (cleanArgs == null || cleanArgs == "") {
-            return ""
+        if (cleanArgs == null || cleanArgs == "" || cleanArgs == "null") {
+            return "default"
         }else{
             return cleanArgs
         }
+    }
+
+    public static clean_tree(treeIn){
+        def tree = treeIn.toString()
+        if(tree == null || tree == "" || tree == "null"){
+            return "DEFAULT"
+        }
+        return tree
     }
 
     public static fix_args(tool,args,tool_to_be_checked, required_flag, default_value) {
@@ -411,9 +832,5 @@ class Utils {
         return args
 
     }
-
-
-
-
 
 }
