@@ -29,7 +29,7 @@ jobs:
         test_name:
           - "test"
           - "test_pdb"
-          - "test_nosheet"
+          - "test_no_sheet"
     steps:
       - name: Check out pipeline code
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
@@ -59,7 +59,7 @@ jobs:
         params:
           - "--skip_stats --skip_eval --skip_visualisation --skip_validation --skip_preprocessing --skip_shiny --skip_multiqc"
         test_name:
-          - "test_nosheet"
+          - "test_no_sheet"
     steps:
       - name: Check out pipeline code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
