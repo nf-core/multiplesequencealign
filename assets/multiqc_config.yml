@@ -12,14 +12,14 @@ report_section_order:
     order: -1002
 
 report_header_info:
-- Application Type: "Muliple Sequence Alignment deplyoment and benchmarking."
+  - Application Type: "Muliple Sequence Alignment deplyoment and benchmarking."
 
 export_plots: true
 
 disable_version_detection: true
 
 run_modules:
-- custom_content
+  - custom_content
 
 custom_data:
   summary_stats:

@@ -1,9 +1,9 @@
 lint:
   files_exist:
-  - conf/igenomes.config
-  - conf/igenomes_ignored.config
+    - conf/igenomes.config
+    - conf/igenomes_ignored.config
   files_unchanged:
-  - .github/CONTRIBUTING.md
+    - .github/CONTRIBUTING.md
   multiqc_config: false
   actions_ci: false # TODO: remove this with nf-core template version 3.3.0
 nf_core_version: 3.2.0
