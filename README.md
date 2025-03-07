@@ -21,7 +21,7 @@
 
 Use **nf-core/multiplesequencealign** to:
 
-1. **Deploy** one (or many in parallel) of the most popular Multiple Sequence Alignment (MSA) tools.
+1. **Deploy** one (or many) of the most popular Multiple Sequence Alignment (MSA) tools.
 2. **Benchmark** MSA tools (and their inputs) using various metrics.
 
 Main steps:
