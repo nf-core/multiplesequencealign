@@ -53,7 +53,7 @@ Main steps:
 
 <br>
 
-More introductory material: [talk](https://www.youtube.com/watch?v=suNulysHIN0) from the nextlow summit, [poster](https://github.com/nf-core/multiplesequencealign/blob/dev/docs/images/poster-nf-msa.pdf).
+More introductory material: [bytesize talk](https://youtu.be/iRY-Y1p5gtc), [nextflow summit talk](https://www.youtube.com/watch?v=suNulysHIN0) from the nextlow summit, [poster](https://github.com/nf-core/multiplesequencealign/blob/dev/docs/images/poster-nf-msa.pdf).
 
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 
