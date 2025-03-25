@@ -18,29 +18,33 @@
                 "pattern": "^\\S+\\.f(n|ast)?a$",
                 "exists": true,
                 "format": "file-path",
-                "errorMessage": "The fasta file has to exist and has to end in either '.fasta', '.fna' or '.fa'",
-                "default": ""
+                "errorMessage": "The fasta file has to exist and has to end in either '.fasta', '.fna' or '.fa'"
             },
             "reference": {
                 "type": "string",
-                "pattern": "^\\S+\\.f(n|ast)?a$",
+                "pattern": "^\\S+\\.(f(n|ast)?a|ref)$",
                 "exists": true,
                 "format": "file-path",
-                "errorMessage": "The reference file has to exist and has to end in either '.fasta', '.fna' or '.fa'",
-                "default": ""
+                "errorMessage": "The reference file has to exist and has to end in either '.fasta', '.fna', '.fa' or '.ref'"
             },
             "optional_data": {
                 "type": "string",
-                "format": "directory-path",
-                "exists": true,
-                "default": ""
+                "oneOf": [
+                    {
+                        "format": "file-path",
+                        "pattern": "^\\S+\\.tar\\.gz$"
+                    },
+                    {
+                        "format": "directory-path"
+                    }
+                ],
+                "exists": true
             },
             "template": {
                 "type": "string",
                 "pattern": "^\\S+\\.txt$",
                 "exists": true,
-                "format": "file-path",
-                "default": ""
+                "format": "file-path"
             }
         },
         "required": ["id"],
