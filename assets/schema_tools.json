@@ -10,7 +10,7 @@
             "tree": {
                 "type": "string",
                 "pattern": "^\\S+$",
-                "errorMessage": "tree name cannot contain spaces",
+                "errorMessage": "tree name cannot contain spaces and must be a string",
                 "meta": ["tree"],
                 "default": ""
             },
@@ -23,7 +23,22 @@
                 "type": "string",
                 "meta": ["aligner"],
                 "pattern": "^\\S+$",
-                "errorMessage": "align name must be provided and cannot contain spaces",
+                "enum": [
+                    "CLUSTALO",
+                    "FAMSA",
+                    "KALIGN",
+                    "LEARNMSA",
+                    "MAFFT",
+                    "MAGUS",
+                    "MUSCLE5",
+                    "TCOFFEE",
+                    "REGRESSIVE",
+                    "UPP",
+                    "3DCOFFEE",
+                    "MTMALIGN",
+                    "FOLDMASON"
+                ],
+                "errorMessage": "align name must be provided, has to be a string, cannot contain spaces and must be one of: CLUSTALO, FAMSA, KALIGN, LEARNMSA, MAFFT, MAGUS, MUSCLES, TCOFFEE, REGRESSIVE, UPP, 3DCOFFE, MTMALIGN or FOLDMASON",
                 "default": ""
             },
             "args_aligner": {
