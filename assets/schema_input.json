@@ -10,25 +10,36 @@
             "id": {
                 "type": "string",
                 "pattern": "^\\S+$",
-                "errorMessage": "Sample name must be provided and cannot contain spaces",
+                "errorMessage": "Sample name must be provided, has to be a string and cannot contain spaces",
                 "meta": ["id"]
             },
             "fasta": {
                 "type": "string",
-                "pattern": "^\\S+\\.f(ast)?a$",
-                "errorMessage": "fasta file. Must end with .fa or .fasta",
+                "pattern": "^\\S+\\.f(n|ast)?a$",
+                "exists": true,
+                "format": "file-path",
+                "errorMessage": "The fasta file has to exist and has to end in either '.fasta', '.fna' or '.fa'",
                 "default": ""
             },
             "reference": {
                 "type": "string",
+                "pattern": "^\\S+\\.f(n|ast)?a$",
+                "exists": true,
+                "format": "file-path",
+                "errorMessage": "The reference file has to exist and has to end in either '.fasta', '.fna' or '.fa'",
                 "default": ""
             },
             "optional_data": {
                 "type": "string",
+                "format": "directory-path",
+                "exists": true,
                 "default": ""
             },
             "template": {
                 "type": "string",
+                "pattern": "^\\S+\\.txt$",
+                "exists": true,
+                "format": "file-path",
                 "default": ""
             }
         },
