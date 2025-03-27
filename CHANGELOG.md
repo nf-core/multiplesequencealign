@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Enhancements & fixes
 
+- [[#218](https://github.com/nf-core/multiplesequencealign/pull/218)] - Improve the input validation of the pipeline. This will prevent multiple downstream errors
+
 ### Parameters
 
 ## [1.1.0 - Nova Icaria](https://github.com/nf-core/multiplesequencealign/releases/tag/1.1.0)

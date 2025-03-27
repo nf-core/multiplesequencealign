@@ -36,6 +36,7 @@ These steps will guide you to include a new MSA tool into the pipeline. Once don
   - [ ] Update docs/usage.md
   - [ ] Update CITATIONS.md
   - [ ] Update CHANGELOG.md
+  - [ ] Update assets/schema_tools.json and include the tool in the list of allowed options
   - [ ] Update citations in utils subworkflow, [here](https://github.com/nf-core/multiplesequencealign/blob/dev/subworkflows/local/utils_nfcore_multiplesequencealign_pipeline/main.nf)
 
 - [ ] **5.** Add your tool in the **toolsheet** in the test dataset repository. [Example](https://github.com/nf-core/test-datasets/pull/1324).
