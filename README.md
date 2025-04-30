@@ -246,7 +246,6 @@ For more details: [output documentation](https://nf-co.re/multiplesequencealign/
 
 For details on how to add your favourite guide tree, MSA or evaluation step in nf-core/multiplesequencealign please refer to the [extending documentation](https://nf-co.re/multiplesequencealign/usage/adding_a_tool).
 
-
 ## Credits
 
 nf-core/multiplesequencealign was originally written by Luisa Santus ([@luisas](https://github.com/luisas)) and Jose Espinosa-Carrasco ([@JoseEspinosa](https://github.com/JoseEspinosa)) from The Comparative Bioinformatics Group at The Centre for Genomic Regulation, Spain.
