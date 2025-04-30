@@ -7,27 +7,47 @@
     "items": {
         "type": "object",
         "properties": {
-            "sample": {
+            "id": {
                 "type": "string",
                 "pattern": "^\\S+$",
-                "errorMessage": "Sample name must be provided and cannot contain spaces",
+                "errorMessage": "Sample name must be provided, has to be a string and cannot contain spaces",
                 "meta": ["id"]
             },
-            "fastq_1": {
+            "fasta": {
                 "type": "string",
-                "format": "file-path",
+                "pattern": "^\\S+\\.f(n|ast)?a$",
                 "exists": true,
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+                "format": "file-path",
+                "errorMessage": "The fasta file has to exist and has to end in either '.fasta', '.fna' or '.fa'"
             },
-            "fastq_2": {
+            "reference": {
                 "type": "string",
-                "format": "file-path",
+                "pattern": "^\\S+\\.(f(n|ast)?a|ref)$",
                 "exists": true,
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+                "format": "file-path",
+                "errorMessage": "The reference file has to exist and has to end in either '.fasta', '.fna', '.fa' or '.ref'"
+            },
+            "optional_data": {
+                "type": "string",
+                "oneOf": [
+                    {
+                        "format": "file-path",
+                        "pattern": "^\\S+\\.tar\\.gz$"
+                    },
+                    {
+                        "format": "directory-path"
+                    }
+                ],
+                "exists": true
+            },
+            "template": {
+                "type": "string",
+                "pattern": "^\\S+\\.txt$",
+                "exists": true,
+                "format": "file-path"
             }
         },
-        "required": ["sample", "fastq_1"]
+        "required": ["id"],
+        "anyOf": [{ "required": ["fasta"] }, { "required": ["optional_data"] }]
     }
 }
