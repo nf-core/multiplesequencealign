@@ -25,6 +25,7 @@ jobs:
       matrix:
         NXF_VER:
           - "24.10.4"
+          - "latest-everything"
         profile:
           - "docker"
           - "singularity"
@@ -86,6 +87,7 @@ jobs:
       matrix:
         NXF_VER:
           - "24.10.4"
+          - "latest-everything"
         profile:
           - "docker"
           - "singularity"
