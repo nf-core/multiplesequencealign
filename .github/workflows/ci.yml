@@ -23,7 +23,7 @@ jobs:
       matrix:
         NXF_VER:
           - "24.10.4"
-          - "latest-everything"
+          - "25.03.1"
         profile:
           - "docker"
         test_name:
@@ -53,7 +53,7 @@ jobs:
       matrix:
         NXF_VER:
           - "24.10.4"
-          - "latest-everything"
+          - "25.03.1"
         profile:
           - "docker"
         params:
