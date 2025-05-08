@@ -1,5 +1,5 @@
 lint:
-  actions_ci: false
+  actions_ci: false # TODO: remove this with nf-core template version 3.3.0
   files_exist:
     - conf/igenomes.config
     - conf/igenomes_ignored.config
