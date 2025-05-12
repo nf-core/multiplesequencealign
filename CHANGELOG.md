@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Enhancements & fixes
 
 - [[#218](https://github.com/nf-core/multiplesequencealign/pull/218)] - Improve the input validation of the pipeline. This will prevent multiple downstream errors
+- [[#221](https://github.com/nf-core/multiplesequencealign/pull/218)] - Update pipeline documentation for shiny.
 
 ### Parameters
 
