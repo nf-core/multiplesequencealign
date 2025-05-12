@@ -194,7 +194,6 @@ Moreover, a Shiny app is generated with interactive summary plots (skip with `--
 
 If structures are provided, the [Foldmason](https://github.com/steineggerlab/foldmason) visualisation will be rendered (skip with `--skip_visualisation`).
 
-
 To run the Shiny app use the following commands from the results directory:
 
 <code>cd shiny_app</code>
@@ -204,7 +203,6 @@ To run the Shiny app use the following commands from the results directory:
 - <code>run.sh</code>: executable to start the shiny app.
 - <code>_.py_</code>: shiny app files.
 - <code>\*.csv</code>: csv file used by shiny app.
-
 
 :::warning
 You will need to have [Shiny](https://shiny.posit.co/py/) installed to run it! See [output documentation](https://nf-co.re/multiplesequencealign/output) for more info.
