@@ -26,7 +26,6 @@ jobs:
           - "latest-everything"
         profile:
           - "docker"
-          - "conda"
         test_name:
           - "test"
           - "test_pdb"
