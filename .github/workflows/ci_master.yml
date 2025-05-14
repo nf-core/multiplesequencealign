@@ -24,7 +24,7 @@ jobs:
     strategy:
       matrix:
         NXF_VER:
-          - "24.10.4"
+          - "25.04.2"
           - "latest-everything"
         profile:
           - "docker"
@@ -86,7 +86,7 @@ jobs:
     strategy:
       matrix:
         NXF_VER:
-          - "24.10.4"
+          - "25.04.2"
           - "latest-everything"
         profile:
           - "docker"
