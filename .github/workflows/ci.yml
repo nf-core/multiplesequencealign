@@ -24,7 +24,7 @@ jobs:
         NXF_VER:
           - "25.04.2"
         profile:
-          - "docker"
+          - "singularity"
         test_name:
           - "test_tiny"
     steps:
