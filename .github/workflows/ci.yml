@@ -128,4 +128,4 @@ jobs:
       - name: "Run pipeline with test data ${{ matrix.NXF_VER }} | ${{ matrix.test_name }} | ${{ matrix.profile }}"
         if: ${{ (matrix.test_name != 'test' && (matrix.profile == 'conda' || matrix.profile == 'singularity')) || (matrix.test_name != 'test_conda' && matrix.profile != 'conda' && matrix.profile != 'singularity') }}
         run: |
-          nextflow run ${GITHUB_WORKSPACE} -profile test,${{ matrix.profile }} ${{ matrix.params }}  --outdir ./results
+          nextflow run ${GITHUB_WORKSPACE} -stub-run -profile test,${{ matrix.profile }} ${{ matrix.params }}  --outdir ./results
