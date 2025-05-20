@@ -10,7 +10,7 @@ Patch release with minor improvements in docs and validation of the pipeline.
 ### Enhancements & fixes
 
 - [[#218](https://github.com/nf-core/multiplesequencealign/pull/218)] - Improve the input validation of the pipeline. This will prevent multiple downstream errors
-- [[#221](https://github.com/nf-core/multiplesequencealign/pull/218)] - Update pipeline documentation for shiny.
+- [[#221](https://github.com/nf-core/multiplesequencealign/pull/218)] - Update pipeline documentation for Shiny.
 
 ### Parameters
 
@@ -72,10 +72,10 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#35](https://github.com/nf-core/multiplesequencealign/issues/35)] - Add module MUSCLE5_SUPER5.
 - [[#59](https://github.com/nf-core/multiplesequencealign/issues/59)] - Add support for passing structure template in samplesheet.
 - [[#77](https://github.com/nf-core/multiplesequencealign/issues/77)] - Add module zip.
-- [[#93](https://github.com/nf-core/multiplesequencealign/pull/93)] - Add multiqc basic support. Add custom params validation. Add basic shiny app.
+- [[#93](https://github.com/nf-core/multiplesequencealign/pull/93)] - Add multiqc basic support. Add custom params validation. Add basic Shiny app.
 - [[#100](https://github.com/nf-core/multiplesequencealign/pull/100)] - Add support for optional stats and evals. Clean tests.
 - [[#110](https://github.com/nf-core/multiplesequencealign/issues/110)] - Add Readme documentation. Add nf-test for the pipeline.
-- [[#76](https://github.com/nf-core/multiplesequencealign/issues/76)] - Add reading of trace files for shiny app.
+- [[#76](https://github.com/nf-core/multiplesequencealign/issues/76)] - Add reading of trace files for Shiny app.
 - [[#99](https://github.com/nf-core/multiplesequencealign/issues/99)] - Add check for conflicting input parameters for stats and eval.
 - [[#117](https://github.com/nf-core/multiplesequencealign/issues/117)] - Add data for full datasets.
 - [[#90](https://github.com/nf-core/multiplesequencealign/issues/90)] - Add TCS evaluation metric.
@@ -85,7 +85,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#139](https://github.com/nf-core/multiplesequencealign/pull/139)] - Add Foldmason.
 - [[#146](https://github.com/nf-core/multiplesequencealign/pull/146)] - Only show additional process tags when they exists and use the same ubuntu version in all modules.
 - [[#145](https://github.com/nf-core/multiplesequencealign/pull/145)] - Add consensus MSA.
-- [[#147](https://github.com/nf-core/multiplesequencealign/pull/147)] - Add small testing profile + some fixes of the shiny app.
+- [[#147](https://github.com/nf-core/multiplesequencealign/pull/147)] - Add small testing profile + some fixes of the Shiny app.
 - [[#148](https://github.com/nf-core/multiplesequencealign/pull/148)] - Add UPP module.
 - [[#150](https://github.com/nf-core/multiplesequencealign/pull/150)] - Update modules and readme for pre-release.
 
@@ -102,7 +102,7 @@ Initial release of nf-core/multiplesequencealign, created with the [nf-core](htt
 - [[#134](https://github.com/nf-core/multiplesequencealign/pull/134)] - Code revision for release preparation.
 - [[#138](https://github.com/nf-core/multiplesequencealign/pull/138)] - MultiQC as nf-core module and fix visualization.
 - [[#152](https://github.com/nf-core/multiplesequencealign/pull/152)] - Ignore kalign error 132 and print a warning (incompatibility with some CPU types).
-- [[#153](https://github.com/nf-core/multiplesequencealign/pull/153)] - Fix time parser in shiny app.
+- [[#153](https://github.com/nf-core/multiplesequencealign/pull/153)] - Fix time parser in Shiny app.
 - [[#154](https://github.com/nf-core/multiplesequencealign/pull/154)] - Fix metromap.
 - [[#155](https://github.com/nf-core/multiplesequencealign/pull/155)] - Fix typos.
 
