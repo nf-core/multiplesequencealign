@@ -29,7 +29,7 @@
             },
             "optional_data": {
                 "type": "string",
-                "oneOf": [
+                "anyOf": [
                     {
                         "format": "file-path",
                         "pattern": "^\\S+\\.tar\\.gz$"
