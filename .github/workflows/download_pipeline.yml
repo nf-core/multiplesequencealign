@@ -13,8 +13,6 @@ on:
         default: "dev"
   pull_request:
     branches:
-      - main
-      - master
       - dev
 
 env:
