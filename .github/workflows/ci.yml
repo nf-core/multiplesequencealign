@@ -3,7 +3,7 @@ name: nf-core CI dev
 on:
   pull_request:
     branches:
-      - master
+      - dev
   workflow_dispatch:
 
 env:
