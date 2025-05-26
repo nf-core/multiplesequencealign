@@ -36,7 +36,7 @@ jobs:
           echo "REPO_BRANCH=${{ github.event.inputs.testbranch || 'dev' }}" >> "$GITHUB_OUTPUT"
 
   download:
-    runs-on: "runs-on=${{ github.run_id }}/family=g4dn.xlarge/image=ubuntu24-gpu-x64"
+    runs-on: "runs-on=${{ github.run_id }}/family=c6id.2xlarge/image=ubuntu24-full-x64"
     needs: configure
     steps:
       - name: Install Nextflow
