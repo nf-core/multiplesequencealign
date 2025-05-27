@@ -121,7 +121,8 @@
                     "tcoffee/alncompare": {
                         "branch": "master",
                         "git_sha": "81880787133db07d9b4c1febd152c090eb8325dc",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/tcoffee/alncompare/tcoffee-alncompare.diff"
                     },
                     "tcoffee/consensus": {
                         "branch": "master",
