@@ -9,7 +9,7 @@
 [![GitHub Actions Linting Status](https://github.com/nf-core/multiplesequencealign/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/multiplesequencealign/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/multiplesequencealign/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.13889386-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.13889386)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
-[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A524.10.4-23aa62.svg)](https://www.nextflow.io/)
+[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A525.04.2-23aa62.svg)](https://www.nextflow.io/)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
@@ -21,7 +21,7 @@
 
 Use **nf-core/multiplesequencealign** to:
 
-1. **Deploy** one (or many in parallel) of the most popular Multiple Sequence Alignment (MSA) tools.
+1. **Deploy** one (or many) of the most popular Multiple Sequence Alignment (MSA) tools.
 2. **Benchmark** MSA tools (and their inputs) using various metrics.
 
 Main steps:
@@ -53,7 +53,7 @@ Main steps:
 
 <br>
 
-More introductory material: [talk](https://www.youtube.com/watch?v=suNulysHIN0) from the nextlow summit, [poster](https://github.com/nf-core/multiplesequencealign/blob/dev/docs/images/poster-nf-msa.pdf).
+More introductory material: [bytesize talk](https://youtu.be/iRY-Y1p5gtc), [nextflow summit talk](https://www.youtube.com/watch?v=suNulysHIN0), [poster](https://github.com/nf-core/multiplesequencealign/blob/dev/docs/images/poster-nf-msa.pdf).
 
 ![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 

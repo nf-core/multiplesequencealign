@@ -17,9 +17,8 @@
                     "format": "file-path",
                     "exists": true,
                     "schema": "assets/schema_input.json",
-                    "mimetype": "text/csv",
-                    "pattern": "^\\S+\\.csv$",
-                    "description": "Path to comma-separated file containing information about datasets to be aligned and evaluated (samplesheet).",
+                    "pattern": "^\\S+\\.(csv|tsv|yaml|yml|json)$",
+                    "description": "Path to the samplesheet file containing information about datasets to be aligned and evaluated (samplesheet).",
                     "help_text": "You will need to create a file with information about the datasets before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with maximum 5 columns, and a header row. See [usage docs](https://nf-co.re/multiplesequencealign/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
                 },
@@ -33,12 +32,14 @@
                     "type": "string",
                     "format": "file-path",
                     "exists": true,
+                    "pattern": "\\S+\\.f(n|ast)?a$",
                     "description": "Path to the input fasta file.",
                     "help_text": "Path to the input fasta file, it can be used in alternative to using the input samplesheet if you only have one dataset.",
                     "fa_icon": "fas fa-folder-open"
                 },
                 "pdbs_dir": {
                     "type": "string",
+                    "format": "path",
                     "exists": true,
                     "description": "Path to a folder containing all the optional data files to be used (e.g. structures).",
                     "help_text": "This is a folder with all the optional data files to be used in the pipeline. It can be used in alternative to the samplesheet if you only have one dataset.",
@@ -76,11 +77,10 @@
                     "type": "string",
                     "format": "file-path",
                     "exists": true,
-                    "mimetype": "text/csv",
                     "schema": "assets/schema_tools.json",
-                    "pattern": "^\\S+\\.csv$",
-                    "description": "Path to comma-separated file containing information about the tools to be deloyed (toolsheet).",
-                    "help_text": "You will need to create a file with information about the tools to be used before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 4 columns, and a header row. See [usage docs](https://nf-co.re/msa/usage#samplesheet-input).",
+                    "pattern": "^\\S+\\.(csv|tsv|yaml|yml|json)$",
+                    "description": "Path to the file containing information about the tools to be deployed (toolsheet).",
+                    "help_text": "You will need to create a file with information about the tools to be used before running the pipeline. Use this parameter to specify its location. It has to be a file with 4 columns, and a header row. See [usage docs](https://nf-co.re/msa/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
                 },
                 "tree": {
@@ -261,6 +261,7 @@
                 "shiny_app": {
                     "type": "string",
                     "format": "directory-path",
+                    "exists": true,
                     "fa_icon": "fas fa-folder-open",
                     "description": "Folder containing the main shiny app."
                 },
