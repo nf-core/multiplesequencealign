@@ -305,10 +305,6 @@ def methodsDescriptionText(mqc_methods_yaml) {
 
     return description_html.toString()
 }
-<<<<<<< HEAD
-=======
-
-
 
 import groovy.transform.Field
 
@@ -836,4 +832,3 @@ class Utils {
     }
 
 }
->>>>>>> origin/dev
