@@ -6,7 +6,7 @@
 </h1>
 
 [![GitHub Actions CI Status](https://github.com/nf-core/multiplesequencealign/actions/workflows/nf-test.yml/badge.svg)](https://github.com/nf-core/multiplesequencealign/actions/workflows/nf-test.yml)
-[![GitHub Actions Linting Status](https://github.com/nf-core/multiplesequencealign/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/multiplesequencealign/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/multiplesequencealign/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![GitHub Actions Linting Status](https://github.com/nf-core/multiplesequencealign/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/multiplesequencealign/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/multiplesequencealign/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.13889386-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.13889386)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
 [![Nextflow](https://img.shields.io/badge/version-%E2%89%A524.10.5-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
@@ -20,68 +20,238 @@
 
 ## Introduction
 
-**nf-core/multiplesequencealign** is a bioinformatics pipeline that ...
+Use **nf-core/multiplesequencealign** to:
 
-<!-- TODO nf-core:
-   Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
-   major pipeline sections and the types of output it produces. You're giving an overview to someone new
-   to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
--->
+1. **Deploy** one (or many) of the most popular Multiple Sequence Alignment (MSA) tools.
+2. **Benchmark** MSA tools (and their inputs) using various metrics.
 
-<!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
-     workflows use the "tube map" design for that. See https://nf-co.re/docs/guidelines/graphic_design/workflow_diagrams#examples for examples.   -->
-<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+Main steps:
+
+  <details>
+      <summary><strong>Inputs summary</strong> (Optional)</summary>
+      <p>Computation of summary statistics on the input files (e.g., average sequence similarity across the input sequences, their length, pLDDT extraction if available).</p>
+  </details>
+
+  <details>
+      <summary><strong>Guide Tree</strong> (Optional)</summary>
+      <p>Renders a guide tree with a chosen tool (list available in <a href="https://nf-co.re/multiplesequencealign/usage#2-guide-trees">usage</a>). Some aligners use guide trees to define the order in which the sequences are aligned.</p>
+  </details>
+
+  <details>
+      <summary><strong>Align</strong> (Required)</summary>
+      <p>Aligns the sequences with a chosen tool (list available in <a href="https://nf-co.re/multiplesequencealign/usage#3-align">usage</a>).</p>
+  </details>
+
+  <details>
+      <summary><strong>Evaluate</strong> (Optional)</summary>
+      <p>Evaluates the generated alignments with different metrics: Sum Of Pairs (SoP), Total Column score (TC), iRMSD, Total Consistency Score (TCS), etc.</p>
+  </details>
+
+  <details>
+      <summary><strong>Report</strong>(Optional)</summary>
+      <p>Reports the collected information of the runs in a Shiny app and a summary table in MultiQC. Optionally, it can also render the <a href="https://github.com/steineggerlab/foldmason">Foldmason</a> MSA visualization in HTML format.</p>
+  </details>
+
+<br>
+
+More introductory material: [bytesize talk](https://youtu.be/iRY-Y1p5gtc), [nextflow summit talk](https://www.youtube.com/watch?v=suNulysHIN0), [poster](https://github.com/nf-core/multiplesequencealign/blob/dev/docs/images/poster-nf-msa.pdf).
+
+![Alt text](docs/images/nf-core-msa_metro_map.png?raw=true "nf-core-msa metro map")
 
 ## Usage
 
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
-     Explain what rows and columns represent. For instance (please edit as appropriate):
+### Quick start - test run
 
-First, prepare a samplesheet with your input data that looks as follows:
+To get a feeling of what the pipeline does, run:
 
-`samplesheet.csv`:
+(You don't need to download or provide any file, try it!)
 
-```csv
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
+```
+nextflow run nf-core/multiplesequencealign \
+   -profile test_tiny,docker \
+   --outdir results
 ```
 
-Each row represents a fastq file (single-end) or a pair of fastq files (paired end).
+and if you want to see how a more complete run looks like, you can try:
 
--->
+```
+nextflow run nf-core/multiplesequencealign \
+   -profile test,docker \
+   --outdir results
+```
 
-Now, you can run the pipeline using:
+## How to set up an easy run:
 
-<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
+> [!NOTE]
+> We have a lot more of use cases examples under [FAQs]("https://nf-co.re/multiplesequencealign/usage/FAQs)
+
+### Input data
+
+You can provide either (or both) a **fasta** file or a set of **protein structures**.
+
+Alternatively, you can provide a [samplesheet](https://nf-co.re/multiplesequencealign/usage/#samplesheet-input) and a [toolsheet](https://nf-co.re/multiplesequencealign/usage/#toolsheet-input).
+
+See below how to provide them.
+
+> Find some example input data [here](https://github.com/nf-core/test-datasets/tree/multiplesequencealign)
+
+### CASE 1: One input dataset, one tool.
+
+If you only have one dataset and want to align it using one specific MSA tool (e.g. FAMSA or FOLDMASON), you can run the pipeline with one single command.
+
+Is your input a fasta file ([example](https://github.com/nf-core/test-datasets/blob/multiplesequencealign/testdata/setoxin-ref.fa))? Then:
 
 ```bash
 nextflow run nf-core/multiplesequencealign \
-   -profile <docker/singularity/.../institute> \
-   --input samplesheet.csv \
-   --outdir <OUTDIR>
+   -profile easy_deploy,docker \
+   --seqs <YOUR_FASTA.fa> \
+   --aligner FAMSA \
+   --outdir outdir
 ```
+
+Is your input a directory where your PDB files are stored ([example](https://github.com/nf-core/test-datasets/blob/multiplesequencealign/testdata/af2_structures/seatoxin-ref.tar.gz))? Then:
+
+```bash
+nextflow run nf-core/multiplesequencealign \
+   -profile easy_deploy,docker \
+   --pdbs_dir <PATH_TO_YOUR_PDB_DIR> \
+   --aligner FOLDMASON \
+   --outdir outdir
+```
+
+<details>
+  <summary> FAQ: Which are the available tools I can use?</summary>
+  Check the list here: <a href="https://nf-co.re/multiplesequencealign/usage/#3-align"> available tools</a>.
+</details>
+
+<details>
+  <summary> FAQ: Can I use both <em>--seqs</em> and <em>--pdbs_dir</em>?</summary>
+  Yes, go for it! This might be useful if you want a structural evaluation of a sequence-based aligner for instance.
+</details>
+
+<details>
+  <summary> FAQ: Can I specify also which guidetree to use? </summary>
+  Yes, use the <code>--tree</code> flag. More info: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a> and <a href="https://nf-co.re/multiplesequencealign/parameters">parameters</a>.
+</details>
+
+<details>
+  <summary> FAQ: Can I specify the arguments of the tools (tree and aligner)? </summary>
+  Yes, use the <code>--args_tree</code> and <code>--args_aligner</code> flags. More info: <a href="https://nf-co.re/multiplesequencealign/usage">usage</a> and <a href="https://nf-co.re/multiplesequencealign/parameters">parameters</a>.
+</details>
+
+### CASE 2: Multiple datasets, multiple tools.
+
+```bash
+nextflow run nf-core/multiplesequencealign \
+   -profile test,docker \
+   --input <samplesheet.csv> \
+   --tools <toolsheet.csv> \
+   --outdir outdir
+```
+
+You need **2 input files**:
+
+- **samplesheet** (your datasets)
+- **toolsheet** (which tools you want to use).
+
+<details>
+  <summary> What is a samplesheet?</summary>
+  The sample sheet defines the <b>input datasets</b> (sequences, structures, etc.) that the pipeline will process.
+
+A minimal version:
+
+```csv
+id,fasta
+seatoxin,seatoxin.fa
+toxin,toxin.fa
+```
+
+A more complete one:
+
+```csv
+id,fasta,reference,optional_data
+seatoxin,seatoxin.fa,seatoxin-ref.fa,seatoxin_structures
+toxin,toxin.fa,toxin-ref.fa,toxin_structures
+```
+
+Each row represents a set of sequences (in this case the seatoxin and toxin protein families) to be aligned and the associated (if available) reference alignments and dependency files (this can be anything from protein structure or any other information you would want to use in your favourite MSA tool).
+
+Please check: <a href="https://nf-co.re/multiplesequencealign/usage/#samplesheet-input">usage</a>.
+
+> [!NOTE]
+> The only required input is the id column and either fasta or optional_data.
+
+</details>
+
+<details>
+  <summary> What is a toolsheet?</summary>
+  The toolsheet specifies <em>which combination of tools will be deployed and benchmarked in the pipeline</em>.
+
+Each line defines a combination of guide tree and multiple sequence aligner to run with the respective arguments to be used.
+
+The only required field is `aligner`. The fields `tree`, `args_tree` and `args_aligner` are optional and can be left empty.
+
+A minimal version:
+
+```csv
+tree,args_tree,aligner,args_aligner
+,,FAMSA,
+```
+
+This will run the FAMSA aligner.
+
+A more complex one:
+
+```csv
+tree,args_tree,aligner,args_aligner
+FAMSA, -gt upgma -medoidtree, FAMSA,
+, ,TCOFFEE,
+FAMSA,,REGRESSIVE,
+```
+
+This will run, in parallel:
+
+- the FAMSA guidetree with the arguments <em>-gt upgma -medoidtree</em>. This guidetree is then used as input for the FAMSA aligner.
+- the TCOFFEE aligner
+- the FAMSA guidetree with default arguments. This guidetree is then used as input for the REGRESSIVE aligner.
+
+Please check: <a href="https://nf-co.re/multiplesequencealign/usage/#toolsheet-input">usage</a>.
+
+> [!NOTE]
+> The only required input is `aligner`.
+
+</details>
+
+For more details on more advanced runs: [usage documentation](https://nf-co.re/multiplesequencealign/usage) and the [parameter documentation](https://nf-co.re/multiplesequencealign/parameters).
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
 
-For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/multiplesequencealign/usage) and the [parameter documentation](https://nf-co.re/multiplesequencealign/parameters).
+## Pipeline resources
+
+Which resources is the pipeline using? You can find the default resources used in [base.config](conf/base.config).
+
+If you are using specific profiles, e.g. [test](conf/test.config), these will overwrite the defaults.
+
+If you want to modify the needed resources, please refer [usage](https://nf-co.re/multiplesequencealign/docs/usage/#custom-configuration).
 
 ## Pipeline output
 
-To see the results of an example test run with a full size dataset refer to the [results](https://nf-co.re/multiplesequencealign/results) tab on the nf-core website pipeline page.
-For more details about the output files and reports, please refer to the
-[output documentation](https://nf-co.re/multiplesequencealign/output).
+Example results: [results](https://nf-co.re/multiplesequencealign/results) tab on the nf-core website pipeline page.
+For more details: [output documentation](https://nf-co.re/multiplesequencealign/output).
+
+## Extending the pipeline
+
+For details on how to add your favourite guide tree, MSA or evaluation step in nf-core/multiplesequencealign please refer to the [extending documentation](https://nf-co.re/multiplesequencealign/usage/adding_a_tool).
 
 ## Credits
 
-nf-core/multiplesequencealign was originally written by Luisa Santus, Jose Espinosa-Carrasco.
+nf-core/multiplesequencealign was originally written by Luisa Santus ([@luisas](https://github.com/luisas)) and Jose Espinosa-Carrasco ([@JoseEspinosa](https://github.com/JoseEspinosa)) from The Comparative Bioinformatics Group at The Centre for Genomic Regulation, Spain.
 
-We thank the following people for their extensive assistance in the development of this pipeline:
-
-<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
+The following people have significantly contributed to the development of the pipeline and its modules: Leon Rauschning ([@lrauschning](https://github.com/lrauschning)), Alessio Vignoli ([@alessiovignoli](https://github.com/alessiovignoli)), Igor Trujnara ([@itrujnara](https://github.com/itrujnara)) and Leila Mansouri ([@l-mansouri](https://github.com/l-mansouri)).
 
 ## Contributions and Support
 
@@ -91,10 +261,7 @@ For further information or help, don't hesitate to get in touch on the [Slack `#
 
 ## Citations
 
-<!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
-<!-- If you use nf-core/multiplesequencealign for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
-
-<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
+If you use nf-core/multiplesequencealign for your analysis, please cite it using the following doi: [10.5281/zenodo.13889386](https://doi.org/10.5281/zenodo.13889386)
 
 An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
 
