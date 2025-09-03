@@ -23,6 +23,7 @@ These steps will guide you to include a new MSA tool into the pipeline. Once don
 
 - [ ] **1.** **Fork** this repository and create a **new branch** (e.g. add-famsa)
 - [ ] **2. Include the module in the alignment subworkflow** (`subworkflows/local/align.nf`)
+
   - [ ] Install the module. E.g. with the command `nf-core modules install famsa/align`.
   - [ ] Include the module in `subworkflows/local/align.nf`, example [here](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/subworkflows/local/align.nf#L12).
   - [ ] Add a branch to the correct channel, depending on your tool input. Example for sequence-based tools [here](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/subworkflows/local/align.nf#L83) and structure-based [here](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/subworkflows/local/align.nf#L101).
@@ -31,6 +32,7 @@ These steps will guide you to include a new MSA tool into the pipeline. Once don
 
 - [ ] **3.** Add the aligner to the **aligner config** in [conf/modules.config](https://github.com/nf-core/multiplesequencealign/blob/dev/conf/modules.config). [Example](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/conf/modules.config#L125-L143).
 - [ ] **4. Update Docs**
+
   - [ ] Update docs/usage.md
   - [ ] Update CITATIONS.md
   - [ ] Update CHANGELOG.md
@@ -54,6 +56,7 @@ Adding a new evaluation mainly requires changes in the [evaluate.nf](https://git
 - [ ] **1.** **Fork** this repository and create a **new branch** (e.g. add-tcoffee-alncompare)
 
 - [ ] **2. Include the module in the evaluate subworkflow** (`subworkflows/local/evaluate.nf`)
+
   - [ ] Add a `calc_yourscore` parameter to the pipeline in `nextflow.config` and document it in `nextflow_schema.json`. The parameter can then be passed by the user to decide whether to run your evaluation workflow. [Example](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/nextflow.config#L32).
   - [ ] Add a codeblock to `subworkflows/local/evaluate` that calls the newly added evaluation module if the appropriate parameter is passed to the pipeline. [Example](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/subworkflows/local/evaluate.nf#L59-L77).
   - [ ] To ensure the called module produces an output file with the correct name for merging evaluation outputs, add a config option in `conf/modules.config`. [Example](https://github.com/nf-core/multiplesequencealign/blob/4623d19f68b20f0ab16410eba496c329e4f31fa3/conf/modules.config#L189-L192).
