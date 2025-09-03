@@ -260,7 +260,13 @@ For further information or help, don't hesitate to get in touch on the [Slack `#
 
 ## Citations
 
-If you use nf-core/multiplesequencealign for your analysis, please cite it using the following doi: [10.5281/zenodo.13889386](https://doi.org/10.5281/zenodo.13889386)
+If you use nf-core/multiplesequencealign for your analysis, please cite:
+
+> **An nf-core framework for the systematic comparison of alternative modeling tools: The multiple sequence alignment case study**
+>
+> Luisa Santus, Jose Espinosa-Carrasco, Leon Rauschning, Júlia Mir-Pedrol, Igor Trujnara, Alessio Vignoli, Leila Mansouri, Athanasios Baltzis, Evan W. Floden, Paolo Di Tommaso, Edgar Garriga, Adam Gudyś, Sebastian Deorowicz, Cameron Gilchrist, Martin Steinegger, Cedric Notredame.
+>
+> _NAR Genomics and Bioinformatics_ 2025 Jul 31. doi: [10.1093/nargab/lqaf104](https://doi.org/10.1093/nargab/lqaf104).
 
 An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
 
