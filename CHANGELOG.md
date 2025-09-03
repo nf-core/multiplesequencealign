@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Enhancements & fixes
 
+- [[#240](https://github.com/nf-core/multiplesequencealign/pull/240)] - Update publication citation.
+
 ### Parameters
 
 ## [1.1.1 - Bogatell](https://github.com/nf-core/multiplesequencealign/releases/tag/1.1.1)
