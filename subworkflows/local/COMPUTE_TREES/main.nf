@@ -6,8 +6,6 @@ include { FAMSA_GUIDETREE    } from '../../../modules/nf-core/famsa/guidetree/ma
 include { CLUSTALO_GUIDETREE } from '../../../modules/nf-core/clustalo/guidetree/main'
 include { MAFFT_GUIDETREE    } from '../../../modules/nf-core/mafft/guidetree/main'
 
-include { CUSTOM_PDBSTOFASTA } from '../../../modules/local/custom/pdbtofasta'
-include { FASTAVALIDATOR     } from '../../../modules/nf-core/fastavalidator/main'
 
 workflow COMPUTE_TREES {
 

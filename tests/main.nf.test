@@ -13,7 +13,7 @@ nextflow_pipeline {
                 tools  = 'https://raw.githubusercontent.com/nf-core/test-datasets/multiplesequencealign/toolsheet/v1.0/toolsheet.csv'
 
                 // Output directory
-                outdir = "./outdir/"
+                outdir = "$outputDir"
             }
         }
 
