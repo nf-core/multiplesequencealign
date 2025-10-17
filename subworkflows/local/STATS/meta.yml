@@ -1,0 +1,61 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: "compute_sequence_stats"
+description: Compute sequence- and structure-based statistics, including similarity, general sequence metrics, and collect pLDDT scores.
+keywords:
+  - sequence statistics
+  - sequence similarity
+  - pLDDT
+  - MSA
+  - bioinformatics
+  - sequence analysis
+components:
+  - tcoffee/seqreformat
+  - custom/parse_sim
+  - custom/calculate_seqstats
+  - custom/extract_plddt
+  - csvtk/concat
+  - csvtk/join
+input:
+  - ch_seqs:
+      description: Input sequences to compute similarity and general statistics.
+      structure:
+        - meta:
+            type: map
+            description: Metadata map for each input sequence file.
+        - fasta:
+            type: file
+            description: Input sequence file in FASTA or alignment format.
+            pattern: "*.{fasta,fa,faa}"
+  - ch_optional_data:
+      description: Optional structural data directory for extracting pLDDT values.
+      structure:
+        - meta:
+            type: map
+            description: Metadata map for each dataset.
+        - pdbs_dir:
+            type: directory
+            description: Input PDB files directory containing predicted structures.
+            pattern: "*/*.pdb"
+output:
+  - stats_summary:
+      description: Combined summary of sequence similarity, general sequence statistics, and pLDDT results.
+      structure:
+        - meta:
+            type: map
+            description: Metadata map.
+        - csv:
+            type: file
+            description: Summary table in CSV format with computed statistics.
+            pattern: "*.csv"
+  - versions:
+      type: file
+      description: File containing software version information for all used tools.
+      pattern: "versions.yml"
+authors:
+  - "@luisasantus"
+  - "@joseespinosa"
+  - "@mirpedrol"
+  - "@lrauschning"
+maintainers:
+  - "@luisasantus"
+  - "@joseespinosa"

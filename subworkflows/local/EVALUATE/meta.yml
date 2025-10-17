@@ -1,0 +1,75 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: "evaluate_msa_quality"
+description: Evaluate the quality of multiple sequence alignments (MSAs) using reference-, structure-, and intrinsic-based metrics.
+keywords:
+  - MSA
+  - alignment quality
+  - structure evaluation
+  - reference evaluation
+  - iRMSD
+  - sum-of-pairs
+  - total column score
+  - TCS
+  - gaps
+components:
+  - tcoffee/alncompare
+  - tcoffee/irmsd
+  - tcoffee/tcs
+  - csvtk/concat
+  - csvtk/join
+  - custom/calc_gaps
+  - custom/parse_irmsd
+input:
+  - ch_msa:
+      description: Input multiple sequence alignments to be evaluated.
+      structure:
+        - meta:
+            type: map
+            description: Metadata map.
+        - aln:
+            type: file
+            description: Multiple sequence alignment file.
+            pattern: "*.{aln,fasta,fa}"
+  - ch_references:
+      description: Reference alignments used for reference-based evaluation (SP and TC scores).
+      structure:
+        - meta:
+            type: map
+            description: Metadata map for each reference alignment.
+        - ref:
+            type: file
+            description: Reference alignment file.
+            pattern: "*.{aln,fasta,fa}"
+  - ch_structures:
+      description: Structural files used for structure-based evaluation (iRMSD).
+      structure:
+        - meta:
+            type: map
+            description: Metadata map for each set of structure.
+        - pdb:
+            type: directory
+            description: Folder of structure files in PDB format.
+            pattern: "*/*.pdb"
+output:
+  - eval_summary:
+      description: Combined evaluation summary across all selected metrics (SP, TC, iRMSD, gaps, TCS).
+      structure:
+        - meta:
+            type: map
+            description: Metadata map.
+        - csv:
+            type: file
+            description: Summary table in CSV format with evaluation scores.
+            pattern: "*.csv"
+  - versions:
+      type: file
+      description: File containing software version information for all used tools.
+      pattern: "versions.yml"
+authors:
+  - "@luisasantus"
+  - "@joseespinosa"
+  - "@mirpedrol"
+  - "@lrauschning"
+maintainers:
+  - "@luisasantus"
+  - "@joseespinosa"

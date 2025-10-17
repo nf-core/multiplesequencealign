@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: "preprocess_structures"
+description: Preprocess structural template files (e.g. PDB) to make them compatible with alignment tools.
+keywords:
+  - preprocessing
+  - structure
+  - PDB
+  - template
+  - alignment
+  - T-Coffee
+components:
+  - tcoffee/extractfrompdb
+input:
+  - ch_optional_data:
+      description: Optional input structural data to be preprocessed (e.g. template files).
+      structure:
+        - meta:
+            type: map
+            description: Metadata map for each input dataset.
+        - files:
+            type: directory
+            description: List of input files (e.g. PDB structures).
+            pattern: "*"
+output:
+  - preprocessed_optionaldata:
+      description: Preprocessed structural data compatible with alignment tools.
+      structure:
+        - meta:
+            type: map
+            description: Metadata map.
+        - formatted_pdb:
+            type: directory
+            description: Folder of reformatted PDB structure files.
+            pattern: "*/*.pdb"
+  - versions:
+      type: file
+      description: File containing software version information.
+      pattern: "versions.yml"
+authors:
+  - "@luisasantus"
+  - "@joseespinosa"
+  - "@mirpedrol"
+  - "@lrauschning"
+maintainers:
+  - "@luisasantus"
+  - "@joseespinosa"
