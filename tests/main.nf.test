@@ -18,7 +18,13 @@ nextflow_pipeline {
         }
 
         then {
-            assert workflow.success
+            assertAll(
+                { assert workflow.success },
+                // Capture versions snapshot
+                { assert snapshot(
+                    workflow.out.versions
+                ).match() }
+            )
         }
     }
 }
