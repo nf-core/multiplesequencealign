@@ -69,6 +69,9 @@ workflow {
         params.outdir,
         params.input,
         params.tools
+        params.help,
+        params.help_full,
+        params.show_hidden
     )
 
     //
