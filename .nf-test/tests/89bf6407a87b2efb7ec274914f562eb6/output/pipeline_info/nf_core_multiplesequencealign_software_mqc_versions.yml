@@ -1,0 +1,7 @@
+CLUSTALO_GUIDETREE:
+  clustalo: 1.2.4
+FASTAVALIDATOR:
+  py_fasta_validator: null
+Workflow:
+    nf-core/multiplesequencealign: v1.2.0dev
+    Nextflow: 25.04.6

@@ -1,0 +1,426 @@
+# TC_SIMILARITY_MATRIX_FORMAT_01
+# SEQ_INDEX 1kbt 0
+# SEQ_INDEX 2crt 1
+# SEQ_INDEX 2cdx 2
+# SEQ_INDEX 1cdta 3
+# SEQ_INDEX 1tgxa 4
+# SEQ_INDEX 1kxia 5
+# SEQ_INDEX 1tfs 6
+# SEQ_INDEX 1drs 7
+# SEQ_INDEX 1txb 8
+# SEQ_INDEX 2ctx 9
+# SEQ_INDEX 1ntn 10
+# SEQ_INDEX 1lsi 11
+# SEQ_INDEX 2abxa 12
+# SEQ_INDEX 2nbta 13
+# SEQ_INDEX 1nean 14
+# SEQ_INDEX 1nor 15
+# SEQ_INDEX 1cod 16
+# SEQ_INDEX 1nxb 17
+# SEQ_INDEX 1ntx 18
+# SEQ_INDEX 1fas 19
+# PW_SEQ_DISTANCES 
+BOT	    0    1	 88.00  1kbt	  2crt	 88.00
+TOP	    1    0	 88.00  2crt	  1kbt	 88.00
+BOT	    0    2	 85.00  1kbt	  2cdx	 85.00
+TOP	    2    0	 85.00  2cdx	  1kbt	 85.00
+BOT	    0    3	 78.00  1kbt	 1cdta	 78.00
+TOP	    3    0	 78.00 1cdta	  1kbt	 78.00
+BOT	    0    4	 71.00  1kbt	 1tgxa	 71.00
+TOP	    4    0	 71.00 1tgxa	  1kbt	 71.00
+BOT	    0    5	 65.00  1kbt	 1kxia	 65.00
+TOP	    5    0	 65.00 1kxia	  1kbt	 65.00
+BOT	    0    6	 41.00  1kbt	  1tfs	 41.00
+TOP	    6    0	 41.00  1tfs	  1kbt	 41.00
+BOT	    0    7	 38.00  1kbt	  1drs	 38.00
+TOP	    7    0	 38.00  1drs	  1kbt	 38.00
+BOT	    0    8	 35.00  1kbt	  1txb	 35.00
+TOP	    8    0	 35.00  1txb	  1kbt	 35.00
+BOT	    0    9	 36.00  1kbt	  2ctx	 36.00
+TOP	    9    0	 36.00  2ctx	  1kbt	 36.00
+BOT	    0   10	 32.00  1kbt	  1ntn	 32.00
+TOP	   10    0	 32.00  1ntn	  1kbt	 32.00
+BOT	    0   11	 33.00  1kbt	  1lsi	 33.00
+TOP	   11    0	 33.00  1lsi	  1kbt	 33.00
+BOT	    0   12	 38.00  1kbt	 2abxa	 38.00
+TOP	   12    0	 38.00 2abxa	  1kbt	 38.00
+BOT	    0   13	 33.00  1kbt	 2nbta	 33.00
+TOP	   13    0	 33.00 2nbta	  1kbt	 33.00
+BOT	    0   14	 38.00  1kbt	 1nean	 38.00
+TOP	   14    0	 38.00 1nean	  1kbt	 38.00
+BOT	    0   15	 40.00  1kbt	  1nor	 40.00
+TOP	   15    0	 40.00  1nor	  1kbt	 40.00
+BOT	    0   16	 32.00  1kbt	  1cod	 32.00
+TOP	   16    0	 32.00  1cod	  1kbt	 32.00
+BOT	    0   17	 32.00  1kbt	  1nxb	 32.00
+TOP	   17    0	 32.00  1nxb	  1kbt	 32.00
+BOT	    0   18	 34.00  1kbt	  1ntx	 34.00
+TOP	   18    0	 34.00  1ntx	  1kbt	 34.00
+BOT	    0   19	 28.00  1kbt	  1fas	 28.00
+TOP	   19    0	 28.00  1fas	  1kbt	 28.00
+BOT	    1    2	 81.00  2crt	  2cdx	 81.00
+TOP	    2    1	 81.00  2cdx	  2crt	 81.00
+BOT	    1    3	 75.00  2crt	 1cdta	 75.00
+TOP	    3    1	 75.00 1cdta	  2crt	 75.00
+BOT	    1    4	 80.00  2crt	 1tgxa	 80.00
+TOP	    4    1	 80.00 1tgxa	  2crt	 80.00
+BOT	    1    5	 65.00  2crt	 1kxia	 65.00
+TOP	    5    1	 65.00 1kxia	  2crt	 65.00
+BOT	    1    6	 38.00  2crt	  1tfs	 38.00
+TOP	    6    1	 38.00  1tfs	  2crt	 38.00
+BOT	    1    7	 34.00  2crt	  1drs	 34.00
+TOP	    7    1	 34.00  1drs	  2crt	 34.00
+BOT	    1    8	 37.00  2crt	  1txb	 37.00
+TOP	    8    1	 37.00  1txb	  2crt	 37.00
+BOT	    1    9	 35.00  2crt	  2ctx	 35.00
+TOP	    9    1	 35.00  2ctx	  2crt	 35.00
+BOT	    1   10	 35.00  2crt	  1ntn	 35.00
+TOP	   10    1	 35.00  1ntn	  2crt	 35.00
+BOT	    1   11	 34.00  2crt	  1lsi	 34.00
+TOP	   11    1	 34.00  1lsi	  2crt	 34.00
+BOT	    1   12	 40.00  2crt	 2abxa	 40.00
+TOP	   12    1	 40.00 2abxa	  2crt	 40.00
+BOT	    1   13	 32.00  2crt	 2nbta	 32.00
+TOP	   13    1	 32.00 2nbta	  2crt	 32.00
+BOT	    1   14	 40.00  2crt	 1nean	 40.00
+TOP	   14    1	 40.00 1nean	  2crt	 40.00
+BOT	    1   15	 42.00  2crt	  1nor	 42.00
+TOP	   15    1	 42.00  1nor	  2crt	 42.00
+BOT	    1   16	 34.00  2crt	  1cod	 34.00
+TOP	   16    1	 34.00  1cod	  2crt	 34.00
+BOT	    1   17	 29.00  2crt	  1nxb	 29.00
+TOP	   17    1	 29.00  1nxb	  2crt	 29.00
+BOT	    1   18	 31.00  2crt	  1ntx	 31.00
+TOP	   18    1	 31.00  1ntx	  2crt	 31.00
+BOT	    1   19	 32.00  2crt	  1fas	 32.00
+TOP	   19    1	 32.00  1fas	  2crt	 32.00
+BOT	    2    3	 80.00  2cdx	 1cdta	 80.00
+TOP	    3    2	 80.00 1cdta	  2cdx	 80.00
+BOT	    2    4	 73.00  2cdx	 1tgxa	 73.00
+TOP	    4    2	 73.00 1tgxa	  2cdx	 73.00
+BOT	    2    5	 63.00  2cdx	 1kxia	 63.00
+TOP	    5    2	 63.00 1kxia	  2cdx	 63.00
+BOT	    2    6	 40.00  2cdx	  1tfs	 40.00
+TOP	    6    2	 40.00  1tfs	  2cdx	 40.00
+BOT	    2    7	 36.00  2cdx	  1drs	 36.00
+TOP	    7    2	 36.00  1drs	  2cdx	 36.00
+BOT	    2    8	 40.00  2cdx	  1txb	 40.00
+TOP	    8    2	 40.00  1txb	  2cdx	 40.00
+BOT	    2    9	 38.00  2cdx	  2ctx	 38.00
+TOP	    9    2	 38.00  2ctx	  2cdx	 38.00
+BOT	    2   10	 35.00  2cdx	  1ntn	 35.00
+TOP	   10    2	 35.00  1ntn	  2cdx	 35.00
+BOT	    2   11	 32.00  2cdx	  1lsi	 32.00
+TOP	   11    2	 32.00  1lsi	  2cdx	 32.00
+BOT	    2   12	 41.00  2cdx	 2abxa	 41.00
+TOP	   12    2	 41.00 2abxa	  2cdx	 41.00
+BOT	    2   13	 31.00  2cdx	 2nbta	 31.00
+TOP	   13    2	 31.00 2nbta	  2cdx	 31.00
+BOT	    2   14	 40.00  2cdx	 1nean	 40.00
+TOP	   14    2	 40.00 1nean	  2cdx	 40.00
+BOT	    2   15	 42.00  2cdx	  1nor	 42.00
+TOP	   15    2	 42.00  1nor	  2cdx	 42.00
+BOT	    2   16	 34.00  2cdx	  1cod	 34.00
+TOP	   16    2	 34.00  1cod	  2cdx	 34.00
+BOT	    2   17	 29.00  2cdx	  1nxb	 29.00
+TOP	   17    2	 29.00  1nxb	  2cdx	 29.00
+BOT	    2   18	 31.00  2cdx	  1ntx	 31.00
+TOP	   18    2	 31.00  1ntx	  2cdx	 31.00
+BOT	    2   19	 25.00  2cdx	  1fas	 25.00
+TOP	   19    2	 25.00  1fas	  2cdx	 25.00
+BOT	    3    4	 70.00 1cdta	 1tgxa	 70.00
+TOP	    4    3	 70.00 1tgxa	 1cdta	 70.00
+BOT	    3    5	 68.00 1cdta	 1kxia	 68.00
+TOP	    5    3	 68.00 1kxia	 1cdta	 68.00
+BOT	    3    6	 40.00 1cdta	  1tfs	 40.00
+TOP	    6    3	 40.00  1tfs	 1cdta	 40.00
+BOT	    3    7	 34.00 1cdta	  1drs	 34.00
+TOP	    7    3	 34.00  1drs	 1cdta	 34.00
+BOT	    3    8	 36.00 1cdta	  1txb	 36.00
+TOP	    8    3	 36.00  1txb	 1cdta	 36.00
+BOT	    3    9	 35.00 1cdta	  2ctx	 35.00
+TOP	    9    3	 35.00  2ctx	 1cdta	 35.00
+BOT	    3   10	 38.00 1cdta	  1ntn	 38.00
+TOP	   10    3	 38.00  1ntn	 1cdta	 38.00
+BOT	    3   11	 33.00 1cdta	  1lsi	 33.00
+TOP	   11    3	 33.00  1lsi	 1cdta	 33.00
+BOT	    3   12	 41.00 1cdta	 2abxa	 41.00
+TOP	   12    3	 41.00 2abxa	 1cdta	 41.00
+BOT	    3   13	 30.00 1cdta	 2nbta	 30.00
+TOP	   13    3	 30.00 2nbta	 1cdta	 30.00
+BOT	    3   14	 40.00 1cdta	 1nean	 40.00
+TOP	   14    3	 40.00 1nean	 1cdta	 40.00
+BOT	    3   15	 42.00 1cdta	  1nor	 42.00
+TOP	   15    3	 42.00  1nor	 1cdta	 42.00
+BOT	    3   16	 34.00 1cdta	  1cod	 34.00
+TOP	   16    3	 34.00  1cod	 1cdta	 34.00
+BOT	    3   17	 29.00 1cdta	  1nxb	 29.00
+TOP	   17    3	 29.00  1nxb	 1cdta	 29.00
+BOT	    3   18	 34.00 1cdta	  1ntx	 34.00
+TOP	   18    3	 34.00  1ntx	 1cdta	 34.00
+BOT	    3   19	 27.00 1cdta	  1fas	 27.00
+TOP	   19    3	 27.00  1fas	 1cdta	 27.00
+BOT	    4    5	 63.00 1tgxa	 1kxia	 63.00
+TOP	    5    4	 63.00 1kxia	 1tgxa	 63.00
+BOT	    4    6	 36.00 1tgxa	  1tfs	 36.00
+TOP	    6    4	 36.00  1tfs	 1tgxa	 36.00
+BOT	    4    7	 36.00 1tgxa	  1drs	 36.00
+TOP	    7    4	 36.00  1drs	 1tgxa	 36.00
+BOT	    4    8	 33.00 1tgxa	  1txb	 33.00
+TOP	    8    4	 33.00  1txb	 1tgxa	 33.00
+BOT	    4    9	 32.00 1tgxa	  2ctx	 32.00
+TOP	    9    4	 32.00  2ctx	 1tgxa	 32.00
+BOT	    4   10	 33.00 1tgxa	  1ntn	 33.00
+TOP	   10    4	 33.00  1ntn	 1tgxa	 33.00
+BOT	    4   11	 33.00 1tgxa	  1lsi	 33.00
+TOP	   11    4	 33.00  1lsi	 1tgxa	 33.00
+BOT	    4   12	 38.00 1tgxa	 2abxa	 38.00
+TOP	   12    4	 38.00 2abxa	 1tgxa	 38.00
+BOT	    4   13	 39.00 1tgxa	 2nbta	 39.00
+TOP	   13    4	 39.00 2nbta	 1tgxa	 39.00
+BOT	    4   14	 50.00 1tgxa	 1nean	 50.00
+TOP	   14    4	 50.00 1nean	 1tgxa	 50.00
+BOT	    4   15	 43.00 1tgxa	  1nor	 43.00
+TOP	   15    4	 43.00  1nor	 1tgxa	 43.00
+BOT	    4   16	 39.00 1tgxa	  1cod	 39.00
+TOP	   16    4	 39.00  1cod	 1tgxa	 39.00
+BOT	    4   17	 34.00 1tgxa	  1nxb	 34.00
+TOP	   17    4	 34.00  1nxb	 1tgxa	 34.00
+BOT	    4   18	 34.00 1tgxa	  1ntx	 34.00
+TOP	   18    4	 34.00  1ntx	 1tgxa	 34.00
+BOT	    4   19	 33.00 1tgxa	  1fas	 33.00
+TOP	   19    4	 33.00  1fas	 1tgxa	 33.00
+BOT	    5    6	 35.00 1kxia	  1tfs	 35.00
+TOP	    6    5	 35.00  1tfs	 1kxia	 35.00
+BOT	    5    7	 35.00 1kxia	  1drs	 35.00
+TOP	    7    5	 35.00  1drs	 1kxia	 35.00
+BOT	    5    8	 39.00 1kxia	  1txb	 39.00
+TOP	    8    5	 39.00  1txb	 1kxia	 39.00
+BOT	    5    9	 36.00 1kxia	  2ctx	 36.00
+TOP	    9    5	 36.00  2ctx	 1kxia	 36.00
+BOT	    5   10	 34.00 1kxia	  1ntn	 34.00
+TOP	   10    5	 34.00  1ntn	 1kxia	 34.00
+BOT	    5   11	 37.00 1kxia	  1lsi	 37.00
+TOP	   11    5	 37.00  1lsi	 1kxia	 37.00
+BOT	    5   12	 45.00 1kxia	 2abxa	 45.00
+TOP	   12    5	 45.00 2abxa	 1kxia	 45.00
+BOT	    5   13	 42.00 1kxia	 2nbta	 42.00
+TOP	   13    5	 42.00 2nbta	 1kxia	 42.00
+BOT	    5   14	 44.00 1kxia	 1nean	 44.00
+TOP	   14    5	 44.00 1nean	 1kxia	 44.00
+BOT	    5   15	 41.00 1kxia	  1nor	 41.00
+TOP	   15    5	 41.00  1nor	 1kxia	 41.00
+BOT	    5   16	 35.00 1kxia	  1cod	 35.00
+TOP	   16    5	 35.00  1cod	 1kxia	 35.00
+BOT	    5   17	 33.00 1kxia	  1nxb	 33.00
+TOP	   17    5	 33.00  1nxb	 1kxia	 33.00
+BOT	    5   18	 38.00 1kxia	  1ntx	 38.00
+TOP	   18    5	 38.00  1ntx	 1kxia	 38.00
+BOT	    5   19	 40.00 1kxia	  1fas	 40.00
+TOP	   19    5	 40.00  1fas	 1kxia	 40.00
+BOT	    6    7	 52.00  1tfs	  1drs	 52.00
+TOP	    7    6	 52.00  1drs	  1tfs	 52.00
+BOT	    6    8	 27.00  1tfs	  1txb	 27.00
+TOP	    8    6	 27.00  1txb	  1tfs	 27.00
+BOT	    6    9	 36.00  1tfs	  2ctx	 36.00
+TOP	    9    6	 36.00  2ctx	  1tfs	 36.00
+BOT	    6   10	 35.00  1tfs	  1ntn	 35.00
+TOP	   10    6	 35.00  1ntn	  1tfs	 35.00
+BOT	    6   11	 37.00  1tfs	  1lsi	 37.00
+TOP	   11    6	 37.00  1lsi	  1tfs	 37.00
+BOT	    6   12	 42.00  1tfs	 2abxa	 42.00
+TOP	   12    6	 42.00 2abxa	  1tfs	 42.00
+BOT	    6   13	 37.00  1tfs	 2nbta	 37.00
+TOP	   13    6	 37.00 2nbta	  1tfs	 37.00
+BOT	    6   14	 48.00  1tfs	 1nean	 48.00
+TOP	   14    6	 48.00 1nean	  1tfs	 48.00
+BOT	    6   15	 46.00  1tfs	  1nor	 46.00
+TOP	   15    6	 46.00  1nor	  1tfs	 46.00
+BOT	    6   16	 43.00  1tfs	  1cod	 43.00
+TOP	   16    6	 43.00  1cod	  1tfs	 43.00
+BOT	    6   17	 43.00  1tfs	  1nxb	 43.00
+TOP	   17    6	 43.00  1nxb	  1tfs	 43.00
+BOT	    6   18	 48.00  1tfs	  1ntx	 48.00
+TOP	   18    6	 48.00  1ntx	  1tfs	 48.00
+BOT	    6   19	 35.00  1tfs	  1fas	 35.00
+TOP	   19    6	 35.00  1fas	  1tfs	 35.00
+BOT	    7    8	 38.00  1drs	  1txb	 38.00
+TOP	    8    7	 38.00  1txb	  1drs	 38.00
+BOT	    7    9	 32.00  1drs	  2ctx	 32.00
+TOP	    9    7	 32.00  2ctx	  1drs	 32.00
+BOT	    7   10	 35.00  1drs	  1ntn	 35.00
+TOP	   10    7	 35.00  1ntn	  1drs	 35.00
+BOT	    7   11	 34.00  1drs	  1lsi	 34.00
+TOP	   11    7	 34.00  1lsi	  1drs	 34.00
+BOT	    7   12	 37.00  1drs	 2abxa	 37.00
+TOP	   12    7	 37.00 2abxa	  1drs	 37.00
+BOT	    7   13	 29.00  1drs	 2nbta	 29.00
+TOP	   13    7	 29.00 2nbta	  1drs	 29.00
+BOT	    7   14	 54.00  1drs	 1nean	 54.00
+TOP	   14    7	 54.00 1nean	  1drs	 54.00
+BOT	    7   15	 52.00  1drs	  1nor	 52.00
+TOP	   15    7	 52.00  1nor	  1drs	 52.00
+BOT	    7   16	 40.00  1drs	  1cod	 40.00
+TOP	   16    7	 40.00  1cod	  1drs	 40.00
+BOT	    7   17	 54.00  1drs	  1nxb	 54.00
+TOP	   17    7	 54.00  1nxb	  1drs	 54.00
+BOT	    7   18	 53.00  1drs	  1ntx	 53.00
+TOP	   18    7	 53.00  1ntx	  1drs	 53.00
+BOT	    7   19	 39.00  1drs	  1fas	 39.00
+TOP	   19    7	 39.00  1fas	  1drs	 39.00
+BOT	    8    9	 73.00  1txb	  2ctx	 73.00
+TOP	    9    8	 73.00  2ctx	  1txb	 73.00
+BOT	    8   10	 66.00  1txb	  1ntn	 66.00
+TOP	   10    8	 66.00  1ntn	  1txb	 66.00
+BOT	    8   11	 60.00  1txb	  1lsi	 60.00
+TOP	   11    8	 60.00  1lsi	  1txb	 60.00
+BOT	    8   12	 56.00  1txb	 2abxa	 56.00
+TOP	   12    8	 56.00 2abxa	  1txb	 56.00
+BOT	    8   13	 53.00  1txb	 2nbta	 53.00
+TOP	   13    8	 53.00 2nbta	  1txb	 53.00
+BOT	    8   14	 48.00  1txb	 1nean	 48.00
+TOP	   14    8	 48.00 1nean	  1txb	 48.00
+BOT	    8   15	 50.00  1txb	  1nor	 50.00
+TOP	   15    8	 50.00  1nor	  1txb	 50.00
+BOT	    8   16	 49.00  1txb	  1cod	 49.00
+TOP	   16    8	 49.00  1cod	  1txb	 49.00
+BOT	    8   17	 42.00  1txb	  1nxb	 42.00
+TOP	   17    8	 42.00  1nxb	  1txb	 42.00
+BOT	    8   18	 53.00  1txb	  1ntx	 53.00
+TOP	   18    8	 53.00  1ntx	  1txb	 53.00
+BOT	    8   19	 37.00  1txb	  1fas	 37.00
+TOP	   19    8	 37.00  1fas	  1txb	 37.00
+BOT	    9   10	 60.00  2ctx	  1ntn	 60.00
+TOP	   10    9	 60.00  1ntn	  2ctx	 60.00
+BOT	    9   11	 53.00  2ctx	  1lsi	 53.00
+TOP	   11    9	 53.00  1lsi	  2ctx	 53.00
+BOT	    9   12	 52.00  2ctx	 2abxa	 52.00
+TOP	   12    9	 52.00 2abxa	  2ctx	 52.00
+BOT	    9   13	 49.00  2ctx	 2nbta	 49.00
+TOP	   13    9	 49.00 2nbta	  2ctx	 49.00
+BOT	    9   14	 44.00  2ctx	 1nean	 44.00
+TOP	   14    9	 44.00 1nean	  2ctx	 44.00
+BOT	    9   15	 43.00  2ctx	  1nor	 43.00
+TOP	   15    9	 43.00  1nor	  2ctx	 43.00
+BOT	    9   16	 44.00  2ctx	  1cod	 44.00
+TOP	   16    9	 44.00  1cod	  2ctx	 44.00
+BOT	    9   17	 44.00  2ctx	  1nxb	 44.00
+TOP	   17    9	 44.00  1nxb	  2ctx	 44.00
+BOT	    9   18	 48.00  2ctx	  1ntx	 48.00
+TOP	   18    9	 48.00  1ntx	  2ctx	 48.00
+BOT	    9   19	 28.00  2ctx	  1fas	 28.00
+TOP	   19    9	 28.00  1fas	  2ctx	 28.00
+BOT	   10   11	 60.00  1ntn	  1lsi	 60.00
+TOP	   11   10	 60.00  1lsi	  1ntn	 60.00
+BOT	   10   12	 61.00  1ntn	 2abxa	 61.00
+TOP	   12   10	 61.00 2abxa	  1ntn	 61.00
+BOT	   10   13	 53.00  1ntn	 2nbta	 53.00
+TOP	   13   10	 53.00 2nbta	  1ntn	 53.00
+BOT	   10   14	 46.00  1ntn	 1nean	 46.00
+TOP	   14   10	 46.00 1nean	  1ntn	 46.00
+BOT	   10   15	 43.00  1ntn	  1nor	 43.00
+TOP	   15   10	 43.00  1nor	  1ntn	 43.00
+BOT	   10   16	 45.00  1ntn	  1cod	 45.00
+TOP	   16   10	 45.00  1cod	  1ntn	 45.00
+BOT	   10   17	 43.00  1ntn	  1nxb	 43.00
+TOP	   17   10	 43.00  1nxb	  1ntn	 43.00
+BOT	   10   18	 47.00  1ntn	  1ntx	 47.00
+TOP	   18   10	 47.00  1ntx	  1ntn	 47.00
+BOT	   10   19	 34.00  1ntn	  1fas	 34.00
+TOP	   19   10	 34.00  1fas	  1ntn	 34.00
+BOT	   11   12	 56.00  1lsi	 2abxa	 56.00
+TOP	   12   11	 56.00 2abxa	  1lsi	 56.00
+BOT	   11   13	 48.00  1lsi	 2nbta	 48.00
+TOP	   13   11	 48.00 2nbta	  1lsi	 48.00
+BOT	   11   14	 47.00  1lsi	 1nean	 47.00
+TOP	   14   11	 47.00 1nean	  1lsi	 47.00
+BOT	   11   15	 47.00  1lsi	  1nor	 47.00
+TOP	   15   11	 47.00  1nor	  1lsi	 47.00
+BOT	   11   16	 49.00  1lsi	  1cod	 49.00
+TOP	   16   11	 49.00  1cod	  1lsi	 49.00
+BOT	   11   17	 41.00  1lsi	  1nxb	 41.00
+TOP	   17   11	 41.00  1nxb	  1lsi	 41.00
+BOT	   11   18	 46.00  1lsi	  1ntx	 46.00
+TOP	   18   11	 46.00  1ntx	  1lsi	 46.00
+BOT	   11   19	 37.00  1lsi	  1fas	 37.00
+TOP	   19   11	 37.00  1fas	  1lsi	 37.00
+BOT	   12   13	 52.00 2abxa	 2nbta	 52.00
+TOP	   13   12	 52.00 2nbta	 2abxa	 52.00
+BOT	   12   14	 48.00 2abxa	 1nean	 48.00
+TOP	   14   12	 48.00 1nean	 2abxa	 48.00
+BOT	   12   15	 45.00 2abxa	  1nor	 45.00
+TOP	   15   12	 45.00  1nor	 2abxa	 45.00
+BOT	   12   16	 44.00 2abxa	  1cod	 44.00
+TOP	   16   12	 44.00  1cod	 2abxa	 44.00
+BOT	   12   17	 40.00 2abxa	  1nxb	 40.00
+TOP	   17   12	 40.00  1nxb	 2abxa	 40.00
+BOT	   12   18	 43.00 2abxa	  1ntx	 43.00
+TOP	   18   12	 43.00  1ntx	 2abxa	 43.00
+BOT	   12   19	 50.00 2abxa	  1fas	 50.00
+TOP	   19   12	 50.00  1fas	 2abxa	 50.00
+BOT	   13   14	 46.00 2nbta	 1nean	 46.00
+TOP	   14   13	 46.00 1nean	 2nbta	 46.00
+BOT	   13   15	 43.00 2nbta	  1nor	 43.00
+TOP	   15   13	 43.00  1nor	 2nbta	 43.00
+BOT	   13   16	 44.00 2nbta	  1cod	 44.00
+TOP	   16   13	 44.00  1cod	 2nbta	 44.00
+BOT	   13   17	 42.00 2nbta	  1nxb	 42.00
+TOP	   17   13	 42.00  1nxb	 2nbta	 42.00
+BOT	   13   18	 35.00 2nbta	  1ntx	 35.00
+TOP	   18   13	 35.00  1ntx	 2nbta	 35.00
+BOT	   13   19	 33.00 2nbta	  1fas	 33.00
+TOP	   19   13	 33.00  1fas	 2nbta	 33.00
+BOT	   14   15	 86.00 1nean	  1nor	 86.00
+TOP	   15   14	 86.00  1nor	 1nean	 86.00
+BOT	   14   16	 78.00 1nean	  1cod	 78.00
+TOP	   16   14	 78.00  1cod	 1nean	 78.00
+BOT	   14   17	 76.00 1nean	  1nxb	 76.00
+TOP	   17   14	 76.00  1nxb	 1nean	 76.00
+BOT	   14   18	 67.00 1nean	  1ntx	 67.00
+TOP	   18   14	 67.00  1ntx	 1nean	 67.00
+BOT	   14   19	 35.00 1nean	  1fas	 35.00
+TOP	   19   14	 35.00  1fas	 1nean	 35.00
+BOT	   15   16	 77.00  1nor	  1cod	 77.00
+TOP	   16   15	 77.00  1cod	  1nor	 77.00
+BOT	   15   17	 72.00  1nor	  1nxb	 72.00
+TOP	   17   15	 72.00  1nxb	  1nor	 72.00
+BOT	   15   18	 67.00  1nor	  1ntx	 67.00
+TOP	   18   15	 67.00  1ntx	  1nor	 67.00
+BOT	   15   19	 30.00  1nor	  1fas	 30.00
+TOP	   19   15	 30.00  1fas	  1nor	 30.00
+BOT	   16   17	 58.00  1cod	  1nxb	 58.00
+TOP	   17   16	 58.00  1nxb	  1cod	 58.00
+BOT	   16   18	 58.00  1cod	  1ntx	 58.00
+TOP	   18   16	 58.00  1ntx	  1cod	 58.00
+BOT	   16   19	 36.00  1cod	  1fas	 36.00
+TOP	   19   16	 36.00  1fas	  1cod	 36.00
+BOT	   17   18	 61.00  1nxb	  1ntx	 61.00
+TOP	   18   17	 61.00  1ntx	  1nxb	 61.00
+BOT	   17   19	 31.00  1nxb	  1fas	 31.00
+TOP	   19   17	 31.00  1fas	  1nxb	 31.00
+BOT	   18   19	 46.00  1ntx	  1fas	 46.00
+TOP	   19   18	 46.00  1fas	  1ntx	 46.00
+AVG	 0	  1kbt	     *	 46.16
+AVG	 1	  2crt	     *	 46.42
+AVG	 2	  2cdx	     *	 46.11
+AVG	 3	 1cdta	     *	 45.47
+AVG	 4	 1tgxa	     *	 45.79
+AVG	 5	 1kxia	     *	 45.16
+AVG	 6	  1tfs	     *	 39.95
+AVG	 7	  1drs	     *	 40.11
+AVG	 8	  1txb	     *	 45.89
+AVG	 9	  2ctx	     *	 43.05
+AVG	 10	  1ntn	     *	 43.95
+AVG	 11	  1lsi	     *	 43.00
+AVG	 12	 2abxa	     *	 45.74
+AVG	 13	 2nbta	     *	 40.58
+AVG	 14	 1nean	     *	 51.32
+AVG	 15	  1nor	     *	 50.05
+AVG	 16	  1cod	     *	 45.95
+AVG	 17	  1nxb	     *	 43.84
+AVG	 18	  1ntx	     *	 46.00
+AVG	 19	  1fas	     *	 34.53
+TOT	   TOT	     *	 44.45
+AVG	   AVG	     *	 44.45
+VAR	   VAR	     *	 185.43
+STD	   STD	     *	 13.62

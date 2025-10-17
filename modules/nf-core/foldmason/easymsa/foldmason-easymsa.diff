@@ -1,5 +1,4 @@
 Changes in component 'nf-core/foldmason/easymsa'
-'modules/nf-core/foldmason/easymsa/environment.yml' is unchanged
 Changes in 'foldmason/easymsa/main.nf':
 --- modules/nf-core/foldmason/easymsa/main.nf
 +++ modules/nf-core/foldmason/easymsa/main.nf
@@ -38,7 +37,7 @@ Changes in 'foldmason/easymsa/main.nf':
 Changes in 'foldmason/easymsa/meta.yml':
 --- modules/nf-core/foldmason/easymsa/meta.yml
 +++ modules/nf-core/foldmason/easymsa/meta.yml
-@@ -58,7 +58,7 @@
+@@ -68,7 +68,7 @@
            description: |
              Groovy Map containing sample information
              e.g. `[ id:'sample1', single_end:false ]`
@@ -48,7 +47,7 @@ Changes in 'foldmason/easymsa/meta.yml':
            description: Fasta file containing the multiple sequence alignment with Amino
              Acid alphabet
 
-'modules/nf-core/foldmason/easymsa/tests/main.nf.test' is unchanged
+'modules/nf-core/foldmason/easymsa/environment.yml' is unchanged
 'modules/nf-core/foldmason/easymsa/tests/main.nf.test.snap' is unchanged
-'modules/nf-core/foldmason/easymsa/tests/tags.yml' is unchanged
+'modules/nf-core/foldmason/easymsa/tests/main.nf.test' is unchanged
 ************************************************************

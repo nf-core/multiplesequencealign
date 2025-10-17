@@ -1,0 +1,67 @@
+CALCULATE_SEQSTATS:
+  python: 3.11.0
+CALC_GAPS:
+  awk: 1.3.4 20200120
+CLUSTALO_ALIGN:
+  clustalo: 1.2.4
+  pigz: 2.8)
+CLUSTALO_GUIDETREE:
+  clustalo: 1.2.4
+CONCAT_SEQSTATS:
+  csvtk: 0.31.0
+CONCAT_SIMSTATS:
+  csvtk: 0.31.0
+EXTRACT_PLDDT:
+  awk: 1.3.4 20200120
+FAMSA_ALIGN:
+  famsa: 2.4.1-45c9b2b (2025-05-09)
+FAMSA_GUIDETREE:
+  famsa: 2.2.2- (2022-10-09)
+FASTAVALIDATOR:
+  py_fasta_validator: 0.6
+KALIGN_ALIGN:
+  kalign: 3.4.0
+  pigz: 2.8)
+MAFFT_ALIGN:
+  mafft: 7.52
+  pigz: 2.8)
+MAFFT_GUIDETREE:
+  mafft: 7.525
+MAGUS_ALIGN:
+  MAGUS: 0.2.0
+  pigz: 2.8)
+MUSCLE5_ALIGN:
+  muscle: 5.1
+  pigz: 2.8)
+PARSE_SIM:
+  awk: 1.3.4 20200120
+  cat: 8.32
+PIGZ_COMPRESS:
+  pigz: 2.8
+REGRESSIVE_ALIGN:
+  tcoffee: 13.46.0.919e8c6b
+  pigz: 2.8)
+TCOFFEE_ALIGN:
+  tcoffee: 13.46.0.919e8c6b
+  pigz: 2.8)
+TCOFFEE_ALNCOMPARE_SP:
+  tcoffee: 13.46.0.919e8c6b
+  pigz: 2.8)
+TCOFFEE_ALNCOMPARE_TC:
+  tcoffee: 13.46.0.919e8c6b
+  pigz: 2.8)
+TCOFFEE_EXTRACTFROMPDB:
+  tcoffee: 13.46.0.919e8c6b
+TCOFFEE_SEQREFORMAT_SIM:
+  tcoffee: 13.46.0.919e8c6b
+TCOFFEE_TCS:
+  tcoffee: 13.46.0.919e8c6b
+  pigz: 2.8)
+UNTAR:
+  untar: 1.34
+UPP_ALIGN:
+  upp: 4.5.5
+  pigz: 2.4)
+Workflow:
+    nf-core/multiplesequencealign: v1.2.0dev
+    Nextflow: 25.04.6

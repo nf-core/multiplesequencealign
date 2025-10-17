@@ -1,0 +1,2 @@
+id,tree,args_tree,args_tree_clean,aligner,args_aligner,args_aligner_clean,TCS
+toxin-ref,CLUSTALO,,default,REGRESSIVE,-reg  -reg_method famsa_msa -reg_nseq 1000 -output fasta_aln,default,802

@@ -1,0 +1,50 @@
+[31mERROR - [nf-co2footprint] Error executing process > 'NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_SP (seatoxin-ref)'
+
+Caused by:
+  Process `NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_SP (seatoxin-ref)` terminated with an error exit status (1)
+
+
+Command executed:
+
+  # check whether it is compressed
+  if [[ "seatoxin-ref_DEFAULT-args-default_FAMSA-args-default.aln" == *.gz ]]; then
+      unpigz -c seatoxin-ref_DEFAULT-args-default_FAMSA-args-default.aln > uncompressed_msa.fa
+  else
+      mv seatoxin-ref_DEFAULT-args-default_FAMSA-args-default.aln uncompressed_msa.fa
+  fi
+  
+  export TEMP='./'
+  t_coffee -other_pg aln_compare         -al1 setoxin.ref         -al2 uncompressed_msa.fa         -compare_mode sp         | grep -v "seq1" | grep -v '*' |         awk '{ print $4}' ORS="	"         >> "scores.txt"
+  
+  # Add metadata info to output file
+  echo "id,tree,args_tree,args_tree_clean,aligner,args_aligner,args_aligner_clean,sp" > "seatoxin-ref_DEFAULT-args-default_FAMSA-args-default_sp.scores"
+  
+  # Add values
+  scores=$(awk '{sub(/[[:space:]]+$/, "")} 1' scores.txt | tr -s '[:blank:]' ',')
+  echo "seatoxin-ref,DEFAULT,,default,FAMSA,,default,$scores" >> "seatoxin-ref_DEFAULT-args-default_FAMSA-args-default_sp.scores"
+  
+  cat <<-END_VERSIONS > versions.yml
+  "NFCORE_MULTIPLESEQUENCEALIGN:MULTIPLESEQUENCEALIGN:EVALUATE:TCOFFEE_ALNCOMPARE_SP":
+      tcoffee: $( t_coffee -version | awk '{gsub("Version_", ""); print $3}')
+      pigz: $(echo $(pigz --version 2>&1) | sed 's/^.*pigz\w*//' ))
+  END_VERSIONS
+
+Command exit status:
+  1
+
+Command output:
+  (empty)
+
+Command error:
+  
+  --ERROR: Could not access created dir /var/tmp//tco/ [FATAL:T-COFFEE]
+  
+  --ERROR: Could not access created dir /var/tmp//tco/ [FATAL:T-COFFEE]
+
+Work dir:
+  /home/luisasantus/Desktop/multiplesequencealign/.nf-test/tests/3b90429fd21b937459e23c535ef473b6/work/bf/8cd43fe6d5b4df8d8791a4e6e8ffb9
+
+Container:
+  quay.io/biocontainers/mulled-v2-a76a981c07359a31ff55b9dc13bd3da5ce1909c1:84c8f17f1259b49e2f7783b95b7a89c6f2cb199e-0
+
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line[0;39m[31mERROR - [nf-co2footprint] Pipeline failed. Please refer to troubleshooting docs: https://nf-co.re/docs/usage/troubleshooting[0;39m

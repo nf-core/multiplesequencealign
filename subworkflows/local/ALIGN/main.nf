@@ -56,7 +56,6 @@ workflow ALIGN {
     // ------------------------------------------------
     COMPUTE_TREES (
         ch_fastas,
-        ch_optional_data,
         ch_tools_split.tree.unique()
     )
     trees = COMPUTE_TREES.out.trees

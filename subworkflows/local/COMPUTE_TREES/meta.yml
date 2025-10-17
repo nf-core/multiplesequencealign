@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: "compute_trees"
+description: Compute guide trees from FASTA files using FAMSA, Clustal Omega, or MAFFT.
+keywords:
+  - guide tree
+  - phylogeny
+  - alignment
+  - FAMSA
+  - Clustal Omega
+  - MAFFT
+components:
+  - famsa/guidetree
+  - clustalo/guidetree
+  - mafft/guidetree
+input:
+  - ch_fastas:
+      description: Input FASTA sequences for which guide trees will be computed.
+      structure:
+        - meta:
+            type: map
+            description: Metadata map.
+        - fasta:
+            type: file
+            description: Input FASTA file.
+            pattern: "*.{fasta,fa,faa}"
+  - tree_tools:
+      description: Defines which tree computation tools to run and with which arguments.
+      structure:
+        - meta:
+            type: map
+            description: Metadata specifying selected tool (FAMSA, CLUSTALO, MAFFT) and parameters ( tools to be run --> meta.tree, meta.args_tree ).
+output:
+  - trees:
+      description: Computed guide trees.
+      structure:
+        - meta:
+            type: map
+            description: Metadata map.
+        - tree:
+            type: file
+            description: Output guide tree file.
+            pattern: "*.{nwk,tree}"
+  - versions:
+      type: file
+      description: File containing software version information.
+      pattern: "versions.yml"
+authors:
+  - "@luisasantus"
+  - "@joseespinosa"
+maintainers:
+  - "@luisasantus"
+  - "@joseespinosa"
