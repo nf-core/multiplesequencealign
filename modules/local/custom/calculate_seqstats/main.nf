@@ -45,5 +45,3 @@ process CALCULATE_SEQSTATS {
     END_VERSIONS
     """
 }
-
-

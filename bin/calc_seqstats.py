@@ -36,4 +36,3 @@ stats_df = (
 stats_df["n_sequences"] = len(summary_lengths)
 stats_df.rename(columns={"mean": "seqlength_mean", "max": "seqlength_max", "median": "seqlength_median"}, inplace=True)
 stats_df.to_csv(outfile_summary, sep=",", index=False)
-
