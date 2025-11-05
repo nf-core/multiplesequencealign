@@ -1,0 +1,63 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: "templates"
+description: Prepares templates by either using existing ones or generating new templates from optional data.
+keywords:
+  - template generation
+  - template preparation
+  - optional data
+components:
+  - custom/create_template
+input:
+  - ch_optional_data:
+      description: Channel containing optional input data for which templates may be created.
+      structure:
+        - meta:
+            type: map
+            description: Metadata map for each dataset.
+        - optional_data:
+            type: file
+            description: Optional data file (e.g., input data used to generate a template).
+            pattern: "*"
+  - ch_templates:
+      description: Channel containing existing templates.
+      structure:
+        - meta:
+            type: map
+            description: Metadata map for each dataset.
+        - template:
+            type: file
+            description: Template file associated with the dataset.
+            pattern: "*.txt"
+  - suffix:
+      description: Suffix string used for identifying data to be used for template creation.
+      type: string
+output:
+  - optional_data_template:
+      description: Channel combining optional data with either existing or newly created templates.
+      structure:
+        - meta:
+            type: map
+            description: Metadata map for each dataset.
+        - optional_data:
+            type: file
+            description: Input optional data file.
+            pattern: "*"
+        - template:
+            type: file
+            description: Corresponding template file.
+            pattern: "*.txt"
+  - versions:
+      description: Channel containing software version information from CREATE_TEMPLATE.
+      structure:
+        - versions:
+            type: file
+            description: Version information file.
+            pattern: "versions.yml"
+authors:
+  - "@luisasantus"
+  - "@joseespinosa"
+  - "@mirpedrol"
+  - "@lrauschning"
+maintainers:
+  - "@luisasantus"
+  - "@joseespinosa"
