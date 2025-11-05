@@ -1,19 +1,17 @@
-Oct-17 15:37:52.569 [main] INFO  com.askimed.nf.test.App - nf-test 0.9.3
-Oct-17 15:37:52.589 [main] INFO  com.askimed.nf.test.App - Arguments: [test, --profile, test,docker, --update-snapshot]
-Oct-17 15:37:53.577 [main] INFO  com.askimed.nf.test.App - Nextflow Version: 25.04.6
-Oct-17 15:37:53.579 [main] INFO  com.askimed.nf.test.commands.RunTestsCommand - Load config from file /home/luisasantus/Desktop/multiplesequencealign/nf-test.config...
-Oct-17 15:37:54.224 [main] INFO  com.askimed.nf.test.lang.dependencies.DependencyResolver - Loaded 54 files from directory /home/luisasantus/Desktop/multiplesequencealign in 0.085 sec
-Oct-17 15:37:54.225 [main] INFO  com.askimed.nf.test.lang.dependencies.DependencyResolver - Found 1 files containing tests.
-Oct-17 15:37:54.225 [main] DEBUG com.askimed.nf.test.lang.dependencies.DependencyResolver - Found files: [/home/luisasantus/Desktop/multiplesequencealign/tests/default.nf.test]
-Oct-17 15:37:54.393 [main] INFO  com.askimed.nf.test.commands.RunTestsCommand - Found 1 tests to execute.
-Oct-17 15:37:54.394 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Started test plan
-Oct-17 15:37:54.394 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Running testsuite 'Test pipeline' from file '/home/luisasantus/Desktop/multiplesequencealign/tests/default.nf.test'.
-Oct-17 15:37:54.394 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Run test '3b90429f: -profile test'. type: com.askimed.nf.test.lang.pipeline.PipelineTest
-Oct-17 15:41:32.089 [main] DEBUG com.askimed.nf.test.lang.extensions.SnapshotFile - Load snapshots from file '/home/luisasantus/Desktop/multiplesequencealign/tests/default.nf.test.snap'
-Oct-17 15:41:32.168 [main] DEBUG com.askimed.nf.test.lang.extensions.Snapshot - Snapshots '-profile test' do not match. Update snapshots flag set.
-Oct-17 15:41:32.169 [main] DEBUG com.askimed.nf.test.lang.extensions.SnapshotFile - Updated snapshot '-profile test'
-Oct-17 15:41:32.212 [main] DEBUG com.askimed.nf.test.lang.extensions.SnapshotFile - Wrote snapshots to file '/home/luisasantus/Desktop/multiplesequencealign/tests/default.nf.test.snap'
-Oct-17 15:41:32.213 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Test '3b90429f: -profile test' finished. status: FAILED
+Nov-05 16:41:48.044 [main] INFO  com.askimed.nf.test.App - nf-test 0.9.3
+Nov-05 16:41:48.058 [main] INFO  com.askimed.nf.test.App - Arguments: [test, tests/default.nf.test, --update-snapshot, --profile, docker]
+Nov-05 16:41:48.776 [main] INFO  com.askimed.nf.test.App - Nextflow Version: 25.10.0
+Nov-05 16:41:48.777 [main] INFO  com.askimed.nf.test.commands.RunTestsCommand - Load config from file /home/luisasantus/Desktop/multiplesequencealign/nf-test.config...
+Nov-05 16:41:49.239 [main] INFO  com.askimed.nf.test.lang.dependencies.DependencyResolver - Loaded 54 files from directory /home/luisasantus/Desktop/multiplesequencealign in 0.084 sec
+Nov-05 16:41:49.241 [main] INFO  com.askimed.nf.test.lang.dependencies.DependencyResolver - Found 1 files containing tests.
+Nov-05 16:41:49.241 [main] DEBUG com.askimed.nf.test.lang.dependencies.DependencyResolver - Found files: [/home/luisasantus/Desktop/multiplesequencealign/tests/default.nf.test]
+Nov-05 16:41:49.425 [main] INFO  com.askimed.nf.test.commands.RunTestsCommand - Found 1 tests to execute.
+Nov-05 16:41:49.426 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Started test plan
+Nov-05 16:41:49.426 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Running testsuite 'Test pipeline' from file '/home/luisasantus/Desktop/multiplesequencealign/tests/default.nf.test'.
+Nov-05 16:41:49.426 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Run test '29aa33c1: -profile test_tiny'. type: com.askimed.nf.test.lang.pipeline.PipelineTest
+Nov-05 16:42:00.162 [main] DEBUG com.askimed.nf.test.lang.extensions.SnapshotFile - Load snapshots from file '/home/luisasantus/Desktop/multiplesequencealign/tests/default.nf.test.snap'
+Nov-05 16:42:00.177 [main] DEBUG com.askimed.nf.test.lang.extensions.Snapshot - Snapshots '-profile test_tiny' match.
+Nov-05 16:42:00.179 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Test '29aa33c1: -profile test_tiny' finished. status: FAILED
 org.codehaus.groovy.runtime.powerassert.PowerAssertionError: 1 of 2 assertions failed
 	at com.askimed.nf.test.lang.extensions.GlobalMethods.assertAll(GlobalMethods.java:48)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
@@ -25,7 +23,7 @@ org.codehaus.groovy.runtime.powerassert.PowerAssertionError: 1 of 2 assertions f
 	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallStatic(CallSiteArray.java:55)
 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callStatic(AbstractCallSite.java:217)
 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callStatic(AbstractCallSite.java:240)
-	at default_nf$_run_closure1$_closure2$_closure4.doCall(default.nf.test:20)
+	at default_nf$_run_closure1$_closure2$_closure4.doCall(default.nf.test:38)
 	at default_nf$_run_closure1$_closure2$_closure4.doCall(default.nf.test)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
@@ -50,5 +48,5 @@ org.codehaus.groovy.runtime.powerassert.PowerAssertionError: 1 of 2 assertions f
 	at picocli.CommandLine.execute(CommandLine.java:2078)
 	at com.askimed.nf.test.App.run(App.java:39)
 	at com.askimed.nf.test.App.main(App.java:46)
-Oct-17 15:41:32.224 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Testsuite 'Test pipeline' finished. snapshot file: true, skipped tests: false, failed tests: true
-Oct-17 15:41:32.228 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Executed 1 tests. 1 tests failed. Done!
+Nov-05 16:42:00.183 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Testsuite 'Test pipeline' finished. snapshot file: true, skipped tests: false, failed tests: true
+Nov-05 16:42:00.183 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Executed 1 tests. 1 tests failed. Done!

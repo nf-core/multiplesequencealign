@@ -22,14 +22,14 @@ nextflow_pipeline {
                 calc_tcs        = true
                 build_consensus = true
 
-    
+
                 // Define your base URL here
                 pipelines_testdata_base_path = 'https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/multiplesequencealign'
-                
+
                 // Now you can use the variable
                 input = "${params.pipelines_testdata_base_path}/samplesheet/v1.1/samplesheet_test_af2.csv"
                 tools = "${params.pipelines_testdata_base_path}/toolsheet/v1.1/toolsheet_tiny.csv"
-    
+
                 outdir = "results"
             }
         }
