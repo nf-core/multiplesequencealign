@@ -1,2 +1,0 @@
-id,tree,args_tree,args_tree_clean,aligner,args_aligner,args_aligner_clean,TCS
-toxin-ref,FAMSA,-gt upgma -medoidtree,-gt_upgma_-medoidtree,FAMSA,,default,808
