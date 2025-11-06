@@ -427,7 +427,7 @@ def keepKeysFromArrayList(arrayList, keysToKeep) {
  * @throws IllegalArgumentException if the time string is not in the correct format.
  */
 def convertTime(String timeStr) {
-    def pattern = /((?<hours>\d+(\.\d+)?)h)?\s*((?<minutes>\d+(\.\d+)?)m)?\s*((?<seconds>\d+(\.\d+)?)s)?\s*((?<milliseconds>\d+(\.\d+)?)ms)?/
+    def pattern = /((?<hours>\d+(\.\d+)?)h)?\s*((?<minutes>\d+(\.\d+)?)m)?\s*((?<seconds>\d+(\.\d+)?)s)?\s*((?<milliseconds>\d+(\.\d+)?)ms)?/    
     def matcher = timeStr.trim() =~ pattern
 
     if (!matcher.matches()) {
@@ -820,6 +820,10 @@ import groovy.text.SimpleTemplateEngine
 class Utils {
 
     public static cleanArgs(argString) {
+        // If argString is null, return "default"
+        if(argString == null){
+            return "default"
+        }
 
         def cleanArgs = argString.toString().trim().replace("  ", " ").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
         // if clearnArgs is empty, return ""
