@@ -6,9 +6,8 @@ nextflow_pipeline {
     tag "test_no_sheet"
     profile "test_no_sheet"
 
-
     test("-profile test_no_sheet - stub") {
-        
+
         when {
             params {
                 outdir = "$outputDir"
