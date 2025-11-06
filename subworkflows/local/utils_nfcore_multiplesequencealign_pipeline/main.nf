@@ -725,13 +725,13 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     // If summary file does not exist, return and log a warning
     if(!new File(summary_file).exists()){
         log.warn "Summary file ${summary_file} does not exist. Skipping merge with trace data."
-        return
+        return []
     }
 
     // If trace directory does not exist, return and log a warning
     if(!new File(trace_dir_path).exists()){
         log.warn "Trace directory ${trace_dir_path} does not exist. Skipping merge with summary data."
-        return
+        return []
     }
 
     // -------------------
@@ -749,7 +749,7 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     // if summary file does not exist, return
     if (!new File(summary_file).exists()) {
         log.warn "Summary file ${summary_file} does not exist. Skipping merge with trace data."
-        return
+        return []
     }
 
     // Parse the summary data (scientific accuracy file: SP, TC etc.)
