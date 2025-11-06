@@ -1,14 +1,18 @@
-Nov-05 17:27:16.010 [main] INFO  com.askimed.nf.test.App - nf-test 0.9.3
-Nov-05 17:27:16.031 [main] INFO  com.askimed.nf.test.App - Arguments: [test, tests/default.nf.test, --update-snapshot, --profile, docker]
-Nov-05 17:27:17.205 [main] INFO  com.askimed.nf.test.App - Nextflow Version: 25.10.0
-Nov-05 17:27:17.206 [main] INFO  com.askimed.nf.test.commands.RunTestsCommand - Load config from file /home/luisasantus/Desktop/multiplesequencealign/nf-test.config...
-Nov-05 17:27:17.883 [main] INFO  com.askimed.nf.test.lang.dependencies.DependencyResolver - Loaded 54 files from directory /home/luisasantus/Desktop/multiplesequencealign in 0.142 sec
-Nov-05 17:27:17.885 [main] INFO  com.askimed.nf.test.lang.dependencies.DependencyResolver - Found 1 files containing tests.
-Nov-05 17:27:17.886 [main] DEBUG com.askimed.nf.test.lang.dependencies.DependencyResolver - Found files: [/home/luisasantus/Desktop/multiplesequencealign/tests/default.nf.test]
-Nov-05 17:27:18.064 [main] INFO  com.askimed.nf.test.commands.RunTestsCommand - Found 1 tests to execute.
-Nov-05 17:27:18.066 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Started test plan
-Nov-05 17:27:18.067 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Running testsuite 'Test pipeline' from file '/home/luisasantus/Desktop/multiplesequencealign/tests/default.nf.test'.
-Nov-05 17:27:18.067 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Run test '29aa33c1: -profile test_tiny'. type: com.askimed.nf.test.lang.pipeline.PipelineTest
-Nov-05 17:28:40.025 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Test '29aa33c1: -profile test_tiny' finished. status: PASSED
-Nov-05 17:28:40.027 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Testsuite 'Test pipeline' finished. snapshot file: false, skipped tests: false, failed tests: false
-Nov-05 17:28:40.027 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Executed 1 tests. 0 tests failed. Done!
+Nov-06 13:16:34.568 [main] INFO  com.askimed.nf.test.App - nf-test 0.9.3
+Nov-06 13:16:34.586 [main] INFO  com.askimed.nf.test.App - Arguments: [test, tests/test_conda.nf.test, --update-snapshot, --profile, +docker]
+Nov-06 13:16:36.284 [main] INFO  com.askimed.nf.test.App - Nextflow Version: 25.10.0
+Nov-06 13:16:36.285 [main] INFO  com.askimed.nf.test.commands.RunTestsCommand - Load config from file /home/luisasantus/Desktop/multiplesequencealign/nf-test.config...
+Nov-06 13:16:36.945 [main] INFO  com.askimed.nf.test.lang.dependencies.DependencyResolver - Loaded 59 files from directory /home/luisasantus/Desktop/multiplesequencealign in 0.139 sec
+Nov-06 13:16:36.948 [main] INFO  com.askimed.nf.test.lang.dependencies.DependencyResolver - Found 1 files containing tests.
+Nov-06 13:16:36.948 [main] DEBUG com.askimed.nf.test.lang.dependencies.DependencyResolver - Found files: [/home/luisasantus/Desktop/multiplesequencealign/tests/test_conda.nf.test]
+Nov-06 13:16:37.140 [main] INFO  com.askimed.nf.test.commands.RunTestsCommand - Found 1 tests to execute.
+Nov-06 13:16:37.141 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Started test plan
+Nov-06 13:16:37.141 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Running testsuite 'Test pipeline' from file '/home/luisasantus/Desktop/multiplesequencealign/tests/test_conda.nf.test'.
+Nov-06 13:16:37.142 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Run test 'd732824b: -profile test_conda'. type: com.askimed.nf.test.lang.pipeline.PipelineTest
+Nov-06 13:20:05.769 [main] DEBUG com.askimed.nf.test.lang.extensions.SnapshotFile - Init new snapshot file '/home/luisasantus/Desktop/multiplesequencealign/tests/test_conda.nf.test.snap'
+Nov-06 13:20:05.770 [main] DEBUG com.askimed.nf.test.lang.extensions.Snapshot - Snapshot '-profile test_conda' not found.
+Nov-06 13:20:05.771 [main] DEBUG com.askimed.nf.test.lang.extensions.SnapshotFile - Created snapshot '-profile test_conda'
+Nov-06 13:20:06.410 [main] DEBUG com.askimed.nf.test.lang.extensions.SnapshotFile - Wrote snapshots to file '/home/luisasantus/Desktop/multiplesequencealign/tests/test_conda.nf.test.snap'
+Nov-06 13:20:06.411 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Test 'd732824b: -profile test_conda' finished. status: PASSED
+Nov-06 13:20:06.412 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Testsuite 'Test pipeline' finished. snapshot file: true, skipped tests: false, failed tests: false
+Nov-06 13:20:06.415 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Executed 1 tests. 0 tests failed. Done!
