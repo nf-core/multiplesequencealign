@@ -95,25 +95,25 @@
                 "seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair_irmsd.irmsd:md5,260e6ec190766c5dfc59a76a02c8efa7",
                 "seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default_irmsd.irmsd:md5,59bfba29741dcf51f5ef2589e50c746c",
                 "seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default_irmsd.irmsd:md5,380cb01e89fac0f2eae9f5418933b8e5",
-                "llms-full.txt:md5,1792b71949bcf2f12932f821ad6a65b4",
-                "multiqc.log:md5,ba696955fa05c236285b69f1a9865ef1",
-                "multiqc.parquet:md5,23d3dcf948281acf8768dbf1acdaa20f",
+                "llms-full.txt:md5,674339aef7192e4c30fcecf94c6eaa4f",
+                "multiqc.log:md5,c589f2b905ff0145ceec8e6cc569167a",
+                "multiqc.parquet:md5,7da7a4b2c1be473544812ce0e1b0e1f7",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "multiqc_data.json:md5,abd3e3e2d54224d63e0eeed29b3c248b",
+                "multiqc_data.json:md5,ab2e68551ebc09c27e85dae14179782b",
                 "multiqc_software_versions.txt:md5,659336ce694409cef38e2b36259e83ef",
                 "multiqc_sources.txt:md5,d2a044df39ce3c6abe5cdc2d67473490",
-                "multiqc_summary_stats.txt:md5,3451fe7e38bfb8b4bfe85da918c5027c",
-                "summary_stats.pdf:md5,db4afee798873f4a884f567f7c9c0373",
-                "summary_stats.png:md5,9faeff00bf2e3c1933ead4fe1f2a903f",
-                "summary_stats.svg:md5,98fa0cea92475f8318f6e3ed97e4b266",
-                "multiqc_report.html:md5,99e906096a2ed0ba6e7784d1e212b011",
+                "multiqc_summary_stats.txt:md5,f1f6b6363d84644e9aa73f802a2b4ad2",
+                "summary_stats.pdf:md5,97d7193a531f3a2d149bd8ee049ab6ac",
+                "summary_stats.png:md5,abec7e0524fb372298943c072bbc3f93",
+                "summary_stats.svg:md5,bfb094bd0bffbac3ebf217ed3b805c6e",
+                "multiqc_report.html:md5,4a523ac96700aac99201876cfc284388",
                 "run.sh:md5,025ecd434fe421c6a52140fd380504f0",
                 "shiny_app.py:md5,1428dfaefa5ad41704f0c9fb7f2dab60",
                 "bootstrap.min.css:md5,d736fb89b2cd45289ab550ad0ee60347",
                 "favicon.ico:md5,6e0be9d9e071c1a5d63dfdefaa12f246",
                 "style.css:md5,97b72456bb461bd2dfc9ad9feda249d7",
                 "seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair.html:md5,1e7af46c3224697cfe2bf3b96aa524c6",
-                "seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default.html:md5,64715692dea284bb8deb2586de138b57",
+                "seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default.html:md5,810a98ceb1fcdb803da9b0dd8f111f46",
                 "seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default.html:md5,0786510d9931106e5415934317c8c2e9"
             ]
         ],
@@ -121,6 +121,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-11-06T12:59:24.474245641"
+        "timestamp": "2025-11-06T14:37:45.187647894"
     }
 }

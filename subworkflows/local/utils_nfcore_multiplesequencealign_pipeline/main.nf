@@ -487,6 +487,10 @@ def latesTraceFileToCSV(String traceDirPath, String filePattern) {
     // Identify and parse the latest trace file based on the given pattern
     def traceFile = new File(traceDirPath).listFiles().findAll { it.name.startsWith(filePattern) }.sort { -it.lastModified() }.take(1)[0]
 
+    // if trace file does not exist, return empty list
+    if (!traceFile) {
+        return []
+    }
     // Keep only the lines that report running times related to evaluation
     def header = traceFile.readLines()[0].replaceAll("\t", ",")
     def traceFileAlign = traceFile.readLines().findAll { it.contains("COMPLETED") && it.contains("MULTIPLESEQUENCEALIGN:ALIGN") }.collect { it.replaceAll("\t", ",") }.join("\n")
@@ -730,6 +734,11 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     // -------------------
     // SUMMARY FILE
     // -------------------
+    // if summary file does not exist, return
+    if (!new File(summary_file).exists()) {
+        log.warn "Summary file ${summary_file} does not exist. Skipping merge with trace data."
+        return
+    }
 
     // Parse the summary data (scientific accuracy file: SP, TC etc.)
     def data = parseCsv(new File(summary_file).readLines().collect { it.replaceAll("\t", ",") }.join("\n"))
