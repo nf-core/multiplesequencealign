@@ -734,6 +734,11 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
         return []
     }
 
+    if(!new File(versions_path).exists()){
+        log.warn "Versions file ${versions_path} does not exist. Skipping merge with summary data."
+        return []
+    }
+
     // -------------------
     // TRACE FILE
     // -------------------
@@ -746,11 +751,6 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     // -------------------
     // SUMMARY FILE
     // -------------------
-    // if summary file does not exist, return
-    if (!new File(summary_file).exists()) {
-        log.warn "Summary file ${summary_file} does not exist. Skipping merge with trace data."
-        return []
-    }
 
     // Parse the summary data (scientific accuracy file: SP, TC etc.)
     def data = parseCsv(new File(summary_file).readLines().collect { it.replaceAll("\t", ",") }.join("\n"))
