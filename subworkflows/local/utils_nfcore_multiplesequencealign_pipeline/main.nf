@@ -428,6 +428,10 @@ def keepKeysFromArrayList(arrayList, keysToKeep) {
  */
 def convertTime(String timeStr) {
     def pattern = /((?<hours>\d+(\.\d+)?)h)?\s*((?<minutes>\d+(\.\d+)?)m)?\s*((?<seconds>\d+(\.\d+)?)s)?\s*((?<milliseconds>\d+(\.\d+)?)ms)?/
+    if (!timeStr) {
+        return "not available"
+    }
+
     def matcher = timeStr.trim() =~ pattern
 
     if (!matcher.matches()) {
