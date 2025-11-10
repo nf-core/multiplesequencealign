@@ -3,7 +3,7 @@ nextflow_pipeline {
     name "Test pipeline"
     script "../main.nf"
     tag "pipeline"
-    tag "conda"
+    tag "docker_singularity"
     tag "test"
     profile "test"
 
