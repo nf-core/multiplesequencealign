@@ -1,0 +1,114 @@
+{
+    "-profile test_pdb": {
+        "content": [
+            30,
+            {
+                "FASTAVALIDATOR": {
+                    "py_fasta_validator": 0.6
+                },
+                "FOLDMASON_ALIGN": {
+                    "foldmason": "2.7bd21ed",
+                    "pigz": "2.8)"
+                },
+                "MERGE_STATS_EVAL": {
+                    "csvtk": "0.31.0"
+                },
+                "MTMALIGN_ALIGN": {
+                    "mTM-align": 20220104,
+                    "pigz": "2.8)"
+                },
+                "PARSE_IRMSD": {
+                    "python": "3.11.0"
+                },
+                "PIGZ_COMPRESS": {
+                    "pigz": 2.8
+                },
+                "PREPARE_SHINY": {
+                    "bash": "5.1.16 3"
+                },
+                "TCOFFEE3D_ALIGN": {
+                    "tcoffee": "13.46.0.919e8c6b",
+                    "pigz": "2.8)"
+                },
+                "TCOFFEE_EXTRACTFROMPDB": {
+                    "tcoffee": "13.46.0.919e8c6b"
+                },
+                "TCOFFEE_IRMSD": {
+                    "tcoffee": "13.46.0.919e8c6b",
+                    "pigz": "2.8)"
+                },
+                "UNTAR": {
+                    "untar": 1.34
+                },
+                "Workflow": {
+                    "nf-core/multiplesequencealign": "v1.2.0dev"
+                }
+            },
+            [
+                "alignments",
+                "alignments/seatoxin-ref",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default.fa.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default.aln.gz",
+                "evaluation",
+                "evaluation/tcoffee_irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default_irmsd.irmsd",
+                "pipeline_info",
+                "pipeline_info/nf_core_multiplesequencealign_software_mqc_versions.yml",
+                "reports",
+                "reports/multiqc",
+                "reports/multiqc/multiqc_data",
+                "reports/multiqc/multiqc_data/llms-full.txt",
+                "reports/multiqc/multiqc_data/multiqc.log",
+                "reports/multiqc/multiqc_data/multiqc.parquet",
+                "reports/multiqc/multiqc_data/multiqc_citations.txt",
+                "reports/multiqc/multiqc_data/multiqc_data.json",
+                "reports/multiqc/multiqc_data/multiqc_software_versions.txt",
+                "reports/multiqc/multiqc_data/multiqc_sources.txt",
+                "reports/multiqc/multiqc_data/multiqc_summary_stats.txt",
+                "reports/multiqc/multiqc_plots",
+                "reports/multiqc/multiqc_plots/pdf",
+                "reports/multiqc/multiqc_plots/pdf/summary_stats.pdf",
+                "reports/multiqc/multiqc_plots/png",
+                "reports/multiqc/multiqc_plots/png/summary_stats.png",
+                "reports/multiqc/multiqc_plots/svg",
+                "reports/multiqc/multiqc_plots/svg/summary_stats.svg",
+                "reports/multiqc/multiqc_report.html",
+                "reports/shiny_app",
+                "reports/shiny_app/complete_summary_stats_eval_times.csv",
+                "reports/shiny_app/run.sh",
+                "reports/shiny_app/shiny_app.py",
+                "reports/shiny_app/static",
+                "reports/shiny_app/static/bootstrap.min.css",
+                "reports/shiny_app/static/favicon.ico",
+                "reports/shiny_app/static/style.css",
+                "reports/visualization",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default.html",
+                "summary",
+                "summary/complete_summary_stats_eval_times.csv"
+            ],
+            [
+                "seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair.aln.gz:md5,bfec7de9e22fb892f573415feab92188",
+                "seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default.fa.gz:md5,61a0244fb011d129017b7be3e35e72b2",
+                "seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default.aln.gz:md5,595c2526ce7637b4630837a607914151",
+                "seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair_irmsd.irmsd:md5,260e6ec190766c5dfc59a76a02c8efa7",
+                "seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default_irmsd.irmsd:md5,59bfba29741dcf51f5ef2589e50c746c",
+                "seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default_irmsd.irmsd:md5,380cb01e89fac0f2eae9f5418933b8e5",
+                "run.sh:md5,025ecd434fe421c6a52140fd380504f0",
+                "shiny_app.py:md5,1428dfaefa5ad41704f0c9fb7f2dab60",
+                "bootstrap.min.css:md5,d736fb89b2cd45289ab550ad0ee60347",
+                "favicon.ico:md5,6e0be9d9e071c1a5d63dfdefaa12f246",
+                "style.css:md5,97b72456bb461bd2dfc9ad9feda249d7"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-10T14:40:13.752103358"
+    }
+}

@@ -3,12 +3,12 @@ nextflow_pipeline {
     name "Test pipeline"
     script "../main.nf"
     tag "pipeline"
+    tag "test_no_sheet"
+    tag "docker_singularity"
     tag "conda"
-    tag "test_tiny"
-    profile "test_tiny"
+    profile "test_no_sheet"
 
-
-    test("-profile test_tiny") {
+    test("-profile test_no_sheet - stub") {
 
         when {
             params {
