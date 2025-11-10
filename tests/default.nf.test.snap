@@ -199,9 +199,7 @@
                 "toxin-ref_CONSENSUS.aln.gz:md5,62ea7ad0d5d2b0527112c83c7d882160",
                 "toxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree.fas.gz:md5,d24caa61ecbe107f1f60d70c4de58263",
                 "toxin-ref_FAMSA-args-default_FAMSA-args-default.aln.gz:md5,326de89fce0fc44b83ce026190449e74",
-                "seatoxin-ref_CONSENSUS.aln.html:md5,f1804566c5282a4b56dfe4661d802086",
                 "seatoxin-ref_CONSENSUS.aln.sp_ascii:md5,9b4c5540ef94da99b7b35e0670a95f2f",
-                "toxin-ref_CONSENSUS.aln.html:md5,fd506d7063ec61a2eb54c25da1328a57",
                 "toxin-ref_CONSENSUS.aln.sp_ascii:md5,3e6c0fbf406f6453ab1fc2015e1320f4",
                 "seatoxin-ref_DEFAULT-args-default_CONSENSUS-args-default_irmsd.irmsd:md5,c10111ab2b6eab2454db77f526fd3d6b",
                 "seatoxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree_irmsd.irmsd:md5,68b1bc3bbbe887161207fb530fffc30a",
@@ -218,33 +216,16 @@
                 "toxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree_tcs.tcs:md5,4ac552a7e8d7b088eef8e38f9dce39d4",
                 "toxin-ref_FAMSA-args-default_FAMSA-args-default_tcs.scores:md5,08496e87d5bd101d5cb89546ce6db937",
                 "toxin-ref_FAMSA-args-default_FAMSA-args-default_tcs.tcs:md5,e22211ddc84faa963bde0a1d2abcce69",
-                "llms-full.txt:md5,f7effb51be0460ef997f4e2f0ff848af",
-                "multiqc.log:md5,d45269b516c5dd4a9db3ca0a0652e1f3",
-                "multiqc.parquet:md5,d1ed42cfb2b0e0c4fae413a9f78ab8ee",
-                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "multiqc_data.json:md5,a068805e390b80d6cadbb4903ad3372a",
-                "multiqc_software_versions.txt:md5,8249ccbdf0a9b5dc9f979124882ca3db",
-                "multiqc_sources.txt:md5,d2a044df39ce3c6abe5cdc2d67473490",
-                "multiqc_summary_stats.txt:md5,86245956cfd548e9728c12d2e572f5f8",
-                "summary_stats.pdf:md5,255a0867549f7d67099c0b93643dad46",
-                "summary_stats.png:md5,23b1537f305d30ced5ca3578778433da",
-                "summary_stats.svg:md5,da64dd9383481352c8d0f5b85285ab7b",
-                "multiqc_report.html:md5,f3dee8e59a4e23a139a000eccd5be2c8",
-                "complete_summary_stats_eval_times.csv:md5,3fc7f345fec1135994bc7df5d196a41b",
+                "complete_summary_stats_eval_times.csv:md5,0fada6286b604d11f7e294aa4a86c2c4",
                 "run.sh:md5,025ecd434fe421c6a52140fd380504f0",
                 "shiny_app.py:md5,1428dfaefa5ad41704f0c9fb7f2dab60",
                 "bootstrap.min.css:md5,d736fb89b2cd45289ab550ad0ee60347",
                 "favicon.ico:md5,6e0be9d9e071c1a5d63dfdefaa12f246",
                 "style.css:md5,97b72456bb461bd2dfc9ad9feda249d7",
-                "seatoxin-ref_DEFAULT-args-default_CONSENSUS-args-default.html:md5,0dbcb624692ca5238f776c0ee15e7f2d",
-                "seatoxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree.html:md5,fcd1db58967435a78b9d51acc344a636",
-                "seatoxin-ref_FAMSA-args-default_FAMSA-args-default.html:md5,a37c1ce23116b79688dafd6469664a8b",
-                "seatoxin-ref.txt:md5,fdaa411d62bd66b5c30b21fd5b85a914",
-                "toxin-ref.txt:md5,a03aa486e0949d572972378a21dff28b",
                 "seatoxin-ref_seqstats.csv:md5,e104112c929b39f43410681d8bdcb15b",
                 "toxin-ref_seqstats.csv:md5,51f477faf393c2c4a49896ef5a49374c",
                 "seatoxin-ref_full_plddt.csv:md5,a7ecccb1bd68fcd9b248b15707955e67",
-                "complete_summary_stats_eval_times.csv:md5,3fc7f345fec1135994bc7df5d196a41b",
+                "complete_summary_stats_eval_times.csv:md5,0fada6286b604d11f7e294aa4a86c2c4",
                 "seatoxin-ref_FAMSA-args-default.dnd:md5,3fddb6ad96904101d105d090ddff061d",
                 "toxin-ref_FAMSA-args-default.dnd:md5,5f47b8a4eff625b224e8a3bacb904009"
             ]
@@ -253,6 +234,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-11-10T13:11:09.288306499"
+        "timestamp": "2025-11-10T14:12:15.541450074"
     }
 }
