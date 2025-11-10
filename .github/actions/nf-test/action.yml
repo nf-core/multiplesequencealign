@@ -56,7 +56,7 @@ runs:
         channel-priority: strict
         conda-remove-defaults: true
 
-    - name: Run nf-test
+    - name: Run nf-test conda
       if: contains(inputs.profile, 'conda')
       shell: bash
       env:
@@ -64,7 +64,25 @@ runs:
       run: |
         nf-test test \
           --profile=+${{ inputs.profile }} \
-          --tag "conda"
+          --tag 'conda' \
+          --ci \
+          --changed-since HEAD^ \
+          --verbose \
+          --tap=test.tap \
+          --shard ${{ inputs.shard }}/${{ inputs.total_shards }}
+
+          # Save the absolute path of the test.tap file to the output
+          echo "tap_file_path=$(realpath test.tap)" >> $GITHUB_OUTPUT
+
+    - name: Run nf-test non-conda
+      if: contains(inputs.profile, 'docker') || contains(inputs.profile, 'singularity')
+      shell: bash
+      env:
+        NFT_WORKDIR: ${{ env.NFT_WORKDIR }}
+      run: |
+        nf-test test \
+          --profile=+${{ inputs.profile }} \
+          --tag 'docker_singularity' \
           --ci \
           --changed-since HEAD^ \
           --verbose \
