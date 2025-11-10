@@ -57,13 +57,14 @@ runs:
         conda-remove-defaults: true
 
     - name: Run nf-test
+      if: contains(inputs.profile, 'conda')
       shell: bash
       env:
         NFT_WORKDIR: ${{ env.NFT_WORKDIR }}
       run: |
         nf-test test \
           --profile=+${{ inputs.profile }} \
-          $(if [ -n "${{ inputs.tags }}" ]; then echo "--tag ${{ inputs.tags }}"; fi) \
+          --tag "conda"
           --ci \
           --changed-since HEAD^ \
           --verbose \
