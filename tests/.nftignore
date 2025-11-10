@@ -12,4 +12,4 @@
 **/*.{html,json,txt,yml}
 **/complete_summary_eval.csv
 **/complete_summary_stats.csv
-*/complete_summary_stats_eval_times.csv
+**/complete_summary_stats_eval_times.csv
