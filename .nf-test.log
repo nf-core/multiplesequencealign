@@ -1,16 +1,11 @@
-Nov-10 15:55:25.519 [main] INFO  com.askimed.nf.test.App - nf-test 0.9.3
-Nov-10 15:55:25.534 [main] INFO  com.askimed.nf.test.App - Arguments: [test, tests/default.nf.test, --update-snapshot, --profile, +docker]
-Nov-10 15:55:26.267 [main] INFO  com.askimed.nf.test.App - Nextflow Version: 25.10.0
-Nov-10 15:55:26.268 [main] INFO  com.askimed.nf.test.commands.RunTestsCommand - Load config from file /home/luisasantus/Desktop/multiplesequencealign/nf-test.config...
-Nov-10 15:55:26.906 [main] INFO  com.askimed.nf.test.lang.dependencies.DependencyResolver - Loaded 54 files from directory /home/luisasantus/Desktop/multiplesequencealign in 0.246 sec
-Nov-10 15:55:26.908 [main] INFO  com.askimed.nf.test.lang.dependencies.DependencyResolver - Found 1 files containing tests.
-Nov-10 15:55:26.908 [main] DEBUG com.askimed.nf.test.lang.dependencies.DependencyResolver - Found files: [/home/luisasantus/Desktop/multiplesequencealign/tests/default.nf.test]
-Nov-10 15:55:27.069 [main] INFO  com.askimed.nf.test.commands.RunTestsCommand - Found 1 tests to execute.
-Nov-10 15:55:27.069 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Started test plan
-Nov-10 15:55:27.069 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Running testsuite 'Test pipeline' from file '/home/luisasantus/Desktop/multiplesequencealign/tests/default.nf.test'.
-Nov-10 15:55:27.070 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Run test '29aa33c1: -profile test_tiny'. type: com.askimed.nf.test.lang.pipeline.PipelineTest
-Nov-10 15:56:29.853 [main] DEBUG com.askimed.nf.test.lang.extensions.SnapshotFile - Load snapshots from file '/home/luisasantus/Desktop/multiplesequencealign/tests/default.nf.test.snap'
-Nov-10 15:56:29.890 [main] DEBUG com.askimed.nf.test.lang.extensions.Snapshot - Snapshots '-profile test_tiny' match.
-Nov-10 15:56:29.891 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Test '29aa33c1: -profile test_tiny' finished. status: PASSED
-Nov-10 15:56:29.892 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Testsuite 'Test pipeline' finished. snapshot file: true, skipped tests: false, failed tests: false
-Nov-10 15:56:29.892 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Executed 1 tests. 0 tests failed. Done!
+Nov-11 10:55:00.052 [main] INFO  com.askimed.nf.test.App - nf-test 0.9.3
+Nov-11 10:55:00.078 [main] INFO  com.askimed.nf.test.App - Arguments: [test, tests/default.nf.test, --update-snapshot, --profile, +docker]
+Nov-11 10:55:01.388 [main] INFO  com.askimed.nf.test.App - Nextflow Version: 25.10.0
+Nov-11 10:55:01.390 [main] INFO  com.askimed.nf.test.commands.RunTestsCommand - Load config from file /home/luisasantus/Desktop/multiplesequencealign/nf-test.config...
+Nov-11 10:55:02.706 [main] INFO  com.askimed.nf.test.lang.dependencies.DependencyResolver - Loaded 54 files from directory /home/luisasantus/Desktop/multiplesequencealign in 0.753 sec
+Nov-11 10:55:02.708 [main] INFO  com.askimed.nf.test.lang.dependencies.DependencyResolver - Found 1 files containing tests.
+Nov-11 10:55:02.708 [main] DEBUG com.askimed.nf.test.lang.dependencies.DependencyResolver - Found files: [/home/luisasantus/Desktop/multiplesequencealign/tests/default.nf.test]
+Nov-11 10:55:02.904 [main] INFO  com.askimed.nf.test.commands.RunTestsCommand - Found 1 tests to execute.
+Nov-11 10:55:02.904 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Started test plan
+Nov-11 10:55:02.904 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Running testsuite 'Test pipeline' from file '/home/luisasantus/Desktop/multiplesequencealign/tests/default.nf.test'.
+Nov-11 10:55:02.904 [main] INFO  com.askimed.nf.test.core.TestExecutionEngine - Run test '3b90429f: -profile test'. type: com.askimed.nf.test.lang.pipeline.PipelineTest
