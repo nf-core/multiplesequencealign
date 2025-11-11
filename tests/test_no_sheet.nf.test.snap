@@ -1,0 +1,40 @@
+{
+    "-profile test_no_sheet - stub": {
+        "content": [
+            3,
+            {
+                "FAMSA_ALIGN": {
+                    "famsa": "2.4.1-45c9b2b (2025-05-09)"
+                },
+                "FAMSA_GUIDETREE": {
+                    "famsa": "2.2.2- (2022-10-09)"
+                },
+                "UNTAR": {
+                    "untar": 1.34
+                },
+                "Workflow": {
+                    "nf-core/multiplesequencealign": "v1.2.0dev"
+                }
+            },
+            [
+                "alignments",
+                "alignments/setoxin-ref",
+                "alignments/setoxin-ref/setoxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args--refine_mode_on.aln.gz",
+                "pipeline_info",
+                "pipeline_info/nf_core_multiplesequencealign_software_mqc_versions.yml",
+                "trees",
+                "trees/setoxin-ref",
+                "trees/setoxin-ref/setoxin-ref_FAMSA-args--gt_upgma_-medoidtree.dnd"
+            ],
+            [
+                "setoxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args--refine_mode_on.aln.gz:md5,9394e09dd7f576da794a74de60327324",
+                "setoxin-ref_FAMSA-args--gt_upgma_-medoidtree.dnd:md5,2f40d5dd57a0072732428ba94ec89347"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-06T13:00:00.803514333"
+    }
+}
