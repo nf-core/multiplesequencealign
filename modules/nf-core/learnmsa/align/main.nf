@@ -1,6 +1,6 @@
 process LEARNMSA_ALIGN {
     tag "$meta.id"
-    label 'process_medium'
+    label 'process_gpu'
     container "registry.hub.docker.com/felbecker/learnmsa:2.0.14"
 
     input:
@@ -20,6 +20,9 @@ process LEARNMSA_ALIGN {
         error("LearnMSA align module does not support Conda. Please use Docker / Singularity / Podman instead.")
     }
     """
+    export MPLCONFIGDIR="./.config/matplotlib"
+    mkdir -p \$MPLCONFIGDIR
+
     learnMSA \\
         -i $fasta \\
         -o "${prefix}.aln" \\
