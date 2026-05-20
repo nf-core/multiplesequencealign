@@ -4,6 +4,10 @@ lint:
     - conf/igenomes_ignored.config
   files_unchanged:
     - .github/CONTRIBUTING.md
+    - .gitignore
+    - assets/nf-core-multiplesequencealign_logo_light.png
+    - docs/images/nf-core-multiplesequencealign_logo_light.png
+    - .prettierignore
   multiqc_config: false
 nf_core_version: 4.0.2
 repository_type: pipeline
