@@ -53,19 +53,19 @@ include { FASTAVALIDATOR                 } from '../modules/nf-core/fastavalidat
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-workflow MULTIPLESEQUENCEALIGN{
+workflow MULTIPLESEQUENCEALIGN {
 
     take:
-    ch_input    // channel: [ meta, path(sequence.fasta), path(reference.fasta), path(dependency_files.tar.gz), path(templates.txt) ]
-    ch_tools    // channel: [ val(guide_tree_tool), val(args_guide_tree_tool), val(alignment_tool), val(args_alignment_tool) ]
-    ch_samplesheet // channel: samplesheet read in from --input
-    multiqc_config
-    multiqc_logo
-    multiqc_methods_description
-    outdir
+    ch_input         // channel: [ meta, path(sequence.fasta), path(reference.fasta), path(dependency_files.tar.gz), path(templates.txt) ]
+    ch_tools         // channel: [ val(guide_tree_tool), val(args_guide_tree_tool), val(alignment_tool), val(args_alignment_tool) ]
+    multiqc_config   // string: path to MultiQC config file or list of paths if multiple config files
+    multiqc_logo     // string: path to MultiQC logo file
+    multiqc_methods_description // string: path to MultiQC methods description file
+    outdir           // path: output directory
 
     main:
-    ch_multiqc_files             = Channel.empty()
+    def ch_versions              = channel.empty()
+    def ch_multiqc_files         = channel.empty()
     ch_multiqc_report            = Channel.empty()
     evaluation_summary           = Channel.empty()
     stats_summary                = Channel.empty()
@@ -73,11 +73,7 @@ workflow MULTIPLESEQUENCEALIGN{
     ch_refs                      = Channel.empty()
     ch_templates                 = Channel.empty()
     ch_optional_data             = Channel.empty()
-    ch_versions                  = Channel.empty()
 
-    def ch_versions = channel.empty()
-    def ch_multiqc_files = channel.empty()
-    
     ch_input
         .filter { it[1].size() > 0}
         .map {
@@ -153,47 +149,66 @@ workflow MULTIPLESEQUENCEALIGN{
                 .groupTuple(by: 0)
                 .set { ch_optional_data }
 
-            )
+        } else {
+            // Identify the sequence IDs from the input fasta file(s)
+            ch_seqs.splitFasta(record: [ id: true ] )
+                .map { id, seq_id -> [ seq_id, id ] }
+                .set { ch_seqs_split }
 
-        if (!params.skip_multiqc) {
-            // MODULE: MultiQC
-            def ch_summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
-            def ch_workflow_summary = channel.value(paramsSummaryMultiqc(ch_summary_params))
-
-            def ch_multiqc_files = Channel.fromList([])
-            ch_multiqc_files = ch_multiqc_files.mix(ch_collated_versions)
-            ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
-
-            def ch_multiqc_custom_methods_description = params.multiqc_methods_description ?
-                file(params.multiqc_methods_description, checkIfExists: true) :
-                file("${projectDir}/assets/methods_description_template.yml", checkIfExists: true)
-            def ch_methods_description = channel.value(methodsDescriptionText(ch_multiqc_custom_methods_description))
-            ch_multiqc_files = ch_multiqc_files.mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml', sort: true))
-
-            PREPARE_MULTIQC(stats_and_evaluation_summary)
-            ch_multiqc_files = ch_multiqc_files.mix(PREPARE_MULTIQC.out.multiqc_table.collect{ it[1] }.ifEmpty([]))
-
-            MULTIQC(
-                ch_multiqc_files.flatten().collect().map { files ->
-                    [
-                        [id: 'multiplesequencealign'],
-                        files,
-                        params.multiqc_config ? file(params.multiqc_config, checkIfExists: true) : file("${projectDir}/assets/multiqc_config.yml", checkIfExists: true),
-                        params.multiqc_logo ? file(params.multiqc_logo, checkIfExists: true) : [],
-                        [],
-                        [],
-                    ]
-                }
-            )
-
-            ch_multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList()
+            // Map the optional_data to the sequence IDs
+            optional_data_to_be_mapped
+                .map { it -> [ [ id: it.baseName ], it ] }
+                .combine(ch_seqs_split, by: 0)
+                .map { dep_id, dep, fasta_id -> [ fasta_id, dep ] }
+                .groupTuple(by: 0)
+                .set { ch_optional_data }
         }
 
-        emit:
-        multiqc_report = ch_multiqc_report
-        summary        = stats_and_evaluation_summary
-        versions       = ch_collated_versions
-     }
+    } else {
+
+        // otherwise, use the dependency files provided in the input samplesheet
+        ch_input
+            .map {
+                meta, fasta, ref, str, template ->
+                    [ meta, str ]
+            }
+            .filter { it[1].size() > 0 }
+            .set { ch_optional_data }
+
+        // Dependency files are taken from a directory.
+        // If the directory is compressed, it is uncompressed first.
+        ch_optional_data
+            .branch {
+                compressed:   it[1].endsWith('.tar.gz')
+                uncompressed: true
+            }
+            .set { ch_optional_data }
+
+        UNTAR (ch_optional_data.compressed)
+            .untar
+            .mix(ch_optional_data.uncompressed)
+            .map {
+                meta,dir ->
+                    [ meta,file(dir).listFiles().collect() ]
+            }
+            .set { ch_optional_data }
+        ch_versions   = ch_versions.mix(UNTAR.out.versions)
+    }
+
+    //
+    // For the inputs that only have optional data but not a fasta
+    // we need to generate the fasta file
+    //
+    ch_optional_data
+        .join(ch_seqs, remainder:true)
+        .filter {
+            it[-1] == null
+        }
+        .map {
+            it -> [it[0], it[1]]
+        }.set { ch_optional_data_no_fasta }
+
+
     CUSTOM_PDBSTOFASTA(ch_optional_data_no_fasta)
     ch_versions = ch_versions.mix(CUSTOM_PDBSTOFASTA.out.versions)
     ch_seqs = ch_seqs.mix(CUSTOM_PDBSTOFASTA.out.fasta)
@@ -296,7 +311,7 @@ workflow MULTIPLESEQUENCEALIGN{
     } else {
         // Create a dummy evaluation summary if the evaluation is skipped
         ALIGN.out.msa.collectFile(keepHeader: true, skip: 1,sort: true){ meta, msa ->
-            content =  meta.keySet().collect{it}.join(",")
+            def content =  meta.keySet().collect{it}.join(",")
             content += "\n"
             content += meta.values().collect{it}.join(",")
             content += "\n"
@@ -373,11 +388,13 @@ workflow MULTIPLESEQUENCEALIGN{
         )
 
     if (!params.skip_multiqc) {
+        //
         // MODULE: MultiQC
+        //
         def ch_summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
         def ch_workflow_summary = channel.value(paramsSummaryMultiqc(ch_summary_params))
 
-        def ch_multiqc_files = Channel.fromList([])
+        // def ch_multiqc_files = Channel.fromList([])
         ch_multiqc_files = ch_multiqc_files.mix(ch_collated_versions)
         ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
 
@@ -407,10 +424,10 @@ workflow MULTIPLESEQUENCEALIGN{
     }
 
     emit:
-    multiqc_report = ch_multiqc_report
+    multiqc_report = ch_multiqc_report                   // channel: /path/to/multiqc_report.html
     summary        = stats_and_evaluation_summary
-    versions       = ch_collated_versions
- }
+    versions       = ch_collated_versions               // channel: [ path(versions.yml) ]
+}
 
 
 
@@ -419,5 +436,3 @@ workflow MULTIPLESEQUENCEALIGN{
     THE END
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-
-
