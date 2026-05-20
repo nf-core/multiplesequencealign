@@ -70,7 +70,7 @@
                     },
                     "learnmsa/align": {
                         "branch": "master",
-                        "git_sha": "81880787133db07d9b4c1febd152c090eb8325dc",
+                        "git_sha": "21e4662ae927fdbc5fc04eec9bde38b0689d4954",
                         "installed_by": ["modules"]
                     },
                     "mafft/align": {
