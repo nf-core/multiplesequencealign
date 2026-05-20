@@ -75,7 +75,7 @@
                     },
                     "mafft/align": {
                         "branch": "master",
-                        "git_sha": "fa92936611247ca647ddee970f94d83f1bcb0ffe",
+                        "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
                         "installed_by": ["modules"]
                     },
                     "mafft/guidetree": {
