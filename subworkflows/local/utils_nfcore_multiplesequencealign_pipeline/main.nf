@@ -140,13 +140,13 @@ workflow PIPELINE_INITIALISATION {
                     def tree_map = [:]
                     def align_map = [:]
 
-                    tree_map["tree"] = Utils.clean_tree(meta_clone["tree"].toString())
+                    tree_map["tree"] = clean_tree(meta_clone["tree"].toString())
                     tree_map["args_tree"] = meta_clone["args_tree"]
-                    tree_map["args_tree_clean"] = Utils.cleanArgs(meta_clone.args_tree)
+                    tree_map["args_tree_clean"] = cleanArgs(meta_clone.args_tree)
 
                     align_map["aligner"] = meta_clone["aligner"].toString()
-                    align_map["args_aligner"] = Utils.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
-                    align_map["args_aligner_clean"] = Utils.cleanArgs(meta_clone.args_aligner)
+                    align_map["args_aligner"] = check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
+                    align_map["args_aligner_clean"] = cleanArgs(meta_clone.args_aligner)
 
                     [ tree_map, align_map ]
             }.unique()
@@ -641,7 +641,7 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
             newRow.tree = treeMatch ? treeMatch[0][1] : "DEFAULT"
 
             def treeArgsMatch = (row.tag =~ /argstree: (.*)/)
-            newRow.args_tree_clean = treeArgsMatch ? Utils.cleanArgs(treeArgsMatch[0][1]) : "default"
+            newRow.args_tree_clean = treeArgsMatch ? cleanArgs(treeArgsMatch[0][1]) : "default"
 
             // remove tree and args_tree from keys
             keys_iterator = keys - ["tree", "args_tree_clean"]
@@ -792,72 +792,51 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     }
 }
 
-// import nextflow.Nextflow
-// import groovy.text.SimpleTemplateEngine
+def cleanArgs(argString) {
+    def cleaned = argString.toString().trim().replace("  ", " ").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
+    if (cleaned == null || cleaned == "" || cleaned == "null") {
+        return "default"
+    }
+    return cleaned
+}
 
-// class Utils {
+def clean_tree(treeIn) {
+    def tree = treeIn.toString()
+    if (tree == null || tree == "" || tree == "null") {
+        return "DEFAULT"
+    }
+    return tree
+}
 
-//     public static cleanArgs(argString) {
+def fix_args(tool, args, tool_to_be_checked, required_flag, default_value) {
+    if (tool == tool_to_be_checked) {
+        if (args == null || args == "" || args == "null" || !args.contains(required_flag + " ")) {
+            if (args == null || args == "" || args == "null") {
+                args = ""
+            }
+            def prefix = args != "" ? args + " " : ""
+            args = prefix + required_flag + " " + default_value
+        }
+    }
+    return args
+}
 
-//         def cleanArgs = argString.toString().trim().replace("  ", " ").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
-//         // if clearnArgs is empty, return ""
+def check_required_args(tool, args) {
+    // 3DCOFFEE
+    args = fix_args(tool, args, "3DCOFFEE", "-method", "TMalign_pair")
+    args = fix_args(tool, args, "3DCOFFEE", "-output", "fasta_aln")
 
-//         if (cleanArgs == null || cleanArgs == "" || cleanArgs == "null") {
-//             return "default"
-//         }else{
-//             return cleanArgs
-//         }
-//     }
+    // REGRESSIVE
+    args = fix_args(tool, args, "REGRESSIVE", "-reg", "")
+    args = fix_args(tool, args, "REGRESSIVE", "-reg_method", "famsa_msa")
+    args = fix_args(tool, args, "REGRESSIVE", "-reg_nseq", "1000")
+    args = fix_args(tool, args, "REGRESSIVE", "-output", "fasta_aln")
 
-//     public static clean_tree(treeIn){
-//         def tree = treeIn.toString()
-//         if(tree == null || tree == "" || tree == "null"){
-//             return "DEFAULT"
-//         }
-//         return tree
-//     }
+    // TCOFFEE
+    args = fix_args(tool, args, "TCOFFEE", "-output", "fasta_aln")
 
-//     public static fix_args(tool,args,tool_to_be_checked, required_flag, default_value) {
-//         /*
-//         This function checks if the required_flag is present in the args string for the tool_to_be_checked.
-//         If not, it adds the required_flag and the default_value to the args string.
-//         */
-//         if(tool == tool_to_be_checked){
-//             if( args == null || args == ""|| args == "null" || !args.contains(required_flag+" ")){
-//                 if(args == null || args == ""|| args == "null"){
-//                     args = ""
-//                 }
-//                 def prefix = ""
-//                 if(args != ""){
-//                     prefix = args + " "
-//                 }
-//                 args = prefix + required_flag + " " + default_value
-//             }
-//         }
-//         return args
-//     }
+    // UPP
+    args = fix_args(tool, args, "UPP", "-m", "amino")
 
-
-//     public static check_required_args(tool,args){
-
-//         // 3DCOFFEE
-//         args = fix_args(tool,args,"3DCOFFEE", "-method", "TMalign_pair")
-//         args = fix_args(tool,args,"3DCOFFEE", "-output", "fasta_aln")
-
-//         // REGRESSIVE
-//         args = fix_args(tool,args,"REGRESSIVE", "-reg", "")
-//         args = fix_args(tool,args,"REGRESSIVE", "-reg_method", "famsa_msa")
-//         args = fix_args(tool,args,"REGRESSIVE", "-reg_nseq", "1000")
-//         args = fix_args(tool,args,"REGRESSIVE", "-output", "fasta_aln")
-
-//         // TCOFFEE
-//         args = fix_args(tool,args,"TCOFFEE", "-output", "fasta_aln")
-
-//         // UPP
-//         args = fix_args(tool,args,"UPP", "-m", "amino")
-
-//         return args
-
-//     }
-
-// }
+    return args
+}
