@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Enhancements & fixes
 
+- [[PR #248](https://github.com/nf-core/multiplesequencealign/pull/248)] - Updated pipeline template to [nf-core/tools 4.0.2](https://github.com/nf-core/tools/releases/tag/4.0.2)
+
 ### Parameters
 
 ## [1.1.1 - Bogatell](https://github.com/nf-core/multiplesequencealign/releases/tag/1.1.1)
