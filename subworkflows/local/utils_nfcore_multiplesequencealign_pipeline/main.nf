@@ -183,7 +183,7 @@ workflow PIPELINE_COMPLETION {
     summary_params      = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
     def multiqc_reports = multiqc_report.toList()
     def summary_reports = summary.toList()
-    def versions        = versions.toList()
+    def versions_list   = versions.toList()
     def skip_shiny      = params.skip_shiny
 
     //
@@ -210,10 +210,10 @@ workflow PIPELINE_COMPLETION {
         }
 
         def summary_file  = summary_reports.getVal()[0][1].toString()
-        def versions_path = versions.getVal()[0].toString()
+        def versions_path = versions_list.getVal()[0].toString()
 
         // Input files
-        def trace_dir_path = "${outdir}/pipeline_info/"
+        trace_dir_path = "${outdir}/pipeline_info/"
 
         // Output file naming
         def summary_file_with_traces = "${outdir}/summary/complete_summary_stats_eval_times.csv"
@@ -335,8 +335,6 @@ def methodsDescriptionText(mqc_methods_yaml) {
 
     return description_html.toString()
 }
-
-import groovy.transform.Field
 
 /*
  * Parses a CSV file and returns a list of maps representing the rows.
@@ -588,19 +586,19 @@ def processTraceFile(String traceDirPath) {
     // we need to do this because the co2 file has the energy consumption and CO2e but misses other columns of interest from the main file
     co2Csv = keepKeysFromArrayList(co2Csv, ["name", "energy_consumption", "CO2e", "powerdraw_cpu", "cpu_model", "requested_memory"])
 
-    trace_co2_csv = mergeListsById(traceCsv.collect { it as Map }, co2Csv, "name")
-    keys = ["id","name", "args", "tree", "aligner", "realtime", "%cpu", "rss", "peak_rss", "vmem", "peak_mem", "rchar", "wchar", "cpus", "energy_consumption", "CO2e", "powerdraw_cpu", "cpu_model", "requested_memory"]
+    def trace_co2_csv = mergeListsById(traceCsv.collect { it as Map }, co2Csv, "name")
+    def keys = ["id","name", "args", "tree", "aligner", "realtime", "%cpu", "rss", "peak_rss", "vmem", "peak_mem", "rchar", "wchar", "cpus", "energy_consumption", "CO2e", "powerdraw_cpu", "cpu_model", "requested_memory"]
 
     // Retain only the necessary columns and parse arguments from tree and aligner
     def cleanTraceData = cleanTrace(trace_co2_csv)
 
     // Extract the tree and align traces separately
-    def traceTrees = prepTrace(cleanTraceData, suffix_to_replace = "_GUIDETREE", subworkflow = "COMPUTE_TREES", keys)
-    def traceAlign = prepTrace(cleanTraceData, suffix_to_replace = "_ALIGN", subworkflow = "ALIGN", keys)
+    def traceTrees = prepTrace(cleanTraceData, "_GUIDETREE", "COMPUTE_TREES", keys)
+    def traceAlign = prepTrace(cleanTraceData, "_ALIGN", "ALIGN", keys)
 
     // Add an empty tree trace for the default tree
-    empty_trace = [:]
-    keys_to_add = keys - ["id", "tree", "args", "aligner"]
+    def empty_trace = [:]
+    def keys_to_add = keys - ["id", "tree", "args", "aligner"]
     keys_to_add.each { key -> empty_trace[key+"_tree"] = null }
     empty_trace["tree"] = "DEFAULT"
     empty_trace["args_tree_clean"] = "default"
@@ -633,6 +631,7 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
         def newRow = [:]
         def keys_iterator = keys
         def suffix = ""
+        def specific_key = ""
         if(subworkflow == "ALIGN") {
             suffix = "_aligner"
             specific_key = "aligner"
@@ -793,72 +792,72 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     }
 }
 
-import nextflow.Nextflow
-import groovy.text.SimpleTemplateEngine
+// import nextflow.Nextflow
+// import groovy.text.SimpleTemplateEngine
 
-class Utils {
+// class Utils {
 
-    public static cleanArgs(argString) {
+//     public static cleanArgs(argString) {
 
-        def cleanArgs = argString.toString().trim().replace("  ", " ").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
-        // if clearnArgs is empty, return ""
+//         def cleanArgs = argString.toString().trim().replace("  ", " ").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
+//         // if clearnArgs is empty, return ""
 
-        if (cleanArgs == null || cleanArgs == "" || cleanArgs == "null") {
-            return "default"
-        }else{
-            return cleanArgs
-        }
-    }
+//         if (cleanArgs == null || cleanArgs == "" || cleanArgs == "null") {
+//             return "default"
+//         }else{
+//             return cleanArgs
+//         }
+//     }
 
-    public static clean_tree(treeIn){
-        def tree = treeIn.toString()
-        if(tree == null || tree == "" || tree == "null"){
-            return "DEFAULT"
-        }
-        return tree
-    }
+//     public static clean_tree(treeIn){
+//         def tree = treeIn.toString()
+//         if(tree == null || tree == "" || tree == "null"){
+//             return "DEFAULT"
+//         }
+//         return tree
+//     }
 
-    public static fix_args(tool,args,tool_to_be_checked, required_flag, default_value) {
-        /*
-        This function checks if the required_flag is present in the args string for the tool_to_be_checked.
-        If not, it adds the required_flag and the default_value to the args string.
-        */
-        if(tool == tool_to_be_checked){
-            if( args == null || args == ""|| args == "null" || !args.contains(required_flag+" ")){
-                if(args == null || args == ""|| args == "null"){
-                    args = ""
-                }
-                def prefix = ""
-                if(args != ""){
-                    prefix = args + " "
-                }
-                args = prefix + required_flag + " " + default_value
-            }
-        }
-        return args
-    }
+//     public static fix_args(tool,args,tool_to_be_checked, required_flag, default_value) {
+//         /*
+//         This function checks if the required_flag is present in the args string for the tool_to_be_checked.
+//         If not, it adds the required_flag and the default_value to the args string.
+//         */
+//         if(tool == tool_to_be_checked){
+//             if( args == null || args == ""|| args == "null" || !args.contains(required_flag+" ")){
+//                 if(args == null || args == ""|| args == "null"){
+//                     args = ""
+//                 }
+//                 def prefix = ""
+//                 if(args != ""){
+//                     prefix = args + " "
+//                 }
+//                 args = prefix + required_flag + " " + default_value
+//             }
+//         }
+//         return args
+//     }
 
 
-    public static check_required_args(tool,args){
+//     public static check_required_args(tool,args){
 
-        // 3DCOFFEE
-        args = fix_args(tool,args,"3DCOFFEE", "-method", "TMalign_pair")
-        args = fix_args(tool,args,"3DCOFFEE", "-output", "fasta_aln")
+//         // 3DCOFFEE
+//         args = fix_args(tool,args,"3DCOFFEE", "-method", "TMalign_pair")
+//         args = fix_args(tool,args,"3DCOFFEE", "-output", "fasta_aln")
 
-        // REGRESSIVE
-        args = fix_args(tool,args,"REGRESSIVE", "-reg", "")
-        args = fix_args(tool,args,"REGRESSIVE", "-reg_method", "famsa_msa")
-        args = fix_args(tool,args,"REGRESSIVE", "-reg_nseq", "1000")
-        args = fix_args(tool,args,"REGRESSIVE", "-output", "fasta_aln")
+//         // REGRESSIVE
+//         args = fix_args(tool,args,"REGRESSIVE", "-reg", "")
+//         args = fix_args(tool,args,"REGRESSIVE", "-reg_method", "famsa_msa")
+//         args = fix_args(tool,args,"REGRESSIVE", "-reg_nseq", "1000")
+//         args = fix_args(tool,args,"REGRESSIVE", "-output", "fasta_aln")
 
-        // TCOFFEE
-        args = fix_args(tool,args,"TCOFFEE", "-output", "fasta_aln")
+//         // TCOFFEE
+//         args = fix_args(tool,args,"TCOFFEE", "-output", "fasta_aln")
 
-        // UPP
-        args = fix_args(tool,args,"UPP", "-m", "amino")
+//         // UPP
+//         args = fix_args(tool,args,"UPP", "-m", "amino")
 
-        return args
+//         return args
 
-    }
+//     }
 
-}
+// }
