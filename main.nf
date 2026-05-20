@@ -41,7 +41,7 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
     //
     MULTIPLESEQUENCEALIGN (
         samplesheet,
-        tools
+        tools,
         params.multiqc_config,
         params.multiqc_logo,
         params.multiqc_methods_description,
@@ -72,7 +72,7 @@ workflow {
         args,
         params.outdir,
         params.input,
-        params.tools
+        params.tools,
         params.help,
         params.help_full,
         params.show_hidden

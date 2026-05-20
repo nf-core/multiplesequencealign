@@ -5,7 +5,7 @@ class Utils {
 
     static cleanArgs(argString) {
         def cleanArgs = argString.toString().trim().replace("  ", " ").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
-        
+
         if (cleanArgs == null || cleanArgs == "" || cleanArgs == "null") {
             return "default"
         } else {
