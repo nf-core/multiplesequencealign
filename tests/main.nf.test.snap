@@ -1,33 +1,9 @@
 {
     "Run with profile test": {
         "content": [
-            58,
+            15,
             null,
             [
-                "alignments",
-                "alignments/seatoxin-ref",
-                "alignments/seatoxin-ref/seatoxin-ref_CLUSTALO-args-default_FAMSA-args-default.aln.gz",
-                "alignments/seatoxin-ref/seatoxin-ref_CONSENSUS.aln.gz",
-                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default.aln.gz",
-                "alignments/toxin-ref",
-                "alignments/toxin-ref/toxin-ref_CLUSTALO-args-default_FAMSA-args-default.aln.gz",
-                "alignments/toxin-ref/toxin-ref_CONSENSUS.aln.gz",
-                "alignments/toxin-ref/toxin-ref_DEFAULT-args-default_TCOFFEE-args-default.aln.gz",
-                "evaluation",
-                "evaluation/complete_summary_eval.csv",
-                "evaluation/tcoffee_tcs",
-                "evaluation/tcoffee_tcs/seatoxin-ref_CLUSTALO-args-default_FAMSA-args-default_tcs.scores",
-                "evaluation/tcoffee_tcs/seatoxin-ref_CLUSTALO-args-default_FAMSA-args-default_tcs.tcs",
-                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_CONSENSUS-args-default_tcs.scores",
-                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_CONSENSUS-args-default_tcs.tcs",
-                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.scores",
-                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.tcs",
-                "evaluation/tcoffee_tcs/toxin-ref_CLUSTALO-args-default_FAMSA-args-default_tcs.scores",
-                "evaluation/tcoffee_tcs/toxin-ref_CLUSTALO-args-default_FAMSA-args-default_tcs.tcs",
-                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_CONSENSUS-args-default_tcs.scores",
-                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_CONSENSUS-args-default_tcs.tcs",
-                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.scores",
-                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.tcs",
                 "pipeline_info",
                 "pipeline_info/nf_core_multiplesequencealign_software_mqc_versions.yml",
                 "reports",
@@ -64,32 +40,9 @@
                 "stats/sequences/perc_sim/toxin-ref.txt",
                 "stats/sequences/seqstats",
                 "stats/sequences/seqstats/seatoxin-ref_seqstats.csv",
-                "stats/sequences/seqstats/toxin-ref_seqstats.csv",
-                "trees",
-                "trees/seatoxin-ref",
-                "trees/seatoxin-ref/seatoxin-ref_CLUSTALO-args-default.dnd",
-                "trees/toxin-ref",
-                "trees/toxin-ref/toxin-ref_CLUSTALO-args-default.dnd"
+                "stats/sequences/seqstats/toxin-ref_seqstats.csv"
             ],
             [
-                "seatoxin-ref_CLUSTALO-args-default_FAMSA-args-default.aln.gz:md5,9c01d20f8ba2dc66d4a671f739f48fa7",
-                "seatoxin-ref_CONSENSUS.aln.gz:md5,d57c4906e7ba75cea3599d481aa5fac3",
-                "seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default.aln.gz:md5,bd1db08ad04514cc6d1334598c1a6ef0",
-                "toxin-ref_CLUSTALO-args-default_FAMSA-args-default.aln.gz:md5,0d631a36aab4a79897ca0d16cc4cba43",
-                "toxin-ref_CONSENSUS.aln.gz:md5,b175a1c2a31f4a3c3bed283b7be34b9a",
-                "toxin-ref_DEFAULT-args-default_TCOFFEE-args-default.aln.gz:md5,66109d372abe90ab292b326a3d411e3a",
-                "seatoxin-ref_CLUSTALO-args-default_FAMSA-args-default_tcs.scores:md5,8e78bf69c1f266df2c07755087563a19",
-                "seatoxin-ref_CLUSTALO-args-default_FAMSA-args-default_tcs.tcs:md5,7ace90453a3d045f9e7259c98b357b15",
-                "seatoxin-ref_DEFAULT-args-default_CONSENSUS-args-default_tcs.scores:md5,d227f8ede3875f2d2867eeab04c16338",
-                "seatoxin-ref_DEFAULT-args-default_CONSENSUS-args-default_tcs.tcs:md5,82e1e60651c7efd8dfc106c7e70c88ce",
-                "seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.scores:md5,3520c83711dae4525482bb74472d7af5",
-                "seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.tcs:md5,6343c7cb5f42d1ef40f74c3016b75941",
-                "toxin-ref_CLUSTALO-args-default_FAMSA-args-default_tcs.scores:md5,9e78630d6517667191b555ce31862853",
-                "toxin-ref_CLUSTALO-args-default_FAMSA-args-default_tcs.tcs:md5,7bab59ffbde584b3799c38a838badb00",
-                "toxin-ref_DEFAULT-args-default_CONSENSUS-args-default_tcs.scores:md5,65fd1560011c3a814c4fb51c2231bf93",
-                "toxin-ref_DEFAULT-args-default_CONSENSUS-args-default_tcs.tcs:md5,d04d882ab6abd05206f6288754c5390c",
-                "toxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.scores:md5,ecd8e6013889af7faf62d31997d91182",
-                "toxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.tcs:md5,468d3d0bbb3eb539a268e6f58ea8eebd",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "run.sh:md5,025ecd434fe421c6a52140fd380504f0",
                 "shiny_app.py:md5,1428dfaefa5ad41704f0c9fb7f2dab60",
@@ -99,15 +52,13 @@
                 "seatoxin-ref.txt:md5,fdaa411d62bd66b5c30b21fd5b85a914",
                 "toxin-ref.txt:md5,a03aa486e0949d572972378a21dff28b",
                 "seatoxin-ref_seqstats.csv:md5,e104112c929b39f43410681d8bdcb15b",
-                "toxin-ref_seqstats.csv:md5,51f477faf393c2c4a49896ef5a49374c",
-                "seatoxin-ref_CLUSTALO-args-default.dnd:md5,0b8de84bed1e52cee17f7c54e322386d",
-                "toxin-ref_CLUSTALO-args-default.dnd:md5,666b7fe7ca55b2b83aef0869b4f38a66"
+                "toxin-ref_seqstats.csv:md5,51f477faf393c2c4a49896ef5a49374c"
             ]
         ],
         "meta": {
             "nf-test": "0.9.3",
             "nextflow": "26.04.2"
         },
-        "timestamp": "2026-05-22T14:12:59.605995836"
+        "timestamp": "2026-05-22T17:51:58.661019921"
     }
 }
