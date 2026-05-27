@@ -17,3 +17,9 @@ multiqc/multiqc_data/fastqc_top_overrepresented_sequences_table.txt
 **/params_*.json
 **/co2footprint_*.*
 **/manifest_*.bco.json
+**/*MUSCLE5*
+**/*_LEARNMSA*
+**/*_CONSENSUS*
+**/*_MAGUS*
+**/seatoxin*.html
+
