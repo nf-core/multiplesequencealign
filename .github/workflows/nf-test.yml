@@ -63,7 +63,7 @@ jobs:
     if: ${{ needs.nf-test-changes.outputs.total_shards != '0' }}
     runs-on: # use self-hosted runners
       - runs-on=${{ github.run_id }}-nf-test
-      - runner=16cpu-linux-x64
+      - runner=4cpu-linux-x64
       - disk=large
       - volume=80gb
     strategy:
