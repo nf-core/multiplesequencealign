@@ -1,7 +1,6 @@
 {
-    "Run with profile test": {
+    "-profile test": {
         "content": [
-            319,
             {
                 "CALCULATE_SEQSTATS": {
                     "python": "3.11.0"
@@ -482,8 +481,8 @@
         ],
         "meta": {
             "nf-test": "0.9.3",
-            "nextflow": "25.10.4"
+            "nextflow": "26.04.2"
         },
-        "timestamp": "2026-05-27T22:53:42.989437322"
+        "timestamp": "2026-05-28T08:37:41.972216409"
     }
 }
