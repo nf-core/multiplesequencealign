@@ -41,7 +41,11 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
     //
     MULTIPLESEQUENCEALIGN (
         samplesheet,
-        tools
+        tools,
+        params.multiqc_config,
+        params.multiqc_logo,
+        params.multiqc_methods_description,
+        params.outdir,
     )
 
     emit:
@@ -68,7 +72,10 @@ workflow {
         args,
         params.outdir,
         params.input,
-        params.tools
+        params.tools,
+        params.help,
+        params.help_full,
+        params.show_hidden
     )
 
     //
@@ -88,7 +95,6 @@ workflow {
         params.plaintext_email,
         params.outdir,
         params.monochrome_logs,
-        params.hook_url,
         NFCORE_MULTIPLESEQUENCEALIGN.out.multiqc_report,
         NFCORE_MULTIPLESEQUENCEALIGN.out.summary,
         NFCORE_MULTIPLESEQUENCEALIGN.out.versions,
