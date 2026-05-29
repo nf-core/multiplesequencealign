@@ -1,0 +1,488 @@
+{
+    "-profile test": {
+        "content": [
+            {
+                "CALCULATE_SEQSTATS": {
+                    "python": "3.11.0"
+                },
+                "CALC_GAPS": {
+                    "awk": "1.3.4 20200120"
+                },
+                "CLUSTALO_ALIGN": {
+                    "clustalo": "1.2.4",
+                    "pigz": "2.8)"
+                },
+                "CLUSTALO_GUIDETREE": {
+                    "clustalo": "1.2.4"
+                },
+                "CONCAT_GAPS": {
+                    "csvtk": "0.31.0"
+                },
+                "CONCAT_PLDDTS": {
+                    "csvtk": "0.31.0"
+                },
+                "CONCAT_SEQSTATS": {
+                    "csvtk": "0.31.0"
+                },
+                "CONCAT_SIMSTATS": {
+                    "csvtk": "0.31.0"
+                },
+                "CONCAT_SP": {
+                    "csvtk": "0.31.0"
+                },
+                "CONCAT_TC": {
+                    "csvtk": "0.31.0"
+                },
+                "CONCAT_TCS": {
+                    "csvtk": "0.31.0"
+                },
+                "CONSENSUS": {
+                    "tcoffee": "13.46.0.919e8c6b",
+                    "pigz": "2.8)"
+                },
+                "EXTRACT_PLDDT": {
+                    "awk": "1.3.4 20200120"
+                },
+                "FAMSA_ALIGN": {
+                    "famsa": "2.2.2- (2022-10-09)"
+                },
+                "FAMSA_GUIDETREE": {
+                    "famsa": "2.2.2- (2022-10-09)"
+                },
+                "FASTAVALIDATOR": {
+                    "py_fasta_validator": 0.6
+                },
+                "FOLDMASON_ALIGN": {
+                    "foldmason": "2.7bd21ed",
+                    "pigz": "2.8)"
+                },
+                "KALIGN_ALIGN": {
+                    "kalign": "3.4.0",
+                    "pigz": "2.8)"
+                },
+                "LEARNMSA_ALIGN": {
+                    "learnmsa": "2.0.14"
+                },
+                "MAFFT_ALIGN": {
+                    "mafft": "v7.520 (2023/Mar/22)",
+                    "pigz": 2.8
+                },
+                "MAFFT_GUIDETREE": {
+                    "mafft": 7.525
+                },
+                "MAGUS_ALIGN": {
+                    "MAGUS": "0.2.0",
+                    "pigz": "2.8)"
+                },
+                "MERGE_EVAL": {
+                    "csvtk": "0.31.0"
+                },
+                "MERGE_STATS": {
+                    "csvtk": "0.31.0"
+                },
+                "MERGE_STATS_EVAL": {
+                    "csvtk": "0.31.0"
+                },
+                "MTMALIGN_ALIGN": {
+                    "mTM-align": 20220104,
+                    "pigz": "2.8)"
+                },
+                "MUSCLE5_ALIGN": {
+                    "muscle": 5.1,
+                    "pigz": "2.8)"
+                },
+                "PARSE_IRMSD": {
+                    "python": "3.11.0"
+                },
+                "PARSE_SIM": {
+                    "awk": "1.3.4 20200120",
+                    "cat": 8.32
+                },
+                "PIGZ_COMPRESS": {
+                    "pigz": 2.8
+                },
+                "PREPARE_SHINY": {
+                    "bash": "5.1.16 3"
+                },
+                "REGRESSIVE_ALIGN": {
+                    "tcoffee": "13.46.0.919e8c6b",
+                    "pigz": "2.8)"
+                },
+                "TCOFFEE3D_ALIGN": {
+                    "tcoffee": "13.46.0.919e8c6b",
+                    "pigz": "2.8)"
+                },
+                "TCOFFEE_ALIGN": {
+                    "tcoffee": "13.46.0.919e8c6b",
+                    "pigz": "2.8)"
+                },
+                "TCOFFEE_ALNCOMPARE_SP": {
+                    "tcoffee": "13.46.0.919e8c6b",
+                    "pigz": "2.8)"
+                },
+                "TCOFFEE_ALNCOMPARE_TC": {
+                    "tcoffee": "13.46.0.919e8c6b",
+                    "pigz": "2.8)"
+                },
+                "TCOFFEE_EXTRACTFROMPDB": {
+                    "tcoffee": "13.46.0.919e8c6b"
+                },
+                "TCOFFEE_IRMSD": {
+                    "tcoffee": "13.46.0.919e8c6b",
+                    "pigz": "2.8)"
+                },
+                "TCOFFEE_SEQREFORMAT_SIM": {
+                    "tcoffee": "13.46.0.919e8c6b"
+                },
+                "TCOFFEE_TCS": {
+                    "tcoffee": "13.46.0.919e8c6b",
+                    "pigz": "2.8)"
+                },
+                "UNTAR": {
+                    "untar": 1.34
+                },
+                "UPP_ALIGN": {
+                    "upp": "4.5.5",
+                    "pigz": "2.4)"
+                },
+                "Workflow": {
+                    "nf-core/multiplesequencealign": "v1.2.0dev"
+                }
+            },
+            [
+                "alignments",
+                "alignments/seatoxin-ref",
+                "alignments/seatoxin-ref/seatoxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_CONSENSUS.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args-default.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_CLUSTALO-args-default.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_FAMSA-args-default.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default.fa.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_KALIGN-args-default.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_LEARNMSA-args---use_language_model.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree.fas.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_MAFFT-args-default.fas.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_MAGUS-args-default.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_MUSCLE5-args-default.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args-default.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_DEFAULT-args-default_UPP-args-default.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_FAMSA-args-default_MAGUS-args-default.aln.gz",
+                "alignments/seatoxin-ref/seatoxin-ref_MAFFT-args-default_FOLDMASON-args-default.fa.gz",
+                "alignments/toxin-ref",
+                "alignments/toxin-ref/toxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default.aln.gz",
+                "alignments/toxin-ref/toxin-ref_CONSENSUS.aln.gz",
+                "alignments/toxin-ref/toxin-ref_DEFAULT-args-default_CLUSTALO-args-default.aln.gz",
+                "alignments/toxin-ref/toxin-ref_DEFAULT-args-default_FAMSA-args-default.aln.gz",
+                "alignments/toxin-ref/toxin-ref_DEFAULT-args-default_KALIGN-args-default.aln.gz",
+                "alignments/toxin-ref/toxin-ref_DEFAULT-args-default_LEARNMSA-args---use_language_model.aln.gz",
+                "alignments/toxin-ref/toxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree.fas.gz",
+                "alignments/toxin-ref/toxin-ref_DEFAULT-args-default_MAFFT-args-default.fas.gz",
+                "alignments/toxin-ref/toxin-ref_DEFAULT-args-default_MAGUS-args-default.aln.gz",
+                "alignments/toxin-ref/toxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3.aln.gz",
+                "alignments/toxin-ref/toxin-ref_DEFAULT-args-default_REGRESSIVE-args-default.aln.gz",
+                "alignments/toxin-ref/toxin-ref_DEFAULT-args-default_TCOFFEE-args-default.aln.gz",
+                "alignments/toxin-ref/toxin-ref_DEFAULT-args-default_UPP-args-default.aln.gz",
+                "alignments/toxin-ref/toxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default.aln.gz",
+                "alignments/toxin-ref/toxin-ref_FAMSA-args-default_MAGUS-args-default.aln.gz",
+                "evaluation",
+                "evaluation/complete_summary_eval.csv",
+                "evaluation/tcoffee_irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_CLUSTALO-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_CONSENSUS-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_FAMSA-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_KALIGN-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_LEARNMSA-args---use_language_model_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_MAFFT-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_MAGUS-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_MUSCLE5-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_DEFAULT-args-default_UPP-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_FAMSA-args-default_MAGUS-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_irmsd/seatoxin-ref_MAFFT-args-default_FOLDMASON-args-default_irmsd.irmsd",
+                "evaluation/tcoffee_tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_CLUSTALO-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_CLUSTALO-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_CONSENSUS-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_CONSENSUS-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_FAMSA-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_FAMSA-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_KALIGN-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_KALIGN-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_LEARNMSA-args---use_language_model_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_LEARNMSA-args---use_language_model_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_MAFFT-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_MAFFT-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_MAGUS-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_MAGUS-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_MUSCLE5-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_MUSCLE5-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_UPP-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_DEFAULT-args-default_UPP-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_FAMSA-args-default_MAGUS-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_FAMSA-args-default_MAGUS-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/seatoxin-ref_MAFFT-args-default_FOLDMASON-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/seatoxin-ref_MAFFT-args-default_FOLDMASON-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_CLUSTALO-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_CLUSTALO-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_CONSENSUS-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_CONSENSUS-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_FAMSA-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_FAMSA-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_KALIGN-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_KALIGN-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_LEARNMSA-args---use_language_model_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_LEARNMSA-args---use_language_model_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_MAFFT-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_MAFFT-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_MAGUS-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_MAGUS-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_REGRESSIVE-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_REGRESSIVE-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_UPP-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_DEFAULT-args-default_UPP-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default_tcs.tcs",
+                "evaluation/tcoffee_tcs/toxin-ref_FAMSA-args-default_MAGUS-args-default_tcs.scores",
+                "evaluation/tcoffee_tcs/toxin-ref_FAMSA-args-default_MAGUS-args-default_tcs.tcs",
+                "pipeline_info",
+                "pipeline_info/nf_core_multiplesequencealign_software_mqc_versions.yml",
+                "reports",
+                "reports/multiqc",
+                "reports/multiqc/multiqc_data",
+                "reports/multiqc/multiqc_data/llms-full.txt",
+                "reports/multiqc/multiqc_data/multiqc.log",
+                "reports/multiqc/multiqc_data/multiqc.parquet",
+                "reports/multiqc/multiqc_data/multiqc_citations.txt",
+                "reports/multiqc/multiqc_data/multiqc_data.json",
+                "reports/multiqc/multiqc_data/multiqc_software_versions.txt",
+                "reports/multiqc/multiqc_data/multiqc_sources.txt",
+                "reports/multiqc/multiqc_data/multiqc_summary_stats.txt",
+                "reports/multiqc/multiqc_plots",
+                "reports/multiqc/multiqc_plots/pdf",
+                "reports/multiqc/multiqc_plots/pdf/summary_stats.pdf",
+                "reports/multiqc/multiqc_plots/png",
+                "reports/multiqc/multiqc_plots/png/summary_stats.png",
+                "reports/multiqc/multiqc_plots/svg",
+                "reports/multiqc/multiqc_plots/svg/summary_stats.svg",
+                "reports/multiqc/multiqc_report.html",
+                "reports/shiny_app",
+                "reports/shiny_app/run.sh",
+                "reports/shiny_app/shiny_app.py",
+                "reports/shiny_app/static",
+                "reports/shiny_app/static/bootstrap.min.css",
+                "reports/shiny_app/static/favicon.ico",
+                "reports/shiny_app/static/style.css",
+                "reports/visualization",
+                "reports/visualization/seatoxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args-default.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_CLUSTALO-args-default.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_CONSENSUS-args-default.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_FAMSA-args-default.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_KALIGN-args-default.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_LEARNMSA-args---use_language_model.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_MAFFT-args-default.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_MAGUS-args-default.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_MUSCLE5-args-default.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args-default.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default.html",
+                "reports/visualization/seatoxin-ref_DEFAULT-args-default_UPP-args-default.html",
+                "reports/visualization/seatoxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default.html",
+                "reports/visualization/seatoxin-ref_FAMSA-args-default_MAGUS-args-default.html",
+                "reports/visualization/seatoxin-ref_MAFFT-args-default_FOLDMASON-args-default.html",
+                "stats",
+                "stats/complete_summary_stats.csv",
+                "stats/sequences",
+                "stats/sequences/perc_sim",
+                "stats/sequences/perc_sim/seatoxin-ref.txt",
+                "stats/sequences/perc_sim/toxin-ref.txt",
+                "stats/sequences/seqstats",
+                "stats/sequences/seqstats/seatoxin-ref_seqstats.csv",
+                "stats/sequences/seqstats/toxin-ref_seqstats.csv",
+                "stats/structures",
+                "stats/structures/plddt",
+                "stats/structures/plddt/seatoxin-ref_full_plddt.csv",
+                "trees",
+                "trees/seatoxin-ref",
+                "trees/seatoxin-ref/seatoxin-ref_CLUSTALO-args-default.dnd",
+                "trees/seatoxin-ref/seatoxin-ref_FAMSA-args--gt_upgma_-medoidtree.dnd",
+                "trees/seatoxin-ref/seatoxin-ref_FAMSA-args-default.dnd",
+                "trees/seatoxin-ref/seatoxin-ref_MAFFT-args-default.dnd",
+                "trees/toxin-ref",
+                "trees/toxin-ref/toxin-ref_CLUSTALO-args-default.dnd",
+                "trees/toxin-ref/toxin-ref_FAMSA-args--gt_upgma_-medoidtree.dnd",
+                "trees/toxin-ref/toxin-ref_FAMSA-args-default.dnd",
+                "trees/toxin-ref/toxin-ref_MAFFT-args-default.dnd"
+            ],
+            [
+                "seatoxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default.aln.gz:md5,9394e09dd7f576da794a74de60327324",
+                "seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair.aln.gz:md5,e470a4588a84690ad1d473a4101d5c44",
+                "seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args-default.aln.gz:md5,e470a4588a84690ad1d473a4101d5c44",
+                "seatoxin-ref_DEFAULT-args-default_CLUSTALO-args-default.aln.gz:md5,9c01d20f8ba2dc66d4a671f739f48fa7",
+                "seatoxin-ref_DEFAULT-args-default_FAMSA-args-default.aln.gz:md5,9394e09dd7f576da794a74de60327324",
+                "seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default.fa.gz:md5,2d90cd080424db8024e6c404c1cfc0b4",
+                "seatoxin-ref_DEFAULT-args-default_KALIGN-args-default.aln.gz:md5,f924f716efa6cda7b56f6d9d67ba5d44",
+                "seatoxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree.fas.gz:md5,514e6910e6a14353963d68d933c18171",
+                "seatoxin-ref_DEFAULT-args-default_MAFFT-args-default.fas.gz:md5,25010d924bb490e81ca10e778d16cc60",
+                "seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default.aln.gz:md5,bb2dfff79cbba5b1987db7d07a96ea6a",
+                "seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3.aln.gz:md5,56686f3b3d853ef31b4b43683c30f8f5",
+                "seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args-default.aln.gz:md5,9394e09dd7f576da794a74de60327324",
+                "seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default.aln.gz:md5,bd1db08ad04514cc6d1334598c1a6ef0",
+                "seatoxin-ref_DEFAULT-args-default_UPP-args-default.aln.gz:md5,a543b6c4d215628c0307111268496557",
+                "seatoxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default.aln.gz:md5,9394e09dd7f576da794a74de60327324",
+                "seatoxin-ref_MAFFT-args-default_FOLDMASON-args-default.fa.gz:md5,40112a544d33fcefc10183e929a0fe35",
+                "toxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default.aln.gz:md5,c6556744aeee7ba25803dab39963ef0b",
+                "toxin-ref_DEFAULT-args-default_CLUSTALO-args-default.aln.gz:md5,5c0294acd4eec1a020cf9a82d0ffa77c",
+                "toxin-ref_DEFAULT-args-default_FAMSA-args-default.aln.gz:md5,288a63da545e9e8e940470fc1e93e184",
+                "toxin-ref_DEFAULT-args-default_KALIGN-args-default.aln.gz:md5,18b7b5385e7b812df39a2c95cbf9fef4",
+                "toxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree.fas.gz:md5,d24caa61ecbe107f1f60d70c4de58263",
+                "toxin-ref_DEFAULT-args-default_MAFFT-args-default.fas.gz:md5,7054267d24ffb83fb4ddc43cf2447f09",
+                "toxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3.aln.gz:md5,cfa9a5c918856ab85873585350bc4b15",
+                "toxin-ref_DEFAULT-args-default_REGRESSIVE-args-default.aln.gz:md5,c6556744aeee7ba25803dab39963ef0b",
+                "toxin-ref_DEFAULT-args-default_TCOFFEE-args-default.aln.gz:md5,66109d372abe90ab292b326a3d411e3a",
+                "toxin-ref_DEFAULT-args-default_UPP-args-default.aln.gz:md5,ee8ac5c634647fb62efdab5c946b6f83",
+                "toxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default.aln.gz:md5,0d631a36aab4a79897ca0d16cc4cba43",
+                "seatoxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default_irmsd.irmsd:md5,4c676706519eb9ed4cfa0241a719a59b",
+                "seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair_irmsd.irmsd:md5,09ec92e695fdc25393814c84c60a8e3a",
+                "seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args-default_irmsd.irmsd:md5,09ec92e695fdc25393814c84c60a8e3a",
+                "seatoxin-ref_DEFAULT-args-default_CLUSTALO-args-default_irmsd.irmsd:md5,e29674d0f4a89f3f6e1f40f7f75a4f27",
+                "seatoxin-ref_DEFAULT-args-default_FAMSA-args-default_irmsd.irmsd:md5,4c676706519eb9ed4cfa0241a719a59b",
+                "seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default_irmsd.irmsd:md5,ec1e2fb7e81c8edd37c4df83d95a4061",
+                "seatoxin-ref_DEFAULT-args-default_KALIGN-args-default_irmsd.irmsd:md5,2ce4e6672ec9964d6e4226437d15033b",
+                "seatoxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree_irmsd.irmsd:md5,68b1bc3bbbe887161207fb530fffc30a",
+                "seatoxin-ref_DEFAULT-args-default_MAFFT-args-default_irmsd.irmsd:md5,3d931dbad8dad549599b9e9433751383",
+                "seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default_irmsd.irmsd:md5,93a8fcfe9d570adda45809e4622db7d9",
+                "seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3_irmsd.irmsd:md5,db147089d52ba8f926a151ea1daa3128",
+                "seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args-default_irmsd.irmsd:md5,4c676706519eb9ed4cfa0241a719a59b",
+                "seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default_irmsd.irmsd:md5,c35bf60f4e03bbcc9a27a858cd7c0231",
+                "seatoxin-ref_DEFAULT-args-default_UPP-args-default_irmsd.irmsd:md5,f10a7a392f2bcf8316500def0116775f",
+                "seatoxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default_irmsd.irmsd:md5,4c676706519eb9ed4cfa0241a719a59b",
+                "seatoxin-ref_MAFFT-args-default_FOLDMASON-args-default_irmsd.irmsd:md5,b2667d1e27fad606a82cb3d94dc24dd0",
+                "seatoxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default_tcs.scores:md5,f65e2f5c176e9cd11a3c90c332c3069e",
+                "seatoxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default_tcs.tcs:md5,cfda4486e3e23460b87b3ad391ae418b",
+                "seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair_tcs.scores:md5,838956c4702953572c0d1961e56f6231",
+                "seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args--method_TMalign_pair_tcs.tcs:md5,103f33166e800cdf3451584459d70b33",
+                "seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args-default_tcs.scores:md5,f8d7715427d702530db4a57cf0b47428",
+                "seatoxin-ref_DEFAULT-args-default_3DCOFFEE-args-default_tcs.tcs:md5,103f33166e800cdf3451584459d70b33",
+                "seatoxin-ref_DEFAULT-args-default_CLUSTALO-args-default_tcs.scores:md5,8014939ae866d2f917ee8c9117403f60",
+                "seatoxin-ref_DEFAULT-args-default_CLUSTALO-args-default_tcs.tcs:md5,7ace90453a3d045f9e7259c98b357b15",
+                "seatoxin-ref_DEFAULT-args-default_FAMSA-args-default_tcs.scores:md5,0f4fc63937804b3e566d9764e94aeb02",
+                "seatoxin-ref_DEFAULT-args-default_FAMSA-args-default_tcs.tcs:md5,cfda4486e3e23460b87b3ad391ae418b",
+                "seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default_tcs.scores:md5,24bc882e8126622b5c53ac5674412b0d",
+                "seatoxin-ref_DEFAULT-args-default_FOLDMASON-args-default_tcs.tcs:md5,fafa15d19ed5c8fea69e523de3c530ab",
+                "seatoxin-ref_DEFAULT-args-default_KALIGN-args-default_tcs.scores:md5,0bf4d8b10a274888f499095ef24589f7",
+                "seatoxin-ref_DEFAULT-args-default_KALIGN-args-default_tcs.tcs:md5,dbe9fc368b82979dd407c414138476df",
+                "seatoxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree_tcs.scores:md5,2124035ff0abf79322e7a2d3dda8c7c3",
+                "seatoxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree_tcs.tcs:md5,f351510a048a39584b4368d6bcfa504a",
+                "seatoxin-ref_DEFAULT-args-default_MAFFT-args-default_tcs.scores:md5,311b5e36b64f42f14f80499b2e383348",
+                "seatoxin-ref_DEFAULT-args-default_MAFFT-args-default_tcs.tcs:md5,b678c0aaaaa9a892ad5481598587232a",
+                "seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default_tcs.scores:md5,d148aa60b22e6b3d681c04b3df63ac4d",
+                "seatoxin-ref_DEFAULT-args-default_MTMALIGN-args-default_tcs.tcs:md5,f471356c6fbd2ded677f446c1748c13f",
+                "seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3_tcs.scores:md5,461fc9bd7f27ec576b7299129e411c13",
+                "seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3_tcs.tcs:md5,2ec0c2cbb381d51aadb9c4cb8df2c013",
+                "seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args-default_tcs.scores:md5,3f2762f21c823ffae44c4dbd3f937a97",
+                "seatoxin-ref_DEFAULT-args-default_REGRESSIVE-args-default_tcs.tcs:md5,cfda4486e3e23460b87b3ad391ae418b",
+                "seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.scores:md5,3520c83711dae4525482bb74472d7af5",
+                "seatoxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.tcs:md5,6343c7cb5f42d1ef40f74c3016b75941",
+                "seatoxin-ref_DEFAULT-args-default_UPP-args-default_tcs.scores:md5,4893fe237a028c2edf80a7751b613987",
+                "seatoxin-ref_DEFAULT-args-default_UPP-args-default_tcs.tcs:md5,47c0a12a6a1d8a5007a81b92dd512922",
+                "seatoxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default_tcs.scores:md5,24889456acb2ca3c67cefa42c50a8b9f",
+                "seatoxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default_tcs.tcs:md5,cfda4486e3e23460b87b3ad391ae418b",
+                "seatoxin-ref_MAFFT-args-default_FOLDMASON-args-default_tcs.scores:md5,bed8c781ba285bc4d25939bed76efe16",
+                "seatoxin-ref_MAFFT-args-default_FOLDMASON-args-default_tcs.tcs:md5,91cdfdf774cda4cbcdc9d8129381140d",
+                "toxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default_tcs.scores:md5,890081067b40770970e894eed36df354",
+                "toxin-ref_CLUSTALO-args-default_REGRESSIVE-args-default_tcs.tcs:md5,9de07ce3a2ef98374cc00f8e42321223",
+                "toxin-ref_DEFAULT-args-default_CLUSTALO-args-default_tcs.scores:md5,6126690f4a22ed66df5b10689f71903a",
+                "toxin-ref_DEFAULT-args-default_CLUSTALO-args-default_tcs.tcs:md5,bd5c31b7cef9c2edf33bcd18016ec48a",
+                "toxin-ref_DEFAULT-args-default_FAMSA-args-default_tcs.scores:md5,065096a948dc0b764874b982b2c53bcd",
+                "toxin-ref_DEFAULT-args-default_FAMSA-args-default_tcs.tcs:md5,9de07ce3a2ef98374cc00f8e42321223",
+                "toxin-ref_DEFAULT-args-default_KALIGN-args-default_tcs.scores:md5,576dbd03b74ca6808563eede8fc3673d",
+                "toxin-ref_DEFAULT-args-default_KALIGN-args-default_tcs.tcs:md5,a2882b9225b490fcfbd0ff58e34eaf2d",
+                "toxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree_tcs.scores:md5,27bcfb8bb054dbc165e3c88b16191f94",
+                "toxin-ref_DEFAULT-args-default_MAFFT-args---dpparttree_tcs.tcs:md5,4ac552a7e8d7b088eef8e38f9dce39d4",
+                "toxin-ref_DEFAULT-args-default_MAFFT-args-default_tcs.scores:md5,1b5fec8307509fa8e4c5c86e2a2bd0d8",
+                "toxin-ref_DEFAULT-args-default_MAFFT-args-default_tcs.tcs:md5,ca27c739aacb4828317bb38cd4c58d40",
+                "toxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3_tcs.scores:md5,5e786930c9639e3a7f7e11c741871db2",
+                "toxin-ref_DEFAULT-args-default_REGRESSIVE-args--reg_nseq_3_tcs.tcs:md5,a8248c5e6176f498721b7b5934893428",
+                "toxin-ref_DEFAULT-args-default_REGRESSIVE-args-default_tcs.scores:md5,1e86882c6b31e00a8f5ad42af49fe0a4",
+                "toxin-ref_DEFAULT-args-default_REGRESSIVE-args-default_tcs.tcs:md5,9de07ce3a2ef98374cc00f8e42321223",
+                "toxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.scores:md5,ecd8e6013889af7faf62d31997d91182",
+                "toxin-ref_DEFAULT-args-default_TCOFFEE-args-default_tcs.tcs:md5,468d3d0bbb3eb539a268e6f58ea8eebd",
+                "toxin-ref_DEFAULT-args-default_UPP-args-default_tcs.scores:md5,23e85a398d2f3d5f8a105c6a589d97f8",
+                "toxin-ref_DEFAULT-args-default_UPP-args-default_tcs.tcs:md5,bd651eef1e120680861221ded0a7f894",
+                "toxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default_tcs.scores:md5,8b9fc2dc71536cd6e06205d523ad985a",
+                "toxin-ref_FAMSA-args--gt_upgma_-medoidtree_FAMSA-args-default_tcs.tcs:md5,7bab59ffbde584b3799c38a838badb00",
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
+                "run.sh:md5,025ecd434fe421c6a52140fd380504f0",
+                "shiny_app.py:md5,1428dfaefa5ad41704f0c9fb7f2dab60",
+                "bootstrap.min.css:md5,d736fb89b2cd45289ab550ad0ee60347",
+                "favicon.ico:md5,6e0be9d9e071c1a5d63dfdefaa12f246",
+                "style.css:md5,97b72456bb461bd2dfc9ad9feda249d7",
+                "seatoxin-ref.txt:md5,fdaa411d62bd66b5c30b21fd5b85a914",
+                "toxin-ref.txt:md5,a03aa486e0949d572972378a21dff28b",
+                "seatoxin-ref_seqstats.csv:md5,e104112c929b39f43410681d8bdcb15b",
+                "toxin-ref_seqstats.csv:md5,51f477faf393c2c4a49896ef5a49374c",
+                "seatoxin-ref_full_plddt.csv:md5,a7ecccb1bd68fcd9b248b15707955e67",
+                "seatoxin-ref_CLUSTALO-args-default.dnd:md5,0b8de84bed1e52cee17f7c54e322386d",
+                "seatoxin-ref_FAMSA-args--gt_upgma_-medoidtree.dnd:md5,2f40d5dd57a0072732428ba94ec89347",
+                "seatoxin-ref_FAMSA-args-default.dnd:md5,3fddb6ad96904101d105d090ddff061d",
+                "seatoxin-ref_MAFFT-args-default.dnd:md5,d4635608d06bc6856874a1a19b03f74e",
+                "toxin-ref_CLUSTALO-args-default.dnd:md5,666b7fe7ca55b2b83aef0869b4f38a66",
+                "toxin-ref_FAMSA-args--gt_upgma_-medoidtree.dnd:md5,c55917a824e99bdcb705d1cfa21bbd2b",
+                "toxin-ref_FAMSA-args-default.dnd:md5,5f47b8a4eff625b224e8a3bacb904009",
+                "toxin-ref_MAFFT-args-default.dnd:md5,f172ccdf796f111145b32d97ed8323b7"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "26.04.2"
+        },
+        "timestamp": "2026-05-28T08:37:41.972216409"
+    }
+}

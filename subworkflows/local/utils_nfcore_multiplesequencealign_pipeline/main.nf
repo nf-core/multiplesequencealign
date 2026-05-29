@@ -11,9 +11,9 @@
 include { UTILS_NFSCHEMA_PLUGIN     } from '../../nf-core/utils_nfschema_plugin'
 include { paramsSummaryMap          } from 'plugin/nf-schema'
 include { samplesheetToList         } from 'plugin/nf-schema'
+include { paramsHelp                } from 'plugin/nf-schema'
 include { completionEmail           } from '../../nf-core/utils_nfcore_pipeline'
 include { completionSummary         } from '../../nf-core/utils_nfcore_pipeline'
-include { imNotification            } from '../../nf-core/utils_nfcore_pipeline'
 include { UTILS_NFCORE_PIPELINE     } from '../../nf-core/utils_nfcore_pipeline'
 include { UTILS_NEXTFLOW_PIPELINE   } from '../../nf-core/utils_nextflow_pipeline'
 
@@ -33,10 +33,13 @@ workflow PIPELINE_INITIALISATION {
     outdir            //  string: The output directory where the results will be saved
     input             //  string: Path to input samplesheet
     tools             //  string: Path to input tools samplesheet
+    help              // boolean: Display help message and exit
+    help_full         // boolean: Show the full help message
+    show_hidden       // boolean: Show hidden parameters in the help message
 
     main:
 
-    ch_versions = Channel.empty()
+    ch_versions = channel.empty()
 
     //
     // Print version and exit if required and dump pipeline parameters to JSON file
@@ -51,10 +54,42 @@ workflow PIPELINE_INITIALISATION {
     //
     // Validate parameters and generate parameter summary to stdout
     //
+
+    def before_text = ""
+    def after_text = ""
+    before_text = """
+-\033[2m----------------------------------------------------\033[0m-
+                                        \033[0;32m,--.\033[0;30m/\033[0;32m,-.\033[0m
+\033[0;34m        ___     __   __   __   ___     \033[0;32m/,-._.--~\'\033[0m
+\033[0;34m  |\\ | |__  __ /  ` /  \\ |__) |__         \033[0;33m}  {\033[0m
+\033[0;34m  | \\| |       \\__, \\__/ |  \\ |___     \033[0;32m\\`-._,-`-,\033[0m
+                                        \033[0;32m`._,._,\'\033[0m
+\033[0;35m  nf-core/multiplesequencealign ${workflow.manifest.version}\033[0m
+-\033[2m----------------------------------------------------\033[0m-
+"""
+    after_text = """${workflow.manifest.doi ? "\n* The pipeline\n" : ""}${workflow.manifest.doi.tokenize(",").collect { doi -> "    https://doi.org/${doi.trim().replace('https://doi.org/','')}"}.join("\n")}${workflow.manifest.doi ? "\n" : ""}
+* The nf-core framework
+    https://doi.org/10.1038/s41587-020-0439-x
+
+* Software dependencies
+    https://github.com/nf-core/multiplesequencealign/blob/master/CITATIONS.md
+"""
+    if (monochrome_logs) {
+        before_text = before_text.replaceAll(/\033\[[0-9;]*m/, '')
+    }
+
+    command = "nextflow run ${workflow.manifest.name} -profile <docker/singularity/.../institute> --input samplesheet.csv --outdir <OUTDIR>"
+
     UTILS_NFSCHEMA_PLUGIN (
         workflow,
         validate_params,
-        null
+        null,
+        help,
+        help_full,
+        show_hidden,
+        before_text,
+        after_text,
+        command
     )
 
     //
@@ -105,13 +140,13 @@ workflow PIPELINE_INITIALISATION {
                     def tree_map = [:]
                     def align_map = [:]
 
-                    tree_map["tree"] = Utils.clean_tree(meta_clone["tree"].toString())
+                    tree_map["tree"] = clean_tree(meta_clone["tree"].toString())
                     tree_map["args_tree"] = meta_clone["args_tree"]
-                    tree_map["args_tree_clean"] = Utils.cleanArgs(meta_clone.args_tree)
+                    tree_map["args_tree_clean"] = cleanArgs(meta_clone.args_tree)
 
                     align_map["aligner"] = meta_clone["aligner"].toString()
-                    align_map["args_aligner"] = Utils.check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
-                    align_map["args_aligner_clean"] = Utils.cleanArgs(meta_clone.args_aligner)
+                    align_map["args_aligner"] = check_required_args(meta_clone["aligner"], meta_clone["args_aligner"])
+                    align_map["args_aligner_clean"] = cleanArgs(meta_clone.args_aligner)
 
                     [ tree_map, align_map ]
             }.unique()
@@ -138,7 +173,6 @@ workflow PIPELINE_COMPLETION {
     plaintext_email  // boolean: Send plain-text email instead of HTML
     outdir           //    path: Path to output directory where results will be published
     monochrome_logs  // boolean: Disable ANSI colour codes in log output
-    hook_url         //  string: hook URL for notifications
     multiqc_report   //  string: Path to MultiQC report
     summary          //  string: Path to summary file
     versions         //  string: Path to versions file
@@ -149,7 +183,7 @@ workflow PIPELINE_COMPLETION {
     summary_params      = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
     def multiqc_reports = multiqc_report.toList()
     def summary_reports = summary.toList()
-    def versions        = versions.toList()
+    def versions_list   = versions.toList()
     def skip_shiny      = params.skip_shiny
 
     //
@@ -169,21 +203,17 @@ workflow PIPELINE_COMPLETION {
         }
 
         completionSummary(monochrome_logs)
-        if (hook_url) {
-            imNotification(summary_params, hook_url)
-        }
 
         // check if summary report is empty
         if (summary_reports.getVal().isEmpty()){
             return
         }
 
-
         def summary_file  = summary_reports.getVal()[0][1].toString()
-        def versions_path = versions.getVal()[0].toString()
+        def versions_path = versions_list.getVal()[0].toString()
 
         // Input files
-        def trace_dir_path = "${outdir}/pipeline_info/"
+        trace_dir_path = "${outdir}/pipeline_info/"
 
         // Output file naming
         def summary_file_with_traces = "${outdir}/summary/complete_summary_stats_eval_times.csv"
@@ -196,7 +226,7 @@ workflow PIPELINE_COMPLETION {
     }
 
     workflow.onError {
-        log.error "Pipeline failed. Please refer to troubleshooting docs: https://nf-co.re/docs/usage/troubleshooting"
+        log.error "Pipeline failed. Please refer to troubleshooting docs for common issues: https://nf-co.re/docs/running/troubleshooting"
     }
 }
 
@@ -305,10 +335,6 @@ def methodsDescriptionText(mqc_methods_yaml) {
 
     return description_html.toString()
 }
-
-
-
-import groovy.transform.Field
 
 /*
  * Parses a CSV file and returns a list of maps representing the rows.
@@ -560,19 +586,19 @@ def processTraceFile(String traceDirPath) {
     // we need to do this because the co2 file has the energy consumption and CO2e but misses other columns of interest from the main file
     co2Csv = keepKeysFromArrayList(co2Csv, ["name", "energy_consumption", "CO2e", "powerdraw_cpu", "cpu_model", "requested_memory"])
 
-    trace_co2_csv = mergeListsById(traceCsv.collect { it as Map }, co2Csv, "name")
-    keys = ["id","name", "args", "tree", "aligner", "realtime", "%cpu", "rss", "peak_rss", "vmem", "peak_mem", "rchar", "wchar", "cpus", "energy_consumption", "CO2e", "powerdraw_cpu", "cpu_model", "requested_memory"]
+    def trace_co2_csv = mergeListsById(traceCsv.collect { it as Map }, co2Csv, "name")
+    def keys = ["id","name", "args", "tree", "aligner", "realtime", "%cpu", "rss", "peak_rss", "vmem", "peak_mem", "rchar", "wchar", "cpus", "energy_consumption", "CO2e", "powerdraw_cpu", "cpu_model", "requested_memory"]
 
     // Retain only the necessary columns and parse arguments from tree and aligner
     def cleanTraceData = cleanTrace(trace_co2_csv)
 
     // Extract the tree and align traces separately
-    def traceTrees = prepTrace(cleanTraceData, suffix_to_replace = "_GUIDETREE", subworkflow = "COMPUTE_TREES", keys)
-    def traceAlign = prepTrace(cleanTraceData, suffix_to_replace = "_ALIGN", subworkflow = "ALIGN", keys)
+    def traceTrees = prepTrace(cleanTraceData, "_GUIDETREE", "COMPUTE_TREES", keys)
+    def traceAlign = prepTrace(cleanTraceData, "_ALIGN", "ALIGN", keys)
 
     // Add an empty tree trace for the default tree
-    empty_trace = [:]
-    keys_to_add = keys - ["id", "tree", "args", "aligner"]
+    def empty_trace = [:]
+    def keys_to_add = keys - ["id", "tree", "args", "aligner"]
     keys_to_add.each { key -> empty_trace[key+"_tree"] = null }
     empty_trace["tree"] = "DEFAULT"
     empty_trace["args_tree_clean"] = "default"
@@ -605,6 +631,7 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
         def newRow = [:]
         def keys_iterator = keys
         def suffix = ""
+        def specific_key = ""
         if(subworkflow == "ALIGN") {
             suffix = "_aligner"
             specific_key = "aligner"
@@ -614,7 +641,7 @@ def prepTrace(trace, suffix_to_replace, subworkflow, keys) {
             newRow.tree = treeMatch ? treeMatch[0][1] : "DEFAULT"
 
             def treeArgsMatch = (row.tag =~ /argstree: (.*)/)
-            newRow.args_tree_clean = treeArgsMatch ? Utils.cleanArgs(treeArgsMatch[0][1]) : "default"
+            newRow.args_tree_clean = treeArgsMatch ? cleanArgs(treeArgsMatch[0][1]) : "default"
 
             // remove tree and args_tree from keys
             keys_iterator = keys - ["tree", "args_tree_clean"]
@@ -765,72 +792,51 @@ def merge_summary_and_traces(summary_file, trace_dir_path, versions_path, outFil
     }
 }
 
-import nextflow.Nextflow
-import groovy.text.SimpleTemplateEngine
-
-class Utils {
-
-    public static cleanArgs(argString) {
-
-        def cleanArgs = argString.toString().trim().replace("  ", " ").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
-        // if clearnArgs is empty, return ""
-
-        if (cleanArgs == null || cleanArgs == "" || cleanArgs == "null") {
-            return "default"
-        }else{
-            return cleanArgs
-        }
+def cleanArgs(argString) {
+    def cleaned = argString.toString().trim().replace("  ", " ").replace(" ", "_").replaceAll("==", "_").replaceAll("\\s+", "")
+    if (cleaned == null || cleaned == "" || cleaned == "null") {
+        return "default"
     }
+    return cleaned
+}
 
-    public static clean_tree(treeIn){
-        def tree = treeIn.toString()
-        if(tree == null || tree == "" || tree == "null"){
-            return "DEFAULT"
-        }
-        return tree
+def clean_tree(treeIn) {
+    def tree = treeIn.toString()
+    if (tree == null || tree == "" || tree == "null") {
+        return "DEFAULT"
     }
+    return tree
+}
 
-    public static fix_args(tool,args,tool_to_be_checked, required_flag, default_value) {
-        /*
-        This function checks if the required_flag is present in the args string for the tool_to_be_checked.
-        If not, it adds the required_flag and the default_value to the args string.
-        */
-        if(tool == tool_to_be_checked){
-            if( args == null || args == ""|| args == "null" || !args.contains(required_flag+" ")){
-                if(args == null || args == ""|| args == "null"){
-                    args = ""
-                }
-                def prefix = ""
-                if(args != ""){
-                    prefix = args + " "
-                }
-                args = prefix + required_flag + " " + default_value
+def fix_args(tool, args, tool_to_be_checked, required_flag, default_value) {
+    if (tool == tool_to_be_checked) {
+        if (args == null || args == "" || args == "null" || !args.contains(required_flag + " ")) {
+            if (args == null || args == "" || args == "null") {
+                args = ""
             }
+            def prefix = args != "" ? args + " " : ""
+            args = prefix + required_flag + " " + default_value
         }
-        return args
     }
+    return args
+}
 
+def check_required_args(tool, args) {
+    // 3DCOFFEE
+    args = fix_args(tool, args, "3DCOFFEE", "-method", "TMalign_pair")
+    args = fix_args(tool, args, "3DCOFFEE", "-output", "fasta_aln")
 
-    public static check_required_args(tool,args){
+    // REGRESSIVE
+    args = fix_args(tool, args, "REGRESSIVE", "-reg", "")
+    args = fix_args(tool, args, "REGRESSIVE", "-reg_method", "famsa_msa")
+    args = fix_args(tool, args, "REGRESSIVE", "-reg_nseq", "1000")
+    args = fix_args(tool, args, "REGRESSIVE", "-output", "fasta_aln")
 
-        // 3DCOFFEE
-        args = fix_args(tool,args,"3DCOFFEE", "-method", "TMalign_pair")
-        args = fix_args(tool,args,"3DCOFFEE", "-output", "fasta_aln")
+    // TCOFFEE
+    args = fix_args(tool, args, "TCOFFEE", "-output", "fasta_aln")
 
-        // REGRESSIVE
-        args = fix_args(tool,args,"REGRESSIVE", "-reg", "")
-        args = fix_args(tool,args,"REGRESSIVE", "-reg_method", "famsa_msa")
-        args = fix_args(tool,args,"REGRESSIVE", "-reg_nseq", "1000")
-        args = fix_args(tool,args,"REGRESSIVE", "-output", "fasta_aln")
+    // UPP
+    args = fix_args(tool, args, "UPP", "-m", "amino")
 
-        // TCOFFEE
-        args = fix_args(tool,args,"TCOFFEE", "-output", "fasta_aln")
-
-        // UPP
-        args = fix_args(tool,args,"UPP", "-m", "amino")
-
-        return args
-
-    }
-
+    return args
 }
