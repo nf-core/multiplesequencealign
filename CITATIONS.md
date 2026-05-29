@@ -1,5 +1,9 @@
 # nf-core/multiplesequencealign: Citations
 
+## [nf-core/multiplesequencealign](https://pubmed.ncbi.nlm.nih.gov/40746377/)
+
+> Santus L, Espinosa-Carrasco J, Rauschning L, Mir-Pedrol J, Trujnara I, Vignoli A, Mansouri L, Baltzis A, Floden EW, Di Tommaso P, Garriga E, Gudyś A, Deorowicz S, Gilchrist C, Steinegger M, Notredame C. An nf-core framework for the systematic comparison of alternative modeling tools: the multiple sequence alignment case study. NAR Genom Bioinform. 2025 Jul 31;7(3):lqaf104. doi: 10.1093/nargab/lqaf104. PubMed PMID: 40746377.
+
 ## [nf-core](https://pubmed.ncbi.nlm.nih.gov/32055031/)
 
 > Ewels PA, Peltzer A, Fillinger S, Patel H, Alneberg J, Wilm A, Garcia MU, Di Tommaso P, Nahnsen S. The nf-core framework for community-curated bioinformatics pipelines. Nat Biotechnol. 2020 Mar;38(3):276-278. doi: 10.1038/s41587-020-0439-x. PubMed PMID: 32055031.
