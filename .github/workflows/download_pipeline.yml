@@ -15,6 +15,7 @@ on:
     branches:
       - main
       - master
+      - dev
 
 env:
   NXF_ANSI_LOG: false
@@ -35,7 +36,7 @@ jobs:
           echo "REPO_BRANCH=${{ github.event.inputs.testbranch || 'dev' }}" >> "$GITHUB_OUTPUT"
 
   download:
-    runs-on: gpu
+    runs-on: "runs-on=${{ github.run_id }}/family=c6id.2xlarge/image=ubuntu24-full-x64"
     needs: configure
     steps:
       - name: Check out pipeline code
