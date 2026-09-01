@@ -9,7 +9,7 @@ lint:
     - docs/images/nf-core-multiplesequencealign_logo_light.png
     - .prettierignore
   multiqc_config: false
-nf_core_version: 4.0.3
+nf_core_version: 4.1.0
 repository_type: pipeline
 template:
   author: Luisa Santus, Jose Espinosa-Carrasco
