@@ -7,4 +7,5 @@ testing/
 testing*
 *.pyc
 null/
+seatoxin*
 .lineage/
