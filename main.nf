@@ -15,21 +15,10 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { MULTIPLESEQUENCEALIGN  } from './workflows/multiplesequencealign'
+
+include { MULTIPLESEQUENCEALIGN   } from './workflows/multiplesequencealign'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_multiplesequencealign_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_multiplesequencealign_pipeline'
-include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_multiplesequencealign_pipeline'
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    GENOME PARAMETER VALUES
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-// TODO nf-core: Remove this line if you don't need a FASTA file
-//   This is an example of how to use getGenomeAttribute() to fetch parameters
-//   from igenomes.config using `--genome`
-params.fasta = getGenomeAttribute('fasta')
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -44,21 +33,25 @@ workflow NFCORE_MULTIPLESEQUENCEALIGN {
 
     take:
     samplesheet // channel: samplesheet read in from --input
+    tools       // channel: toolsheet read in from --tools
 
     main:
-
     //
     // WORKFLOW: Run pipeline
     //
     MULTIPLESEQUENCEALIGN (
         samplesheet,
+        tools,
         params.multiqc_config,
         params.multiqc_logo,
         params.multiqc_methods_description,
         params.outdir,
     )
+
     emit:
     multiqc_report = MULTIPLESEQUENCEALIGN.out.multiqc_report // channel: /path/to/multiqc_report.html
+    versions       = MULTIPLESEQUENCEALIGN.out.versions       // channel: /path/to/versions.txt
+    summary        = MULTIPLESEQUENCEALIGN.out.summary        // channel: /path/to/summary.txt
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -79,6 +72,7 @@ workflow {
         args,
         params.outdir,
         params.input,
+        params.tools,
         params.help,
         params.help_full,
         params.show_hidden
@@ -88,18 +82,24 @@ workflow {
     // WORKFLOW: Run main workflow
     //
     NFCORE_MULTIPLESEQUENCEALIGN (
-        PIPELINE_INITIALISATION.out.samplesheet
+        PIPELINE_INITIALISATION.out.samplesheet,
+        PIPELINE_INITIALISATION.out.tools
     )
     //
     // SUBWORKFLOW: Run completion tasks
     //
+
     PIPELINE_COMPLETION (
         params.email,
         params.email_on_fail,
         params.plaintext_email,
         params.outdir,
         params.monochrome_logs,
-        NFCORE_MULTIPLESEQUENCEALIGN.out.multiqc_report
+        NFCORE_MULTIPLESEQUENCEALIGN.out.multiqc_report,
+        NFCORE_MULTIPLESEQUENCEALIGN.out.summary,
+        NFCORE_MULTIPLESEQUENCEALIGN.out.versions,
+        "${params.outdir}/reports/shiny_app",
+        "${params.outdir}/pipeline_info"
     )
 }
 
