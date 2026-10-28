@@ -1,0 +1,54 @@
+Changes in component 'nf-core/foldmason/easymsa'
+'modules/nf-core/foldmason/easymsa/environment.yml' is unchanged
+Changes in 'foldmason/easymsa/main.nf':
+--- modules/nf-core/foldmason/easymsa/main.nf
++++ modules/nf-core/foldmason/easymsa/main.nf
+@@ -15,7 +15,7 @@
+ 
+     output:
+     tuple val(meta), path("${prefix}_3di.fa${compress ? '.gz' : ''}"), emit: msa_3di
+-    tuple val(meta), path("${prefix}_aa.fa${compress ? '.gz' : ''}") , emit: msa_aa
++    tuple val(meta), path("${prefix}.fa${compress ? '.gz' : ''}")    , emit: msa_aa
+     path "versions.yml"                                              , emit: versions
+ 
+     when:
+@@ -34,9 +34,11 @@
+         $args \\
+         --threads $task.cpus
+ 
++    mv ${prefix}_aa.fa ${prefix}.fa
++
+     if ${compress}; then
+         pigz -p ${task.cpus} ${prefix}_3di.fa
+-        pigz -p ${task.cpus} ${prefix}_aa.fa
++        pigz -p ${task.cpus} ${prefix}.fa
+     fi
+ 
+     cat <<-END_VERSIONS > versions.yml
+@@ -51,7 +53,7 @@
+     prefix = task.ext.prefix ?: "${meta.id}"
+     """
+     echo ""  ${compress ? '| gzip' : ''} > ${prefix}_3di.fa${compress ? '.gz' : ''}
+-    echo ""  ${compress ? '| gzip' : ''} > ${prefix}_aa.fa${compress ? '.gz' : ''}
++    echo ""  ${compress ? '| gzip' : ''} > ${prefix}.fa${compress ? '.gz' : ''}
+ 
+     cat <<-END_VERSIONS > versions.yml
+     "${task.process}":
+
+Changes in 'foldmason/easymsa/meta.yml':
+--- modules/nf-core/foldmason/easymsa/meta.yml
++++ modules/nf-core/foldmason/easymsa/meta.yml
+@@ -58,7 +58,7 @@
+           description: |
+             Groovy Map containing sample information
+             e.g. `[ id:'sample1', single_end:false ]`
+-      - "${prefix}_aa.fa${compress ? '.gz' : ''}":
++      - "${prefix}.fa${compress ? '.gz' : ''}":
+           type: file
+           description: Fasta file containing the multiple sequence alignment with Amino
+             Acid alphabet
+
+'modules/nf-core/foldmason/easymsa/tests/main.nf.test' is unchanged
+'modules/nf-core/foldmason/easymsa/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/foldmason/easymsa/tests/tags.yml' is unchanged
+************************************************************
