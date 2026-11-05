@@ -142,8 +142,8 @@
                     "untar": 1.34
                 },
                 "UPP_ALIGN": {
-                    "upp": "4.5.5",
-                    "pigz": "2.4)"
+                    "pigz": "2.4)",
+                    "upp": "4.5.5"
                 },
                 "Workflow": {
                     "nf-core/multiplesequencealign": "v1.2.0dev"
