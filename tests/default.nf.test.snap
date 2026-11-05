@@ -37,8 +37,8 @@
                     "csvtk": "0.31.0"
                 },
                 "CONSENSUS": {
-                    "tcoffee": "13.46.0.919e8c6b",
-                    "pigz": "2.8)"
+                    "pigz": "2.8)",
+                    "tcoffee": "13.46.0.919e8c6b"
                 },
                 "EXTRACT_PLDDT": {
                     "awk": "1.3.4 20200120"
@@ -105,38 +105,38 @@
                     "bash": "5.1.16 3"
                 },
                 "REGRESSIVE_ALIGN": {
-                    "tcoffee": "13.46.0.919e8c6b",
-                    "pigz": "2.8)"
+                    "pigz": "2.8)",
+                    "tcoffee": "13.46.0.919e8c6b"
                 },
                 "TCOFFEE3D_ALIGN": {
-                    "tcoffee": "13.46.0.919e8c6b",
-                    "pigz": "2.8)"
+                    "pigz": "2.8)",
+                    "tcoffee": "13.46.0.919e8c6b"
                 },
                 "TCOFFEE_ALIGN": {
-                    "tcoffee": "13.46.0.919e8c6b",
-                    "pigz": "2.8)"
+                    "pigz": "2.8)",
+                    "tcoffee": "13.46.0.919e8c6b"
                 },
                 "TCOFFEE_ALNCOMPARE_SP": {
-                    "tcoffee": "13.46.0.919e8c6b",
-                    "pigz": "2.8)"
+                    "pigz": "2.8)",
+                    "tcoffee": "13.46.0.919e8c6b"
                 },
                 "TCOFFEE_ALNCOMPARE_TC": {
-                    "tcoffee": "13.46.0.919e8c6b",
-                    "pigz": "2.8)"
+                    "pigz": "2.8)",
+                    "tcoffee": "13.46.0.919e8c6b"
                 },
                 "TCOFFEE_EXTRACTFROMPDB": {
                     "tcoffee": "13.46.0.919e8c6b"
                 },
                 "TCOFFEE_IRMSD": {
-                    "tcoffee": "13.46.0.919e8c6b",
-                    "pigz": "2.8)"
+                    "pigz": "2.8)",
+                    "tcoffee": "13.46.0.919e8c6b"
                 },
                 "TCOFFEE_SEQREFORMAT_SIM": {
                     "tcoffee": "13.46.0.919e8c6b"
                 },
                 "TCOFFEE_TCS": {
-                    "tcoffee": "13.46.0.919e8c6b",
-                    "pigz": "2.8)"
+                    "pigz": "2.8)",
+                    "tcoffee": "13.46.0.919e8c6b"
                 },
                 "UNTAR": {
                     "untar": 1.34

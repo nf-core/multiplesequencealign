@@ -9,6 +9,8 @@ lint:
     - docs/images/nf-core-multiplesequencealign_logo_light.png
     - .prettierignore
   multiqc_config: false
+  module_changes: false
+  subworkflow_changes: false
 nf_core_version: 4.2.1
 repository_type: pipeline
 template:
