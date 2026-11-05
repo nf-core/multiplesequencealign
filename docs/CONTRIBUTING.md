@@ -34,6 +34,10 @@ To contribute code to any nf-core pipeline:
 
 If you are not used to this workflow with Git, see the [GitHub documentation](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests) or [Git resources](https://try.github.io/) for more information.
 
+:::note
+! There is an extended documentation for adding specific module types into this pipeline at [extending](../docs/extending.md).
+:::
+
 ## Use of AI and LLMs
 
 The nf-core stance on the use of AI and LLMs is that humans are still ultimately responsible for their submitted code, regardless of the tools they use.

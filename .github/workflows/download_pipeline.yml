@@ -35,7 +35,7 @@ jobs:
           echo "REPO_BRANCH=${{ github.event.inputs.testbranch || 'dev' }}" >> "$GITHUB_OUTPUT"
 
   download:
-    runs-on: ubuntu-latest
+    runs-on: gpu
     needs: configure
     steps:
       - name: Check out pipeline code
@@ -55,7 +55,7 @@ jobs:
       - name: Setup Apptainer
         uses: eWaterCycle/setup-apptainer@3f706d898c9db585b1d741b4692e66755f3a1b40 # v2
         with:
-          apptainer-version: 1.3.4
+          apptainer-version: 1.4.1
 
       - name: Read .nf-core.yml
         id: read_yml

@@ -9,6 +9,7 @@ lint:
     - docs/images/nf-core-multiplesequencealign_logo_light.png
     - .prettierignore
   multiqc_config: false
+  nfcore_components: false
 nf_core_version: 4.2.1
 repository_type: pipeline
 template:
